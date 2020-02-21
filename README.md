@@ -6,12 +6,11 @@
 
 This repository hosts the code which powers the https://th3s4mur41.me website.
 
-## Changelog
+### Assets & Design
 
-## Contributing
-
-@Th3S4mur41
+Assets and design belong to [@Th3S4mur41](https://github.com/Th3S4mur41/)
 
 ### Licence
 
+This Source Code Form is subject to the terms of the MIT Public License. 
 The source code and assets are owned by @Th3S4mur41
