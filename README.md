@@ -1,2 +1,17 @@
 # th3s4mur41.me
-Personal website
+
+[![GitHub version](https://badge.fury.io/gh/https%3A%2F%2Fgithub.com%2FTh3S4mur41%2Fth3s4mur41.me.svg)](https://badge.fury.io/gh/https%3A%2F%2Fgithub.com%2FTh3S4mur41%2Fth3s4mur41.me)
+[![dependencies](https://david-dm.org/webcompat/Th3S4mur41/th3s4mur41.me.svg)](https://david-dm.org/Th3S4mur41/th3s4mur41.me/)
+[![devDependencies](https://david-dm.org/webcompat/Th3S4mur41/th3s4mur41.me/dev-status.svg)](https://david-dm.org/Th3S4mur41/th3s4mur41.me/)
+
+This repository hosts the code which powers the https://th3s4mur41.me website.
+
+## Changelog
+
+## Contributing
+
+@Th3S4mur41
+
+### Licence
+
+The source code and assets are owned by @Th3S4mur41
