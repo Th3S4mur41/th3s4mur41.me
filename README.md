@@ -4,6 +4,9 @@
 [![dependencies](https://david-dm.org/webcompat/Th3S4mur41/th3s4mur41.me.svg)](https://david-dm.org/Th3S4mur41/th3s4mur41.me/)
 [![devDependencies](https://david-dm.org/webcompat/Th3S4mur41/th3s4mur41.me/dev-status.svg)](https://david-dm.org/Th3S4mur41/th3s4mur41.me/)
 
+[![Build Status](https://travis-ci.com/Th3S4mur41/th3s4mur41.me.svg?branch=master)](https://travis-ci.com/Th3S4mur41/th3s4mur41.me)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f239bebf-3347-4787-af89-008fb288c7ce/deploy-status)](https://app.netlify.com/sites/naughty-saha-141eba/deploys)
+
 This repository hosts the code which powers the https://th3s4mur41.me website.
 
 ### Assets & Design
