@@ -1,6 +1,6 @@
 name: CI
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
@@ -31,10 +31,10 @@ jobs:
       uses: actions/setup-node@v2.1.4
       with:
         check-latest: true
-        
+
     - name: npm install, build & test
       run: |
-        npm install
+        npm ci --no-optional --no-audit --prefer-offline
         npm run build
         npm run lint
         npm test
