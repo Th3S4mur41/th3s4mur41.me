@@ -8,20 +8,14 @@ on:
     branches: [master]
 
 jobs:
-  build:
-
+  sonarcloud:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup Node.js for use with actions
-      uses: actions/setup-node@v1.1.0
+    - uses: actions/checkout@v2        
       with:
-        # Version Spec of the version to use.  Examples: 10.x, 10.15.1, >=10.15.0, lts
-        version: # optional, default is 10.x
-        # Optional registry to set up for auth. Will set the registry in a project level .npmrc and .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN
-        registry-url: # optional
-        # Optional scope for authenticating against scoped registries
-        scope: # optional
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
     - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@v1.1
+      uses: SonarSource/sonarcloud-github-action@master
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }
