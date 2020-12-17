@@ -1,0 +1,14 @@
+# List and versions of browsers we support
+
+# Desktop
+last 3 Chrome versions
+last 3 Edge versions
+last 3 Firefox versions
+Firefox ESR
+last 3 Opera versions
+last 3 Safari versions
+
+# Mobile
+last 3 ChromeAndroid versions
+last 3 FirefoxAndroid versions
+last 3 iOS versions

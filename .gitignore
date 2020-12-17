@@ -1,0 +1,38 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Typescript v1 declaration files
+typings/
+
+# Typescript temporary files
+src/scripts/.baseDir.ts
+*.tmp.txt
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# IDEs
+*.code-workspace
+.idea/
+!.idea/codeStyles/
+
+# Compiled output
+build/
+dist/
+reports/
+.tscache/
