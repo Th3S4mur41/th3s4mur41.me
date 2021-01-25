@@ -32,7 +32,8 @@ module.exports = [
 							options: {
 								sourceMap: true
 							}
-						}
+						},
+						'postcss-loader'
 					]
 				}
 			]
