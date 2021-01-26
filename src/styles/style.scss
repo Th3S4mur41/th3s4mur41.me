@@ -1,9 +1,23 @@
+/**
+ * Global Styleguide CSS file
+ *
+ * This file should only contain imports
+ */
 
-:root {
-	--theme-color: hsla(69, 93%, 48%, 1);
-	--theme-gradient: hsla(68, 93%, 41%, 1);
-}
+/* Settings */
+@import 'settings/colors.scss';
+@import 'settings/fonts.scss';
+@import 'settings/settings.scss';
 
-body {
-	background: greenyellow;
-}
+/* Utils */
+@import 'utils/mixins.scss';
+
+/* Generics */
+@import 'generic/reset.scss';
+@import 'generic/global.scss';
+@import 'generic/animations.scss';
+@import 'generic/layout.scss';
+
+/* Elements */
+
+/* Components */
