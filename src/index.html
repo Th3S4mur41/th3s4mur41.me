@@ -45,9 +45,16 @@
 		<meta property="fb:admins" content="Facebook numeric ID" />
 	</head>
 	<body>
-		<picture class="avatar">
-			<source srcset="https://s.gravatar.com/avatar/140e603c046d72eca8784f9ba9fdc4c1?s=80" media="(min-width: 600px)" />
-			<img src="https://s.gravatar.com/avatar/140e603c046d72eca8784f9ba9fdc4c1?s=80" alt="" />
-		</picture>
+		<header>Th3S4mur41</header>
+		<main>
+			<picture class="avatar">
+				<source
+					srcset="https://s.gravatar.com/avatar/140e603c046d72eca8784f9ba9fdc4c1?s=80"
+					media="(min-width: 600px)"
+				/>
+				<img src="https://s.gravatar.com/avatar/140e603c046d72eca8784f9ba9fdc4c1?s=80" alt="" />
+			</picture>
+		</main>
+		<footer>© <%= JSON.stringify(htmlWebpackPlugin.options.currentYear) %> Th3S4mur41.me</footer>
 	</body>
 </html>
