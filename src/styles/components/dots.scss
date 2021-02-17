@@ -1,0 +1,49 @@
+.progress-dots {
+	--dot-size: 0.2em;
+	--animation-duration: 1s;
+	position: relative;
+	animation: growing-dot 1s infinite linear 0.25s;
+	margin-left: calc(var(--dot-size) * 1.75);
+
+	&,
+	&::before,
+	&::after {
+		display: inline-block;
+		width: var(--dot-size);
+		height: var(--dot-size);
+		border-radius: 100%;
+		background-color: currentColor;
+	}
+	&::before,
+	&::after {
+		content: '';
+		position: absolute;
+		top: 0;
+	}
+	&::before {
+		left: calc(var(--dot-size) * -1.5);
+		animation: growing-dot 1s infinite linear;
+	}
+	&::after {
+		left: calc(var(--dot-size) * 1.5);
+		animation: growing-dot 1s infinite linear 0.5s;
+	}
+}
+
+@keyframes growing-dot {
+	0% {
+		transform: scale(1, 1);
+	}
+	20% {
+		transform: scale(1, 1.5);
+	}
+	50% {
+		transform: scale(1, 0.67);
+	}
+	75% {
+		transform: scale(1, 1);
+	}
+	100% {
+		transform: scale(1, 1);
+	}
+}
