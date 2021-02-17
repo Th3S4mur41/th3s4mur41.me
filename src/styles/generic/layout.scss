@@ -1,0 +1,32 @@
+body {
+	display: grid;
+	grid-template-rows: auto 3fr auto;
+}
+
+#header {
+	display: grid;
+	grid-auto-flow: row;
+	justify-items: center;
+	gap: 0.5em;
+	margin-block: 1em;
+	font-size: clamp(2rem, 8vw, 5rem);
+
+	> .logo {
+		align-self: end;
+	}
+	> h1 {
+		align-self: start;
+		margin: 0;
+		font-size: inherit;
+	}
+}
+
+main {
+	text-align: center;
+	align-self: center;
+	font-size: clamp(1.6rem, 5vw, 3rem);
+}
+
+#footer {
+	text-align: center;
+}

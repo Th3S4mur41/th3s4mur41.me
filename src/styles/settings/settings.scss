@@ -1,0 +1,49 @@
+:root {
+	--modal-zindex: 10;
+	--border-radius: 0.4rem;
+
+	/**
+   * Replacing default browser outline with adapted design
+   */
+	--focus-outline: 0 0 0.4rem 0.2rem hsl(0 0% 100% / 0.5), 0 0 0.2rem 0.2rem var(--focus-color);
+
+	/**
+ * Elevation
+ * Drop shadows for different purposes
+ */
+	--card-elevation: 0 0.2rem 0.4rem 0 hsl(0 0% 0% / 0.13), 0 0.1rem 0.1rem 0 hsl(0 0% 0% / 0.108);
+	--dropdown-elevation: 0 0.3rem 0.7rem 0 hsl(0 0% 0% / 0.13), 0 0.1rem 0.2rem 0 hsl(0 0% 0% / 0.108);
+	--hovered-card-elevation: 0 0.6rem 1.4rem 0 hsl(0 0% 0% / 0.13), 0 0.1rem 0.4rem 0 hsl(0 0% 0% / 0.108);
+	--modal-elevation: 0 2.6rem 5.8rem 0 hsl(0 0% 0% / 0.22), 0 0.5rem 1.4rem 0 hsl(0 0% 0% / 0.18);
+	--sidebar-elevation: 0.3rem 0 0.7rem 0 hsl(0 0% 0% / 0.13), 0.1rem 0 0.2rem 0 hsl(0 0% 0% / 0.108);
+
+	/**
+ * Animation settings
+ */
+	--color-duration: 0.2s;
+	--shake-duration: 0.5s;
+	--slide-duration: 0.8s;
+	--fly-duration: 0.3s;
+	--fade-duration: 0.1s;
+	--pulse-duration: 0.4s;
+
+	/**
+ * Animations
+ */
+	--color-transition: color var(--color-duration) ease;
+	--background-transition: background var(--color-duration) ease;
+	--shake-animation: shake var(--shake-duration);
+	--slide-in-animation: slide-in var(--slide-duration);
+	--slide-out-animation: out var(--slide-duration);
+	--fly-in-animation: fly-in var(--fly-duration);
+	--fade-in-animation: fade-in var(--fade-duration) ease-out;
+	--pulse-animation: pulse var(--pulse-duration) ease-out;
+
+	@media (prefers-reduced-motion) {
+		--shake-animation: none;
+		--slide-in-animation: none;
+		--slide-out-animation: none;
+		--fly-in-animation: none;
+		--pulse-animation: none;
+	}
+}

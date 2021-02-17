@@ -4,9 +4,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -26,15 +26,15 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node_version }}
-      uses: actions/setup-node@v2.1.4
-      with:
-        check-latest: true
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node_version }}
+        uses: actions/setup-node@v2.1.4
+        with:
+          check-latest: true
 
-    - name: npm install, build & test
-      run: |
-        npm ci --no-optional --no-audit --prefer-offline
-        npm run build
-        npm run lint
-        npm test
+      - name: npm install, build & test
+        run: |
+          npm ci --no-optional --no-audit --prefer-offline --progress=false
+          npm run build
+          npm run lint
+          npm test
