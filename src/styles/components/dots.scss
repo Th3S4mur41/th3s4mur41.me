@@ -1,9 +1,14 @@
 .progress-dots {
 	--dot-size: 0.2em;
 	--animation-duration: 1s;
+	--animation: growing-dot var(--animation-duration) infinite linear;
 	position: relative;
-	animation: growing-dot 1s infinite linear 0.25s;
+	animation: var(--animation) calc(var(--animation-duration) / 4);
 	margin-left: calc(var(--dot-size) * 1.75);
+
+	@media (prefers-reduced-motion: reduce) {
+		--animation: none;
+	}
 
 	&,
 	&::before,
@@ -22,11 +27,11 @@
 	}
 	&::before {
 		left: calc(var(--dot-size) * -1.5);
-		animation: growing-dot 1s infinite linear;
+		animation: var(--animation);
 	}
 	&::after {
 		left: calc(var(--dot-size) * 1.5);
-		animation: growing-dot 1s infinite linear 0.5s;
+		animation: var(--animation) calc(var(--animation-duration) / 2);
 	}
 }
 
