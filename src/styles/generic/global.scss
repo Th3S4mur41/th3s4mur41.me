@@ -2,9 +2,15 @@
 	font-size: 10px;
 }
 
+@font-face {
+	font-family: 'monospace';
+	advance-override: 0.0375; // stylelint-disable-line property-no-unknown
+	src: local('monospace');
+}
+
 body {
 	font-size: var(--default-font-size);
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Cascadia Code', monospace;
 	background-color: var(--primary-background-color);
 	color: var(--primary-color);
 	display: grid;

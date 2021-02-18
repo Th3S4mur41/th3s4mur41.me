@@ -10,7 +10,7 @@
 	},
 	"homepage": "https://th3s4mur41.me",
 	"dependencies": {
-		"@babel/runtime": "^7.12.13"
+		"@fontsource/cascadia-code": "^4.2.1"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.16",
