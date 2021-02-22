@@ -1,4 +1,54 @@
 :root {
-	--theme-color: hsla(69, 93%, 48%, 1);
-	--theme-gradient: hsla(68, 93%, 41%, 1);
+	/**
+     * Theme specific colors
+     */
+	--theme-hue: 360;
+	--theme-saturation: 100%;
+	--theme-lightness: 48%;
+	--theme-color: hsl(var(--theme-hue) var(--theme-saturation) var(--theme-lightness));
+	// --theme-color: hsla(69, 93%, 48%, 1);
+	// --theme-gradient: hsla(68, 93%, 41%, 1);
+
+	/**
+     * Basic colors
+     */
+	--success-color: hsl(88 92% 24%);
+	--warning-color: hsl(37 91% 55%);
+	--error-color: hsl(358 72% 59%);
+
+	/**
+     * Dark mode (default)
+     */
+	--primary-background-color: hsl(0 1% 17%);
+	--secondary-background-color: hsl(0 2% 12%);
+	--primary-color: hsl(0 0% 98%);
+	--secondary-color: hsl(219 14% 75%);
+	--overlay-color: hsl(0 0% 0% / 0.3);
+	--overlay-fallback-color: hsl(0 0% 0% / 0.9);
+
+	/**
+     * Elements
+     */
+	--link-color: currentColor;
+
+	/**
+     * States
+     */
+	--focus-color: hsl(var(--theme-hue) var(--theme-saturation) calc(var(--theme-lightness) + 10%));
+	--hover-color: hsl(var(--theme-hue) var(--theme-saturation) calc(var(--theme-lightness) + 8%));
+	--active-color: hsl(var(--theme-hue) calc(var(--theme-saturation) - 10%) calc(var(--theme-lightness) - 9%));
+
+	/**
+     * Light mode
+     */
+	@media (prefers-color-scheme: light) {
+		:root {
+			--primary-background-color: hsl(0 0% 100%);
+			--secondary-background-color: hsl(0 0% 98%);
+			--primary-color: hsl(30 3% 14%);
+			--secondary-color: var(--primary-color);
+			--overlay-color: hsl(0 0% 100% / 0.3);
+			--overlay-fallback-color: hsl(0 0% 100% / 0.8);
+		}
+	}
 }
