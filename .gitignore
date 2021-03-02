@@ -30,6 +30,7 @@ src/scripts/.baseDir.ts
 *.code-workspace
 .idea/
 !.idea/codeStyles/
+.history/
 
 # Compiled output
 build/

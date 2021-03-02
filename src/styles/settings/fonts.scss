@@ -1,5 +1,11 @@
 @import '~@fontsource/cascadia-code/index.css';
 
+@font-face {
+	font-family: 'monospace';
+	advance-override: 0.0375; // stylelint-disable-line property-no-unknown
+	src: local('monospace');
+}
+
 :root {
 	--default-font-size: 1.6rem;
 	--font-size-large: 1.8rem;
@@ -7,6 +13,7 @@
 	--font-size-huge: 3rem;
 	--font-size-small: 1.4rem;
 	--font-size-xsmall: 1.2rem;
+	--font-weight-normal: 400;
 	--font-weight-semi-bold: 600;
 	--font-weight-bold: 700;
 }

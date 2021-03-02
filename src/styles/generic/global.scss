@@ -2,10 +2,10 @@
 	font-size: 10px;
 }
 
-@font-face {
-	font-family: 'monospace';
-	advance-override: 0.0375; // stylelint-disable-line property-no-unknown
-	src: local('monospace');
+html,
+body {
+	height: 100%;
+	overflow: hidden;
 }
 
 body {
@@ -13,17 +13,10 @@ body {
 	font-family: 'Cascadia Code', monospace;
 	background-color: var(--primary-background-color);
 	color: var(--primary-color);
-	display: grid;
 
 	/* Additional smoothing fixes for MacOS */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-}
-
-html,
-body {
-	height: 100%;
-	overflow: hidden;
 }
 
 /**

@@ -1,0 +1,32 @@
+a {
+	color: var(--link-color);
+	transition: color 0.3s ease;
+	text-decoration: none;
+	outline: none;
+
+	&[href]:not(.image) {
+		// Only for navigation links which are not images
+		&:hover,
+		&:active {
+			text-decoration: underline;
+		}
+	}
+
+	/**
+     * States
+     */
+	&:focus, // Set fallback for not supported focus-visible
+	&:focus-visible {
+		color: var(--theme-color);
+		filter: drop-shadow(0 0 5em var(--theme-color));
+	}
+	&:hover {
+		color: var(--hover-color);
+	}
+	&:active,
+	&:focus:not(:focus-visible) {
+		// Reset focus if focus-visible is supported
+		color: var(--active-color);
+		outline: 0;
+	}
+}
