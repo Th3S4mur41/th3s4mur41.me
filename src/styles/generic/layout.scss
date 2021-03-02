@@ -28,5 +28,20 @@ main {
 }
 
 #footer {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 1.2rem;
+	padding: 1.2rem;
 	text-align: center;
+	font-size: clamp(1.4rem, 1.5vw, 2rem);
+
+	@media (orientation: portrait) {
+		> .copyright {
+			flex: auto;
+		}
+		> .social {
+			flex: auto;
+		}
+	}
 }
