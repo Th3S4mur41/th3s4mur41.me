@@ -1,0 +1,25 @@
+// Define breakpoints
+// TODO: consider using https://github.com/postcss/postcss-custom-media
+
+// Default: Mobile-portrait
+// Down to 320px (WCAG requirement)
+
+// Small:	Mobile-landscape (and larger)
+@media (min-width: 480px) {
+
+}
+
+// Medium: Tablet-portrait (and larger)
+@media (min-width: 768px) {
+
+}
+
+// Large: Tablet-landscape (and larger)
+@media (min-width: 992px) {
+
+}
+
+// X-Large: Laptops (and langer)
+@media (min-width: 1200px) {
+
+}
