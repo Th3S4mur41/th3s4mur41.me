@@ -42,13 +42,11 @@
      * Light mode
      */
 	@media (prefers-color-scheme: light) {
-		:root {
-			--primary-background-color: hsl(0 0% 100%);
-			--secondary-background-color: hsl(0 0% 98%);
-			--primary-color: hsl(30 3% 14%);
-			--secondary-color: var(--primary-color);
-			--overlay-color: hsl(0 0% 100% / 0.3);
-			--overlay-fallback-color: hsl(0 0% 100% / 0.8);
-		}
+		--primary-background-color: hsl(0 0% 100%);
+		--secondary-background-color: hsl(0 0% 98%);
+		--primary-color: hsl(30 3% 14%);
+		--secondary-color: var(--primary-color);
+		--overlay-color: hsl(0 0% 100% / 0.3);
+		--overlay-fallback-color: hsl(0 0% 100% / 0.8);
 	}
 }
