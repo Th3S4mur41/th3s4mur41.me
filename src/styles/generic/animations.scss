@@ -63,3 +63,9 @@
 		transform: scale(0.8);
 	}
 }
+
+@keyframes appear {
+	0% {
+		opacity: 0;
+	}
+}

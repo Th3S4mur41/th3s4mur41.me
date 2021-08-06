@@ -11,6 +11,10 @@ a {
 			text-decoration: underline;
 		}
 	}
+	&.image > svg {
+		inline-size: 4rem;
+		block-size: auto;
+	}
 
 	/**
      * States
