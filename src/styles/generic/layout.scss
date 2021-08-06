@@ -15,6 +15,7 @@ body {
 	filter: invert(1);
 	block-size: auto;
 	inline-size: auto;
+	animation: appear 1.5s ease-out;
 
 	@media (prefers-color-scheme: light) {
 		filter: none;
