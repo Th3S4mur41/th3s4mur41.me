@@ -19,7 +19,11 @@
 		<title>Th3S4mur41</title>
 	</head>
 	<body>
-		<img class="hero-image" src="assets/images/samurai.png" width="856" height="1200" alt="" />
+		<picture>
+			<source srcset="assets/images/samurai.avif" type="image/avif" />
+			<source srcset="assets/images/samurai.webp" type="image/webp" />
+			<img class="hero-image" src="assets/images/samurai.png" width="856" height="1200" decoding="async" alt="" />
+		</picture>
 		<header id="header">
 			<div class="logo" aria-hidden="true">&lt;侍/&gt;</div>
 			<h1>The Samurai</h1>

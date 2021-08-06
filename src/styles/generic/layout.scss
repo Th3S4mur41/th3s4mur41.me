@@ -9,13 +9,13 @@ body {
 	grid-column: 1;
 	justify-self: center;
 	align-self: end;
+	z-index: -1;
 	max-block-size: 100%;
 	max-inline-size: 100%;
-	z-index: -1;
-	filter: invert(1);
 	block-size: auto;
 	inline-size: auto;
-	animation: appear 1.5s ease-out;
+	filter: invert(1);
+	animation: appear 1s ease-out;
 
 	@media (prefers-color-scheme: light) {
 		filter: none;
