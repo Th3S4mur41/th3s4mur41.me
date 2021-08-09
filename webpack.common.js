@@ -1,4 +1,5 @@
 const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -8,7 +9,7 @@ module.exports = {
 		app: './src/index.js'
 	},
 	output: {
-		filename: 'scripts.js',
+		filename: 'app.[hash].js',
 		path: path.resolve(__dirname, 'dist'),
 		assetModuleFilename: 'assets/[hash][ext]'
 	},
@@ -44,13 +45,13 @@ module.exports = {
 							sourceMap: true
 						}
 					},
+					'postcss-loader',
 					{
 						loader: 'sass-loader',
 						options: {
 							sourceMap: true
 						}
-					},
-					'postcss-loader'
+					}
 				]
 			},
 			{
@@ -65,10 +66,15 @@ module.exports = {
 	},
 	plugins: [
 		new CleanWebpackPlugin(),
+		new CopyPlugin({
+			patterns: [{ from: 'public', to: '.' }]
+		}),
 		new HtmlWebpackPlugin({
 			template: 'src/index.html',
 			filename: './index.html'
 		}),
-		new MiniCssExtractPlugin()
+		new MiniCssExtractPlugin({
+			filename: 'styles.[hash].css'
+		})
 	]
 };

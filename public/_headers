@@ -1,0 +1,16 @@
+/*
+	X-Frame-Options: DENY
+	X-Content-Type-Options: nosniff
+	Referrer-Policy: no-referrer-when-downgrade
+
+/*.js
+	Cache-Control: public, max-age=2628000
+
+/*.css
+	Cache-Control: public, max-age=2628000
+
+/favicon.ico
+	Cache-Control: public, max-age=2628000
+
+/assets/*
+	Cache-Control: public, max-age=2628000
