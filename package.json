@@ -10,7 +10,8 @@
 	},
 	"homepage": "https://th3s4mur41.me",
 	"dependencies": {
-		"@fontsource/cascadia-code": "^4.2.1"
+		"@fontsource/cascadia-code": "^4.2.1",
+		"postcss-preset-env": "^6.7.0"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.14.8",
