@@ -9,7 +9,7 @@ module.exports = {
 		app: './src/index.js'
 	},
 	output: {
-		filename: 'scripts.js',
+		filename: 'app.[hash].js',
 		path: path.resolve(__dirname, 'dist'),
 		assetModuleFilename: 'assets/[hash][ext]'
 	},
@@ -73,6 +73,8 @@ module.exports = {
 			template: 'src/index.html',
 			filename: './index.html'
 		}),
-		new MiniCssExtractPlugin()
+		new MiniCssExtractPlugin({
+			filename: 'styles.[hash].css'
+		})
 	]
 };
