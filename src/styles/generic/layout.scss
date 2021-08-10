@@ -36,6 +36,8 @@ body {
 
 	> .logo {
 		align-self: end;
+		inline-size: clamp(8rem, 25vw, 20rem);
+		block-size: auto;
 	}
 	> h1 {
 		align-self: start;
