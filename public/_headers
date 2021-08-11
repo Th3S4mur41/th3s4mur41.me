@@ -11,6 +11,12 @@
 /*.css
 	Cache-Control: public, immutable, max-age=31536000
 
+/*.json
+	Content-Type: application/json; charset=utf-8
+
+/*.svg
+	Content-Type: image/svg+xml; charset=utf-8
+
 /favicon.ico
 	Cache-Control: public, immutable, max-age=31536000
 
