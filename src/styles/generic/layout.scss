@@ -1,11 +1,11 @@
 body {
 	display: grid;
-	grid-template-rows: 3fr 1fr auto;
+	grid-template-rows: auto 1fr auto;
 	grid-template-columns: auto;
 }
 
 .hero-image {
-	grid-row: 1 / -1;
+	grid-row: 2 / -1;
 	grid-column: 1;
 	justify-self: center;
 	align-self: end;
@@ -25,9 +25,10 @@ body {
 #header {
 	grid-row: 1;
 	grid-column: 1;
-	display: grid;
-	grid-template-rows: auto auto;
-	justify-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
 	gap: 0.5em;
 	margin-block: 1em;
 	font-size: clamp(2rem, 8vw, 5rem);
@@ -35,10 +36,10 @@ body {
 	text-shadow: 0.1rem 0.1rem 0.2rem var(--primary-background-color);
 
 	> .logo {
-		align-self: end;
+		inline-size: clamp(8rem, 25vw, 20rem);
+		block-size: auto;
 	}
 	> h1 {
-		align-self: start;
 		margin: 0;
 		font-size: inherit;
 	}
@@ -57,7 +58,7 @@ main {
 	grid-row: 3;
 	grid-column: 1;
 	display: flex;
-	flex-wrap: wrap;
+	flex-wrap: wrap-reverse;
 	justify-content: space-between;
 	gap: 1.2rem;
 	padding: 1.2rem;
@@ -67,18 +68,9 @@ main {
 	> .copyright,
 	> .social {
 		display: flex;
-		flex: auto;
-		justify-content: center;
+		flex-wrap: wrap;
 		align-items: center;
 		gap: 1.2rem;
-	}
-
-	@media (orientation: landscape) {
-		> .copyright {
-			justify-content: start;
-		}
-		> .social {
-			justify-content: end;
-		}
+		text-align: center;
 	}
 }
