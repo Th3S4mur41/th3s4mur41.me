@@ -59,7 +59,7 @@ main {
 	grid-column: 1;
 	display: flex;
 	flex-wrap: wrap-reverse;
-	justify-content: space-between;
+	justify-content: space-around;
 	gap: 1.2rem;
 	padding: 1.2rem;
 	text-align: center;
@@ -72,5 +72,31 @@ main {
 		align-items: center;
 		gap: 1.2rem;
 		text-align: center;
+	}
+}
+
+@media (screen-spanning: single-fold-vertical) {
+	body {
+		grid-template-columns: minmax(auto, env(fold-left)) auto;
+	}
+
+	#header {
+		grid-column: 1 / span 2;
+
+		> .logo {
+			flex: 0 0 env(fold-left);
+			/* limit the logo to half the screen size */
+			margin-inline: calc(env(fold-left) / 4);
+			max-inline-size: calc(env(fold-left) / 2);
+		}
+		> h1 {
+			flex: 1; /* Fill the right side */
+			margin-inline-start: env(fold-width);
+			text-align: center;
+		}
+	}
+
+	#footer {
+		grid-column: 1 / span 2;
 	}
 }
