@@ -13,6 +13,7 @@ body {
 	font-family: 'Cascadia Code', monospace;
 	background-color: var(--primary-background-color);
 	color: var(--primary-color);
+	accent-color: var(--theme-color);
 
 	/* Additional smoothing fixes for MacOS */
 	-webkit-font-smoothing: antialiased;
