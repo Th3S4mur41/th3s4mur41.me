@@ -31,7 +31,6 @@ body {
 	align-items: center;
 	gap: 0.5em;
 	margin-block: 1em;
-	font-size: clamp(2rem, 8vw, 5rem);
 	color: var(--theme-color);
 	text-shadow: 0.1rem 0.1rem 0.2rem var(--primary-background-color);
 
@@ -41,7 +40,6 @@ body {
 	}
 	> h1 {
 		margin: 0;
-		font-size: inherit;
 	}
 }
 
