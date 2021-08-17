@@ -1,7 +1,18 @@
-@import '~@fontsource/cascadia-code/index.css';
+@import '~@fontsource/nanum-brush-script/latin.css';
+
+@media (prefers-redduced-data: no-preference) {
+	@import '~@fontsource/cascadia-code/index.css';
+}
 
 @font-face {
-	font-family: 'monospace';
+	font-family: 'Nanum Brush Script-fallback';
+	size-adjust: 75.32000000000005%;
+	ascent-override: 126%;
+	src: local('Arial');
+}
+
+@font-face {
+	font-family: 'Cascadia Code-fallback';
 	advance-override: 0.0375; // stylelint-disable-line property-no-unknown
 	src: local('monospace');
 }

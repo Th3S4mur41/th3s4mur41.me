@@ -1,0 +1,13 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: 'Nanum Brush Script', 'Nanum Brush Script-fallback';
+	font-weight: 600;
+}
+
+h1 {
+	font-size: clamp(3.5rem, 12vw, 10rem);
+}
