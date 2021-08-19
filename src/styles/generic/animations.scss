@@ -65,7 +65,14 @@
 }
 
 @keyframes appear {
-	0% {
+	from {
 		opacity: 0;
+	}
+}
+
+@keyframes fade-out {
+	to {
+		opacity: 0;
+		transform: translateY(25vh) scale(3);
 	}
 }

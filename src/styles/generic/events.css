@@ -1,0 +1,7 @@
+/**
+ * This file must be CSS otherwise, SASS parser would strip start and end value
+ */
+
+@scroll-timeline hero-image-timeline {
+	time-range: 1s; /* stylelint-disable-line property-no-unknown */
+}

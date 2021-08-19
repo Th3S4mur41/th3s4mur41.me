@@ -44,10 +44,10 @@
 		<link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml" />
 	</head>
 	<body>
-		<picture>
+		<picture class="background-container">
 			<source srcset="assets/images/samurai.avif" type="image/avif" />
 			<source srcset="assets/images/samurai.webp" type="image/webp" />
-			<img class="hero-image" src="assets/images/samurai.png" width="856" height="1200" decoding="async" alt="" />
+			<img class="background-image" src="assets/images/samurai.png" width="856" height="1200" decoding="async" alt="" />
 		</picture>
 		<header id="header">
 			<svg class="logo" width="400" height="200">
@@ -55,8 +55,13 @@
 				<use href="assets/images/logo-monochrome.svg#svg" />
 			</svg>
 			<h1>The Samurai</h1>
+			<picture id="hero-image">
+				<source srcset="assets/images/samurai.avif" type="image/avif" />
+				<source srcset="assets/images/samurai.webp" type="image/webp" />
+				<img class="hero-image" src="assets/images/samurai.png" width="856" height="1200" decoding="async" alt="" />
+			</picture>
 		</header>
-		<main></main>
+		<main id="main"></main>
 		<footer id="footer" class="overlay">
 			<section class="copyright">© {currentYear} Th3S4mur41.me</section>
 			<section class="social">
