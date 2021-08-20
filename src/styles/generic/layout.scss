@@ -112,6 +112,8 @@ main {
 
 	> section,
 	> article {
+		content-visibility: auto;
+		contain-intrinsic-size: 100vh;
 		min-block-size: 100vh;
 		scroll-snap-align: start;
 	}
