@@ -5,8 +5,3 @@ body {
 * {
 	box-sizing: border-box; /* More intuitive for responsive design */
 }
-
-picture {
-	// Requires to set all class to the <img> tag inside
-	display: contents;
-}

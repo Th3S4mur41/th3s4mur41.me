@@ -16,11 +16,13 @@
 @import 'generic/reset.scss';
 @import 'generic/global.scss';
 @import 'generic/animations.scss';
+@import 'generic/events.css';
 @import 'generic/layout.scss';
 
 /* Elements */
 @import 'elements/a.scss';
 @import 'elements/h.scss';
+@import 'elements/picture.scss';
 @import 'elements/svg.scss';
 
 /* Components */

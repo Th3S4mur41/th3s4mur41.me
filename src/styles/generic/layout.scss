@@ -1,45 +1,103 @@
-body {
-	display: grid;
-	grid-template-rows: auto 1fr auto;
-	grid-template-columns: auto;
+html {
+	// scroll-snap-type: y proximity; // TODO: activate only with content
 }
 
-.hero-image {
-	grid-row: 2 / -1;
-	grid-column: 1;
-	justify-self: center;
-	align-self: end;
+body {
+	display: grid;
+	grid-auto-rows: auto;
+	grid-template-columns: auto;
+	// iOS Workaround: https://webkit.org/blog/7929/designing-websites-for-iphone-x/
+	padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+.background-container {
+	display: flex;
+	justify-content: center;
+	position: fixed;
+	inset-block-end: 0;
+	max-block-size: 100%;
+	max-inline-size: 100%;
+	inline-size: 100%; // necessary for the inner img to adapt
+	margin: auto; // center
 	z-index: -1;
+}
+
+.background-image {
 	max-block-size: 100%;
 	max-inline-size: 100%;
 	block-size: auto;
 	inline-size: auto;
+	object-fit: contain;
+	filter: blur(1px) opacity(0.4) contrast(0.7) brightness(0.8);
+
+	@media (prefers-color-scheme: light) {
+		filter: invert(1) blur(1px) opacity(0.4) contrast(0.7) brightness(1.2);
+	}
+}
+
+#hero-image {
+	display: flex;
+	justify-content: center;
+	max-block-size: 100%;
+	max-inline-size: 100%;
+	inline-size: 100%; // necessary for the inner img to adapt
+	overflow: hidden;
+	z-index: -1; // behind the content
+}
+
+.hero-image {
+	max-block-size: 100%;
+	max-inline-size: 100%;
+	block-size: auto;
+	inline-size: auto;
+	object-fit: contain;
 	filter: invert(1);
-	animation: appear 1s ease-out;
 
 	@media (prefers-color-scheme: light) {
 		filter: none;
+	}
+
+	@supports (animation-timeline: works) {
+		@media (prefers-reduced-motion: no-preference) {
+			animation: 1s linear forwards fade-out;
+			animation-timeline: hero-image-timeline;
+		}
 	}
 }
 
 #header {
 	grid-row: 1;
 	grid-column: 1;
-	display: flex;
+	display: grid;
+	grid-template-columns: auto auto auto auto;
+	grid-template-rows: auto 1fr;
+	min-block-size: 100vh;
+	max-block-size: 100vh;
 	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
 	gap: 0.5em;
-	margin-block: 1em;
 	color: var(--theme-color);
-	text-shadow: 0.1rem 0.1rem 0.2rem var(--primary-background-color);
+	filter: drop-shadow(0.1rem 0.1rem 0.2rem var(--shadow-color));
+	scroll-snap-align: start;
 
 	> .logo {
 		inline-size: clamp(8rem, 25vw, 20rem);
 		block-size: auto;
+		grid-row: 1;
+		grid-column: 2;
 	}
 	> h1 {
-		margin: 0;
+		margin: 0.2em;
+		grid-row: 1;
+		grid-column: 3;
+		white-space: nowrap;
+	}
+	> #hero-image {
+		grid-row: 1 / span 2;
+		grid-column: 1 / span 4;
+		align-self: end;
+		// z-index: -1;
 	}
 }
 
@@ -50,6 +108,14 @@ main {
 	align-self: center;
 	font-size: clamp(1.6rem, 5vw, 3rem);
 	color: var(--theme-color);
+
+	> section,
+	> article {
+		content-visibility: auto;
+		contain-intrinsic-size: 100vh;
+		min-block-size: 100vh;
+		scroll-snap-align: start;
+	}
 }
 
 #footer {
@@ -62,6 +128,7 @@ main {
 	padding: 1.2rem;
 	text-align: center;
 	font-size: clamp(1.4rem, 1.5vw, 2rem);
+	scroll-snap-align: end;
 
 	> .copyright,
 	> .social {
@@ -78,19 +145,30 @@ main {
 		grid-template-columns: minmax(auto, env(fold-left)) auto;
 	}
 
+	.background-container {
+		max-inline-size: calc(env(fold-left));
+		margin: revert;
+	}
+
 	#header {
 		grid-column: 1 / span 2;
+		grid-template-columns: 1fr env(fold-width) 1fr;
 
 		> .logo {
+			grid-column: 1;
 			flex: 0 0 env(fold-left);
 			/* limit the logo to half the screen size */
 			margin-inline: calc(env(fold-left) / 4);
 			max-inline-size: calc(env(fold-left) / 2);
 		}
 		> h1 {
+			grid-column: 3;
 			flex: 1; /* Fill the right side */
 			margin-inline-start: env(fold-width);
 			text-align: center;
+		}
+		> #hero-image {
+			grid-column: 1;
 		}
 	}
 

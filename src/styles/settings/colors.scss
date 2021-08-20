@@ -1,4 +1,5 @@
 :root {
+	color-scheme: dark light;
 	/**
      * Theme specific colors
      */
@@ -25,6 +26,7 @@
 	--secondary-color: hsl(219 14% 75%);
 	--overlay-color: hsl(0 0% 0% / 0.3);
 	--overlay-fallback-color: hsl(0 0% 0% / 0.9);
+	--shadow-color: hsl(0 0% 100% / 0.3);
 
 	/**
      * Elements
@@ -48,5 +50,6 @@
 		--secondary-color: var(--primary-color);
 		--overlay-color: hsl(0 0% 100% / 0.3);
 		--overlay-fallback-color: hsl(0 0% 100% / 0.8);
+		--shadow-color: hsl(0 0% 0% / 0.5);
 	}
 }
