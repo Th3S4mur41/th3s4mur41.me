@@ -25,7 +25,7 @@ module.exports = {
 					preprocessor: (content) => {
 						return content
 							.replace(/{currentYear}/g, new Date().getFullYear())
-							.replace(/{currentISODate}/g, new Date().toISOString());
+							.replace(/{currentLocalISODate}/g, new Date().toISOString().replace(/\.\d*Z/g, '+00:00'));
 					}
 				}
 			},
