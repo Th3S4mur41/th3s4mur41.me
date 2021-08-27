@@ -23,7 +23,9 @@ module.exports = {
 				loader: 'html-loader',
 				options: {
 					preprocessor: (content) => {
-						return content.replace(/{currentYear}/g, new Date().getFullYear());
+						return content
+							.replace(/{currentYear}/g, new Date().getFullYear())
+							.replace(/{currentLocalISODate}/g, new Date().toISOString().replace(/\.\d*Z/g, '+00:00'));
 					}
 				}
 			},
