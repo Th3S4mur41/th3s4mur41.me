@@ -12,6 +12,7 @@
 	"dependencies": {
 		"@fontsource/cascadia-code": "^4.2.1",
 		"@fontsource/nanum-brush-script": "^4.5.0",
+		"@squoosh/cli": "^0.7.2",
 		"postcss-preset-env": "^6.7.0"
 	},
 	"devDependencies": {
@@ -60,6 +61,7 @@
 		"start": "webpack serve --config webpack.dev.js",
 		"build": "webpack --config webpack.prod.js",
 		"build:favicon": "real-favicon check-for-update --fail-on-update faviconData.json",
+		"images:webp": "squoosh-cli --webp auto --output-dir public/icons public/icons/android*.png",
 		"lint": "npm-run-all lint:* --parallel",
 		"lint:js": "eslint 'src/**/*.js'",
 		"lint:css": "stylelint \"src/**/*.{css, less, sass, scss}\" --aei",

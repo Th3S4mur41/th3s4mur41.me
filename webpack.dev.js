@@ -5,11 +5,8 @@ module.exports = merge(common, {
 	mode: 'development',
 	devtool: 'inline-source-map',
 	devServer: {
-		contentBase: './dist',
-		watchContentBase: true,
-		disableHostCheck: true,
-		inline: true,
-		liveReload: true,
-		hot: true
+		static: './dist',
+		hot: true,
+		watchFiles: ['./src/**/*.html', './src/**/*.{css,scss}']
 	}
 });
