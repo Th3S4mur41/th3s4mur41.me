@@ -1,7 +1,9 @@
 const path = require('path');
+const glob = require('glob');
 const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const PurgecssPlugin = require('purgecss-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
@@ -77,6 +79,9 @@ module.exports = {
 		}),
 		new MiniCssExtractPlugin({
 			filename: 'styles.[hash].css'
+		}),
+		new PurgecssPlugin({
+			paths: glob.sync('src/**/*', { nodir: true })
 		})
 	]
 };
