@@ -81,7 +81,7 @@ module.exports = {
 			filename: 'styles.[hash].css'
 		}),
 		new PurgecssPlugin({
-			paths: glob.sync(`path.join(__dirname, 'src')/**/*`, { nodir: true })
+			paths: glob.sync('src/**/*', { nodir: true })
 		})
 	]
 };
