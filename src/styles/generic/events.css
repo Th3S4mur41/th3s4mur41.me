@@ -3,5 +3,5 @@
  */
 
 @scroll-timeline hero-image-timeline {
-	time-range: 1s; /* stylelint-disable-line property-no-unknown */
+	orientation: block;
 }
