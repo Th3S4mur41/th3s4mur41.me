@@ -12,12 +12,17 @@
 /* Utils */
 @import 'utils/mixins.scss';
 
-/* Generics */
-@import 'generic/reset.scss';
-@import 'generic/global.scss';
-@import 'generic/animations.scss';
-@import 'generic/events.css';
-@import 'generic/layout.scss';
+/* Base */
+@import 'base/reset.scss';
+@import 'base/global.scss';
+@import 'base/animations.scss';
+@import 'base/events.css';
+
+/* Layouts */
+@import 'layouts/base.scss';
+@import 'layouts/header.scss';
+@import 'layouts/main.scss';
+@import 'layouts/footer.scss';
 
 /* Elements */
 @import 'elements/a.scss';
