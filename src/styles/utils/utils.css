@@ -1,0 +1,27 @@
+/**
+ * Class dedicated to visually hide elements that should still be read by screen readers
+ */
+.screen-reader-text {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	white-space: nowrap;
+	clip: rect(1px, 1px, 1px, 1px);
+}
+
+/**
+ * Hide content while maintaining required space
+ */
+.hidden {
+	visibility: hidden;
+}
+
+/**
+ * End text with ... at container end
+ */
+.ellipsis {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}

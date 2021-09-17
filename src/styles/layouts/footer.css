@@ -1,0 +1,21 @@
+#footer {
+	grid-row: 3;
+	grid-column: 1;
+	display: flex;
+	flex-wrap: wrap-reverse;
+	justify-content: space-around;
+	gap: 1.2rem;
+	padding: 1.2rem;
+	text-align: center;
+	font-size: clamp(1.4rem, 1.5vw, 2rem);
+	scroll-snap-align: end;
+
+	& > .copyright,
+	& > .social {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 1.2rem;
+		text-align: center;
+	}
+}
