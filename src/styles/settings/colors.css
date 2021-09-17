@@ -1,5 +1,6 @@
 :root {
 	color-scheme: dark light;
+
 	/**
      * Theme specific colors
      */
@@ -7,8 +8,10 @@
 	--theme-saturation: 100%;
 	--theme-lightness: 48%;
 	--theme-color: hsl(var(--theme-hue) var(--theme-saturation) var(--theme-lightness));
-	// --theme-color: hsla(69, 93%, 48%, 1);
-	// --theme-gradient: hsla(68, 93%, 41%, 1);
+
+	/* --theme-color: hsla(69, 93%, 48%, 1); */
+
+	/* --theme-gradient: hsla(68, 93%, 41%, 1); */
 
 	/**
      * Basic colors

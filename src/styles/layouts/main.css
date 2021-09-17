@@ -6,8 +6,8 @@ main {
 	font-size: clamp(1.6rem, 5vw, 3rem);
 	color: var(--theme-color);
 
-	> section,
-	> article {
+	& > section,
+	& > article {
 		content-visibility: auto;
 		contain-intrinsic-size: 100vh;
 		min-block-size: 100vh;

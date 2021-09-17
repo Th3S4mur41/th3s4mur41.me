@@ -1,0 +1,33 @@
+/**
+ * Global Styleguide CSS file
+ *
+ * This file should only contain imports
+ */
+
+/* Settings */
+@import 'settings/colors.css';
+@import 'settings/fonts.css';
+@import 'settings/settings.css';
+
+/* Base */
+@import '~cssremedy/css/remedy.css';
+@import 'base/global.css';
+@import 'base/animations.css';
+@import 'base/events.css';
+
+/* Layouts */
+@import 'layouts/base.css';
+@import 'layouts/header.css';
+@import 'layouts/main.css';
+@import 'layouts/footer.css';
+
+/* Elements */
+@import 'elements/a.css';
+@import 'elements/h.css';
+@import 'elements/picture.css';
+@import 'elements/svg.css';
+
+/* Components */
+
+/* Utils */
+@import 'utils/utils.css';

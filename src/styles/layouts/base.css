@@ -1,12 +1,15 @@
 html {
-	// scroll-snap-type: y proximity; // TODO: activate only with content
+	/* scroll-snap-type: y proximity; */
+
+	/* TODO: activate only with content */
 }
 
 body {
 	display: grid;
 	grid-auto-rows: auto;
 	grid-template-columns: auto;
-	// iOS Workaround: https://webkit.org/blog/7929/designing-websites-for-iphone-x/
+
+	/* iOS Workaround: https://webkit.org/blog/7929/designing-websites-for-iphone-x/ */
 	padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
@@ -17,8 +20,8 @@ body {
 	inset-block-end: 0;
 	max-block-size: 100%;
 	max-inline-size: 100%;
-	inline-size: 100%; // necessary for the inner img to adapt
-	margin: auto; // center
+	inline-size: 100%; /* necessary for the inner img to adapt */
+	margin: auto; /* center */
 	z-index: -1;
 }
 
@@ -40,9 +43,9 @@ body {
 	justify-content: center;
 	max-block-size: 100%;
 	max-inline-size: 100%;
-	inline-size: 100%; // necessary for the inner img to adapt
+	inline-size: 100%; /* necessary for the inner img to adapt */
 	overflow: hidden;
-	z-index: -1; // behind the content
+	z-index: -1; /* behind the content */
 }
 
 .hero-image {
@@ -60,43 +63,42 @@ body {
 	@supports (animation-timeline: works) {
 		@media (prefers-reduced-motion: no-preference) {
 			animation: 1s linear forwards fade-out;
-			animation-timeline: hero-image-timeline;
+			animation-timeline: hero-image-timeline; /* stylelint-disable-line property-no-unknown */
 		}
 	}
 }
 
+/* stylelint-disable-next-line media-feature-name-no-unknown */
 @media (screen-spanning: single-fold-vertical) {
 	body {
 		grid-template-columns: minmax(auto, env(fold-left)) auto;
 	}
-
 	.background-container {
 		max-inline-size: calc(env(fold-left));
 		margin: revert;
 	}
-
 	#header {
 		grid-column: 1 / span 2;
 		grid-template-columns: 1fr env(fold-width) 1fr;
 
-		> .logo {
+		& > .logo {
 			grid-column: 1;
 			flex: 0 0 env(fold-left);
+
 			/* limit the logo to half the screen size */
 			margin-inline: calc(env(fold-left) / 4);
 			max-inline-size: calc(env(fold-left) / 2);
 		}
-		> h1 {
+		& > h1 {
 			grid-column: 3;
 			flex: 1; /* Fill the right side */
 			margin-inline-start: env(fold-width);
 			text-align: center;
 		}
-		> #hero-image {
+		& > #hero-image {
 			grid-column: 1;
 		}
 	}
-
 	#footer {
 		grid-column: 1 / span 2;
 	}

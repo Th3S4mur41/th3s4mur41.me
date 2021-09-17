@@ -10,8 +10,8 @@
 	font-size: clamp(1.4rem, 1.5vw, 2rem);
 	scroll-snap-align: end;
 
-	> .copyright,
-	> .social {
+	& > .copyright,
+	& > .social {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;

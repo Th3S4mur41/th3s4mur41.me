@@ -17,7 +17,6 @@ module.exports = {
 	},
 	resolve: {
 		alias: {
-			'@': path.resolve(__dirname, 'src/'),
 			'~': path.resolve(__dirname, 'node_modules/')
 		},
 		extensions: ['.js', '.scss']
@@ -41,7 +40,7 @@ module.exports = {
 				exclude: /node_modules/
 			},
 			{
-				test: /\.s[ac]ss$/i,
+				test: /\.css$/i,
 				use: [
 					{
 						loader: MiniCssExtractPlugin.loader,
@@ -50,16 +49,12 @@ module.exports = {
 					{
 						loader: 'css-loader',
 						options: {
+							import: true,
+							importLoaders: 1,
 							sourceMap: true
 						}
 					},
-					'postcss-loader',
-					{
-						loader: 'sass-loader',
-						options: {
-							sourceMap: true
-						}
-					}
+					'postcss-loader'
 				]
 			},
 			{

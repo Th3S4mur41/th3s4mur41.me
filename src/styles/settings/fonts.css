@@ -1,19 +1,20 @@
-@import '~@fontsource/nanum-brush-script/latin.css';
+@import '~/@fontsource/nanum-brush-script/latin.css';
 
+/* stylelint-disable-next-line media-feature-name-no-unknown */
 @media (prefers-redduced-data: no-preference) {
-	@import '~@fontsource/cascadia-code/index.css';
+	@import '~/@fontsource/cascadia-code/index.css';
 }
 
 @font-face {
 	font-family: 'Nanum Brush Script-fallback';
-	size-adjust: 75.32000000000005%;
+	size-adjust: 75.32000000000005%; /* stylelint-disable-line property-no-unknown */
 	ascent-override: 126%;
 	src: local('Arial');
 }
 
 @font-face {
 	font-family: 'Cascadia Code-fallback';
-	advance-override: 0.0375; // stylelint-disable-line property-no-unknown
+	advance-override: 0.0375; /* stylelint-disable-line property-no-unknown */
 	src: local('monospace');
 }
 
