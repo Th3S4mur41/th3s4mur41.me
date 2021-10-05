@@ -13,7 +13,8 @@ module.exports = {
 	output: {
 		filename: 'app.[hash].js',
 		path: path.resolve(__dirname, 'dist'),
-		assetModuleFilename: 'assets/[hash][ext]'
+		assetModuleFilename: 'assets/[hash][ext]',
+		crossOriginLoading: 'anonymous'
 	},
 	resolve: {
 		alias: {
