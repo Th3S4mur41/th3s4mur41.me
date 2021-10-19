@@ -16,7 +16,7 @@
 		"postcss-preset-env": "^6.7.0"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.15.5",
+		"@babel/core": "^7.15.8",
 		"@babel/preset-env": "^7.15.8",
 		"auto-changelog": "^2.3.0",
 		"autoprefixer": "^10.3.7",
