@@ -19,7 +19,7 @@
 		"@babel/core": "^7.15.5",
 		"@babel/preset-env": "^7.15.8",
 		"auto-changelog": "^2.3.0",
-		"autoprefixer": "^10.3.6",
+		"autoprefixer": "^10.3.7",
 		"babel-loader": "^8.2.2",
 		"browserslist": "^4.17.3",
 		"clean-webpack-plugin": "^4.0.0",
