@@ -9,6 +9,7 @@
 ![CI](https://github.com/Th3S4mur41/th3s4mur41.me/actions/workflows/ci.yml/badge.svg?branch=master)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Th3S4mur41_th3s4mur41.me&metric=alert_status)](https://sonarcloud.io/dashboard?id=Th3S4mur41_th3s4mur41.me)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/f239bebf-3347-4787-af89-008fb288c7ce/deploy-status)](https://app.netlify.com/sites/naughty-saha-141eba/deploys)
+[![This project is using Percy.io for visual regression testing.](https://percy.io/static/images/percy-badge.svg)](https://percy.io/e069e124/th3s4mur41.me)
 
 This repository hosts the code which powers the https://th3s4mur41.me website.
 
