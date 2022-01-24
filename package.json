@@ -11,7 +11,7 @@
 	"homepage": "https://th3s4mur41.me",
 	"dependencies": {
 		"@fontsource/cascadia-code": "^4.2.1",
-		"@fontsource/nanum-brush-script": "^4.5.0",
+		"@fontsource/nanum-brush-script": "^4.5.1",
 		"@squoosh/cli": "^0.7.2",
 		"postcss-preset-env": "^7.2.3"
 	},
