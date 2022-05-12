@@ -6,7 +6,7 @@ name: Release
 on:
   # Trigger workflow for pull requests.
   push:
-    branches: [main]
+    branches: [main, next, beta, alpha]
 
 jobs:
   lint-code:
