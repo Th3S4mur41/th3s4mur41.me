@@ -1,20 +1,15 @@
-:root {
-	font-size: 10px;
-}
-
 body {
-	font-size: var(--default-font-size);
-	font-family: monospace;
+	/* Handle the notch on the iPhone */
+	padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 	background-color: var(--primary-background-color);
 	color: var(--primary-color);
-	accent-color: var(--theme-color);
+	font-family: var(--font-family-monospace);
+	font-size: var(--default-font-size);
 
 	/* Additional smoothing fixes for MacOS */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-
-	/* Handle the notch on the iPhone */
-	padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+	accent-color: var(--theme-color);
 }
 
 /**

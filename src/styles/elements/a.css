@@ -1,8 +1,8 @@
 a {
-	color: var(--link-color);
 	transition: color 0.3s ease;
-	text-decoration: none;
 	outline: none;
+	color: var(--link-color);
+	text-decoration: none;
 
 	&[href]:not(.image) {
 		/* Only for navigation links which are not images */
@@ -12,8 +12,8 @@ a {
 		}
 	}
 	&.image > svg {
-		inline-size: 4rem;
 		block-size: auto;
+		inline-size: 4rem;
 	}
 
 	/**
@@ -29,8 +29,9 @@ a {
 	}
 	&:active,
 	&:focus:not(:focus-visible) {
+		outline: 0;
+
 		/* Reset focus if focus-visible is supported */
 		color: var(--active-color);
-		outline: 0;
 	}
 }

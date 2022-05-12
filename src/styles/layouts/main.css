@@ -1,10 +1,10 @@
 main {
-	grid-row: 2;
 	grid-column: 1;
-	text-align: center;
+	grid-row: 2;
 	align-self: center;
-	font-size: clamp(1.6rem, 5vw, 3rem);
 	color: var(--theme-color);
+	font-size: clamp(1.6rem, 5vw, 3rem);
+	text-align: center;
 
 	& > section,
 	& > article {

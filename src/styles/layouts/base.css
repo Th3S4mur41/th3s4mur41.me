@@ -15,21 +15,21 @@ body {
 
 .background-container {
 	display: flex;
-	justify-content: center;
 	position: fixed;
-	inset-block-end: 0;
-	max-block-size: 100%;
-	max-inline-size: 100%;
-	inline-size: 100%; /* necessary for the inner img to adapt */
-	margin: auto; /* center */
 	z-index: -1;
+	justify-content: center;
+	max-block-size: 100%;
+	inline-size: 100%; /* necessary for the inner img to adapt */
+	max-inline-size: 100%;
+	margin: auto; /* center */
+	inset-block-end: 0;
 }
 
 .background-image {
-	max-block-size: 100%;
-	max-inline-size: 100%;
 	block-size: auto;
+	max-block-size: 100%;
 	inline-size: auto;
+	max-inline-size: 100%;
 	object-fit: contain;
 	filter: blur(1px) opacity(0.4) contrast(0.7) brightness(0.8);
 
@@ -40,19 +40,19 @@ body {
 
 #hero-image {
 	display: flex;
+	z-index: -1; /* behind the content */
 	justify-content: center;
 	max-block-size: 100%;
-	max-inline-size: 100%;
 	inline-size: 100%; /* necessary for the inner img to adapt */
+	max-inline-size: 100%;
 	overflow: hidden;
-	z-index: -1; /* behind the content */
 }
 
 .hero-image {
-	max-block-size: 100%;
-	max-inline-size: 100%;
 	block-size: auto;
+	max-block-size: 100%;
 	inline-size: auto;
+	max-inline-size: 100%;
 	object-fit: contain;
 	filter: invert(1);
 
@@ -84,10 +84,10 @@ body {
 		& > .logo {
 			grid-column: 1;
 			flex: 0 0 env(fold-left);
+			max-inline-size: calc(env(fold-left) / 2);
 
 			/* limit the logo to half the screen size */
 			margin-inline: calc(env(fold-left) / 4);
-			max-inline-size: calc(env(fold-left) / 2);
 		}
 		& > h1 {
 			grid-column: 3;

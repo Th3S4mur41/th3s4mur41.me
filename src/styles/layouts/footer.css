@@ -1,13 +1,13 @@
 #footer {
-	grid-row: 3;
-	grid-column: 1;
 	display: flex;
+	grid-column: 1;
+	grid-row: 3;
 	flex-wrap: wrap-reverse;
 	justify-content: space-around;
-	gap: 1.2rem;
 	padding: 1.2rem;
-	text-align: center;
 	font-size: clamp(1.4rem, 1.5vw, 2rem);
+	text-align: center;
+	gap: 1.2rem;
 	scroll-snap-align: end;
 
 	& > .copyright,
