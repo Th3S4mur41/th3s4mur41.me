@@ -8,7 +8,7 @@ module.exports = defineConfig({
 	build: {
 		outDir: '../dist'
 	},
-	css: { postcss: './postcss.config.js' },
+	css: {},
 	resolve: {
 		alias: {
 			'~': 'node_modules/'
