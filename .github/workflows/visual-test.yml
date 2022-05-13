@@ -14,7 +14,7 @@ on:
 jobs:
   visual-test:
     name: '🖼️ Visual Test'
-    runs-on: [self-hosted, linux]
+    runs-on: ubuntu-latest
     container: mcr.microsoft.com/playwright
 
     steps:
@@ -24,7 +24,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: '⚙️ Use Node.js'
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           check-latest: true
           cache: 'npm'
