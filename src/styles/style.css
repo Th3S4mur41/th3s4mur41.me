@@ -18,6 +18,7 @@
 /* Layouts */
 @import 'layouts/base.css';
 @import 'layouts/header.css';
+@import 'layouts/nav.css';
 @import 'layouts/main.css';
 @import 'layouts/footer.css';
 

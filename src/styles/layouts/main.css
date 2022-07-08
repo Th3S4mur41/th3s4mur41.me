@@ -1,6 +1,6 @@
 main {
 	grid-column: 1;
-	grid-row: 2;
+	grid-row: 3;
 	align-self: center;
 	color: var(--theme-color);
 	font-size: clamp(1.6rem, 5vw, 3rem);

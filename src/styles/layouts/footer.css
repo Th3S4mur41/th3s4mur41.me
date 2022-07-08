@@ -1,7 +1,7 @@
 #footer {
 	display: flex;
 	grid-column: 1;
-	grid-row: 3;
+	grid-row: 4;
 	flex-wrap: wrap-reverse;
 	justify-content: space-around;
 	padding: 1.2rem;
