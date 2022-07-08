@@ -1,10 +1,14 @@
 # List and versions of browsers we support
 
+# Run npx browserslist to get the current list of matching browsers
+
+> .5% in alt-EU and not last 2 versions and not dead
+
 # Desktop
 
-last 3 Chrome versions
-last 3 Edge versions
-last 3 Firefox versions
+last 2 Chrome versions
+last 2 Edge versions
+last 2 Firefox versions
 Firefox ESR
 last 2 Opera versions
 last 2 Safari versions
