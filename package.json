@@ -13,7 +13,7 @@
 		"@fontsource/cascadia-code": "^4.2.1",
 		"@fontsource/nanum-brush-script": "^4.5.10",
 		"@squoosh/cli": "^0.7.2",
-		"postcss-preset-env": "^7.8.1"
+		"postcss-preset-env": "^7.8.2"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.19.0",
