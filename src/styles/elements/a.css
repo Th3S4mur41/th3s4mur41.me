@@ -22,7 +22,12 @@ a {
 	&:focus, /* Set fallback for not supported focus-visible */
 	&:focus-visible {
 		color: var(--theme-color);
-		filter: drop-shadow(0 0 5em var(--theme-color));
+
+		/* filter: drop-shadow(0 0 0.5em var(--theme-color)); */
+
+		&.image > svg {
+			filter: drop-shadow(0 0 0.5rem var(--theme-color));
+		}
 	}
 	&:hover {
 		color: var(--hover-color);
