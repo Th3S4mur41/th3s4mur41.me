@@ -55,10 +55,10 @@
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
-	"updateContentCommand": ["nvm install", "nvm use"],
 
 	// "oryx build" will automatically install your dependencies and attempt to build your project
 	"postCreateCommand": [
+		".devcontainer/setup-npm.sh",
 		"oryx build -p virtualenv_name=.venv --log-file /tmp/oryx-build.log --manifest-dir /tmp || echo 'Could not auto-build. Skipping.'"
 	]
 }
