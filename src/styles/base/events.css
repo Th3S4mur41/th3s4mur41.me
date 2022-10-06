@@ -1,8 +1,3 @@
 /**
  * This file must be CSS otherwise, SASS parser would strip start and end value
  */
-
-/* stylelint-disable-next-line at-rule-no-unknown */
-@scroll-timeline hero-image-timeline {
-	orientation: block;
-}

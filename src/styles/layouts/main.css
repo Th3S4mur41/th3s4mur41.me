@@ -1,7 +1,7 @@
 main {
-	grid-column: 1;
-	grid-row: 3;
-	align-self: center;
+	grid-area: main;
+	flex-grow: 1;
+	align-content: center;
 	color: var(--theme-color);
 	font-size: clamp(1.6rem, 5vw, 3rem);
 	text-align: center;
@@ -9,8 +9,13 @@ main {
 	& > section,
 	& > article {
 		content-visibility: auto;
-		contain-intrinsic-size: 100vh;
-		min-block-size: 100vh;
-		scroll-snap-align: start;
 	}
+}
+
+.social {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 1.2rem;
+	text-align: center;
 }

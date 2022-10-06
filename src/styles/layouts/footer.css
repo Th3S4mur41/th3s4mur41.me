@@ -1,21 +1,17 @@
 #footer {
-	display: flex;
-	grid-column: 1;
-	grid-row: 4;
-	flex-wrap: wrap-reverse;
-	justify-content: space-around;
-	padding: 1.2rem;
-	font-size: clamp(1.4rem, 1.5vw, 2rem);
+	display: grid;
+	grid-area: footer;
+	grid-template-areas: '. copyright .';
+	grid-template-columns: var(--layout-grid-columns);
+	padding-block: var(--spacing-m);
+	font-size: var(--font-size-s);
 	text-align: center;
-	gap: 1.2rem;
-	scroll-snap-align: end;
 
-	& > .copyright,
-	& > .social {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 1.2rem;
-		text-align: center;
+	@supports (grid-template-columns: subgrid) {
+		grid-template-columns: subgrid;
+	}
+
+	& > .copyright {
+		grid-area: copyright;
 	}
 }

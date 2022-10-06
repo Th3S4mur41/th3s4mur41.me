@@ -1,34 +1,19 @@
 #header {
-	display: grid;
-	grid-column: 1;
-	grid-row: 1;
-	grid-template-columns: auto auto auto auto;
-	grid-template-rows: auto 1fr;
+	display: flex;
+	grid-area: header;
 	flex-wrap: wrap;
 	align-items: center;
 	justify-content: center;
-	min-block-size: 100vh;
-	max-block-size: 100vh;
+	column-gap: 0.5em;
 	color: var(--theme-color);
-	gap: 0.5em;
 	filter: drop-shadow(0.1rem 0.1rem 0.2rem var(--shadow-color));
-	scroll-snap-align: start;
 
 	& > .logo {
-		grid-column: 2;
-		grid-row: 1;
 		block-size: auto;
 		inline-size: clamp(8rem, 25vw, 20rem);
 	}
 	& > h1 {
-		grid-column: 3;
-		grid-row: 1;
 		margin: 0.2em;
 		white-space: nowrap;
-	}
-	& > #hero-image {
-		grid-column: 1 / span 4;
-		grid-row: 1 / span 2;
-		align-self: end;
 	}
 }

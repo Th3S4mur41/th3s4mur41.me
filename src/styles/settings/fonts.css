@@ -24,12 +24,9 @@
 	}
 
 	/* font size */
-	--default-font-size: 1rem;
-	--font-size-large: 1.25rem;
-	--font-size-xlarge: 1.5rem;
-	--font-size-huge: 2rem;
-	--font-size-small: 0.85rem;
-	--font-size-xsmall: 0.75rem;
+	--font-size-s: clamp(0.75rem, 1.5vw, 1rem);
+	--font-size-m: clamp(1rem, 2vw, 1.5rem);
+	--font-size-header-xl: clamp(3.5rem, 12vw, 10rem);
 
 	/* font weight */
 	--font-weight-normal: 400;
