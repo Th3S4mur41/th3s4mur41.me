@@ -15,3 +15,10 @@
 		grid-area: copyright;
 	}
 }
+
+/* stylelint-disable-next-line media-feature-name-no-unknown */
+@media (horizontal-viewport-segments: 2) {
+	#footer {
+		grid-template-areas: '. copyright . . . . .';
+	}
+}

@@ -1,7 +1,10 @@
 main {
+	display: flex;
 	grid-area: main;
 	flex-grow: 1;
 	align-content: center;
+	align-items: center;
+	justify-content: center;
 	color: var(--theme-color);
 	font-size: clamp(1.6rem, 5vw, 3rem);
 	text-align: center;
@@ -16,6 +19,8 @@ main {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
-	gap: 1.2rem;
+	justify-content: center;
+	margin-inline: var(--spacing-l);
 	text-align: center;
+	gap: 1.2rem;
 }

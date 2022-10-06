@@ -8,10 +8,15 @@ html {
 body {
 	--layout-grid-columns: minmax(1rem, 1fr) auto minmax(1rem, 1fr);
 	display: grid;
-	grid-template: '. . .' 1fr '. header .' auto '. main .' auto '. . .' 1fr 'footer footer footer' auto / var(
-			--layout-grid-columns
-		);
+	grid-template:
+		'. . .' 1fr
+		'. header .' auto
+		'. main .' auto
+		'. . .' 1fr
+		'footer footer footer' auto
+		/ var(--layout-grid-columns);
 	min-block-size: 100%;
+	row-gap: var(--spacing-l);
 
 	/* iOS Workaround: https://webkit.org/blog/7929/designing-websites-for-iphone-x/ */
 	padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
@@ -43,37 +48,39 @@ body {
 }
 
 /* stylelint-disable-next-line media-feature-name-no-unknown */
-@media (screen-spanning: single-fold-vertical) {
-	body {
-		grid-template-columns: minmax(auto, env(fold-left)) auto;
-	}
+@media (horizontal-viewport-segments: 2) {
 	.background-container {
-		max-inline-size: calc(env(fold-left));
-		margin: revert;
+		max-inline-size: 50%;
 	}
-	#header {
-		grid-column: 1 / span 2;
-		grid-template-columns: 1fr env(fold-width) 1fr;
-
-		& > .logo {
-			grid-column: 1;
-			flex: 0 0 env(fold-left);
-			max-inline-size: calc(env(fold-left) / 2);
-
-			/* limit the logo to half the screen size */
-			margin-inline: calc(env(fold-left) / 4);
-		}
-		& > h1 {
-			grid-column: 3;
-			flex: 1; /* Fill the right side */
-			margin-inline-start: env(fold-width);
-			text-align: center;
-		}
-		& > #hero-image {
-			grid-column: 1;
-		}
+	body {
+		/* grid-template-columns: minmax(auto, env(fold-left)) auto; */
+		--layout-grid-columns: minmax(1rem, 1fr) minmax(auto, calc(env(viewport-segment-width 0 0) - 2rem))
+			minmax(1rem, 1fr) calc(env(viewport-segment-left 1 0) - env(viewport-segment-right 0 0)) minmax(1rem, 1fr)
+			minmax(auto, calc(env(viewport-segment-width 1 0) - 2rem)) minmax(1rem, 1fr);
+		grid-template:
+			'. . . . . . .' 1fr
+			'. header . . . main .' auto
+			'. . . . . . .' 1fr
+			'footer footer footer footer footer footer footer' auto
+			/ var(--layout-grid-columns);
 	}
-	#footer {
-		grid-column: 1 / span 2;
+}
+
+/* stylelint-disable-next-line media-feature-name-no-unknown */
+@media (vertical-viewport-segments: 2) {
+	.background-container {
+		max-block-size: 50%;
+	}
+	body {
+		grid-template:
+			'. . .' 1fr
+			'. header .' auto
+			'. . .' 1fr
+			'. . .' calc(env(viewport-segment-top 0 1) - env(viewport-segment-bottom 0 0))
+			'. . .' 1fr
+			'. main .' auto
+			'. . .' 1fr
+			'footer footer footer' auto
+			/ var(--layout-grid-columns);
 	}
 }
