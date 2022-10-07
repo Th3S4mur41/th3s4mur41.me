@@ -33,22 +33,22 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - name: '🧹 Clear previous database' # https://github.com/github/codeql-action/issues/611#issuecomment-872252659
-        run: |
-          rm -rf "${{ runner.temp }}/codeql_databases/${{ matrix.language }}"
+      # - name: '🧹 Clear previous database' # https://github.com/github/codeql-action/issues/611#issuecomment-872252659
+      #   run: |
+      #     rm -rf "${{ runner.temp }}/codeql_databases/${{ matrix.language }}"
 
       # Initializes the CodeQL tools for scanning.
       - name: ' 🪡 Initialize CodeQL'
         uses: github/codeql-action/init@v1
         with:
           languages: ${{ matrix.language }}
-          db-location: '${{ runner.temp }}/codeql_databases'
-          ram: 2048 # Limite memory usage to 2GB
-          # If you wish to specify custom queries, you can do so here or in a config file.
+          # db-location: '${{ runner.temp }}/codeql_databases'
+          # ram: 2048 # Limite memory usage to 2GB
           # By default, queries listed here will override any specified in a config file.
           # Prefix the list here with "+" to use these queries and those in the config file.
-          # queries: ./path/to/local/query, your-org/your-repo/queries@main
-          queries: +security-extended
+
+          # Details on CodeQL's query packs refer to : https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
+          queries: +security-and-quality
 
       # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
       # If this step fails, then you should remove it and run the build manually (see below)
