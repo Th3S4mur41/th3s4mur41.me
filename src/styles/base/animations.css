@@ -44,14 +44,14 @@
 
 @keyframes fade-in {
 	0% {
+		transform: scaleY(0);
 		transform-origin: top center;
 		opacity: 0;
-		transform: scaleY(0);
 	}
 	100% {
+		transform: scaleY(1);
 		transform-origin: top center;
 		opacity: 1;
-		transform: scaleY(1);
 	}
 }
 
@@ -72,7 +72,7 @@
 
 @keyframes fade-out {
 	to {
-		opacity: 0;
 		transform: translateY(25vh) scale(3);
+		opacity: 0;
 	}
 }

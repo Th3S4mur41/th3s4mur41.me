@@ -3,11 +3,11 @@
  */
 .screen-reader-text {
 	position: absolute;
-	width: 1px;
-	height: 1px;
+	block-size: 1px;
+	inline-size: 1px;
 	overflow: hidden;
-	white-space: nowrap;
 	clip: rect(1px, 1px, 1px, 1px);
+	white-space: nowrap;
 }
 
 /**
@@ -21,7 +21,7 @@
  * End text with ... at container end
  */
 .ellipsis {
-	text-overflow: ellipsis;
 	overflow: hidden;
+	text-overflow: ellipsis;
 	white-space: nowrap;
 }

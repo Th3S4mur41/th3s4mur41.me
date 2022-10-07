@@ -1,16 +1,26 @@
 main {
-	grid-row: 2;
-	grid-column: 1;
-	text-align: center;
-	align-self: center;
-	font-size: clamp(1.6rem, 5vw, 3rem);
+	display: flex;
+	grid-area: main;
+	flex-grow: 1;
+	align-content: center;
+	align-items: center;
+	justify-content: center;
 	color: var(--theme-color);
+	font-size: clamp(1.6rem, 5vw, 3rem);
+	text-align: center;
 
 	& > section,
 	& > article {
 		content-visibility: auto;
-		contain-intrinsic-size: 100vh;
-		min-block-size: 100vh;
-		scroll-snap-align: start;
 	}
+}
+
+.social {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	margin-inline: var(--spacing-l);
+	text-align: center;
+	gap: 1.2rem;
 }

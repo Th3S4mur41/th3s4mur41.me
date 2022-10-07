@@ -1,3 +1,10 @@
 module.exports = {
-	plugins: [require('postcss-nested'), require('autoprefixer'), require('postcss-preset-env')]
+	plugins: [
+		require('postcss-nesting'),
+		require('autoprefixer'),
+		require('postcss-preset-env'),
+		require('cssnano')({
+			preset: 'default'
+		})
+	]
 };

@@ -1,5 +1,3 @@
 {
-    "extends": [
-        "web-recommended"
-    ]
+	"extends": ["development"]
 }

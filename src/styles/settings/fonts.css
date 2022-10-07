@@ -1,13 +1,9 @@
 @import '~/@fontsource/nanum-brush-script/latin.css';
-
-/* stylelint-disable-next-line media-feature-name-no-unknown */
-@media (prefers-redduced-data: no-preference) {
-	@import '~/@fontsource/cascadia-code/index.css';
-}
+@import '~/@fontsource/cascadia-code/index.css';
 
 @font-face {
 	font-family: 'Nanum Brush Script-fallback';
-	size-adjust: 75.32000000000005%; /* stylelint-disable-line property-no-unknown */
+	size-adjust: 75.32%; /* stylelint-disable-line property-no-unknown */
 	ascent-override: 126%;
 	src: local('Arial');
 }
@@ -19,13 +15,26 @@
 }
 
 :root {
-	--default-font-size: 1.6rem;
-	--font-size-large: 1.8rem;
-	--font-size-xlarge: 2rem;
-	--font-size-huge: 3rem;
-	--font-size-small: 1.4rem;
-	--font-size-xsmall: 1.2rem;
+	--font-family: 'Nanum Brush Script', 'Nanum Brush Script-fallback', sans-serif;
+	--font-family-monospace: monospace;
+
+	/* stylelint-disable-next-line media-feature-name-no-unknown */
+	@media (prefers-redduced-data: no-preference) {
+		--font-family-monospace: 'Cascadia Code', 'Cascadia Code-fallback', monospace;
+	}
+
+	/* font size */
+	--font-size-s: clamp(0.75rem, 1.5vw, 1rem);
+	--font-size-m: clamp(1rem, 2vw, 1.5rem);
+	--font-size-header-xl: clamp(3.5rem, 12vw, 10rem);
+
+	/* font weight */
 	--font-weight-normal: 400;
 	--font-weight-semi-bold: 600;
 	--font-weight-bold: 700;
+
+	/* stylelint-disable-next-line media-feature-name-no-unknown */
+	@media (horizontal-viewport-segments: 2) {
+		--font-size-header-xl: clamp(3.5rem, 10vw, 10rem);
+	}
 }
