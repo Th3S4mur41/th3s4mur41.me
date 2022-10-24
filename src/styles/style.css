@@ -5,30 +5,30 @@
  */
 
 /* Settings */
-@import 'settings/colors.css';
-@import 'settings/fonts.css';
-@import 'settings/settings.css';
+@import url('settings/colors.css');
+@import url('settings/fonts.css');
+@import url('settings/settings.css');
 
 /* Base */
-@import '~/cssremedy/css/remedy.css';
-@import 'base/global.css';
-@import 'base/animations.css';
-@import 'base/events.css';
+@import url('~/cssremedy/css/remedy.css');
+@import url('base/global.css');
+@import url('base/animations.css');
+@import url('base/events.css');
 
 /* Layouts */
-@import 'layouts/base.css';
-@import 'layouts/header.css';
-@import 'layouts/nav.css';
-@import 'layouts/main.css';
-@import 'layouts/footer.css';
+@import url('layouts/base.css');
+@import url('layouts/header.css');
+@import url('layouts/nav.css');
+@import url('layouts/main.css');
+@import url('layouts/footer.css');
 
 /* Elements */
-@import 'elements/a.css';
-@import 'elements/h.css';
-@import 'elements/picture.css';
-@import 'elements/svg.css';
+@import url('elements/a.css');
+@import url('elements/h.css');
+@import url('elements/picture.css');
+@import url('elements/svg.css');
 
 /* Components */
 
 /* Utils */
-@import 'utils/utils.css';
+@import url('utils/utils.css');

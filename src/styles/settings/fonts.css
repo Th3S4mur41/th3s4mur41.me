@@ -1,5 +1,5 @@
-@import '~/@fontsource/nanum-brush-script/latin.css';
-@import '~/@fontsource/cascadia-code/index.css';
+@import url('~/@fontsource/nanum-brush-script/latin.css');
+@import url('~/@fontsource/cascadia-code/index.css');
 
 @font-face {
 	font-family: 'Nanum Brush Script-fallback';
