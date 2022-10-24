@@ -19,7 +19,8 @@ body {
 	row-gap: var(--spacing-l);
 
 	/* iOS Workaround: https://webkit.org/blog/7929/designing-websites-for-iphone-x/ */
-	padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+	padding-block: env(safe-area-inset-top) env(safe-area-inset-bottom);
+	padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
 }
 
 .background-container {
