@@ -9,7 +9,7 @@ on:
     types: [opened, synchronize, reopened]
 
 concurrency:
-  group: ${{ github.ref || github.run_id }}
+  group: PRT_${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
 jobs:

@@ -9,7 +9,7 @@ on:
     branches: [main, next, beta, alpha]
 
 concurrency:
-  group: ${{ github.ref || github.run_id }}
+  group: PR_${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
 jobs:
