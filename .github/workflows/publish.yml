@@ -56,6 +56,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ID }}
-          projectName: mh-photography
+          projectName: th3s4mur41-me
           directory: ./dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
