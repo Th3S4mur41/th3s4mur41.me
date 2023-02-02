@@ -8,6 +8,9 @@ module.exports = defineConfig({
 	build: {
 		outDir: '../dist'
 	},
+	server: {
+		host: true
+	},
 	plugins: [
 		handlebars({
 			context: {
