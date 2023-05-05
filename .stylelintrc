@@ -1,6 +1,6 @@
 {
 	"plugins": ["stylelint-use-logical-spec", "stylelint-order"],
-	"extends": ["stylelint-config-standard", "stylelint-config-property-sort-order-smacss", "stylelint-config-prettier"],
+	"extends": ["stylelint-config-standard", "stylelint-config-property-sort-order-smacss"],
 	"rules": {
 		"alpha-value-notation": "number",
 		"block-no-empty": true,
