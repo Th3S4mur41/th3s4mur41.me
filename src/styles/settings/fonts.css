@@ -34,7 +34,7 @@
 	--font-weight-bold: 700;
 
 	/* stylelint-disable-next-line media-feature-name-no-unknown */
-	@media (horizontal-viewport-segments: 2) {
+	@media (horizontal-viewport-segments <= 2) {
 		--font-size-header-xl: clamp(3.5rem, 10vw, 10rem);
 	}
 }
