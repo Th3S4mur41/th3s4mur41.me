@@ -49,7 +49,7 @@ body {
 }
 
 /* stylelint-disable-next-line media-feature-name-no-unknown */
-@media (horizontal-viewport-segments: 2) {
+@media (horizontal-viewport-segments <= 2) {
 	.background-container {
 		max-inline-size: 50%;
 	}
@@ -68,7 +68,7 @@ body {
 }
 
 /* stylelint-disable-next-line media-feature-name-no-unknown */
-@media (vertical-viewport-segments: 2) {
+@media (vertical-viewport-segments <= 2) {
 	.background-container {
 		max-block-size: 50%;
 	}
