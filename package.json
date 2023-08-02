@@ -21,7 +21,7 @@
 	"homepage": "https://th3s4mur41.me",
 	"dependencies": {
 		"@fontsource/cascadia-code": "^4.2.1",
-		"@fontsource/nanum-brush-script": "^5.0.5"
+		"@fontsource/nanum-brush-script": "^5.0.6"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.22.9",
