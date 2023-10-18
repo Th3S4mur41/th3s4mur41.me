@@ -2,9 +2,8 @@ main {
 	display: flex;
 	grid-area: main;
 	flex-grow: 1;
-	align-content: center;
+	place-content: center center;
 	align-items: center;
-	justify-content: center;
 	color: var(--theme-color);
 	font-size: clamp(1.6rem, 5vw, 3rem);
 	text-align: center;
