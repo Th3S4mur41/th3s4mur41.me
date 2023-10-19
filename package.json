@@ -61,7 +61,7 @@
 		"vite-plugin-handlebars": "^1.6.0"
 	},
 	"optionalDependencies": {
-		"lint-staged": "^15.0.1"
+		"lint-staged": "^15.0.2"
 	},
 	"scripts": {
 		"start": "vite",
