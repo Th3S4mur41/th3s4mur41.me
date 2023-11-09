@@ -24,7 +24,7 @@
 		"@fontsource/nanum-brush-script": "^5.0.7"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.23.2",
+		"@babel/core": "^7.23.3",
 		"@babel/preset-env": "^7.23.3",
 		"@commitlint/cli": "^18.2.0",
 		"@commitlint/config-conventional": "^18.1.0",
