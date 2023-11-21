@@ -48,7 +48,7 @@ jobs:
       - name: '⛓️ Install dependencies'
         env:
           HUSKY: 0
-        run: npm cil --no-audit --prefer-offline --progress=false
+        run: npm ci --no-audit --prefer-offline --progress=false
 
       - name: '📎 Download build output'
         uses: actions/download-artifact@v3
