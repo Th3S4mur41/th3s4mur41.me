@@ -51,7 +51,7 @@
 		"postcss-preset-env": "^9.3.0",
 		"prettier": "^3.2.4",
 		"semantic-release": "^23.0.0",
-		"stylelint": "^16.2.0",
+		"stylelint": "^16.2.1",
 		"stylelint-config-property-sort-order-smacss": "^10.0.0",
 		"stylelint-config-standard": "^36.0.0",
 		"stylelint-order": "^6.0.4",
