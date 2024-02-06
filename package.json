@@ -58,7 +58,7 @@
 		"stylelint-use-logical-spec": "^5.0.1",
 		"typescript": "^5.3.3",
 		"vite": "^5.0.12",
-		"vite-plugin-handlebars": "^1.6.0"
+		"vite-plugin-handlebars": "^2.0.0"
 	},
 	"optionalDependencies": {
 		"lint-staged": "^15.2.2"
