@@ -1,29 +1,3 @@
 {
-	"compilerOptions": {
-		"target": "es2017",
-		"module": "es2020",
-		"lib": ["es2020", "DOM", "DOM.Iterable"],
-		"declaration": true,
-		"declarationMap": true,
-		"sourceMap": true,
-		"inlineSources": true,
-		"importHelpers": true,
-		"removeComments": true,
-		"outDir": "./dist",
-		"rootDir": "./src",
-		"strict": true,
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
-		"noImplicitReturns": true,
-		"noFallthroughCasesInSwitch": true,
-		"noImplicitAny": true,
-		"noImplicitThis": true,
-		"moduleResolution": "node",
-		"allowSyntheticDefaultImports": true,
-		"experimentalDecorators": true,
-		"forceConsistentCasingInFileNames": true,
-		"noImplicitOverride": true
-	},
-	"include": ["src/**/*.ts", "src/**/*.d.ts"],
-	"exclude": ["node_modules", "**/*.spec.ts"]
+	"extends": "astro/tsconfigs/base"
 }

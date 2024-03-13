@@ -1,17 +1,14 @@
 {
 	"name": "th3s4mur41.me",
+	"type": "module",
 	"version": "1.0.0",
 	"license": "LICENSE",
 	"private": true,
 	"description": "th3s4mur41.me website",
-	"keywords": [
-		"th3s4mur41",
-		"th3s4mur41.me",
-		"website"
-	],
+	"keywords": ["th3s4mur41", "th3s4mur41.me", "website"],
 	"engines": {
-		"node": ">= 16.0.0",
-		"npm": ">= 8.0.0"
+		"node": ">= 20.0.0",
+		"npm": ">= 9.0.0"
 	},
 	"bugs": "https://github.com/Th3S4mur41/th3s4mur41.me/issues",
 	"repository": {
@@ -20,14 +17,18 @@
 	},
 	"homepage": "https://th3s4mur41.me",
 	"dependencies": {
+		"@astrojs/sitemap": "^3.1.1",
 		"@fontsource/cascadia-code": "^4.2.1",
-		"@fontsource/nanum-brush-script": "^5.0.11"
+		"@fontsource/nanum-brush-script": "^5.0.11",
+		"astro": "^4.5.2"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.24.0",
 		"@babel/preset-env": "^7.24.0",
+		"@biomejs/biome": "1.6.1",
 		"@commitlint/cli": "^19.1.0",
 		"@commitlint/config-conventional": "^19.1.0",
+		"@csstools/postcss-oklab-function": "^3.0.10",
 		"@semantic-release/changelog": "^6.0.3",
 		"@semantic-release/git": "^10.0.1",
 		"@squoosh/cli": "^0.7.3",
@@ -50,7 +51,6 @@
 		"postcss-nesting": "^12.0.4",
 		"postcss-preset-env": "^9.5.0",
 		"prettier": "^3.2.5",
-		"semantic-release": "^23.0.2",
 		"stylelint": "^16.2.1",
 		"stylelint-config-property-sort-order-smacss": "^10.0.0",
 		"stylelint-config-standard": "^36.0.0",
@@ -61,28 +61,26 @@
 		"vite-plugin-handlebars": "^1.6.0"
 	},
 	"optionalDependencies": {
-		"lint-staged": "^15.2.2"
+		"lint-staged": "^15.2.2",
+		"semantic-release": "^23.0.2"
 	},
 	"scripts": {
-		"start": "vite",
-		"start:prod": "vite preview",
-		"build": "vite build",
-		"build:watch": "tsc --watch",
+		"start": "astro dev",
+		"start:prod": "astro preview",
+		"build": "astro build",
 		"build:favicon": "real-favicon check-for-update --fail-on-update faviconData.json",
 		"images:webp": "squoosh-cli --webp auto --output-dir public/icons public/icons/android*.png",
 		"lint": "concurrently 'npm:lint:*(!fix)'",
 		"lint:fix": "concurrently -m 1 'npm:lint:*:fix'",
-		"lint:js": "eslint \"src/**/*.{js,mjs,ts}\"",
-		"lint:js:fix": "eslint \"src/**/*.{js,mjs,ts}\" --fix",
-		"lint:css": "stylelint \"src/**/*.{css, less, sass, scss}\" --aei",
-		"lint:css:fix": "stylelint \"src/**/*.{css,less,sass,scss}\" --aei --fix",
-		"lint:style": "prettier --check --ignore-unknown .",
-		"lint:style:fix": "prettier --write --ignore-unknown .",
+		"lint:js": "biome ci .",
+		"lint:js:fix": "biome check --apply .",
+		"lint:css": "stylelint \"*.{css, less, sass, scss}\" --ignore-path .gitignore --aei ",
+		"lint:css:fix": "stylelint \"*.{css,less,sass,scss}\" --ignore-path .gitignore --aei --fix",
+		"lint:style": "prettier --check --ignore-unknown \"!(*.{js,cjs,mjs,ts,json})\"",
+		"lint:style:fix": "prettier --write --ignore-unknown \"!(*.{js,cjs,mjs,ts,json})\"",
 		"test": "echo No test specified",
 		"test:visual": "npx percy snapshot ./dist",
 		"release": "semantic-release",
-		"prepare": "husky install",
-		"git:pre-commit": "lint-staged",
-		"git:pre-push": "npm run test"
+		"prepare": "husky"
 	}
 }

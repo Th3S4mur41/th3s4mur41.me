@@ -1,8 +1,0 @@
-svg {
-	flex-shrink: 0; /* Do not adapt icon */
-	block-size: 1.35em;
-
-	/* TODO: consider replacing sizes thorough min- alteratives */
-	inline-size: 1.35em;
-	vertical-align: sub; /* Align icons with text by default */
-}
