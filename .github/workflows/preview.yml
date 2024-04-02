@@ -1,14 +1,14 @@
 # This workflow triggers the release process after code check is completed
 #
-name: Release
-run-name: ${{ github.event.workflow_run.head_commit.message }} [${{ github.event.workflow_run.id }}]
+name: Preview
+run-name: ${{ github.event.workflow_run.event }} [${{ github.event.workflow_run.id }}]
 
 # Controls when the action will run.
 on:
   workflow_run:
     workflows: [Checks]
     types: [completed]
-    branches: [main, next, beta, alpha]
+    branches-ignore: [main, next, beta, alpha]
 
 concurrency:
   group: ${{ github.workflow }}_${{ github.head_ref || github.ref || github.run_id }}
@@ -22,17 +22,18 @@ jobs:
     secrets:
       PERCY_TOKEN: ${{ secrets.PERCY_TOKEN  }}
 
-  release:
+  dependabot:
     name: '▶️ actions'
-    needs: [visual-test]
-    uses: ./.github/workflows/release.yml
+    uses: ./.github/workflows/dependabot.yml
     secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN  }}
       GH_TOKEN: ${{ secrets.GH_TOKEN  }}
 
   publish:
     name: '▶️ actions'
-    needs: [release]
+
+    # Publish only if not PR is was not opened by dependabot
+    if: github.actor != 'dependabot[bot]'
+
     uses: ./.github/workflows/publish.yml
     secrets:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN  }}
