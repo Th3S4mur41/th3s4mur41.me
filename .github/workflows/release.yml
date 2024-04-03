@@ -22,17 +22,17 @@ jobs:
     secrets:
       PERCY_TOKEN: ${{ secrets.PERCY_TOKEN  }}
 
-  release:
+  semantic-release:
     name: '▶️ actions'
     needs: [visual-test]
-    uses: ./.github/workflows/release.yml
+    uses: ./.github/workflows/semantic-release.yml
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN  }}
       GH_TOKEN: ${{ secrets.GH_TOKEN  }}
 
   publish:
     name: '▶️ actions'
-    needs: [release]
+    needs: [semantic-release]
     uses: ./.github/workflows/publish.yml
     secrets:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN  }}

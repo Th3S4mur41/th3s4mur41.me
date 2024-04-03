@@ -1,6 +1,6 @@
 # This is the workflow to trigger a release
 #
-name: Release
+name: Semantic Release
 
 on:
   # Allows you to call this workflow from other workflows
