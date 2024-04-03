@@ -13,6 +13,16 @@ updates:
       timezone: 'Europe/Berlin'
     reviewers:
       - 'Th3S4mur41'
+    groups:
+      babel:
+        patterns:
+          - '@babel/*'
+      commitlint:
+        patterns:
+          - '@commitlint/*'
+      typescript-eslint:
+        patterns:
+          - '@typescript-eslint/*'
 
   - package-ecosystem: 'github-actions'
     directory: '/'
