@@ -22,12 +22,6 @@ jobs:
     secrets:
       PERCY_TOKEN: ${{ secrets.PERCY_TOKEN  }}
 
-  dependabot:
-    name: '▶️ actions'
-    uses: ./.github/workflows/dependabot.yml
-    secrets:
-      GH_TOKEN: ${{ secrets.GH_TOKEN  }}
-
   publish:
     name: '▶️ actions'
 
