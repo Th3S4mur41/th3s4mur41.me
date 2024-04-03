@@ -27,6 +27,7 @@ jobs:
         uses: dependabot/fetch-metadata@v1.6.0
         with:
           github-token: '${{ secrets.GITHUB_TOKEN }}'
+          skip-verification: true # skip actor verification to avoid error on workflow-run event. Actor is checked on the job level
 
       - name: Enable auto-merge for Dependabot PRs
         continue-on-error: true
