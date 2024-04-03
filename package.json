@@ -5,11 +5,7 @@
 	"license": "LICENSE",
 	"private": true,
 	"description": "th3s4mur41.me website",
-	"keywords": [
-		"th3s4mur41",
-		"th3s4mur41.me",
-		"website"
-	],
+	"keywords": ["th3s4mur41", "th3s4mur41.me", "website"],
 	"engines": {
 		"node": ">= 20.0.0",
 		"npm": ">= 9.0.0"
