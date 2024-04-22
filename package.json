@@ -25,7 +25,7 @@
 	"devDependencies": {
 		"@babel/core": "^7.24.4",
 		"@babel/preset-env": "^7.24.4",
-		"@biomejs/biome": "1.7.0",
+		"@biomejs/biome": "1.7.1",
 		"@commitlint/cli": "^19.2.2",
 		"@commitlint/config-conventional": "^19.2.2",
 		"@csstools/postcss-oklab-function": "^3.0.14",
