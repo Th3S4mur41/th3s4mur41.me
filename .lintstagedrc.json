@@ -1,8 +1,4 @@
 {
-	"*.{js,cjs,mjs,ts,json}": ["biome check --apply --no-errors-on-unmatched"],
-	"*.{css,less,sass,scss}": [
-		"prettier --write --no-error-on-unmatched-pattern",
-		"stylelint --ignore-path .gitignore --fix"
-	],
-	"!(*.{js,cjs,mjs,ts,json,less,sass,scss})": "prettier --write --ignore-unknown --no-error-on-unmatched-pattern"
+	"*.{js,cjs,mjs,ts,json,css}": ["biome check --apply --no-errors-on-unmatched"],
+	"!(*.{js,cjs,mjs,ts,json,css})": "prettier --write --ignore-unknown --no-error-on-unmatched-pattern"
 }

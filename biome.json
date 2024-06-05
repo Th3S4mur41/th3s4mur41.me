@@ -6,6 +6,14 @@
 			"recommended": true
 		}
 	},
+	"css": {
+		"linter": {
+			"enabled": true
+		},
+		"formatter": {
+			"enabled": true
+		}
+	},
 	"formatter": {
 		"indentStyle": "tab",
 		"lineWidth": 120
