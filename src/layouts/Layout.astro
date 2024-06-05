@@ -9,10 +9,59 @@ const { title } = Astro.props;
 <!doctype html>
 <html lang="en">
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta charset="utf-8" />
+		<!-- mobile -->
+		<meta name="HandheldFriendly" content="true" />
+		<!-- Viewport -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+		<!-- Local -->
+		<meta name="geo.region" content="BE" />
+		<meta name="geo.placename" content="La Calamine" />
+		<meta name="geo.position" content="50.719355;6.014359" />
+		<meta name="ICBM" content="50.719355, 6.014359" />
+		<!-- Linking -->
+		<link rel="manifest" href="manifest.webmanifest" />
+		<meta name="application-name" content="Th3S4mur41.me" />
+		<meta name="color-scheme" content="dark light" />
+		<meta name="theme-color" content="#2c2b2b" media="(prefers-color-scheme: dark)" />
+		<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+
+				<!-- Icon -->
+		<link rel="apple-touch-icon" sizes="57x57" href="icons/apple-icon-57x57.png" />
+		<link rel="apple-touch-icon" sizes="60x60" href="icons/apple-icon-60x60.png" />
+		<link rel="apple-touch-icon" sizes="72x72" href="icons/apple-icon-72x72.png" />
+		<link rel="apple-touch-icon" sizes="76x76" href="icons/apple-icon-76x76.png" />
+		<link rel="apple-touch-icon" sizes="114x114" href="icons/apple-icon-114x114.png" />
+		<link rel="apple-touch-icon" sizes="120x120" href="icons/apple-icon-120x120.png" />
+		<link rel="apple-touch-icon" sizes="144x144" href="icons/apple-icon-144x144.png" />
+		<link rel="apple-touch-icon" sizes="152x152" href="icons/apple-icon-152x152.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-icon-180x180.png" />
+		<link rel="icon" type="image/png" sizes="192x192" href="icons/favicon-192x192.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png" />
+		<link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+
+				<!-- Twitter Card data -->
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:site" content="@Th3S4muR41" />
+		<meta name="twitter:creator" content="@Th3S4mur41" />
+		<meta name="twitter:title" content="Th3S4mur41.me" />
+		<!-- Twitter summary card with large image must be at least 280x150px -->
+		<meta name="twitter:image:src" content="https://th3s4mur41.me/icons/android-icon-512x512.png" />
+		<meta name="twitter:description" content="Th3S4mur41's personal website" />
+
+		<!-- Open Graph data -->
+		<meta property="og:title" content="Th3S4mur41.me" />
+		<meta property="og:description" content="Th3S4mur41's personal website" />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://th3s4mur41.me" />
+		<meta property="og:image" content="https://th3s4mur41.me/icons/android-icon-512x512.png" />
+		<meta property="og:image:width" content="512" />
+		<meta property="og:image:height" content="512" />
+		<meta property="article:published_time" content="{currentLocalISODate}" />
+		<meta property="article:modified_time" content="{currentLocalISODate}" />
+
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
@@ -21,31 +70,5 @@ const { title } = Astro.props;
 	</body>
 </html>
 <style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
-		background-size: 224px;
-	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
+
 </style>
