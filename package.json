@@ -56,7 +56,7 @@
 		"vite-plugin-handlebars": "^1.6.0"
 	},
 	"optionalDependencies": {
-		"lint-staged": "^15.2.6",
+		"lint-staged": "^15.2.7",
 		"semantic-release": "^24.0.0"
 	},
 	"scripts": {
