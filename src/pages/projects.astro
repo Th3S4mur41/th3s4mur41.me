@@ -1,0 +1,20 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getCollection, getEntry } from 'astro:content';
+
+const projects = await getCollection('projects');
+---
+
+<Layout title="Projects">
+{projects.map(project => (
+	<section>
+		<header>
+			<h2>{project.data.title}</h2>
+			<p>{project.data.description}</p>
+			<a href=`https://medium.com${project.slug}`>Read more</a>
+			By <a href="https://medium.com/@th3s4mur41">{project.data.author}</a> on <time datetime="{project.date}">{new Date(project.data.date).toLocaleDateString()}</time>
+		</header>	
+	</section>
+))}
+
+</Layout>
