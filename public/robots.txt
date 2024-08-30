@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://th3S4mur41.me/sitemap-index.xml
