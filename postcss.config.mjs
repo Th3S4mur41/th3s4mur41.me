@@ -1,4 +1,4 @@
-export default (context) => {
+export default () => {
 	return {
 		plugins: {
 			"postcss-nesting": {},

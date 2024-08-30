@@ -72,9 +72,10 @@ test-unit:
  script: **npm run test:unit**  
  artifacts:  
  when: always  
- paths:  
- - coverage  
- expire_in: 30 days
+ paths:
+
+- coverage  
+  expire_in: 30 days
 
 \[Optional\] A nice to have you can add is to upload the coverage folder that contains the HTML report to the Gitlab artefacts. That way the detailed report will be available to everybody with the job.
 

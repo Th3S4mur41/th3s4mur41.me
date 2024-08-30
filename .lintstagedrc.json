@@ -1,4 +1,4 @@
 {
-	"*.{js,cjs,mjs,ts,json,css}": ["biome check --apply --no-errors-on-unmatched"],
+	"*.{js,cjs,mjs,ts,json,css}": ["biome check --write --no-errors-on-unmatched"],
 	"!(*.{js,cjs,mjs,ts,json,css})": "prettier --write --ignore-unknown --no-error-on-unmatched-pattern"
 }

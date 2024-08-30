@@ -66,7 +66,7 @@
 		"build:favicon": "real-favicon check-for-update --fail-on-update faviconData.json",
 		"images:webp": "squoosh-cli --webp auto --output-dir public/icons public/icons/android*.png",
 		"lint": "prettier --check --ignore-unknown --no-error-on-unmatched-pattern . && biome ci .",
-		"lint:fix": "prettier --write --ignore-unknown --no-error-on-unmatched-pattern . && biome check --apply .",
+		"lint:fix": "prettier --write --ignore-unknown --no-error-on-unmatched-pattern . && biome check --write .",
 		"test": "echo No test specified",
 		"test:visual": "npx percy snapshot ./dist",
 		"release": "semantic-release",
