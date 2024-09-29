@@ -57,7 +57,7 @@
 	},
 	"optionalDependencies": {
 		"lint-staged": "^15.2.10",
-		"semantic-release": "^24.1.1"
+		"semantic-release": "^24.1.2"
 	},
 	"scripts": {
 		"start": "astro dev",
