@@ -19,7 +19,7 @@
 	"dependencies": {
 		"@astrojs/sitemap": "^3.2.1",
 		"@fontsource/cascadia-code": "^4.2.1",
-		"@fontsource/nanum-brush-script": "^5.1.1",
+		"@fontsource/nanum-brush-script": "^5.2.5",
 		"astro": "^5.4.1"
 	},
 	"devDependencies": {
