@@ -23,7 +23,7 @@
 		"astro": "^5.4.2"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.26.9",
+		"@babel/core": "^7.26.10",
 		"@babel/preset-env": "^7.26.9",
 		"@biomejs/biome": "1.9.4",
 		"@commitlint/cli": "^19.8.0",
