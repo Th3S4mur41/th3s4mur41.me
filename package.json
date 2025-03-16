@@ -52,7 +52,7 @@
 		"postcss-preset-env": "^10.1.5",
 		"prettier": "^3.5.3",
 		"typescript": "^5.8.2",
-		"vite": "^6.2.1",
+		"vite": "^6.2.2",
 		"vite-plugin-handlebars": "^1.6.0"
 	},
 	"optionalDependencies": {
