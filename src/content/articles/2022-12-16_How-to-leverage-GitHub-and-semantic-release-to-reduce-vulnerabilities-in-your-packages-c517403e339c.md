@@ -8,7 +8,7 @@ description: >-
 date: '2022-12-16T04:16:49.598Z'
 categories: []
 keywords: []
-slug: >-
+canonical: >-
   /@th3s4mur41/how-to-leverage-github-and-semantic-release-to-reduce-vulnerabilities-in-your-packages-c517403e339c
 ---
 

@@ -6,8 +6,8 @@ description: >-
 date: '2018-12-10T14:05:24.964Z'
 categories: []
 keywords: []
-slug: >-
-  /@th3s4mur41/tools-that-improve-team-collaboration-and-code-quality-fad9394c9ec6
+canonical: >-
+  https://th3s4mur41.medium.com/tools-that-improve-team-collaboration-and-code-quality-fad9394c9ec6
 ---
 
 When you start working on a new website or a web app, chances are that you don’t spend much time thinking about code style or code quality. Why?! Just because you already have a well configured IDE and you reuse the same coding guidelines that you already know by heart over and over again.

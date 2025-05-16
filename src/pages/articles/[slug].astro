@@ -1,0 +1,26 @@
+---
+import { getEntry, getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+const { slug } = Astro.params;
+const article = await getEntry("articles", slug);
+if (!article) {
+	throw new Error(`Article not found: ${slug}`);
+}
+
+export async function getStaticPaths() {
+	const articles = await getCollection("articles");
+	return articles.map((entry) => ({ params: { slug: entry.slug }, props: { article: entry } }));
+}
+
+const { Content } = await article.render();
+---
+
+<Layout title={article.data.title}>
+  <article>
+    <h1>{article.data.title}</h1>
+    <!-- <p>{article.data.description}</p> -->
+    {/** Render markdown as HTML using Astro's set:html directive */}
+	<Content />
+  </article>
+</Layout>

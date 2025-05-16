@@ -1,3 +1,11 @@
 body {
 	margin: unset;
+	min-block-size: 100svb;
+	display: flex;
+	flex-direction: column;
+	justify-content: stretch;
+}
+
+main {
+	flex-grow: 1;
 }

@@ -11,7 +11,7 @@ const articles = (await getCollection("articles")).sort((a, b) => new Date(b.dat
 		<header>
 			<h2>{article.data.title}</h2>
 			<p>{article.data.description}</p>
-			<a href=`https://medium.com${article.slug}`>Read more</a>
+			<a href={"/articles/" + article.slug}>Read more</a>
 			By <a href="https://medium.com/@th3s4mur41">{article.data.author}</a> on <time datetime="{article.date}">{new Date(article.data.date).toLocaleDateString()}</time>
 		</header>	
 	</section>

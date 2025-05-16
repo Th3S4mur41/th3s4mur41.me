@@ -6,7 +6,7 @@ description: >-
 date: '2024-03-11T10:58:54.379Z'
 categories: []
 keywords: []
-slug: >-
+canonical: >-
   /@th3s4mur41/design-for-accessibility-make-your-product-usable-for-all-ab463198de3f
 ---
 

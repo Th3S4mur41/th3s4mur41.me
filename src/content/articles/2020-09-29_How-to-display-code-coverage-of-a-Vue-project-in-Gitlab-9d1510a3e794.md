@@ -6,7 +6,7 @@ description: >-
 date: '2020-09-29T13:12:03.246Z'
 categories: []
 keywords: []
-slug: >-
+canonical: >-
   /@th3s4mur41/how-to-display-code-coverage-of-a-vue-project-in-gitlab-9d1510a3e794
 ---
 

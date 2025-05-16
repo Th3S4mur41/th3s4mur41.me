@@ -6,7 +6,7 @@ description: >-
 date: '2020-01-09T15:35:18.317Z'
 categories: []
 keywords: []
-slug: /@th3s4mur41/mixins-the-good-the-bad-the-ugly-46dee687ab29
+canonical: /@th3s4mur41/mixins-the-good-the-bad-the-ugly-46dee687ab29
 ---
 
 ![](C:\src\test\medium-export\posts\md_1712848580652\img\1__xGH__uhi__yDtDV73Quv8V6A.jpeg)

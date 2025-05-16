@@ -6,7 +6,7 @@ description: >-
 date: '2020-12-16T09:38:21.133Z'
 categories: []
 keywords: []
-slug: /@th3s4mur41/all-the-things-you-need-to-test-your-web-app-5efbc3028d13
+canonical: /@th3s4mur41/all-the-things-you-need-to-test-your-web-app-5efbc3028d13
 ---
 
 ![](C:\src\test\medium-export\posts\md_1712848580652\img\0__YGa5XtsuA4IXtR__W.jpg)
