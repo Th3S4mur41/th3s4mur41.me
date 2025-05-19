@@ -1,3 +1,11 @@
+# [2.2.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.1.0...v2.2.0) (2025-05-19)
+
+
+### Features
+
+* add intro and about me content ([7f1eedc](https://github.com/Th3S4mur41/th3s4mur41.me/commit/7f1eedc439d1dfc4a12e60455aa2aea2cd114084))
+* display articles on main page ([134a4df](https://github.com/Th3S4mur41/th3s4mur41.me/commit/134a4dfc8174ee2ce12005ef39b4dc712df65f0c))
+
 # [2.1.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.0.0...v2.1.0) (2024-08-30)
 
 
