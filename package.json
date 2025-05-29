@@ -20,7 +20,7 @@
 		"@astrojs/sitemap": "^3.4.0",
 		"@fontsource/cascadia-code": "^5.2.1",
 		"@fontsource/nanum-brush-script": "^5.2.5",
-		"astro": "^5.8.0"
+		"astro": "^5.8.1"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.27.3",
