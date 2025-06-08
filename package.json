@@ -18,7 +18,7 @@
 	"homepage": "https://th3s4mur41.me",
 	"dependencies": {
 		"@astrojs/sitemap": "^3.4.1",
-		"@fontsource/cascadia-code": "^5.2.1",
+		"@fontsource/cascadia-code": "^5.2.2",
 		"@fontsource/nanum-brush-script": "^5.2.6",
 		"astro": "^5.9.1"
 	},
