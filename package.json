@@ -46,7 +46,7 @@
 		"hint": "^7.1.13",
 		"html-loader": "^5.1.0",
 		"husky": "^9.1.7",
-		"postcss": "^8.5.4",
+		"postcss": "^8.5.5",
 		"postcss-loader": "^8.1.1",
 		"postcss-nesting": "^13.0.2",
 		"postcss-preset-env": "^10.2.3",
