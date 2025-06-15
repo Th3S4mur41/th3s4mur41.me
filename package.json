@@ -40,7 +40,7 @@
 		"concurrently": "^9.1.2",
 		"cssnano": "^7.0.7",
 		"cssremedy": "^0.1.0-beta.2",
-		"eslint": "^9.28.0",
+		"eslint": "^9.29.0",
 		"eslint-config-prettier": "^10.1.5",
 		"eslint-plugin-compat": "^6.0.2",
 		"hint": "^7.1.13",
