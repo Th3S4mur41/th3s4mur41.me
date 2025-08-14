@@ -27,8 +27,8 @@
 		"astro": "^5.12.9"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.28.0",
-		"@babel/preset-env": "^7.28.0",
+		"@babel/core": "^7.28.3",
+		"@babel/preset-env": "^7.28.3",
 		"@biomejs/biome": "2.1.4",
 		"@commitlint/cli": "^19.8.1",
 		"@commitlint/config-conventional": "^19.8.1",
