@@ -2,7 +2,7 @@
 import { getCollection, getEntry } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 
-const articles = (await getCollection("articles")).sort(
+const blog = (await getCollection("blog")).sort(
 	(a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
 );
 
@@ -14,9 +14,9 @@ const dateOptions = {
 };
 ---
 
-<Layout title="Articles">
-{articles.map(article => (
-<a href={`/articles/${article.slug}`} aria-labelledby={`article-header-${article.slug}`} aria-describedby={`article-description-${article.slug}`}>
+<Layout title="blog">
+{blog.map(article => (
+<a href={`/blog/${article.slug}`} aria-labelledby={`article-header-${article.slug}`} aria-describedby={`article-description-${article.slug}`}>
 			<h2 id={`article-header-${article.slug}`}>{article.data.title}</h2>
 			<p id={`article-desciption-${article.slug}`}>{article.data.description}</p>
 			<time datetime="{article.date}">{new Date(article.data.date).toLocaleDateString('en-gb', {year: "numeric",month: "short", 	day: "numeric",})}</time>
