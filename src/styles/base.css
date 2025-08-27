@@ -168,6 +168,27 @@ footer {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+
+	a {
+		color: currentColor;
+
+		& > svg {
+			stroke-width: 0.1rem;
+			@media (prefers-reduced-motion: no-preference) {
+				transition:
+					stroke-width 0.2s ease-out,
+					filter 0.25s ease-out;
+			}
+		}
+		&:is(:hover, :focus) {
+			& > svg {
+				stroke-width: 0.15rem;
+				@media not (prefers-contrast: more) {
+					filter: drop-shadow(0 0 0.1rem currentColor);
+				}
+			}
+		}
+	}
 }
 
 a.to-top {
