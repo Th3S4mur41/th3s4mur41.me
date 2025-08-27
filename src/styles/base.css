@@ -55,6 +55,14 @@ header {
 	}
 }
 
+:is(h1, h2, h3) {
+	font-weight: 300;
+	line-height: 1.25;
+	letter-spacing: 0.05ch;
+	text-transform: uppercase;
+	text-wrap: balance;
+}
+
 p {
 	text-wrap: pretty;
 
