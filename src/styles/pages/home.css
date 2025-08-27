@@ -1,0 +1,9 @@
+body.home {
+	.intro {
+		& a {
+			float: left;
+			shape-outside: circle(50%);
+			margin: 1rem;
+		}
+	}
+}

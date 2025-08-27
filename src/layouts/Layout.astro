@@ -6,6 +6,10 @@ interface Props {
 }
 
 const { title } = Astro.props;
+const pageTitle = title ? `${title} | Th3S4mur41.me` : "Th3S4mur41.me";
+const header = title ? title : "Th3S3mur41.me";
+const currentYear = new Date().getFullYear();
+const slug = Astro.url.pathname.replace(/^\/|\/$/g, "").replace(/\//g, "-") || "home";
 ---
 
 <!doctype html>
@@ -66,29 +70,26 @@ const { title } = Astro.props;
 
 		<meta name="generator" content={Astro.generator} />
 		<link rel="sitemap" href="/sitemap-index.xml" />
-		<title>{title}</title>
+		<title>{pageTitle}</title>
 	</head>
-	<body>
+	<body class={slug}>
 		<!-- <a href="#main" class="skip-link">Skip to main content</a> -->
 	<header>
-		<h1>Th3S4mur41</h1>
+		<h1>{header}</h1>
+		<img src='/src/assets/th3S4mur41_colors_ultrawide.png' alt='' />
 	</header>
-	<nav>
+	<nav aria-label="main">
 		<ul>
-			<li><a href="/">Home</a></li>
-			<li><a href="/blog">Blog</a></li>
+			<li><a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Home</a></li>
+			<li><a href="/blog" aria-current={Astro.url.pathname === '/blog' ? 'page' : undefined}>Blog</a></li>
 			<!-- <li><a href="/projects">Projects</a></li> -->
-			<li><a href="/about">About me</a></li>
+			<li><a href="/about" aria-current={Astro.url.pathname === '/about' ? 'page' : undefined}>About me</a></li>
 		</ul>
 	</nav>
 	<main id="main">
 		<slot />
 	</main>
 	<footer>
-		
-			<div class="copyright">© 2024 Th3S4mur41.me</div>
-
-
 			<section class="social">
 				<!-- icons from https://github.com/gauravghongde/social-icons -->
 				<a class="image" href="https://twitter.com/Th3S4mur41" title="Th3S4mur41 on Twitter">
@@ -328,6 +329,10 @@ const { title } = Astro.props;
 					</svg>
 				</a>
 			</section>
+			<small>
+				<div class="copyright">© 2024-{currentYear} Th3S4mur41.me</div>
+				<a href="#" class="to-top">To the top</a>
+			</small>
 	</footer>
 	</body>
 </html>
