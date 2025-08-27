@@ -1,6 +1,8 @@
 ---
 import "../index.css";
 
+import Socials from "../components/Socials.astro";
+
 interface Props {
 	title: string;
 }
@@ -90,43 +92,7 @@ const slug = Astro.url.pathname.replace(/^\/|\/$/g, "").replace(/\//g, "-") || "
 		<slot />
 	</main>
 	<footer>
-			<section class="social">
-				<!-- icons from https://github.com/gauravghongde/social-icons -->
-
-				<a
-					class="image"
-					href="https://www.linkedin.com/in/michaelvanderheyden/"
-					title="Michaël Vanderheyden on LinkedIn"
-				>
-					<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" aria-hidden="true"><circle cx="15.64" cy="13.46" r=".75" fill="currentColor"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M15.64 16.93v14.98m17.47 0V22.3a5.83 5.83 0 0 0-5.82-5.82a5.83 5.83 0 0 0-5.83 5.82v9.61m0-9.61v-5.37"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M40.5 5.5h-33a2 2 0 0 0-2 2v33a2 2 0 0 0 2 2h33a2 2 0 0 0 2-2v-33a2 2 0 0 0-2-2"/></svg>
-				</a>				<a class="image" href="https://bsky.app/profile/th3s4mur41.me" title="Th3S4mur41 on Bluesky">
-<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M24 32.19c0-.196.075.025.237.5c.874 2.577 4.289 12.631 12.096 4.593c4.111-4.232 2.208-8.463-5.275-9.741c4.28.73 9.094-.477 10.414-5.212c.38-1.362 1.028-9.752 1.028-10.885c0-5.676-4.96-3.892-8.02-1.587c-4.242 3.195-8.805 9.673-10.48 13.15c-1.675-3.477-6.238-9.954-10.48-13.15C10.46 7.553 5.5 5.77 5.5 11.445c0 1.133.647 9.523 1.028 10.885c1.32 4.735 6.133 5.943 10.414 5.212c-7.483 1.278-9.386 5.51-5.275 9.741c7.807 8.038 11.222-2.016 12.096-4.592c.162-.476.237-.697.237-.501"/></svg>
-				</a>
-				<a class="image" href="https://github.com/Th3S4mur41" title="Th3S4mur41 on Github">
-					<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M24 2.5a21.5 21.5 0 0 0-6.8 41.9c1.08.2 1.47-.46 1.47-1v-3.65c-6 1.3-7.24-2.88-7.24-2.88A5.7 5.7 0 0 0 9 33.68c-1.95-1.33.15-1.31.15-1.31a4.52 4.52 0 0 1 3.29 2.22c1.92 3.29 5 2.34 6.26 1.79a4.6 4.6 0 0 1 1.37-2.88c-4.78-.54-9.8-2.38-9.8-10.62a8.3 8.3 0 0 1 2.22-5.77a7.68 7.68 0 0 1 .21-5.69s1.8-.58 5.91 2.2a20.46 20.46 0 0 1 10.76 0c4.11-2.78 5.91-2.2 5.91-2.2a7.74 7.74 0 0 1 .21 5.69a8.28 8.28 0 0 1 2.21 5.77c0 8.26-5 10.07-9.81 10.61a5.12 5.12 0 0 1 1.46 4v5.9c0 .71.39 1.24 1.48 1A21.5 21.5 0 0 0 24 2.5"/></svg>
-				</a>
-				<a class="image" href="https://codepen.io/th3s4mur41/" title="Th3S4mur41 on CodePen"
-					><svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="48"
-						height="48"
-						viewBox="0 0 48 48" aria-hidden="true"
-					>
-						<path
-							fill="none" stroke="currentColor"
-							d="M22.913,5.304l-17,11.005C5.344,16.677,5,17.309,5,17.988v12.024	c0,0.678,0.344,1.31,0.913,1.679l17,11.005c0.661,0.428,1.512,0.428,2.174,0l17-11.005C42.656,31.323,43,30.69,43,30.012V17.988	c0-0.678-0.344-1.31-0.913-1.679l-17-11.005C24.426,4.875,23.574,4.875,22.913,5.304z M23.422,27.19l-3.254-2.307	c-0.566-0.401-0.561-1.243,0.009-1.638l3.254-2.251c0.342-0.237,0.796-0.237,1.138,0l3.254,2.251	c0.571,0.395,0.576,1.237,0.009,1.638l-3.254,2.307C24.232,27.436,23.768,27.436,23.422,27.19z M26,16.67v-4.139	c0-0.792,0.878-1.27,1.543-0.84l8.644,5.59c0.594,0.384,0.612,1.247,0.035,1.656l-3.25,2.304c-0.344,0.244-0.804,0.246-1.15,0.005	l-5.393-3.755C26.16,17.304,26,16.997,26,16.67z M21.571,17.491l-5.393,3.755c-0.346,0.241-0.806,0.239-1.15-0.005l-3.25-2.304	c-0.577-0.409-0.559-1.271,0.035-1.656l8.644-5.59c0.665-0.43,1.543,0.047,1.543,0.84v4.139C22,16.997,21.84,17.304,21.571,17.491z M11.552,24.466l-1.766,1.229C9.454,25.926,9,25.689,9,25.285v-2.471c0-0.405,0.456-0.642,0.788-0.409l1.766,1.242	C11.837,23.846,11.836,24.267,11.552,24.466z M16.112,26.853l5.463,3.842C21.842,30.882,22,31.187,22,31.513v3.957	c0,0.792-0.878,1.27-1.543,0.84l-8.65-5.594c-0.598-0.387-0.612-1.257-0.026-1.662l3.187-2.205	C15.313,26.61,15.77,26.612,16.112,26.853z M26.425,30.695l5.463-3.842c0.343-0.241,0.8-0.243,1.144-0.004l3.187,2.205	c0.586,0.405,0.572,1.275-0.026,1.662l-8.65,5.594C26.878,36.739,26,36.261,26,35.469v-3.957C26,31.187,26.158,30.882,26.425,30.695	z M36.446,23.646l1.766-1.242C38.544,22.171,39,22.408,39,22.813v2.471c0,0.404-0.454,0.641-0.786,0.41l-1.766-1.229	C36.164,24.267,36.163,23.846,36.446,23.646z"
-						></path></svg
-				></a>
-				<a class="image" href="https://th3s4mur41.medium.com/" title="Th3S4mur41 on Medium">
-			<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M5.5 40.5a2 2 0 0 0 2 2h33a2 2 0 0 0 2-2m0-33a2 2 0 0 0-2-2h-33a2 2 0 0 0-2 2"/><circle cx="15.329" cy="24" r="9.068" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="31.198" cy="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" rx="4.269" ry="9.068"/><ellipse cx="39.869" cy="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" rx="1.87" ry="9.068"/></svg>
-				</a>
-				<a class="image" href="https://www.instagram.com/th3s4mur41/" title="Th3S4mur41 on Instagram">
-					<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M35.38 10.46a2.19 2.19 0 1 0 2.16 2.22v-.06a2.18 2.18 0 0 0-2.16-2.16"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M40.55 5.5H7.45a2 2 0 0 0-1.95 2v33.1a2 2 0 0 0 2 2h33.1a2 2 0 0 0 2-2V7.45a2 2 0 0 0-2.05-1.95"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M24 15.72A8.28 8.28 0 1 0 32.28 24h0A8.28 8.28 0 0 0 24 15.72"/></svg>
-				</a>
-				<a class="image" href="https://twitter.com/Th3S4mur41" title="Th3S4mur41 on Twitter">
-				<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M21.604 25.622L7.693 41.498M37.924 6.502L25.554 21.07M6.61 6.5l27.44 35h7.56l-27.439-35z"/></svg>
-				</a>
-			</section>
+		<Socials />
 			<small>
 				<div class="copyright">© 2024-{currentYear} Th3S4mur41.me</div>
 				<a href="#" class="to-top">To the top</a>

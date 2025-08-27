@@ -1,0 +1,56 @@
+.social {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: min(0.5em, 1vi);
+
+	@supports (position-area: bottom) {
+		margin-block-end: 1lh;
+	}
+
+	a {
+		color: currentColor;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		anchor-scope: --social-link;
+
+		& > svg {
+			anchor-name: --social-link;
+			stroke-width: 0.1rem;
+			inline-size: clamp(2rem, 10vi, 3rem);
+			@media (prefers-reduced-motion: no-preference) {
+				transition:
+					stroke-width 0.2s ease-out,
+					filter 0.25s ease-out;
+			}
+		}
+		& > span {
+			display: none;
+			font-size: 0.875rem;
+		}
+
+		&:is(:hover, :focus) {
+			& > svg {
+				stroke-width: 0.15rem;
+				@media not (prefers-contrast: more) {
+					filter: drop-shadow(0 0 0.1rem currentColor);
+				}
+			}
+
+			@supports (position-area: bottom) {
+				& > span {
+					display: block;
+					position: absolute;
+					position-anchor: --social-link;
+					position-area: bottom;
+
+					@media (prefers-reduced-motion: no-preference) {
+						animation: slideDown 0.3s linear(0, 1.5, 0.5, 1.2, 0.8, 1) backwards;
+					}
+				}
+			}
+		}
+	}
+}
