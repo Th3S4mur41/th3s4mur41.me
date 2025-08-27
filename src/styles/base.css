@@ -90,6 +90,7 @@ main {
 body > nav {
 	justify-items: center;
 	position: sticky;
+	z-index: 1;
 	top: 0.25rem;
 
 	& > ul {

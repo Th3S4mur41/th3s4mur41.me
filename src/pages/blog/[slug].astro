@@ -16,11 +16,9 @@ export async function getStaticPaths() {
 const { Content } = await article.render();
 ---
 
-<Layout title={article.data.title}>
+<Layout title={article.data.title} canonical={article.data.canonical ?? undefined} noHeader>
   <article>
-    <h1>{article.data.title}</h1>
-    <!-- <p>{article.data.description}</p> -->
     {/** Render markdown as HTML using Astro's set:html directive */}
-	<Content />
+	  <Content />
   </article>
 </Layout>

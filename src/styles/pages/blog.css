@@ -77,3 +77,40 @@ body.blog {
 		}
 	}
 }
+
+/* individual blog pages */
+body[class^="blog-"] {
+	article {
+		grid-column: full-width;
+		display: grid;
+		grid-template-columns: subgrid;
+
+		& > * {
+			grid-column: content;
+		}
+		/* Treat an image following the h1 as the hero image */
+		& h1 + p:has(img) {
+			grid-row: 1;
+			grid-column: full-width;
+
+			& img {
+				width: 100%;
+			}
+		}
+	}
+}
+
+figure {
+	& > img {
+		inline-size: 100%;
+		block-size: auto;
+	}
+	& > figcaption {
+		margin-top: 0.5rem;
+		font-size: 0.875rem;
+		color: var(--color-subtle-text);
+		font-style: italic;
+		text-align: center;
+		text-wrap: balance;
+	}
+}

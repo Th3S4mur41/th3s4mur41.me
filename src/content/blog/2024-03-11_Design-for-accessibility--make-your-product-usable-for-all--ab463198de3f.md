@@ -1,18 +1,22 @@
 ---
-title: 'Design for accessibility, make your product usable for all.'
+title: '“If you ask customers or product owners to choose between feature and accessibility, they will choose feature almost every time.”'
+heroImage: /blog/2024-03-11_design-for-accessibility--make-your-product-usable-for-all--ab463198de3f.png
 description: >-
-  “If you ask customers or product owners to choose between feature and
-  accessibility, they will choose feature almost every time.” is wrong
+  “If you ask customers or product owners to choose between feature and accessibility, they will choose feature almost every time.”
 date: '2024-03-11T10:58:54.379Z'
 categories: []
 keywords: []
 canonical: >-
-  /@th3s4mur41/design-for-accessibility-make-your-product-usable-for-all-ab463198de3f
+  https://medium.com/@th3s4mur41/design-for-accessibility-make-your-product-usable-for-all-ab463198de3f
 ---
+
+# “If you ask customers or product owners to choose between feature and accessibility, they will choose feature almost every time.”
+
+![](/blog/2024-03-11_design-for-accessibility--make-your-product-usable-for-all--ab463198de3f.png)
 
 There are several issues with this statement, yet it continues to resurface periodically. I’d like to take this opportunity to delve into it more thoroughly.
 
-### Feature or accessibility is not a choice
+## Feature or accessibility is not a choice
 
 When you present people with the dilemma of choosing between a feature and accessibility, you aren’t truly offering them a choice.
 
@@ -20,7 +24,7 @@ Accessibility of what? It can’t be the accessibility of the feature itself, as
 
 Let’s assume we’re discussing the process of retrofitting an existing feature to make it accessible.
 
-### Building for accessibility: Correct Approach
+## Building for accessibility: Correct Approach
 
 The sentence implies that making a feature accessible would require as much time and effort as adding an entirely new feature.
 
@@ -28,7 +32,7 @@ This might be true if accessibility is an afterthought. You’ll need to go back
 
 Consider a different perspective. If accessibility is considered from the outset — integrated into every step of the process — the additional effort can be minimal or even nonexistent for well-trained individuals.
 
-### A Different angle
+## A Different angle
 
 The problem lies not so much in the answer but in the question itself. Let’s replace “accessibility” with “usability” and observe the outcome:
 
@@ -36,15 +40,20 @@ The problem lies not so much in the answer but in the question itself. Let’s r
 
 Developing an app with this mindset often leads to a familiar scenario — one we’d rather avoid
 
+<figure>
+<img src='/blog/ms-word-ux.png' alt="Old version of Microsoft Word with toolbars that take up most of the screen making typing almost impossible and turning the search for a specific button into an adventure." />
+<figcaption>Old version of Microsoft Word with toolbars that take up most of the screen making typing almost impossible and turning the search for a specific button into an adventure.</figcaption>
+</figure>
+
 We can all agree that investing extra effort to ensure a feature not only functions but is also usable is time well spent.
 
-### Accessibility is usability: The 20% dilemma
+## Accessibility is usability: The 20% dilemma
 
 Neglecting accessibility could mean that up to 20% of your users might encounter usability issues. These issues could render the entire feature partially or completely unusable for them.
 
 Now, ask yourself: Is the feature still worth implementing if it fails to serve 1 in 5 users effectively?
 
-### Beyond Extreme Cases
+## Beyond Extreme Cases
 
 When advocating for accessibility, I often encounter a common misconception. Many people associate the term “accessibility” solely with specific disabilities, leading to responses like, “We don’t need that; we don’t have any blind users.” However, accessibility extends far beyond extreme cases.
 
@@ -55,7 +64,7 @@ Building with accessibility in mind, however, doesn’t mean focusing solely on 
 
 There are many examples like. By considering accessibility from the outset, we create products that benefit everyone, regardless of their abilities or their environment.
 
-### Building an Accessible Solution: A Team Effort
+## Building an Accessible Solution: A Team Effort
 
 It’s crucial to ensure that the entire team — not just developers — is well-versed in accessibility. By integrating accessibility into your entire process, you can create solutions that are inherently accessible. The best part? This approach requires minimal to no additional effort.
 

@@ -5,6 +5,8 @@ import Socials from "../components/Socials.astro";
 
 interface Props {
 	title: string;
+	noHeader: boolean
+	canonical: string;
 }
 
 const { title } = Astro.props;
@@ -70,16 +72,22 @@ const slug = Astro.url.pathname.replace(/^\/|\/$/g, "").replace(/\//g, "-") || "
 		<meta property="article:published_time" content="{currentLocalISODate}" />
 		<meta property="article:modified_time" content="{currentLocalISODate}" />
 
+		{Astro.props.canonical && (
+			<link rel="canonical" href={Astro.props.canonical} />
+		)}
+
 		<meta name="generator" content={Astro.generator} />
 		<link rel="sitemap" href="/sitemap-index.xml" />
 		<title>{pageTitle}</title>
 	</head>
 	<body class={slug}>
 		<!-- <a href="#main" class="skip-link">Skip to main content</a> -->
-	<header>
-		<h1>{header}</h1>
-		<img src='/src/assets/th3S4mur41_colors_ultrawide.png' alt='' />
-	</header>
+	{!Astro.props.noHeader && (
+		<header>
+			<h1>{header}</h1>
+			<img src='/src/assets/th3S4mur41_colors_ultrawide.png' alt='' />
+		</header>
+	)}
 	<nav aria-label="main">
 		<ul>
 			<li><a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Home</a></li>
