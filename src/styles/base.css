@@ -8,6 +8,20 @@
 		1rem [margin-end] 1fr [full-width-end];
 }
 
+@view-transition {
+	/*  biome-ignore lint/correctness/noUnknownProperty: navigation is a new property for view-transition */
+	navigation: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	:root {
+		interpolate-size: allow-keywords;
+	}
+	html {
+		scroll-behavior: smooth;
+	}
+}
+
 body {
 	margin: unset;
 	min-block-size: 100svb;
@@ -37,6 +51,16 @@ header {
 		width: 100%;
 		height: auto;
 		object-fit: cover;
+	}
+}
+
+p {
+	text-wrap: pretty;
+
+	@media (prefers-reduced-motion: no-preference) {
+		animation: fadeIn 1ms linear both;
+		animation-timeline: view();
+		animation-range: entry 10% entry 60%;
 	}
 }
 
@@ -155,22 +179,4 @@ a.to-top {
 	&::after {
 		content: " ↑" / "";
 	}
-}
-
-.profile {
-	border-radius: 50%;
-	width: 10rem;
-	height: 10rem;
-	object-fit: cover;
-
-	border: 2px solid transparent;
-	background:
-		radial-gradient(circle at 50% 250%, var(--color-subtle-bg), var(--color-bg)),
-		linear-gradient(var(--color-bg), var(--color-subtle-bg));
-	background-clip: padding-box, border-box;
-	background-origin: padding-box, border-box;
-
-	box-shadow:
-		0 0.75rem 1rem -0.25rem hsl(var(--hsl-shadow) / 0.06),
-		0 0.25rem 0.375rem -0.125rem hsl(var(--hsl-shadow) / 0.02);
 }

@@ -1,0 +1,7 @@
+body.about {
+	.profile {
+		width: 100%;
+		mask-image: linear-gradient(to bottom, black 80%, transparent 99%);
+		margin-block-end: 4rem;
+	}
+}

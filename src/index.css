@@ -1,3 +1,6 @@
 @import url("styles/base.css");
+@import url("styles/animation.css");
+
 @import url("styles/pages/home.css");
 @import url("styles/pages/blog.css");
+@import url("styles/pages/about.css");
