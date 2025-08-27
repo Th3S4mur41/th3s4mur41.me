@@ -1,5 +1,17 @@
 ---
+import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
+
+const blog = (await getCollection("blog")).sort(
+	(a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+);
+
+const dateOptions = {
+	// weekday: "long",
+	year: "numeric",
+	month: "short",
+	day: "numeric",
+};
 ---
 
 <Layout title="">
@@ -9,4 +21,21 @@ import Layout from "../layouts/Layout.astro";
 		<strong> Hey! My name is Michaël</strong> I'm a passionate web developer dedicated to crafting accessible and user-friendly interfaces that make a difference. I believe that every user—regardless of abilities or context—should experience seamless, intuitive digital interactions. My love for clean code and exploring the latest HTML and CSS features fuels my drive for innovation. With a background in martial arts, I bring the same discipline, respect, and commitment to my work, ensuring high-quality, future-proof solutions.
 	</p>
 	</div>
+	<hr>
+	<h2>Latest post</h2>
+	{blog.length > 0 && (
+		<article>
+			<h3>
+				<a href={blog[0].url}>{blog[0].data.title}</a>
+			</h3>
+			<!-- TODO: add here image concept to -->
+			<img src={`/blog/${blog[0].slug}.png`} alt="" />
+			<p>
+				{blog[0].data.description}
+			</p>
+			<time datetime={blog[0].data.date}>
+				{new Date(blog[0].data.date).toLocaleDateString(undefined, dateOptions)}
+			</time>
+		</article>
+	)}
 </Layout>

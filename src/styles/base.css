@@ -3,6 +3,7 @@
 	--color-subtle-bg: oklch(0 0 0);
 	--color-highlight: oklch(0.4 0 0);
 	--color-text: oklch(1 0 0);
+	--color-subtle-text: oklch(0.8 0 0);
 
 	--grid-columns: [full-width-start] 1fr [margin-start] 1rem [content-start] min(80ch, calc(100vi - 2rem)) [content-end]
 		1rem [margin-end] 1fr [full-width-end];
@@ -68,7 +69,9 @@ main {
 	flex-grow: 1;
 	display: grid;
 	grid-template-columns: var(--grid-columns);
+	grid-auto-rows: min-content;
 	margin-block: 2rem;
+	container: main / inline-size;
 
 	& > * {
 		grid-column: content;
@@ -200,4 +203,11 @@ a.to-top {
 	&::after {
 		content: " ↑" / "";
 	}
+}
+
+hr {
+	border: none;
+	block-size: 0.1rem;
+	inline-size: stretch;
+	background: linear-gradient(to right, transparent, var(--color-text), transparent);
 }
