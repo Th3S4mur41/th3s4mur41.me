@@ -1,5 +1,5 @@
 ---
-title: '“If you ask customers or product owners to choose between feature and accessibility, they will choose feature almost every time.”'
+title: 'If you ask customers or product owners to choose between feature and accessibility, they will choose feature almost every time.'
 slug: design-for-accessibility--make-your-product-usable-for-all
 date: 2024-03-11T10:58:54.379Z
 image: /blog/2024-03-11_design-for-accessibility--make-your-product-usable-for-all--ab463198de3f.png

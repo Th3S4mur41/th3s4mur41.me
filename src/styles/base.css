@@ -149,7 +149,7 @@ body > nav {
 	}
 }
 
-footer {
+body > footer {
 	padding-block: 2rem;
 	border-block-start: 2px solid transparent;
 	background:

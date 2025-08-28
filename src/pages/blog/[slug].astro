@@ -14,11 +14,25 @@ export async function getStaticPaths() {
 }
 
 const { Content } = await render(article);
+
 ---
 
-<Layout title={article.data.title} canonical={article.data.canonical ?? undefined} noHeader>
+<Layout 
+	title={article.data.title} canonical={article.data.canonical ?? undefined} noHeader>
   <article>
     {/** Render markdown as HTML using Astro's set:html directive */}
 	  <Content />
+		<footer>
+			<p>
+				Published on <time datetime={article.data.date}>{article.data.date.toLocaleDateString()}</time>
+				{article.data.canonical && (
+					<>
+						{' '}via <a href={article.data.canonical} target="_blank" rel="noopener noreferrer">
+							{new URL(article.data.canonical).hostname.replace(/^www\./, '').split('.')[0]}
+						</a>
+					</>
+				)}
+			</p>
+		</footer>
   </article>
 </Layout>
