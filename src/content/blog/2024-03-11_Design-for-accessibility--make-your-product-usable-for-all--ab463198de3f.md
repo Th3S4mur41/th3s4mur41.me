@@ -1,10 +1,12 @@
 ---
 title: '“If you ask customers or product owners to choose between feature and accessibility, they will choose feature almost every time.”'
-heroImage: /blog/2024-03-11_design-for-accessibility--make-your-product-usable-for-all--ab463198de3f.png
+slug: design-for-accessibility--make-your-product-usable-for-all
+date: 2024-03-11T10:58:54.379Z
+image: /blog/2024-03-11_design-for-accessibility--make-your-product-usable-for-all--ab463198de3f.png
+published: true
 description: >-
   “If you ask customers or product owners to choose between feature and accessibility, they will choose feature almost every time.”
-date: '2024-03-11T10:58:54.379Z'
-categories: []
+tags: []
 keywords: []
 canonical: >-
   https://medium.com/@th3s4mur41/design-for-accessibility-make-your-product-usable-for-all-ab463198de3f

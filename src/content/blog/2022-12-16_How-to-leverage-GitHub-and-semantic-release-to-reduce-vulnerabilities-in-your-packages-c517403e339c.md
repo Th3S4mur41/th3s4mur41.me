@@ -2,14 +2,17 @@
 title: >-
   How to leverage GitHub and semantic release to reduce vulnerabilities in your
   packages
+slug: how-to-leverage-github-and-semantic-release-to-reduce-vulnerabilities-in-your-packages
+date: 2022-12-16T04:16:49.598Z
+image: ''
+published: true
 description: >-
   Have you ever noticed, when you install your project’s dependencies, that npm
   is reporting known vulnerabilities you just installed?
-date: '2022-12-16T04:16:49.598Z'
-categories: []
+tags: []
 keywords: []
 canonical: >-
-  /@th3s4mur41/how-to-leverage-github-and-semantic-release-to-reduce-vulnerabilities-in-your-packages-c517403e339c
+  https://medium.com/@th3s4mur41/how-to-leverage-github-and-semantic-release-to-reduce-vulnerabilities-in-your-packages-c517403e339c
 ---
 
 You most probably know from personal experience that many projects nowadays require a bunch of dependencies to develop, compile or run.

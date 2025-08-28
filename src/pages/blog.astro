@@ -16,11 +16,11 @@ const dateOptions = {
 
 <Layout title="blog">
 {blog.map(article => (
-<a href={`/blog/${article.slug}`} aria-labelledby={`article-header-${article.slug}`} aria-describedby={`article-description-${article.slug}`}>
+<a href={`/blog/${article.data.slug}`} aria-labelledby={`article-header-${article.data.slug}`} aria-describedby={`article-description-${article.data.slug}`}>
 <article>
-			<h2 id={`article-header-${article.slug}`}>{article.data.title}</h2>
-			<p id={`article-desciption-${article.slug}`}>{article.data.description}</p>
-			<time datetime="{article.date}">{new Date(article.data.date).toLocaleDateString('en-gb', {year: "numeric",month: "short", 	day: "numeric",})}</time>
+			<h2 id={`article-header-${article.data.slug}`}>{article.data.title}</h2>
+			<p id={`article-desciption-${article.data.slug}`}>{article.data.description}</p>
+			<time datetime="{article.data.date}">{new Date(article.data.date).toLocaleDateString('en-gb', {year: "numeric",month: "short", 	day: "numeric",})}</time>
 			</article>
 	</a>
 ))}

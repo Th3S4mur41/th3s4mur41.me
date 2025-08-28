@@ -1,5 +1,5 @@
 ---
-import { getCollection, getEntry } from "astro:content";
+import { getCollection, getEntry, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 
 const { slug } = Astro.params;
@@ -10,10 +10,10 @@ if (!article) {
 
 export async function getStaticPaths() {
 	const articles = await getCollection("blog");
-	return articles.map((entry) => ({ params: { slug: entry.slug }, props: { article: entry } }));
+	return articles.map((entry) => ({ params: { slug: entry.data.slug }, props: { article: entry } }));
 }
 
-const { Content } = await article.render();
+const { Content } = await render(article);
 ---
 
 <Layout title={article.data.title} canonical={article.data.canonical ?? undefined} noHeader>

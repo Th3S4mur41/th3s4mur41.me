@@ -1,13 +1,16 @@
 ---
 title: How to display code coverage of a Vue project in Gitlab
+slug: how-to-display-code-coverage-of-a-vue-project-in-gitlab
+date: 2020-09-29T13:12:03.246Z
+image: ''
+published: true
 description: >-
   One might think that this should be pretty straight forward but there are some
   hoops you need to jump in order to get it to work.
-date: '2020-09-29T13:12:03.246Z'
-categories: []
+tags: []
 keywords: []
 canonical: >-
-  /@th3s4mur41/how-to-display-code-coverage-of-a-vue-project-in-gitlab-9d1510a3e794
+  https://medium.com/@th3s4mur41/how-to-display-code-coverage-of-a-vue-project-in-gitlab-9d1510a3e794
 ---
 
 One might think that this should be pretty straight forward and shouldn’t require an article, at least I did. But when I tried to set it up for some of my projects, it took me much more time than I expected.

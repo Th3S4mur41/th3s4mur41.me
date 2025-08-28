@@ -1,12 +1,15 @@
 ---
 title: 'Mixins: the good, the bad, the ugly…'
+slug: mixins-the-good-the-bad-the-ugly
+date: 2020-01-09T15:35:18.317Z
+image: ''
+published: true
 description: >-
   Mixins in SCSS and LESS can be used in many different ways… Some are good
   other not so much!
-date: '2020-01-09T15:35:18.317Z'
-categories: []
+tags: []
 keywords: []
-canonical: /@th3s4mur41/mixins-the-good-the-bad-the-ugly-46dee687ab29
+canonical: https://medium.com/@th3s4mur41/mixins-the-good-the-bad-the-ugly-46dee687ab29
 ---
 
 ![](C:\src\test\medium-export\posts\md_1712848580652\img\1__xGH__uhi__yDtDV73Quv8V6A.jpeg)
