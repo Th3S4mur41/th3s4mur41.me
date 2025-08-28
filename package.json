@@ -1,7 +1,7 @@
 {
 	"name": "th3s4mur41.me",
 	"type": "module",
-	"version": "2.2.0",
+	"version": "2.3.0",
 	"license": "LICENSE",
 	"private": true,
 	"description": "th3s4mur41.me website",
@@ -24,7 +24,7 @@
 		"@astrojs/sitemap": "^3.5.1",
 		"@fontsource/cascadia-code": "^5.2.2",
 		"@fontsource/nanum-brush-script": "^5.2.6",
-		"astro": "^5.13.3"
+		"astro": "^5.13.4"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.28.3",
@@ -53,7 +53,7 @@
 		"postcss": "^8.5.6",
 		"postcss-loader": "^8.1.1",
 		"postcss-nesting": "^13.0.2",
-		"postcss-preset-env": "^10.3.0",
+		"postcss-preset-env": "^10.3.1",
 		"prettier": "^3.6.2",
 		"typescript": "^5.9.2",
 		"vite": "^7.1.3",
