@@ -1,10 +1,13 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from "../layouts/Layout.astro";
+
+import profileImage from '/src/assets/michael-profile.png';
 ---
 
 <Layout title="About me">
 
-	<img class="profile" src="/src/assets/michael-profile.png" alt="Michael's profile picture">
+	<Image class="profile" src={profileImage} alt="Michael's profile picture" />
 
 	<p>As a web developer with a strong focus on UI/UX, I create digital experiences that prioritize accessibility and user preferences, aiming to make every interaction smoother and more inclusive. I firmly believe that technology should adapt to people, not the other way around, and I am committed to designing interfaces that improve users’ lives, regardless of their abilities or browsing context.</p>
 	<p>Innovation excites me, and I stay ahead of the curve by experimenting with new HTML and CSS features as soon as they’re available. I enjoy pushing boundaries, exploring fresh techniques, and introducing meaningful enhancements to the projects I work on. Writing clean, maintainable code is a priority—it’s about crafting solutions that stand the test of time and remain intuitive for developers and users alike.</p>

@@ -2,6 +2,9 @@
 import "../index.css";
 
 import Socials from "../components/Socials.astro";
+import {Image} from 'astro:assets';
+
+import heroImage from '/src/assets/th3S4mur41_colors_ultrawide.png';
 
 interface Props {
 	title: string;
@@ -76,7 +79,7 @@ const slug = Astro.url.pathname.replace(/^\/|\/$/g, "").replace(/\//g, "-") || "
 	{!Astro.props.noHeader && (
 		<header>
 			<h1>{header}</h1>
-			<img src='/src/assets/th3S4mur41_colors_ultrawide.png' alt='' />
+			<Image src={heroImage} alt='' />
 		</header>
 	)}
 	<nav aria-label="main">

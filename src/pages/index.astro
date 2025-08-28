@@ -1,6 +1,9 @@
 ---
 import { getCollection } from "astro:content";
+import { Image } from 'astro:assets';
 import Layout from "../layouts/Layout.astro";
+
+import profileImg from '/src/assets/michael-profile-colors.jpg';
 
 const blog = (await getCollection("blog")).sort(
 	(a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
@@ -12,11 +15,12 @@ const dateOptions = {
 	month: "short",
 	day: "numeric",
 };
+
 ---
 
 <Layout title="">
 	<div class="intro">
-	<a href='/about'><img class="profile" src='/src/assets/michael-profile-colors.jpg' alt="michaël holding a katana on a colorful background"></a>
+	<a href='/about'><Image class="profile" src={profileImg} alt="michaël holding a katana on a colorful background"></a>
 	<p>
 		<strong> Hey! My name is Michaël</strong>, I'm a passionate web developer dedicated to crafting accessible and user-friendly interfaces that make a difference. I believe that every user—regardless of abilities or context—should experience seamless, intuitive digital interactions. My love for clean code and exploring the latest HTML and CSS features fuels my drive for innovation. With a background in martial arts, I bring the same discipline, respect, and commitment to my work, ensuring high-quality, future-proof solutions.
 	</p>
@@ -29,7 +33,7 @@ const dateOptions = {
 				<a href={blog[0].url}>{blog[0].data.title}</a>
 			</h3>
 			<!-- TODO: add here image concept to -->
-			<img src={`/blog/${blog[0].slug}.png`} alt="" />
+			<img src={`/blog/${blog[0].id}/${blog[0].data.image}`} alt="" />
 			<p>
 				{blog[0].data.description}
 			</p>
