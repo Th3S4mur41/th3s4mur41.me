@@ -1,6 +1,5 @@
 ---
 title: Tools that improve team collaboration and code quality
-slug: tools-that-improve-team-collaboration-and-code-quality
 date: 2018-12-10T14:05:24.964Z
 image: ''
 published: true

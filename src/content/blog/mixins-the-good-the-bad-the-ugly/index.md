@@ -1,6 +1,5 @@
 ---
 title: 'Mixins: the good, the bad, the ugly…'
-slug: mixins-the-good-the-bad-the-ugly
 date: 2020-01-09T15:35:18.317Z
 image: ''
 published: true

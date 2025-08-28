@@ -7,7 +7,6 @@ import { glob } from "astro/loaders";
 // 3. Define shared schema for contact cards and employee profiles
 const blogSchema = z.object({
 	title: z.string(),
-	slug: z.string(),
 	date: z.date(),
 	image: z.string().optional(),
 	published: z.boolean().optional().default(false),

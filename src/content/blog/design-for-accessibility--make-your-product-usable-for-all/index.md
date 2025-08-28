@@ -2,7 +2,7 @@
 title: 'If you ask customers or product owners to choose between feature and accessibility, they will choose feature almost every time.'
 slug: design-for-accessibility--make-your-product-usable-for-all
 date: 2024-03-11T10:58:54.379Z
-image: /blog/2024-03-11_design-for-accessibility--make-your-product-usable-for-all--ab463198de3f.png
+image: design-for-accessibility--make-your-product-usable-for-all.png
 published: true
 description: >-
   “If you ask customers or product owners to choose between feature and accessibility, they will choose feature almost every time.”
@@ -14,7 +14,7 @@ canonical: >-
 
 # “If you ask customers or product owners to choose between feature and accessibility, they will choose feature almost every time.”
 
-![](/blog/2024-03-11_design-for-accessibility--make-your-product-usable-for-all--ab463198de3f.png)
+![](design-for-accessibility--make-your-product-usable-for-all.png)
 
 There are several issues with this statement, yet it continues to resurface periodically. I’d like to take this opportunity to delve into it more thoroughly.
 
@@ -43,7 +43,7 @@ The problem lies not so much in the answer but in the question itself. Let’s r
 Developing an app with this mindset often leads to a familiar scenario — one we’d rather avoid
 
 <figure>
-<img src='/blog/ms-word-ux.png' alt="Old version of Microsoft Word with toolbars that take up most of the screen making typing almost impossible and turning the search for a specific button into an adventure." />
+<img src='ms-word-ux.png' alt="Old version of Microsoft Word with toolbars that take up most of the screen making typing almost impossible and turning the search for a specific button into an adventure." />
 <figcaption>Old version of Microsoft Word with toolbars that take up most of the screen making typing almost impossible and turning the search for a specific button into an adventure.</figcaption>
 </figure>
 

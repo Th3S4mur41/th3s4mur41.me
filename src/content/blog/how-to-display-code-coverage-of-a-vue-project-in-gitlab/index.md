@@ -1,6 +1,5 @@
 ---
 title: How to display code coverage of a Vue project in Gitlab
-slug: how-to-display-code-coverage-of-a-vue-project-in-gitlab
 date: 2020-09-29T13:12:03.246Z
 image: ''
 published: true

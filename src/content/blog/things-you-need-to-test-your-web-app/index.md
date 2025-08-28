@@ -1,6 +1,5 @@
 ---
 title: Things You Need To Test Your Web App
-slug: things-you-need-to-test-your-web-app
 date: 2020-12-16T09:38:21.133Z
 image: ''
 published: true

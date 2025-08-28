@@ -2,7 +2,6 @@
 title: >-
   How to leverage GitHub and semantic release to reduce vulnerabilities in your
   packages
-slug: how-to-leverage-github-and-semantic-release-to-reduce-vulnerabilities-in-your-packages
 date: 2022-12-16T04:16:49.598Z
 image: ''
 published: true
