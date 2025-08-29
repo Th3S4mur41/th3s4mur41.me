@@ -12,10 +12,12 @@ const dateOptions = {
 	month: "short",
 	day: "numeric",
 };
+
+console.log(blog); // Debug: Log the collection to verify included entries
 ---
 
 <Layout title="blog">
-{blog.map(article => (
+{blog.filter(article => article.data.published).map(article => (
 <a href={`/blog/${article.id}`} aria-labelledby={`article-header-${article.id}`} aria-describedby={`article-description-${article.id}`}>
 <article>
 			<h2 id={`article-header-${article.id}`}>{article.data.title}</h2>

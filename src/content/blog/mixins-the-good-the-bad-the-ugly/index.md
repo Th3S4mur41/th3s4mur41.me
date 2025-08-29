@@ -2,7 +2,7 @@
 title: 'Mixins: the good, the bad, the ugly…'
 date: 2020-01-09T15:35:18.317Z
 image: ''
-published: true
+published: false
 description: >-
   Mixins in SCSS and LESS can be used in many different ways… Some are good
   other not so much!

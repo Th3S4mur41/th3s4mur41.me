@@ -25,19 +25,27 @@ const dateOptions = {
 	</div>
 	<hr>
 	<h2>Latest post</h2>
-	{blog.length > 0 && (
+	{blog.find(post => post.data.published) && (
 		<article>
-			<h3>
-				<a href={blog[0].url}>{blog[0].data.title}</a>
-			</h3>
-			<!-- TODO: add here image concept to -->
-			<img src={`/blog/${blog[0].id}/${blog[0].data.image}`} alt="" />
-			<p>
-				{blog[0].data.description}
-			</p>
-			<time datetime={blog[0].data.date}>
-				{new Date(blog[0].data.date).toLocaleDateString(undefined, dateOptions)}
-			</time>
+			{(() => {
+				const lastPublished = blog.find(post => post.data.published);
+				return (
+					<>
+						<h3>
+							<a href={lastPublished.url}>{lastPublished.data.title}</a>
+						</h3>
+						{/* TODO: add here image concept too */}
+						<img src={`/blog/${lastPublished.id}/${lastPublished.data.image}`} alt="" />
+						<p>
+							{lastPublished.data.description}
+						</p>
+						<time datetime={lastPublished.data.date}>
+							{new Date(lastPublished.data.date).toLocaleDateString(undefined, dateOptions)}
+						</time>
+					</>
+				);
+			})()}
 		</article>
+	)}
 	)}
 </Layout>

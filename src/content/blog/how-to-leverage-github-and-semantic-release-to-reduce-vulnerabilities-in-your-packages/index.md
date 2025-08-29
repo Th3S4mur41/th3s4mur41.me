@@ -4,7 +4,7 @@ title: >-
   packages
 date: 2022-12-16T04:16:49.598Z
 image: ''
-published: true
+published: false
 description: >-
   Have you ever noticed, when you install your project’s dependencies, that npm
   is reporting known vulnerabilities you just installed?

@@ -2,7 +2,7 @@
 title: Tools that improve team collaboration and code quality
 date: 2018-12-10T14:05:24.964Z
 image: ''
-published: true
+published: false
 description: >-
   When you start working on a new website or a web app, chances are that you
   don’t spend much time thinking about code style or code quality…

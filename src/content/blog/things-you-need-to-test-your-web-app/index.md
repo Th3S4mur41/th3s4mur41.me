@@ -2,7 +2,7 @@
 title: Things You Need To Test Your Web App
 date: 2020-12-16T09:38:21.133Z
 image: ''
-published: true
+published: false
 description: >-
   Recently I came across some bugs in an app I developed that only affected
   iPhone users

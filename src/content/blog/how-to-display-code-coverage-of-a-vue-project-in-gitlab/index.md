@@ -2,7 +2,7 @@
 title: How to display code coverage of a Vue project in Gitlab
 date: 2020-09-29T13:12:03.246Z
 image: ''
-published: true
+published: false
 description: >-
   One might think that this should be pretty straight forward but there are some
   hoops you need to jump in order to get it to work.
