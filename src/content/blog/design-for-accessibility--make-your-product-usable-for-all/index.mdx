@@ -1,6 +1,5 @@
 ---
 title: 'If you ask customers or product owners to choose between feature and accessibility, they will choose feature almost every time.'
-slug: design-for-accessibility--make-your-product-usable-for-all
 date: 2024-03-11T10:58:54.379Z
 image: design-for-accessibility--make-your-product-usable-for-all.png
 published: true
@@ -11,6 +10,9 @@ keywords: []
 canonical: >-
   https://medium.com/@th3s4mur41/design-for-accessibility-make-your-product-usable-for-all-ab463198de3f
 ---
+
+import { Image } from 'astro:assets';
+import msWord from 'ms-word-ux.png';
 
 # “If you ask customers or product owners to choose between feature and accessibility, they will choose feature almost every time.”
 
@@ -43,8 +45,14 @@ The problem lies not so much in the answer but in the question itself. Let’s r
 Developing an app with this mindset often leads to a familiar scenario — one we’d rather avoid
 
 <figure>
-<img src='ms-word-ux.png' alt="Old version of Microsoft Word with toolbars that take up most of the screen making typing almost impossible and turning the search for a specific button into an adventure." />
-<figcaption>Old version of Microsoft Word with toolbars that take up most of the screen making typing almost impossible and turning the search for a specific button into an adventure.</figcaption>
+	<Image
+		src={msWord}
+		alt="Old version of Microsoft Word with toolbars that take up most of the screen making typing almost impossible and turning the search for a specific button into an adventure."
+	/>
+	<figcaption>
+		Old version of Microsoft Word with toolbars that take up most of the screen making typing almost impossible and
+		turning the search for a specific button into an adventure.
+	</figcaption>
 </figure>
 
 We can all agree that investing extra effort to ensure a feature not only functions but is also usable is time well spent.

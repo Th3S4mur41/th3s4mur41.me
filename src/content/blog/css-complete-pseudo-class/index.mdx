@@ -1,0 +1,121 @@
+---
+title: 'From Skeletons to Smooth Reveals: A Case for the :complete pseudo-class'
+date: 2025-08-29T10:58:54.379Z
+image: css-complete-pseudo-class.jpg
+published: false
+description: ''
+tags: []
+keywords: []
+---
+
+import { Image } from 'astro:assets';
+import avatarExample from 'avatar-example.png';
+
+# From Skeletons to Smooth Reveals: A Case for the `:complete` pseudo-class
+
+![The CSS logo in front of a skeleton UI template](css-complete-pseudo-class.jpg)
+
+**Ever had a skeleton loader refuse to disappear, lingering like an uninvited guest under your freshly loaded image?** If you've worked with transparent PNGs or avatars, you know the pain: placeholders, initials, or shimmer effects that keep showing through long after the content is ready.
+
+Today, CSS has no way to tell, "Hey, this image is fully here - style it differently now." We patch over the gap with JavaScript listeners and class toggles, but that's a lot of moving parts for what should be a single, declarative rule.
+
+The following code snippet adds listeners in JavaScript to add a class "complete" when the image finished loading successfully or remove it when it didn't.
+const img = card.querySelector('img');
+
+```js
+img.addEventListener('load', () => {
+	card.classList.add('complete');
+});
+img.addEventListener('error', () => {
+	card.classList.remove('complete');
+});
+```
+
+Imagine a native pseudo‑class  - ` :complete` - that fires the instant an image (or any replaced element) successfully renders. One line of CSS to swap a skeleton for the real deal. No extra scripts. No race conditions. Just cleaner, more accessible, more performant design.
+
+> It's time we stopped hacking around a missing feature and started building a web where "complete" is a first‑class citizen.
+
+## The current State
+
+### Skeleton loaders
+
+Skeletons have become the go‑to pattern for avoiding the dreaded "content jump". Instead of a blank box, you render a gray placeholder shaped like the final content. The problem: CSS has no built‑in way to know when to swap it out for the real image.
+
+1. You attach a `load` event listener in JavaScript.
+2. On success, JS toggles a class, e.g., `.complete`.
+3. CSS picks up that class to fade out the skeleton.
+
+```css
+img.complete {
+	background: none; /* clear fallback */
+}
+```
+
+This means every skeleton loader ships with extra script, DOM manipulation, and sometimes messy race‑condition handling. Without JS, the skeleton just sits there indefinitely.
+
+### Avatars with Transparent PNGs
+
+User profile pictures often come in as transparent PNGs. The standard fallback is to show initials, a colored background, or an icon behind the avatar.
+
+<figure>
+	<Image
+		src={avatarExample}
+		alt="The left and center avatars appear as expected. On the left, there's a colored fallback displaying initials, while the center shows an image with a solid background. The issue arises with the right avatar: when the image has a transparent background, the fallback initials remain visible underneath, creating an unintended visual overlap."
+	/>
+	<figcaption>
+		The left and center avatars appear as expected. On the left, there's a colored fallback displaying initials, while
+		the center shows an image with a solid background. The issue arises with the right avatar: when the image has a
+		transparent background, the fallback initials remain visible underneath, creating an unintended visual overlap.
+	</figcaption>
+</figure>
+
+**The hitch**: CSS can't tell that the transparent PNG has fully loaded - so the fallback bleeds through unless you hide it manually with JS.
+
+1. You watch for the `load` event.
+2. Swap `background-color `or `background-image` to `none`.
+3. If the image fails, you need an error handler to restore the fallback.
+
+```css
+.avatar:has(img.complete) {
+	background: white; /* use a more discreet background */
+	color: transparent; /* hide the initials */
+}
+```
+
+It's a fragile dance: JS does all the state‑tracking because CSS is essentially "blind" to whether an image exists in memory yet.
+
+## Why This Matters
+
+Both cases are solved today with JavaScript event plumbing, even though the **state we care about is purely presentational**. A native pseudo‑class like `:complete` would let CSS take full responsibility:
+
+```css
+img:complete {
+	background: none; /* clear fallback */
+}
+.avatar:has(img:complete) {
+	background: white; /* use a more discreet background */
+	color: transparent; /* hide the initials */
+}
+```
+
+No listener cleanup. No manual class toggles. Just declarative, resilient styling tied directly to the resource state.
+
+### State Selectors for the Win - Adding :loaded to the set
+
+Just like `:playing` and `:muted` let CSS react to the runtime state of media elements, `:complete` would expose a similarly dynamic hook - but for images and other replaced elements.
+Where `:playing` styles a `<video>` in motion and `:muted` adapts its UI when sound is off, `:complete` would style elements the moment their resource is fully ready to render. 
+
+All three share the same philosophy: **declare visual changes in pure CSS, directly from the element's state, without bolting on JavaScript plumbing.**
+
+## Conclusion - Let's Make `:complete` Happen
+
+We've lived too long in a world where CSS can't natively respond to an image that's simply… ready. Skeletons, fallbacks, and low‑quality placeholders all suffer from the same gap: the browser knows the resource is loaded, but CSS can't act on that knowledge without JavaScript as a middle‑man.
+
+The fix isn't hypothetical - the CSS Working Group is already discussing a broader set of [resource‑state pseudo‑classes](https://github.com/w3c/csswg-drafts/issues/3134) like `:loading`, `:partial`, `:complete`, and `:broken`. Those fit naturally into the pseudo-class family, giving us a declarative, accessible, and performant way to handle one of the most common UI states on the web.
+
+**If you believe this belongs in the platform, now's the time to speak up.** Share your use cases, add your voice, and help shape the spec by joining the conversation on the CSSWG's ["Pseudo‑classes for image state" issue](https://github.com/w3c/csswg-drafts/issues/3134). Every real‑world example strengthens the case - and brings us closer to a web where "complete" is just another state CSS can style.
+
+## Links
+
+- [[selectors] Pseudo-classes for image state · Issue #3134 · w3c/csswg-drafts](https://github.com/w3c/csswg-drafts/issues/3134)
+- [What's a skeleton screen? - UX Design Institute](https://www.uxdesigninstitute.com/blog/whats-a-skeleton-screen/)
