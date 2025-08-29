@@ -1,10 +1,13 @@
 ---
-import { getCollection, getEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 
-const blog = (await getCollection("blog")).sort(
+const blog = (await getCollection("blog")).filter(article => article.data.published).sort(
 	(a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
 );
+
+const blogImages = import.meta.glob("/src/content/blog/**/*.{jpg,png,webp}", { eager: true });
 
 const dateOptions = {
 	// weekday: "long",
@@ -17,14 +20,19 @@ console.log(blog); // Debug: Log the collection to verify included entries
 ---
 
 <Layout title="blog">
-{blog.filter(article => article.data.published).map(article => (
-<a href={`/blog/${article.id}`} aria-labelledby={`article-header-${article.id}`} aria-describedby={`article-description-${article.id}`}>
-<article>
-			<h2 id={`article-header-${article.id}`}>{article.data.title}</h2>
-			<p id={`article-desciption-${article.id}`}>{article.data.description}</p>
-			<time datetime="{article.data.date}">{new Date(article.data.date).toLocaleDateString('en-gb', {year: "numeric",month: "short", 	day: "numeric",})}</time>
+{blog.map(article => {
+	const imagePath = `/src/content/blog/${article.id}/${article.data.image}`;
+	const image = blogImages[imagePath]?.default;
+	return (
+		<a href={`/blog/${article.id}`} aria-labelledby={`article-header-${article.id}`} aria-describedby={`article-description-${article.id}`}>
+			<article>
+				<h2 id={`article-header-${article.id}`}>{article.data.title}</h2>
+				{image && <Image src={image} alt={article.data.imageAlt || article.data.title} loading="lazy" />}
+				<p id={`article-desciption-${article.id}`}>{article.data.description}</p>
+				<time datetime="{article.data.date}">{new Date(article.data.date).toLocaleDateString('en-gb', {year: "numeric",month: "short", day: "numeric",})}</time>
 			</article>
-	</a>
-))}
+		</a>
+	);
+})}
 
 </Layout>

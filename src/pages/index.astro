@@ -14,38 +14,35 @@ const dateOptions = {
 	month: "short",
 	day: "numeric",
 };
+
+const blogImages = import.meta.glob("/src/content/blog/**/*.{jpg,png,webp}", { eager: true });
+
+const lastPublishedPost = blog.find(post => post.data.published);
+const imagePath = lastPublishedPost ? `/src/content/blog/${lastPublishedPost.id}/${lastPublishedPost.data.image}` : null;
+const image = imagePath ? blogImages[imagePath]?.default : null;
 ---
 
 <Layout title="">
 	<div class="intro">
-	<a href='/about'><Image class="profile" src={profileImg} alt="michaël holding a katana on a colorful background"></a>
+	<a href='/about'><Image class="profile" src={profileImg} alt="michaël holding a katana on a colorful background" /></a>
 	<p>
 		<strong> Hey! My name is Michaël</strong>, I'm a passionate web developer dedicated to crafting accessible and user-friendly interfaces that make a difference. I believe that every user—regardless of abilities or context—should experience seamless, intuitive digital interactions. My love for clean code and exploring the latest HTML and CSS features fuels my drive for innovation. With a background in martial arts, I bring the same discipline, respect, and commitment to my work, ensuring high-quality, future-proof solutions.
 	</p>
 	</div>
 	<hr>
 	<h2>Latest post</h2>
-	{blog.find(post => post.data.published) && (
+	{lastPublishedPost && (
+		<a href={`/blog/${lastPublishedPost.id}`} aria-labelledby={`article-header-${lastPublishedPost.id}`} aria-describedby={`article-description-${lastPublishedPost.id}`}>
 		<article>
-			{(() => {
-				const lastPublished = blog.find(post => post.data.published);
-				return (
-					<>
-						<h3>
-							<a href={lastPublished.url}>{lastPublished.data.title}</a>
-						</h3>
-						{/* TODO: add here image concept too */}
-						<img src={`/blog/${lastPublished.id}/${lastPublished.data.image}`} alt="" />
-						<p>
-							{lastPublished.data.description}
-						</p>
-						<time datetime={lastPublished.data.date}>
-							{new Date(lastPublished.data.date).toLocaleDateString(undefined, dateOptions)}
-						</time>
-					</>
-				);
-			})()}
+			<h3>{lastPublishedPost.data.title}</h3>
+			{image && <Image src={image} alt="" />}
+			<p>
+				{lastPublishedPost.data.description}
+			</p>
+			<time datetime={lastPublishedPost.data.date}>
+				{new Date(lastPublishedPost.data.date).toLocaleDateString(undefined, dateOptions)}
+			</time>
 		</article>
-	)}
+		</a>
 	)}
 </Layout>
