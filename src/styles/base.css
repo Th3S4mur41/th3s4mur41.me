@@ -220,3 +220,11 @@ a:has(> article) {
 		}
 	}
 }
+
+a.author {
+	font-weight: 600;
+	color: inherit;
+	&:is(:hover, :focus) {
+		color: var(--color-text);
+	}
+}
