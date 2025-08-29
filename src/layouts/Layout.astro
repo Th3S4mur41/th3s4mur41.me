@@ -21,8 +21,23 @@ const header = title ? title : "Th3S3mur41.me";
 const currentYear = new Date().getFullYear();
 const slug = Astro.url.pathname.replace(/^\/|\/$/g, "").replace(/\//g, "-") || "home";
 
-const desc = description || 'Personal website of Th3S4mur41 – developer, martial artist, and tech enthusiast.'
-const defaultKeywords = ['Th3S4mur41', 'developer', 'martial artist', 'tech enthusiast', 'personal website', 'samurai', 'webdev', 'accessibility', 'a11y', 'css', 'html', 'javascript', 'ui', 'ux'];
+const desc = description || "Personal website of Th3S4mur41 – developer, martial artist, and tech enthusiast.";
+const defaultKeywords = [
+	"Th3S4mur41",
+	"developer",
+	"martial artist",
+	"tech enthusiast",
+	"personal website",
+	"samurai",
+	"webdev",
+	"accessibility",
+	"a11y",
+	"css",
+	"html",
+	"javascript",
+	"ui",
+	"ux",
+];
 const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...defaultKeywords]));
 ---
 

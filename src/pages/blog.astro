@@ -1,11 +1,11 @@
 ---
-import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 
-const blog = (await getCollection("blog")).filter(article => article.data.published).sort(
-	(a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
-);
+const blog = (await getCollection("blog"))
+	.filter((article) => article.data.published)
+	.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 
 const blogImages = import.meta.glob("/src/content/blog/**/*.{jpg,png,webp}", { eager: true });
 

@@ -17,8 +17,10 @@ const dateOptions = {
 
 const blogImages = import.meta.glob("/src/content/blog/**/*.{jpg,png,webp}", { eager: true });
 
-const lastPublishedPost = blog.find(post => post.data.published);
-const imagePath = lastPublishedPost ? `/src/content/blog/${lastPublishedPost.id}/${lastPublishedPost.data.image}` : null;
+const lastPublishedPost = blog.find((post) => post.data.published);
+const imagePath = lastPublishedPost
+	? `/src/content/blog/${lastPublishedPost.id}/${lastPublishedPost.data.image}`
+	: null;
 const image = imagePath ? blogImages[imagePath]?.default : null;
 ---
 
