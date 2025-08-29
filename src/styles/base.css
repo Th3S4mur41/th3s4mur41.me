@@ -52,6 +52,7 @@ header {
 		width: 100%;
 		height: auto;
 		object-fit: cover;
+		view-transition-name: hero-image;
 	}
 }
 

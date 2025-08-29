@@ -37,6 +37,7 @@ body.home {
 		& > h3 {
 			grid-area: title;
 			margin: 0;
+			view-transition-name: article-title;
 		}
 		& img {
 			grid-area: image;
@@ -44,6 +45,7 @@ body.home {
 			height: 100%;
 			object-fit: cover;
 			border-radius: 0.5rem;
+			view-transition-name: article-hero-image;
 		}
 		& p {
 			grid-area: teaser;
