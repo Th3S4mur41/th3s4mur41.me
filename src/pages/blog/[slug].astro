@@ -17,7 +17,7 @@ const { Content } = await render(article);
 ---
 
 <Layout 
-	title={article.data.title} noIndex={!article.data.published} canonical={article.data.canonical ?? undefined} noHeader>
+	title={article.data.title} description={article.data.description} noIndex={!article.data.published} canonical={article.data.canonical ?? undefined} noHeader>
   <article>
     {/** Render markdown as HTML using Astro's set:html directive */}
 	  <Content />
