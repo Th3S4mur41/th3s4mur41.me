@@ -1,3 +1,14 @@
+# [2.4.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.3.0...v2.4.0) (2025-08-29)
+
+
+### Features
+
+* **blog:** add schema and collection definition ([95faca8](https://github.com/Th3S4mur41/th3s4mur41.me/commit/95faca8963a8fe8a9ef0a25ed9f0793840ea4062))
+* **blog:** update article title formatting and enhance footer styling ([e8b3989](https://github.com/Th3S4mur41/th3s4mur41.me/commit/e8b39896d75c0335ced7b06027163083018d3320))
+* **blog:** update logic to respect unpublished state ([5dcf197](https://github.com/Th3S4mur41/th3s4mur41.me/commit/5dcf197b7cf0cd55fc0fa943f93a70fb4cc02154))
+* **seo:** add description and keywords ([eb621db](https://github.com/Th3S4mur41/th3s4mur41.me/commit/eb621dbf7ec8d68cc42516a459f17dc585a93d31))
+* **transitions:** add view transition names for hero images and article titles ([57ac4ae](https://github.com/Th3S4mur41/th3s4mur41.me/commit/57ac4ae9c6a228175dd3dda344d4668aa4e2eb31))
+
 # [2.3.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.2.0...v2.3.0) (2025-08-28)
 
 
