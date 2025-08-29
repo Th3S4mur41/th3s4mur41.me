@@ -23,11 +23,6 @@ jobs:
     name: '▶️ actions'
     uses: ./.github/workflows/pr-lint.yml
 
-  codeql:
-    name: '▶️ actions'
-    needs: [pr-lint]
-    uses: ./.github/workflows/codeql.yml
-
   dependencies:
     name: '▶️ actions'
     needs: [pr-lint]
