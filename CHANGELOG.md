@@ -1,3 +1,10 @@
+# [2.5.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.4.0...v2.5.0) (2025-09-01)
+
+
+### Features
+
+* **blog:** add frameworks-are-tools article ([#1839](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1839)) ([527c5a5](https://github.com/Th3S4mur41/th3s4mur41.me/commit/527c5a50ed9987447bc8fe91f5ac2a846d7199c9))
+
 # [2.4.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.3.0...v2.4.0) (2025-08-29)
 
 
