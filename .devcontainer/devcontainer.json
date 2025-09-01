@@ -35,23 +35,25 @@
 			"extensions": [
 				"github.codespaces",
 				"GitHub.vscode-pull-request-github",
-				"dbaeumer.vscode-eslint",
-				"stylelint.vscode-stylelint",
+				"GitHub.vscode-codeql",
+				"github.vscode-github-actions",
+				"GitHub.copilot",
+				"biomejs.biome",
 				"esbenp.prettier-vscode",
 				"deque-systems.vscode-axe-linter",
 				"brainfit.vscode-coverage-highlighter",
 				"vivaxy.vscode-conventional-commits",
 				"donjayamanne.git-extension-pack",
-				"cschleiden.vscode-github-actions",
 				"anteprimorac.html-end-tag-labels",
 				"swellaby.node-pack",
 				"visualstudioexptteam.intellicode-api-usage-examples",
 				"ms-vsliveshare.vsliveshare",
-				"2gua.rainbow-brackets",
 				"jock.svg",
 				"webhint.vscode-webhint",
 				"yzhang.markdown-all-in-one",
-				"MS-SarifVSCode.sarif-viewer"
+				"MS-SarifVSCode.sarif-viewer",
+				"astro-build.astro-vscode",
+				"ms-edgedevtools.vscode-edge-devtools"
 			]
 		}
 	}
