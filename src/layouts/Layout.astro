@@ -7,6 +7,7 @@ import Socials from "../components/Socials.astro";
 
 interface Props {
 	title: string;
+	image?: any;
 	noHeader?: boolean;
 	canonical?: string;
 	noIndex?: boolean;
@@ -15,7 +16,7 @@ interface Props {
 	keywords?: string[];
 }
 
-const { title, description } = Astro.props;
+const { title, image, description } = Astro.props;
 const pageTitle = title ? `${title} | Th3S4mur41.me` : "Th3S4mur41.me";
 const header = title ? title : "Th3S3mur41.me";
 const currentYear = new Date().getFullYear();
@@ -39,6 +40,23 @@ const defaultKeywords = [
 	"ux",
 ];
 const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...defaultKeywords]));
+
+// Retrieve metadata for the hero image
+const ogImageMetadata = image
+	? {
+			src: image.src,
+			attributes: {
+				width: image.attributes.width,
+				height: image.attributes.height,
+			},
+		}
+	: {
+			src: "/icons/android-icon-512x512.png",
+			attributes: {
+				width: 512,
+				height: 512,
+			},
+		};
 ---
 
 <!doctype html>
@@ -90,9 +108,9 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 		<meta property="og:title" content={pageTitle} />
 		<meta property="og:description" content={desc} />
 		<meta property="og:url" content={Astro.url.href} />
-		<meta property="og:image" content="https://th3s4mur41.me/icons/android-icon-512x512.png" />
-		<meta property="og:image:width" content="512" />
-		<meta property="og:image:height" content="512" />
+		<meta property="og:image" content={ogImageMetadata.src} />
+		<meta property="og:image:width" content={ogImageMetadata.attributes.width} />
+		<meta property="og:image:height" content={ogImageMetadata.attributes.height} />
 		<meta property="og:type" content="website" />
 		<!-- <meta property="article:published_time" content="{currentLocalISODate}" />
 		<meta property="article:modified_time" content="{currentLocalISODate}" /> -->
@@ -106,7 +124,7 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 	{!Astro.props.noHeader && (
 		<header>
 			<h1>{header}</h1>
-			<Image src={heroImage} alt='' />
+			<Image src={heroImage} alt="" />
 		</header>
 	)}
 	<nav aria-label="main">
