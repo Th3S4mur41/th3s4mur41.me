@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.5.0...v2.6.0) (2025-09-03)
+
+
+### Features
+
+* enhance Open Graph metadata with article image ([#1844](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1844)) ([ec472ea](https://github.com/Th3S4mur41/th3s4mur41.me/commit/ec472ea762f599ca2c9f60d0ff87f507e67ce118))
+
 # [2.5.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.4.0...v2.5.0) (2025-09-01)
 
 
