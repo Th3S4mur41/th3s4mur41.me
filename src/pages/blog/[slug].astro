@@ -1,6 +1,6 @@
 ---
+import { getImage } from "astro:assets";
 import { getCollection, getEntry, render } from "astro:content";
-import { getImage  } from "astro:assets";
 import Layout from "../../layouts/Layout.astro";
 
 const { slug } = Astro.params;
@@ -19,12 +19,14 @@ const { Content } = await render(article);
 const blogImages = import.meta.glob("/src/content/blog/**/*.{jpg,png,webp}", { eager: true });
 
 const imagePath = article.data.image ? `/src/content/blog/${slug}/${article.data.image}` : undefined;
-const img = imagePath ? await getImage({
-      src: blogImages[imagePath]?.default ,
+const img = imagePath
+	? await getImage({
+			src: blogImages[imagePath]?.default,
 			width: 1200,
 			height: 630,
 			format: "jpg",
-    }) : null;
+		})
+	: null;
 ---
 
 

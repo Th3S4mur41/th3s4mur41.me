@@ -41,24 +41,22 @@ const defaultKeywords = [
 ];
 const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...defaultKeywords]));
 
-
 // Retrieve metadata for the hero image
-const ogImageMetadata = image 
-  ? {
-      src: image.src,
+const ogImageMetadata = image
+	? {
+			src: image.src,
 			attributes: {
-        width: image.attributes.width,
-        height: image.attributes.height,
-      },
-    }
-  : {
-      src: "/icons/android-icon-512x512.png",
-      attributes: {
-        width: 512,
-        height: 512,
-      },
-    };
-
+				width: image.attributes.width,
+				height: image.attributes.height,
+			},
+		}
+	: {
+			src: "/icons/android-icon-512x512.png",
+			attributes: {
+				width: 512,
+				height: 512,
+			},
+		};
 ---
 
 <!doctype html>
