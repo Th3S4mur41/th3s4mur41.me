@@ -1,13 +1,13 @@
 ---
 import "../index.css";
 
-import { Image, getImage  } from "astro:assets";
+import { Image } from "astro:assets";
 import heroImage from "/src/assets/th3S4mur41_colors_ultrawide.png";
 import Socials from "../components/Socials.astro";
 
 interface Props {
 	title: string;
-	image?: string;
+	image?: any;
 	noHeader?: boolean;
 	canonical?: string;
 	noIndex?: boolean;
@@ -44,12 +44,13 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 
 // Retrieve metadata for the hero image
 const ogImageMetadata = image 
-  ? await getImage({
-      src: (await import(image /* @vite-ignore */)).default,
-			width: 1200,
-			height: 630,
-			format: "jpg",
-    })
+  ? {
+      src: image.src,
+			attributes: {
+        width: image.attributes.width,
+        height: image.attributes.height,
+      },
+    }
   : {
       src: "/icons/android-icon-512x512.png",
       attributes: {

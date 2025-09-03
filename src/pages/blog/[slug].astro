@@ -1,5 +1,6 @@
 ---
 import { getCollection, getEntry, render } from "astro:content";
+import { getImage  } from "astro:assets";
 import Layout from "../../layouts/Layout.astro";
 
 const { slug } = Astro.params;
@@ -14,12 +15,22 @@ export async function getStaticPaths() {
 }
 
 const { Content } = await render(article);
-const imgPath = article.data.image ? `/src/content/blog/${slug}/${article.data.image}` : undefined;
+
+const blogImages = import.meta.glob("/src/content/blog/**/*.{jpg,png,webp}", { eager: true });
+
+const imagePath = article.data.image ? `/src/content/blog/${slug}/${article.data.image}` : undefined;
+const img = imagePath ? await getImage({
+      src: blogImages[imagePath]?.default ,
+			width: 1200,
+			height: 630,
+			format: "jpg",
+    }) : null;
 ---
+
 
 <Layout 
 	title={article.data.title} 
-	image={imgPath}
+	image={img}
 	description={article.data.description} 
 	noIndex={!article.data.published} 
 	canonical={article.data.canonical ?? undefined} 
