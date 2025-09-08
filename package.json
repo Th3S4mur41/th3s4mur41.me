@@ -27,7 +27,7 @@
 		"astro": "^5.13.5"
 	},
 	"devDependencies": {
-		"@astrojs/mdx": "^4.3.4",
+		"@astrojs/mdx": "^4.3.5",
 		"@babel/core": "^7.28.4",
 		"@babel/preset-env": "^7.28.3",
 		"@biomejs/biome": "2.2.3",
