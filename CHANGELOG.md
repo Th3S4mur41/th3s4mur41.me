@@ -1,3 +1,10 @@
+# [2.7.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.6.0...v2.7.0) (2025-09-11)
+
+
+### Features
+
+* **blog:** publish the :complete pseudo-class article ([#1859](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1859)) ([cfe1fd2](https://github.com/Th3S4mur41/th3s4mur41.me/commit/cfe1fd233623eacba6bac63da750d6af4f44ac26))
+
 # [2.6.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.5.0...v2.6.0) (2025-09-03)
 
 
