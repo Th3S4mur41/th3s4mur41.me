@@ -118,6 +118,14 @@ const ogImageMetadata = image
 		<meta name="generator" content={Astro.generator} />
 		<link rel="sitemap" href="/sitemap-index.xml" />
 		<title>{pageTitle}</title>
+
+		<!-- Performance -->
+		<script type="speculationrules">
+			{
+				"prerender": [{ "where": { "href_matches": "/*" }, "eagerness": "moderate" }],
+				"prefetch": [{ "where": { "href_matches": "/*" }, "eagerness": "moderate" }]
+			}
+		</script>
 	</head>
 	<body class={slug}>
 		<!-- <a href="#main" class="skip-link">Skip to main content</a> -->
