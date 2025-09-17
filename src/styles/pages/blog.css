@@ -124,5 +124,11 @@ pre {
 	padding-block: 1.5rem;
 }
 
-h2#update {
+h2#update::before {
+	content: "⟳"; /* Unicode symbol for update */
+	/* biome-ignore lint/suspicious/noDuplicateProperties: Version without alternative text as fallback */
+	content: "⟳" / "";
+	margin-inline-end: 0.2em;
+	font-size: 1.2em;
+	color: var(--color-accent);
 }

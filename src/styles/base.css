@@ -4,6 +4,7 @@
 	--color-highlight: oklch(0.4 0 0);
 	--color-text: oklch(1 0 0);
 	--color-subtle-text: oklch(0.8 0 0);
+	--color-accent: oklch(0.86 0.18 90.53);
 
 	--grid-columns: [full-width-start] 1fr [margin-start] 1rem [content-start] min(80ch, calc(100vi - 2rem)) [content-end]
 		1rem [margin-end] 1fr [full-width-end];
@@ -219,6 +220,10 @@ a:has(> article) {
 			text-decoration: underline;
 		}
 	}
+}
+
+a {
+	color: var(--color-accent);
 }
 
 a.author {
