@@ -41,7 +41,7 @@ const img = imagePath
     {/** Render markdown as HTML using Astro's set:html directive */}
 	  <Content />
 		<footer>
-			<p>
+			<p class="published">
 				Published on <time datetime={article.data.date}>{article.data.date.toLocaleDateString()}</time>
 				{article.data.canonical && (
 					<>
@@ -51,6 +51,11 @@ const img = imagePath
 					</>
 				)} by <a href="/about" class="author">Michaël Vanderheyden</a>
 			</p>
+			{article.data.updated && (
+				<p class="updated">
+					Last updated on <time datetime={article.data.updated}>{article.data.updated.toLocaleDateString()}</time>
+				</p>
+			)}
 		</footer>
   </article>
 </Layout>
