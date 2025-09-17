@@ -127,7 +127,7 @@ const ogImageMetadata = image
 	{!Astro.props.noHeader && (
 		<header>
 			<h1>{header}</h1>
-			<Image src={heroImage} alt="" />
+			<Image src={heroImage} alt="" loading="eager" fetchpriority="high" />
 		</header>
 	)}
 	<nav aria-label="main">
