@@ -79,8 +79,17 @@ body[class^="blog-"] {
 			}
 		}
 		& > footer {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			column-gap: 2rem;
+			margin-block: 1em;
 			font-size: 0.875rem;
 			color: var(--color-subtle-text);
+
+			> p {
+				margin: unset;
+			}
 		}
 	}
 }
@@ -113,4 +122,13 @@ pre {
 	border-radius: 0.5rem;
 	padding-inline: 1.5rem;
 	padding-block: 1.5rem;
+}
+
+h2#update::before {
+	content: "⟳"; /* Unicode symbol for update */
+	/* biome-ignore lint/suspicious/noDuplicateProperties: Version without alternative text as fallback */
+	content: "⟳" / "";
+	margin-inline-end: 0.2em;
+	font-size: 1.2em;
+	color: var(--color-accent);
 }
