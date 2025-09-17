@@ -1,3 +1,10 @@
+# [2.9.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.8.0...v2.9.0) (2025-09-17)
+
+
+### Features
+
+* add update section discussing CSSWG's resource state pseudo-classes ([#1865](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1865)) ([331ad34](https://github.com/Th3S4mur41/th3s4mur41.me/commit/331ad34a649613a9128b5025d099f51e92c78a6c))
+
 # [2.8.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.7.0...v2.8.0) (2025-09-17)
 
 
