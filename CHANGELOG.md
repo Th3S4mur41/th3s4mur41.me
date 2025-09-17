@@ -1,3 +1,10 @@
+# [2.8.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.7.0...v2.8.0) (2025-09-17)
+
+
+### Features
+
+* add performance optimization script for prerendering and prefetching ([#1863](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1863)) ([4d022c0](https://github.com/Th3S4mur41/th3s4mur41.me/commit/4d022c0ce0aff731fc28a239efe3eb74299e3a06))
+
 # [2.7.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.6.0...v2.7.0) (2025-09-11)
 
 
