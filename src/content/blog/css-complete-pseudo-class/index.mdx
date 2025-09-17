@@ -115,6 +115,37 @@ The fix isn't hypothetical - the CSS Working Group is already discussing a b
 
 **If you believe this belongs in the platform, now's the time to speak up.** Share your use cases, add your voice, and help shape the spec by joining the conversation on the CSSWG's ["Pseudo‑classes for image state" issue](https://github.com/w3c/csswg-drafts/issues/3134). Every real‑world example strengthens the case - and brings us closer to a web where "complete" is just another state CSS can style.
 
+---
+
+## Update
+
+After publishing the post, [Bramus Van Damme](https://bsky.app/profile/bram.us) pointed me to the ongoing [CSSWG discussion on resource state pseudo-classes](https://github.com/w3c/csswg-drafts/issues/7467).
+
+While my original post referred to a hypothetical `:complete` pseudo-class—based on earlier GitHub discussions and the class I’ve been manually toggling via JavaScript—the current proposal introduces `:loading` and `:failed` instead.
+These two could potentially cover the same use cases, albeit with slightly more verbose selectors like:
+
+```css
+img:not(:failed):not(:loading) {
+	/* image has successfully loaded */
+}
+```
+
+This tradeoff might be acceptable to avoid redundant pseudo-classes, but only the spec sticks to just those two states.  
+However, if additional pseudo-classes like `:stalled`, `:pending`, or `:delayed` are introduced—as some commenters have suggested—the absence of a unified `:complete` or `:loaded` state might lead to increasingly complex selectors:
+
+```css
+img:not(:failed):not(:loading):not(:pending):not(:stalled) {
+	/* image is fully loaded and visible */
+}
+```
+
+In such scenarios, a dedicated `:complete` pseudo-class could regain relevance for clarity and maintainability.
+
+What are your thoughts? Would you prefer the simplicity of a `:complete` pseudo-class, or do you find the current proposal sufficient?
+Let me know on [Bluesky](https://bsky.app/profile/th3s4mur41.me/post/3lykpz2kuic22) or [X](https://x.com/Th3S4mur41/status/1966109475154313716), or even better - join the discussion directly on the [CSSWG issue](https://github.com/w3c/csswg-drafts/issues/7467).
+
+---
+
 ## Links
 
 - [[selectors-4] additional resource state pseudo-classes for img / picture elements · Issue #7467 · w3c/csswg-drafts](https://github.com/w3c/csswg-drafts/issues/7467)
