@@ -1,3 +1,10 @@
+# [2.10.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.9.0...v2.10.0) (2025-09-18)
+
+
+### Features
+
+* add prism syntax highlighting for better a11y ([#1870](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1870)) ([9fdf8b3](https://github.com/Th3S4mur41/th3s4mur41.me/commit/9fdf8b37b9118ffe59904534ad90497df0782a7f))
+
 # [2.9.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.8.0...v2.9.0) (2025-09-17)
 
 
