@@ -73,7 +73,6 @@
 		"lint": "prettier --check --ignore-unknown --no-error-on-unmatched-pattern . && biome ci .",
 		"lint:fix": "prettier --write --ignore-unknown --no-error-on-unmatched-pattern . && biome check --write .",
 		"test": "echo No test specified",
-		"test:visual": "npx percy snapshot ./dist",
 		"release": "semantic-release",
 		"version": "npm run lint:fix",
 		"prepare": "husky"
