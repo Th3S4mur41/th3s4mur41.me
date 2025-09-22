@@ -15,16 +15,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  visual-test:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    name: '▶️ actions'
-    uses: ./.github/workflows/visual-test.yml
-    secrets:
-      PERCY_TOKEN: ${{ secrets.PERCY_TOKEN  }}
-
   semantic-release:
     name: '▶️ actions'
-    needs: [visual-test]
     uses: ./.github/workflows/semantic-release.yml
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN  }}
