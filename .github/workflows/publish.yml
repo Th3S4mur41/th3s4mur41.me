@@ -10,6 +10,8 @@ on:
         required: true
       CLOUDFLARE_API_TOKEN:
         required: true
+      INDEXNOW_KEY:
+        required: false
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
