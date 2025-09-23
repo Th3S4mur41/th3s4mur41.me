@@ -24,20 +24,20 @@
 		"@astrojs/sitemap": "^3.6.0",
 		"@fontsource/cascadia-code": "^5.2.3",
 		"@fontsource/nanum-brush-script": "^5.2.8",
-		"astro": "^5.13.8"
+		"astro": "^5.13.9"
 	},
 	"devDependencies": {
-		"@astrojs/mdx": "^4.3.5",
+		"@astrojs/mdx": "^4.3.6",
 		"@babel/core": "^7.28.4",
 		"@babel/preset-env": "^7.28.3",
 		"@biomejs/biome": "2.2.4",
 		"@commitlint/cli": "^19.8.1",
 		"@commitlint/config-conventional": "^19.8.1",
-		"@csstools/postcss-oklab-function": "^4.0.10",
+		"@csstools/postcss-oklab-function": "^4.0.12",
 		"@semantic-release/changelog": "^6.0.3",
 		"@semantic-release/git": "^10.0.1",
 		"@squoosh/cli": "^0.7.3",
-		"@typescript-eslint/eslint-plugin": "^8.44.0",
+		"@typescript-eslint/eslint-plugin": "^8.44.1",
 		"@typescript-eslint/parser": "^8.32.1",
 		"autoprefixer": "^10.4.21",
 		"babel-loader": "^10.0.0",
@@ -45,7 +45,7 @@
 		"concurrently": "^9.2.1",
 		"cssnano": "^7.1.1",
 		"cssremedy": "^0.1.0-beta.2",
-		"eslint": "^9.35.0",
+		"eslint": "^9.36.0",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-compat": "^6.0.2",
 		"hint": "^7.1.13",
@@ -54,14 +54,14 @@
 		"postcss": "^8.5.6",
 		"postcss-loader": "^8.2.0",
 		"postcss-nesting": "^13.0.2",
-		"postcss-preset-env": "^10.3.1",
+		"postcss-preset-env": "^10.4.0",
 		"prettier": "^3.6.2",
 		"typescript": "^5.9.2",
-		"vite": "^7.1.6",
+		"vite": "^7.1.7",
 		"vite-plugin-handlebars": "^2.0.0"
 	},
 	"optionalDependencies": {
-		"lint-staged": "^16.1.6",
+		"lint-staged": "^16.2.0",
 		"semantic-release": "^24.2.8"
 	},
 	"scripts": {
@@ -73,7 +73,6 @@
 		"lint": "prettier --check --ignore-unknown --no-error-on-unmatched-pattern . && biome ci .",
 		"lint:fix": "prettier --write --ignore-unknown --no-error-on-unmatched-pattern . && biome check --write .",
 		"test": "echo No test specified",
-		"test:visual": "npx percy snapshot ./dist",
 		"release": "semantic-release",
 		"version": "npm run lint:fix",
 		"prepare": "husky"
