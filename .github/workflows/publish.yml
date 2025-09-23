@@ -52,6 +52,11 @@ jobs:
       #     name: build
       #     path: dist
 
+      - name: Create IndexNow key file
+        run: echo $INDEXNOW_KEY > dist/$INDEXNOW_KEY.txt
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+
       - name: '🚀 Publish to Cloudflare Pages'
         uses: cloudflare/pages-action@1
         with:
@@ -60,3 +65,15 @@ jobs:
           projectName: th3s4mur41-me
           directory: ./dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Notify IndexNow
+        run: |
+          if [ -z "${INDEXNOW_KEY}" ]; then
+            echo "INDEXNOW_KEY is empty; skipping IndexNow notification.";
+            exit 0;
+          fi
+          curl -H "Content-Type: application/json" \
+            -d "{\"host\":\"th3s4mur41.me\",\"key\":\"$INDEXNOW_KEY\",\"urlList\":[\"https://th3s4mur41.me/sitemap-index.xml\"]}" \
+            https://api.indexnow.org/indexnow
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
