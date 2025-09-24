@@ -1,3 +1,10 @@
+# [2.11.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.10.0...v2.11.0) (2025-09-24)
+
+
+### Features
+
+* **blog:** add article on enhancing Dependabot auto-merging ([6f0c226](https://github.com/Th3S4mur41/th3s4mur41.me/commit/6f0c22647e17cd099330b3dfb5033374621fed8e))
+
 # [2.10.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.9.0...v2.10.0) (2025-09-18)
 
 
