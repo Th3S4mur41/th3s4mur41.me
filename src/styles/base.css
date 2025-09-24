@@ -33,6 +33,7 @@ body {
 	background-color: var(--color-bg);
 	font-family: sans-serif;
 	line-height: 1.5;
+	color: var(--color-text);
 }
 
 header {
@@ -231,5 +232,54 @@ a.author {
 	color: inherit;
 	&:is(:hover, :focus) {
 		color: var(--color-text);
+	}
+}
+
+.emoji,
+.emoji > * {
+	/* avoid layout breaking when astro wraps the emoji in an additional p tag */
+	display: inline;
+}
+
+.emoji > p {
+	margin-block: unset;
+}
+
+li:has(> .emoji) {
+	list-style-type: "";
+	margin-block-end: 0.5em;
+
+	& > .emoji {
+		margin-inline-start: -4ch;
+		margin-inline-end: 1.3ch;
+	}
+}
+
+ol {
+	list-style-position: outside; /* default */
+	padding-inline-start: 1ch;
+	margin-inline-start: 1em;
+}
+
+ol > li {
+	position: relative;
+	margin-block-end: 0.5em;
+	padding-inline-start: 1.5ch;
+
+	&::marker {
+		font-weight: 600;
+		color: var(--color-bg);
+	}
+	&::before {
+		content: "";
+		display: inline-block;
+		position: absolute;
+		top: 0;
+		left: -2.3ch;
+		background-color: var(--color-accent);
+		border-radius: 0.25rem;
+		inline-size: 2.1ch;
+		block-size: 1lh;
+		z-index: -1;
 	}
 }
