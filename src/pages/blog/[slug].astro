@@ -1,6 +1,7 @@
 ---
 import { getImage } from "astro:assets";
 import { getCollection, getEntry, render } from "astro:content";
+import readingTime from "reading-time";
 import Layout from "../../layouts/Layout.astro";
 
 const { slug } = Astro.params;
@@ -15,18 +16,26 @@ export async function getStaticPaths() {
 }
 
 const { Content } = await render(article);
+const minutesRead = Math.max(1, Math.ceil(readingTime(article.body).minutes));
 
-const blogImages = import.meta.glob("/src/content/blog/**/*.{jpg,png,webp}", { eager: true });
+const blogImages = import.meta.glob<Record<string, { default: ImageMetadata }>>(
+	"/src/content/blog/**/*.{jpg,png,webp}",
+	{ eager: true },
+);
 
 const imagePath = article.data.image ? `/src/content/blog/${slug}/${article.data.image}` : undefined;
-const img = imagePath
-	? await getImage({
-			src: blogImages[imagePath]?.default,
+let img: Awaited<ReturnType<typeof getImage>> | undefined;
+if (imagePath) {
+	const mod = blogImages[imagePath] as unknown as { default?: ImageMetadata } | undefined;
+	if (mod?.default) {
+		img = await getImage({
+			src: mod.default,
 			width: 1200,
 			height: 630,
 			format: "jpg",
-		})
-	: null;
+		});
+	}
+}
 ---
 
 
