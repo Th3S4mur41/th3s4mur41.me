@@ -47,6 +47,7 @@ const MAX_TITLE_LEN = 60 - "| Th3S4mur41.me".length;
 function truncateTitle(original: string): string {
 	if (!original) return original;
 	if (original.length <= MAX_TITLE_LEN) return original;
+	// Consider only the first MAX_TITLE_LEN characters as the working window
 	const window = original.slice(0, MAX_TITLE_LEN);
 	const findLast = (chars: string) => {
 		let pos = -1;
@@ -61,8 +62,18 @@ function truncateTitle(original: string): string {
 	if (pos !== -1) {
 		return window.slice(0, pos + 1).trim();
 	}
-	// Separators (: ;)
-	pos = findLast(":;");
+	// Separators (: ;) — only if followed by whitespace in the ORIGINAL string.
+	// This prevents splitting inside constructs like times (e.g., "10:30") or tokens like "key:value".
+	const findLastFollowedByWhitespace = (chars: string) => {
+		for (let i = window.length - 1; i >= 0; i--) {
+			const ch = window[i];
+			if (!chars.includes(ch)) continue;
+			const nextChar = original[i + 1]; // may be outside the window but still inside original
+			if (nextChar && /\s/.test(nextChar)) return i;
+		}
+		return -1;
+	};
+	pos = findLastFollowedByWhitespace(":;");
 	if (pos !== -1) {
 		return window.slice(0, pos).trim();
 	}
