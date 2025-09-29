@@ -1,3 +1,10 @@
+## [2.12.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.12.0...v2.12.1) (2025-09-29)
+
+
+### Bug Fixes
+
+* enhance SEO based on ahrefs report ([#1892](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1892)) ([56b88be](https://github.com/Th3S4mur41/th3s4mur41.me/commit/56b88bedb83480f889db87d9dabada142c7dddbc))
+
 # [2.12.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.11.0...v2.12.0) (2025-09-29)
 
 
