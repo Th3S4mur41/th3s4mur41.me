@@ -15,7 +15,10 @@ const dateOptions: Intl.DateTimeFormatOptions = {
 	day: "numeric",
 };
 
-const blogImages = import.meta.glob("/src/content/blog/**/*.{jpg,png,webp}", { eager: true }) as Record<string, { default: any }>;
+const blogImages = import.meta.glob("/src/content/blog/**/*.{jpg,png,webp}", { eager: true }) as Record<
+	string,
+	{ default: any }
+>;
 
 const lastPublishedPost = blog.find((post) => post.data.published);
 const imagePath = lastPublishedPost
@@ -24,7 +27,9 @@ const imagePath = lastPublishedPost
 const image = imagePath ? blogImages[imagePath]?.default : null;
 
 // Talks: retrieve latest published talk and load its MD/MDX component so we can inline full content
-const talks = (await getCollection("talks")).sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+const talks = (await getCollection("talks")).sort(
+	(a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+);
 const lastPublishedTalk = talks.find((talk) => talk.data.published);
 let TalkContent;
 if (lastPublishedTalk) {
@@ -32,21 +37,24 @@ if (lastPublishedTalk) {
 	const talkModules = import.meta.glob("/src/content/talks/**/*.{md,mdx}", { eager: true });
 	// Try common filename patterns
 	const basePath = `/src/content/talks/${lastPublishedTalk.id}/index`;
-	const possiblePaths = [
-		`${basePath}.mdx`,
-		`${basePath}.md`,
-	];
+	const possiblePaths = [`${basePath}.mdx`, `${basePath}.md`];
 	for (const p of possiblePaths) {
 		if (p in talkModules) {
-			// @ts-ignore - dynamic module shape from MDX
+			// @ts-expect-error - dynamic module shape from MDX
 			TalkContent = talkModules[p].default;
 			break;
 		}
 	}
 }
 // Resolve latest talk image similar to blog
-const talkImages = import.meta.glob("/src/content/talks/**/*.{jpg,png,webp}", { eager: true }) as Record<string, { default: any }>;
-const talkImagePath = lastPublishedTalk && lastPublishedTalk.data.image ? `/src/content/talks/${lastPublishedTalk.id}/${lastPublishedTalk.data.image}` : null;
+const talkImages = import.meta.glob("/src/content/talks/**/*.{jpg,png,webp}", { eager: true }) as Record<
+	string,
+	{ default: any }
+>;
+const talkImagePath =
+	lastPublishedTalk && lastPublishedTalk.data.image
+		? `/src/content/talks/${lastPublishedTalk.id}/${lastPublishedTalk.data.image}`
+		: null;
 const talkImage = talkImagePath ? talkImages[talkImagePath]?.default : null;
 ---
 
@@ -72,18 +80,17 @@ const talkImage = talkImagePath ? talkImages[talkImagePath]?.default : null;
 		</a>
 	)}
 	{lastPublishedTalk && (
-			<hr />
-			<h2>Latest talk</h2>
-			<a href={`/talks/${lastPublishedTalk.id}/`} aria-labelledby={`talk-header-${lastPublishedTalk.id}`}>
-				<article aria-labelledby={`talk-header-${lastPublishedTalk.id}`} data-type={lastPublishedTalk.data.type}>
-					<h3 id={`talk-header-${lastPublishedTalk.id}`}>{lastPublishedTalk.data.title}</h3>
-					{talkImage && <Image src={talkImage} alt="" />}
-					<p>{lastPublishedTalk.data.description}</p>
-					<time datetime={lastPublishedTalk.data.date}>
-						{new Date(lastPublishedTalk.data.date).toLocaleDateString(undefined, dateOptions)}
-					</time>
-				</article>
-			</a>
-		</>
+		<hr />
+		<h2>Latest talk</h2>
+		<a href={`/talks/${lastPublishedTalk.id}/`} aria-labelledby={`talk-header-${lastPublishedTalk.id}`}>
+			<article aria-labelledby={`talk-header-${lastPublishedTalk.id}`} data-type={lastPublishedTalk.data.type}>
+				<h3 id={`talk-header-${lastPublishedTalk.id}`}>{lastPublishedTalk.data.title}</h3>
+				{talkImage && <Image src={talkImage} alt="" />}
+				<p>{lastPublishedTalk.data.description}</p>
+				<time datetime={lastPublishedTalk.data.date}>
+					{new Date(lastPublishedTalk.data.date).toLocaleDateString(undefined, dateOptions)}
+				</time>
+			</article>
+		</a>
 	)}
 </Layout>
