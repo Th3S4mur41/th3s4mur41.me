@@ -41,11 +41,52 @@ const img =
 				format: "jpg",
 			})
 		: undefined;
+
+// Title truncation logic: ensure max 60 chars with punctuation-aware rules.
+const MAX_TITLE_LEN = 60;
+function truncateTitle(original: string): string {
+	if (!original) return original;
+	if (original.length <= MAX_TITLE_LEN) return original;
+	const window = original.slice(0, MAX_TITLE_LEN);
+	const findLast = (chars: string) => {
+		let pos = -1;
+		for (const ch of chars) {
+			const i = window.lastIndexOf(ch);
+			if (i > pos) pos = i;
+		}
+		return pos;
+	};
+	// Sentence-ending punctuation (. ? !)
+	let pos = findLast(".?!");
+	if (pos !== -1) {
+		return window.slice(0, pos + 1).trim();
+	}
+	// Separators (: ;)
+	pos = findLast(":;");
+	if (pos !== -1) {
+		return window.slice(0, pos).trim();
+	}
+	// Comma (,): keep comma then add ellipsis ensuring total <= 60
+	pos = window.lastIndexOf(",");
+	if (pos !== -1) {
+		const cut = Math.min(pos + 1, MAX_TITLE_LEN - 3); // leave room for ...
+		return `${window.slice(0, cut).trimEnd()}...`;
+	}
+	// Fallback: cut at last space before limit-3 if possible
+	const spacePos = window.lastIndexOf(" ", MAX_TITLE_LEN - 3);
+	if (spacePos > 20) {
+		// avoid trimming to something too tiny
+		return `${window.slice(0, spacePos).trimEnd()}...`;
+	}
+	return `${window.slice(0, MAX_TITLE_LEN - 3).trimEnd()}...`;
+}
+
+const truncatedTitle = truncateTitle(article.data.title);
 ---
 
 
 <Layout 
-	title={article.data.title} 
+	title={truncatedTitle} 
 	image={img}
 	description={article.data.description} 
 	keywords={article.data.keywords}
