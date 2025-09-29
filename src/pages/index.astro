@@ -34,7 +34,7 @@ const image = imagePath ? blogImages[imagePath]?.default : null;
 	<hr>
 	<h2>Latest post</h2>
 	{lastPublishedPost && (
-		<a href={`/blog/${lastPublishedPost.id}`} aria-labelledby={`article-header-${lastPublishedPost.id}`} aria-describedby={`article-description-${lastPublishedPost.id}`}>
+		<a href={`/blog/${lastPublishedPost.id}/`} aria-labelledby={`article-header-${lastPublishedPost.id}`} aria-describedby={`article-description-${lastPublishedPost.id}`}>
 		<article>
 			<h3>{lastPublishedPost.data.title}</h3>
 			{image && <Image src={image} alt="" />}
