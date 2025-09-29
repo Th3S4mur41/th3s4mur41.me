@@ -3,15 +3,23 @@ import { getImage } from "astro:assets";
 import { getCollection, getEntry, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 
-const { slug } = Astro.params;
-const article = await getEntry("blog", slug);
-if (!article) {
-	throw new Error(`Article not found: ${slug}`);
-}
-
+// Build-time: generate slugs, prefixing unpublished posts with `_draft-` for preview.
 export async function getStaticPaths() {
 	const articles = await getCollection("blog");
-	return articles.map((entry) => ({ params: { slug: entry.id }, props: { article: entry } }));
+	return articles.map((entry) => {
+		const base = entry.id;
+		const isPublished = entry.data.published === true;
+		const finalSlug = !isPublished && !base.startsWith("_draft-") ? `_draft-${base}` : base;
+		return { params: { slug: finalSlug }, props: { article: entry } };
+	});
+}
+
+// Runtime: normalize slug back (strip `_draft-`) to fetch original entry id.
+const { slug } = Astro.params as { slug: string | undefined };
+const normalizedSlug = slug?.startsWith("_draft-") ? slug.slice("_draft-".length) : slug;
+const article = await getEntry("blog", normalizedSlug);
+if (!article) {
+	throw new Error(`Article not found: ${normalizedSlug}`);
 }
 
 const { Content } = await render(article);
@@ -19,14 +27,20 @@ const { Content } = await render(article);
 const blogImages = import.meta.glob("/src/content/blog/**/*.{jpg,png,webp}", { eager: true });
 
 const imagePath = article.data.image ? `/src/content/blog/${slug}/${article.data.image}` : undefined;
-const img = imagePath
-	? await getImage({
-			src: blogImages[imagePath]?.default,
-			width: 1200,
-			height: 630,
-			format: "jpg",
-		})
-	: null;
+let resolvedImage: unknown;
+if (imagePath && blogImages[imagePath] && typeof blogImages[imagePath] === "object") {
+	const maybeMod = blogImages[imagePath] as { default?: unknown };
+	if (maybeMod.default) resolvedImage = maybeMod.default;
+}
+const img =
+	imagePath && resolvedImage
+		? await getImage({
+				src: resolvedImage as unknown as string,
+				width: 1200,
+				height: 630,
+				format: "jpg",
+			})
+		: undefined;
 ---
 
 
