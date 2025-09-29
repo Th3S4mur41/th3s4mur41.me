@@ -10,3 +10,9 @@
 		transform: translateY(-100%) scaleY(0);
 	}
 }
+
+@keyframes slash {
+	to {
+		--hr-slash: 50%;
+	}
+}
