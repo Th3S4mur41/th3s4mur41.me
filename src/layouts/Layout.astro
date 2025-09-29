@@ -22,7 +22,10 @@ const header = title ? title : "Th3S3mur41.me";
 const currentYear = new Date().getFullYear();
 const slug = Astro.url.pathname.replace(/^\/|\/$/g, "").replace(/\//g, "-") || "home";
 
-const desc = description || "Personal website of Th3S4mur41 – developer, martial artist, and tech enthusiast.";
+// Default meta description (~150 chars) optimized for primary topics without truncation in SERPs
+const desc =
+	description ||
+	"Personal site of Th3S4mur41: developer & martial artist sharing web development, accessibility, performance, CSS, JS, UI/UX and open source insights.";
 const defaultKeywords = [
 	"Th3S4mur41",
 	"developer",
