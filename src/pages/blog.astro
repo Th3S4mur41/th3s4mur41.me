@@ -22,7 +22,7 @@ const dateOptions = {
 	const imagePath = `/src/content/blog/${article.id}/${article.data.image}`;
 	const image = blogImages[imagePath]?.default;
 	return (
-		<a href={`/blog/${article.id}`} aria-labelledby={`article-header-${article.id}`} aria-describedby={`article-description-${article.id}`}>
+		<a href={`/blog/${article.id}/`} aria-labelledby={`article-header-${article.id}`} aria-describedby={`article-description-${article.id}`}>
 			<article>
 				<h2 id={`article-header-${article.id}`}>{article.data.title}</h2>
 				{image && <Image src={image} alt={article.data.imageAlt || article.data.title} loading="lazy" />}
