@@ -54,7 +54,7 @@ body.blog {
 }
 
 /* individual blog pages */
-body[class^="blog-"] {
+body:is([class^="blog-"], [class^="talks-"]) {
 	article {
 		grid-column: full-width;
 		display: grid;
