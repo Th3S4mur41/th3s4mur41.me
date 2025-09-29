@@ -43,7 +43,7 @@ const img =
 		: undefined;
 
 // Title truncation logic: ensure max 60 chars with punctuation-aware rules.
-const MAX_TITLE_LEN = 60;
+const MAX_TITLE_LEN = 60 - "| Th3S4mur41.me".length;
 function truncateTitle(original: string): string {
 	if (!original) return original;
 	if (original.length <= MAX_TITLE_LEN) return original;
