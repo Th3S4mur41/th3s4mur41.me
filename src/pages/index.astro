@@ -26,26 +26,11 @@ const imagePath = lastPublishedPost
 	: null;
 const image = imagePath ? blogImages[imagePath]?.default : null;
 
-// Talks: retrieve latest published talk and load its MD/MDX component so we can inline full content
+// Talks: retrieve latest published talk (no inline MDX import required here)
 const talks = (await getCollection("talks")).sort(
 	(a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
 );
 const lastPublishedTalk = talks.find((talk) => talk.data.published);
-let TalkContent;
-if (lastPublishedTalk) {
-	// Eagerly import all talk markdown/MDX files to get their compiled components
-	const talkModules = import.meta.glob("/src/content/talks/**/*.{md,mdx}", { eager: true });
-	// Try common filename patterns
-	const basePath = `/src/content/talks/${lastPublishedTalk.id}/index`;
-	const possiblePaths = [`${basePath}.mdx`, `${basePath}.md`];
-	for (const p of possiblePaths) {
-		if (p in talkModules) {
-			// @ts-expect-error - dynamic module shape from MDX
-			TalkContent = talkModules[p].default;
-			break;
-		}
-	}
-}
 // Resolve latest talk image similar to blog
 const talkImages = import.meta.glob("/src/content/talks/**/*.{jpg,png,webp}", { eager: true }) as Record<
 	string,
