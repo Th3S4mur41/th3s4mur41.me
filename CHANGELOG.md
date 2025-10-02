@@ -1,3 +1,20 @@
+# [2.13.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.12.2...v2.13.0) (2025-10-02)
+
+
+### Features
+
+* add talks section and entry for beyond barriers podcast ([#1894](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1894)) ([fbc9664](https://github.com/Th3S4mur41/th3s4mur41.me/commit/fbc96641c1a2849db6fe2cec12c25c2b0b822757))
+
+## [2.12.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.12.1...v2.12.2) (2025-09-29)
+
+
+### Bug Fixes
+
+* adjust title length calculation for truncation logic ([653fc3d](https://github.com/Th3S4mur41/th3s4mur41.me/commit/653fc3d658077ab781b0f3252fb213bfc5ce2a39))
+* improve title truncation logic with whitespace-aware separators ([e8f111e](https://github.com/Th3S4mur41/th3s4mur41.me/commit/e8f111e3f22fa5ea21482928b6e4430b04b930a4))
+* **SEO:** optimize description length ([a0ac7e2](https://github.com/Th3S4mur41/th3s4mur41.me/commit/a0ac7e232b1fdac77be210ef495abe9ea5ae7b00))
+* update author link to include trailing slash ([2f0acd9](https://github.com/Th3S4mur41/th3s4mur41.me/commit/2f0acd944c7ffc366c499125cfc50175ea949699))
+
 ## [2.12.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.12.0...v2.12.1) (2025-09-29)
 
 
