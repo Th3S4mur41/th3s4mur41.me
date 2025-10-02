@@ -1,3 +1,10 @@
+## [2.13.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.13.0...v2.13.1) (2025-10-02)
+
+
+### Bug Fixes
+
+* simplify browser support list by removing specific version entries ([#1893](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1893)) ([39fdc40](https://github.com/Th3S4mur41/th3s4mur41.me/commit/39fdc40ba6f8aab24b9ed191a60151501fac6259))
+
 # [2.13.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.12.2...v2.13.0) (2025-10-02)
 
 
