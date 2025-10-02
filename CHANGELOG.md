@@ -1,3 +1,10 @@
+# [2.13.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.12.2...v2.13.0) (2025-10-02)
+
+
+### Features
+
+* add talks section and entry for beyond barriers podcast ([#1894](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1894)) ([fbc9664](https://github.com/Th3S4mur41/th3s4mur41.me/commit/fbc96641c1a2849db6fe2cec12c25c2b0b822757))
+
 ## [2.12.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.12.1...v2.12.2) (2025-09-29)
 
 
