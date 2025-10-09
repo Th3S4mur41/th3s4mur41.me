@@ -1,3 +1,90 @@
+## [2.13.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.13.0...v2.13.1) (2025-10-02)
+
+
+### Bug Fixes
+
+* simplify browser support list by removing specific version entries ([#1893](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1893)) ([39fdc40](https://github.com/Th3S4mur41/th3s4mur41.me/commit/39fdc40ba6f8aab24b9ed191a60151501fac6259))
+
+# [2.13.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.12.2...v2.13.0) (2025-10-02)
+
+
+### Features
+
+* add talks section and entry for beyond barriers podcast ([#1894](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1894)) ([fbc9664](https://github.com/Th3S4mur41/th3s4mur41.me/commit/fbc96641c1a2849db6fe2cec12c25c2b0b822757))
+
+## [2.12.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.12.1...v2.12.2) (2025-09-29)
+
+
+### Bug Fixes
+
+* adjust title length calculation for truncation logic ([653fc3d](https://github.com/Th3S4mur41/th3s4mur41.me/commit/653fc3d658077ab781b0f3252fb213bfc5ce2a39))
+* improve title truncation logic with whitespace-aware separators ([e8f111e](https://github.com/Th3S4mur41/th3s4mur41.me/commit/e8f111e3f22fa5ea21482928b6e4430b04b930a4))
+* **SEO:** optimize description length ([a0ac7e2](https://github.com/Th3S4mur41/th3s4mur41.me/commit/a0ac7e232b1fdac77be210ef495abe9ea5ae7b00))
+* update author link to include trailing slash ([2f0acd9](https://github.com/Th3S4mur41/th3s4mur41.me/commit/2f0acd944c7ffc366c499125cfc50175ea949699))
+
+## [2.12.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.12.0...v2.12.1) (2025-09-29)
+
+
+### Bug Fixes
+
+* enhance SEO based on ahrefs report ([#1892](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1892)) ([56b88be](https://github.com/Th3S4mur41/th3s4mur41.me/commit/56b88bedb83480f889db87d9dabada142c7dddbc))
+
+# [2.12.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.11.0...v2.12.0) (2025-09-29)
+
+
+### Features
+
+* update favicon ([#1888](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1888)) ([1130379](https://github.com/Th3S4mur41/th3s4mur41.me/commit/11303798104693ebc8e9b1220ac7804de5d139d4))
+
+# [2.11.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.10.0...v2.11.0) (2025-09-24)
+
+
+### Features
+
+* **blog:** add article on enhancing Dependabot auto-merging ([6f0c226](https://github.com/Th3S4mur41/th3s4mur41.me/commit/6f0c22647e17cd099330b3dfb5033374621fed8e))
+
+# [2.10.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.9.0...v2.10.0) (2025-09-18)
+
+
+### Features
+
+* add prism syntax highlighting for better a11y ([#1870](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1870)) ([9fdf8b3](https://github.com/Th3S4mur41/th3s4mur41.me/commit/9fdf8b37b9118ffe59904534ad90497df0782a7f))
+
+# [2.9.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.8.0...v2.9.0) (2025-09-17)
+
+
+### Features
+
+* add update section discussing CSSWG's resource state pseudo-classes ([#1865](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1865)) ([331ad34](https://github.com/Th3S4mur41/th3s4mur41.me/commit/331ad34a649613a9128b5025d099f51e92c78a6c))
+
+# [2.8.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.7.0...v2.8.0) (2025-09-17)
+
+
+### Features
+
+* add performance optimization script for prerendering and prefetching ([#1863](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1863)) ([4d022c0](https://github.com/Th3S4mur41/th3s4mur41.me/commit/4d022c0ce0aff731fc28a239efe3eb74299e3a06))
+
+# [2.7.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.6.0...v2.7.0) (2025-09-11)
+
+
+### Features
+
+* **blog:** publish the :complete pseudo-class article ([#1859](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1859)) ([cfe1fd2](https://github.com/Th3S4mur41/th3s4mur41.me/commit/cfe1fd233623eacba6bac63da750d6af4f44ac26))
+
+# [2.6.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.5.0...v2.6.0) (2025-09-03)
+
+
+### Features
+
+* enhance Open Graph metadata with article image ([#1844](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1844)) ([ec472ea](https://github.com/Th3S4mur41/th3s4mur41.me/commit/ec472ea762f599ca2c9f60d0ff87f507e67ce118))
+
+# [2.5.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.4.0...v2.5.0) (2025-09-01)
+
+
+### Features
+
+* **blog:** add frameworks-are-tools article ([#1839](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1839)) ([527c5a5](https://github.com/Th3S4mur41/th3s4mur41.me/commit/527c5a50ed9987447bc8fe91f5ac2a846d7199c9))
+
 # [2.4.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.3.0...v2.4.0) (2025-08-29)
 
 

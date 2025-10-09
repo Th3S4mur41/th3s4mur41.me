@@ -1,0 +1,100 @@
+---
+title: 'Enhancing Dependabot Auto-Merging: A Smarter, More Secure Approach'
+date: 2025-05-09T07:00:00Z
+image: enhancing-dependabot-auto-merging.webp
+published: true
+description: >-
+  Securely auto-merge Dependabot PRs with GitHub Rulesets and a webhook-driven GitHub App—no PATs, lower risk, and faster, safer dependency updates.
+tags: ['dependabot', 'github', 'security', 'automation', 'devops']
+keywords:
+  [
+    'dependabot',
+    'dependabot auto-merge',
+    'github',
+    'github apps',
+    'github rulesets',
+    'branch protection',
+    'dependency management',
+    'security',
+    'vulnerability management',
+    'automation',
+    'semantic-release',
+    'ci/cd',
+    'npm',
+    'nodejs',
+    'devops'
+  ]
+---
+
+# Enhancing Dependabot Auto-Merging: A Smarter, More Secure Approach
+
+![A shield floating in front of some code snippets](enhancing-dependabot-auto-merging.webp)
+
+Did you know that [outdated dependencies account for up to 68% of vulnerabilities in JavaScript applications](https://moldstud.com/articles/p-understanding-nodejs-security-common-vulnerabilities-and-prevention-strategies)?
+
+In the past, I shared [a method that leveraged GitHub Dependabot, Semantic Release, and automated workflows to streamline dependency updates](https://medium.com/javascript-in-plain-english/how-to-leverage-github-and-semantic-release-to-reduce-vulnerabilities-in-your-packages-c517403e339c) while ensuring new versions were published seamlessly.
+
+While effective, the approach had a few flaws — particularly regarding branch protection and the necessity of personal access tokens (PATs) for auto-merging. Since then, two major improvements have reshaped how I handle these updates: **[GitHub Rulesets](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets)** and a **GitHub App-Based Workflow**. Let’s dive into the evolution of this method and explore how these changes simplify and secure the process.
+
+## Recap: The Old Workflow & Its Drawbacks
+
+My original workflow automated dependency updates via Dependabot PRs, auto-merging them, and triggering Semantic Release to publish new versions. However, several concerns arose:
+
+- **Requiring a Personal Access Token (PAT):** In repositories enforcing review requirements, merging automatically required a PAT from a code owner, as specified in branch protection rules.
+- **Branch Protection Limitations with GitHub Apps:** Since GitHub Apps **cannot be assigned as code owners**, repositories using an app secret instead of a PAT for automation had to **entirely bypass branch protection**, as partial bypass was not possible.
+  These constraints made the process riskier and harder to scale securely, leading to a need for a more refined approach
+
+## Improvement: GitHub Rulesets for Smarter Branch Protection
+
+GitHub introduced **Rulesets**, a modular way to configure branch protection. The flexibility of rulesets allows for a **dedicated account** to bypass review requirements **only for Dependabot PRs**, while still enforcing other checks like:
+
+- <span class="emoji" aria-hidden="true">
+  	✅
+  </span>
+  Ensuring all status checks pass before merging
+- <span class="emoji" aria-hidden="true">
+  	✅
+  </span>
+  Keeping strict protections for other contributors
+
+This granular approach made it possible to replace the PAT through a GitHub App secret and use an [Action](https://github.com/marketplace/actions/create-github-app-token) to generate a token on the fly to merge the PRs.
+
+While more secure, this solution just traded PAT management for app secret management, providing no improvement in that matter.
+
+## The Solution: A Webhook-Triggered GitHub App
+
+Instead of merely using an app for authentication, I implemented an **app-driven auto-merging solution** that operates via webhooks:
+
+1. The app **triggers a webhook** on PR changes and workflow runs.
+2. The webhook **fetches metadata** using GitHub’s GraphQL API.
+3. It evaluates the PR using Dependabot’s own [fetch-metadata](https://github.com/dependabot/fetch-metadata) logic.
+4. If all checks pass, the webhook **merges the PR automatically**.
+
+## Why This Approach Works Best
+
+- <span class="emoji" aria-hidden="true">
+  	🚀
+  </span>
+  **Simple Deployment:** Installing the app takes just **two clicks**, eliminating the overhead of secret management.
+- <span class="emoji" aria-hidden="true">
+  	🔒
+  </span>
+  **No More PATs:** The webhook **generates a temporary installation token** dynamically for each request — enhancing
+  security and automation.
+- <span class="emoji" aria-hidden="true">
+  	🎯
+  </span>
+  **Single point of improvement:** The code for the app is maintained in a central repository making it much easier to
+  improve than multiple copies of the same workflow.
+
+## Conclusion
+
+By leveraging **GitHub Rulesets** and a **Webhook-Triggered GitHub App**, auto-merging Dependabot PRs is now **safer, more scalable, and easier to deploy**. These enhancements **remove security risks and maintenance efforts** and ensure continuous updates without exposing sensitive credentials.
+
+Want to try this approach for your repositories? Start by setting up a GitHub App and optimizing your branch protection rules — automation has never been this effortless.
+
+---
+
+**Special Thanks & Acknowledgments**
+
+To [Thomas Dupoiron](https://www.linkedin.com/in/thomas-dupoiron) from the GitHub team as well as [Mugdha Deshmukh](https://www.linkedin.com/in/mugdha-deshmukh09/) from the Atos Tooling team for the support as well as [Lars Hermanns](https://www.linkedin.com/in/lhermanns/) for all the code reviews during the implementation

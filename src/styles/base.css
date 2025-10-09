@@ -10,6 +10,7 @@
 	--color-highlight: oklch(0.4 0 0);
 	--color-text: oklch(1 0 0);
 	--color-subtle-text: oklch(0.8 0 0);
+	--color-accent: oklch(0.86 0.18 90.53);
 
 	--grid-columns: [full-width-start] 1fr [margin-start] 1rem [content-start] min(80ch, calc(100vi - 2rem)) [content-end]
 		1rem [margin-end] 1fr [full-width-end];
@@ -38,6 +39,7 @@ body {
 	background-color: var(--color-bg);
 	font-family: sans-serif;
 	line-height: 1.5;
+	color: var(--color-text);
 }
 
 header {
@@ -234,5 +236,66 @@ a:has(> article) {
 		h3 {
 			text-decoration: underline;
 		}
+	}
+}
+
+a {
+	color: var(--color-accent);
+}
+
+a.author {
+	font-weight: 600;
+	color: inherit;
+	&:is(:hover, :focus) {
+		color: var(--color-text);
+	}
+}
+
+.emoji,
+.emoji > * {
+	/* avoid layout breaking when astro wraps the emoji in an additional p tag */
+	display: inline;
+}
+
+.emoji > p {
+	margin-block: unset;
+}
+
+li:has(> .emoji) {
+	list-style-type: "";
+	margin-block-end: 0.5em;
+
+	& > .emoji {
+		margin-inline-start: -4ch;
+		margin-inline-end: 1.3ch;
+	}
+}
+
+ol {
+	list-style-position: outside; /* default */
+	padding-inline-start: 1ch;
+	margin-inline-start: 1em;
+}
+
+ol > li {
+	position: relative;
+	margin-block-end: 0.5em;
+	padding-inline-start: 1.5ch;
+
+	&::marker {
+		font-weight: 600;
+		color: var(--color-bg);
+	}
+	&::before {
+		content: "";
+		display: inline-block;
+		position: absolute;
+		top: 0;
+		left: -2.3ch;
+		background-color: var(--color-accent);
+		border-radius: 0.25rem;
+		inline-size: 2.1ch;
+		block-size: 1lh;
+		z-index: -1;
 	}
 }

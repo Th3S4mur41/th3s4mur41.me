@@ -7,6 +7,7 @@ import Socials from "../components/Socials.astro";
 
 interface Props {
 	title: string;
+	image?: any;
 	noHeader?: boolean;
 	canonical?: string;
 	noIndex?: boolean;
@@ -15,13 +16,16 @@ interface Props {
 	keywords?: string[];
 }
 
-const { title, description } = Astro.props;
+const { title, image, description } = Astro.props;
 const pageTitle = title ? `${title} | Th3S4mur41.me` : "Th3S4mur41.me";
 const header = title ? title : "Th3S3mur41.me";
 const currentYear = new Date().getFullYear();
 const slug = Astro.url.pathname.replace(/^\/|\/$/g, "").replace(/\//g, "-") || "home";
 
-const desc = description || "Personal website of Th3S4mur41 – developer, martial artist, and tech enthusiast.";
+// Default meta description (~150 chars) optimized for primary topics without truncation in SERPs
+const desc =
+	description ||
+	"Personal site of Th3S4mur41: developer & martial artist sharing web development, accessibility, performance, CSS, JS, UI/UX and open source insights.";
 const defaultKeywords = [
 	"Th3S4mur41",
 	"developer",
@@ -39,6 +43,23 @@ const defaultKeywords = [
 	"ux",
 ];
 const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...defaultKeywords]));
+
+// Retrieve metadata for the hero image
+const ogImageMetadata = image
+	? {
+			src: image.src,
+			attributes: {
+				width: image.attributes.width,
+				height: image.attributes.height,
+			},
+		}
+	: {
+			src: "/icons/android-icon-512x512.png",
+			attributes: {
+				width: 512,
+				height: 512,
+			},
+		};
 ---
 
 <!doctype html>
@@ -55,7 +76,6 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 		<meta name="geo.position" content="50.719355;6.014359" />
 		<meta name="ICBM" content="50.719355, 6.014359" />
 		<!-- Linking -->
-		<link rel="manifest" href="manifest.webmanifest" />
 		<meta name="application-name" content="Th3S4mur41.me" />
 		<meta name="color-scheme" content="dark light" />
 		<meta name="theme-color" content="#2c2b2b" media="(prefers-color-scheme: dark)" />
@@ -71,28 +91,16 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 		)}
 			
 		<!-- Icon -->
-		<link rel="apple-touch-icon" sizes="57x57" href="icons/apple-icon-57x57.png" />
-		<link rel="apple-touch-icon" sizes="60x60" href="icons/apple-icon-60x60.png" />
-		<link rel="apple-touch-icon" sizes="72x72" href="icons/apple-icon-72x72.png" />
-		<link rel="apple-touch-icon" sizes="76x76" href="icons/apple-icon-76x76.png" />
-		<link rel="apple-touch-icon" sizes="114x114" href="icons/apple-icon-114x114.png" />
-		<link rel="apple-touch-icon" sizes="120x120" href="icons/apple-icon-120x120.png" />
-		<link rel="apple-touch-icon" sizes="144x144" href="icons/apple-icon-144x144.png" />
-		<link rel="apple-touch-icon" sizes="152x152" href="icons/apple-icon-152x152.png" />
-		<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-icon-180x180.png" />
-		<link rel="icon" type="image/png" sizes="192x192" href="icons/favicon-192x192.png" />
-		<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png" />
-		<link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png" />
-		<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png" />
-		<link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+		<link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
+		<link rel="apple-touch-icon" href="icons/favicon-180.png" />
 
 		<!-- Open Graph data -->
 		<meta property="og:title" content={pageTitle} />
 		<meta property="og:description" content={desc} />
 		<meta property="og:url" content={Astro.url.href} />
-		<meta property="og:image" content="https://th3s4mur41.me/icons/android-icon-512x512.png" />
-		<meta property="og:image:width" content="512" />
-		<meta property="og:image:height" content="512" />
+		<meta property="og:image" content={ogImageMetadata.src} />
+		<meta property="og:image:width" content={ogImageMetadata.attributes.width} />
+		<meta property="og:image:height" content={ogImageMetadata.attributes.height} />
 		<meta property="og:type" content="website" />
 		<!-- <meta property="article:published_time" content="{currentLocalISODate}" />
 		<meta property="article:modified_time" content="{currentLocalISODate}" /> -->
@@ -100,21 +108,24 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 		<meta name="generator" content={Astro.generator} />
 		<link rel="sitemap" href="/sitemap-index.xml" />
 		<title>{pageTitle}</title>
+
+		<!-- Performance -->
+		<script type="speculationrules">{"prerender":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}],"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
 	</head>
 	<body class={slug}>
 		<!-- <a href="#main" class="skip-link">Skip to main content</a> -->
 	{!Astro.props.noHeader && (
 		<header>
 			<h1>{header}</h1>
-			<Image src={heroImage} alt='' />
+			<Image src={heroImage} alt="" loading="eager" fetchpriority="high" />
 		</header>
 	)}
 	<nav aria-label="main">
 		<ul>
 			<li><a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Home</a></li>
-			<li><a href="/blog" aria-current={Astro.url.pathname === '/blog' ? 'page' : undefined}>Blog</a></li>
+			<li><a href="/blog/" aria-current={Astro.url.pathname === '/blog/' ? 'page' : undefined}>Blog</a></li>
 			<!-- <li><a href="/projects">Projects</a></li> -->
-			<li><a href="/about" aria-current={Astro.url.pathname === '/about' ? 'page' : undefined}>About me</a></li>
+			<li><a href="/about/" aria-current={Astro.url.pathname === '/about/' ? 'page' : undefined}>About me</a></li>
 		</ul>
 	</nav>
 	<main id="main">

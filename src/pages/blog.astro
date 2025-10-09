@@ -3,34 +3,42 @@ import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 
-const blog = (await getCollection("blog"))
-	.filter((article) => article.data.published)
-	.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+// Fetch collections
+const blog = (await getCollection("blog")).filter((article) => article.data.published);
+const talks = (await getCollection("talks")).filter((talk) => talk.data.published);
+
+// Combine with a discriminant for section type
+const combined = [
+	...blog.map((entry) => ({ section: "blog" as const, entry })),
+	...talks.map((entry) => ({ section: "talks" as const, entry })),
+].sort((a, b) => new Date(b.entry.data.date).getTime() - new Date(a.entry.data.date).getTime());
 
 const blogImages = import.meta.glob("/src/content/blog/**/*.{jpg,png,webp}", { eager: true });
+const talksImages = import.meta.glob("/src/content/talks/**/*.{jpg,png,webp}", { eager: true });
 
-const dateOptions = {
-	// weekday: "long",
-	year: "numeric",
-	month: "short",
-	day: "numeric",
-};
+// Ensure linter recognizes these as used in the template section below (Astro template usage not detected by linter).
+void [combined, blogImages, talksImages, Image, Layout];
 ---
 
 <Layout title="blog">
-{blog.map(article => {
-	const imagePath = `/src/content/blog/${article.id}/${article.data.image}`;
-	const image = blogImages[imagePath]?.default;
+{combined.map(({ section, entry }) => {
+	const imagePath = entry.data.image ? `/src/content/${section}/${entry.id}/${entry.data.image}` : undefined;
+	const pools = { blog: blogImages, talks: talksImages } as const;
+	const image = imagePath ? pools[section][imagePath]?.default : undefined;
+	const date = new Date(entry.data.date);
+	const href = `/${section}/${entry.id}/`;
 	return (
-		<a href={`/blog/${article.id}`} aria-labelledby={`article-header-${article.id}`} aria-describedby={`article-description-${article.id}`}>
+		<a href={href} aria-labelledby={`article-header-${section}-${entry.id}`} aria-describedby={`article-description-${section}-${entry.id}`}>
 			<article>
-				<h2 id={`article-header-${article.id}`}>{article.data.title}</h2>
-				{image && <Image src={image} alt={article.data.imageAlt || article.data.title} loading="lazy" />}
-				<p id={`article-desciption-${article.id}`}>{article.data.description}</p>
-				<time datetime="{article.data.date}">{new Date(article.data.date).toLocaleDateString('en-gb', {year: "numeric",month: "short", day: "numeric",})}</time>
+				<h2 id={`article-header-${section}-${entry.id}`}>
+					{entry.data.title} 
+				</h2>
+				<span class="type">{entry.data.type}</span>
+				{image && <Image src={image} alt={entry.data.imageAlt || entry.data.title} loading="lazy" />}
+				<p id={`article-description-${section}-${entry.id}`}>{entry.data.description}</p>
+				<time datetime={entry.data.date}>{date.toLocaleDateString('en-gb', { year: 'numeric', month: 'short', day: 'numeric' })}</time>
 			</article>
 		</a>
 	);
 })}
-
 </Layout>

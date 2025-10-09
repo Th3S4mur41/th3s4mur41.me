@@ -10,6 +10,8 @@ on:
         required: true
       CLOUDFLARE_API_TOKEN:
         required: true
+      INDEXNOW_KEY:
+        required: false
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -27,10 +29,10 @@ jobs:
       - name: '☁️ Checkout repository'
         uses: actions/checkout@v5
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.event.workflow_run.head_branch || github.event.pull_request.base.ref }}
 
       - name: '⚙️ Use Node.js'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version-file: '.nvmrc'
           check-latest: true
@@ -52,6 +54,11 @@ jobs:
       #     name: build
       #     path: dist
 
+      - name: Create IndexNow key file
+        run: echo $INDEXNOW_KEY > dist/$INDEXNOW_KEY.txt
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+
       - name: '🚀 Publish to Cloudflare Pages'
         uses: cloudflare/pages-action@1
         with:
@@ -60,3 +67,15 @@ jobs:
           projectName: th3s4mur41-me
           directory: ./dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Notify IndexNow
+        run: |
+          if [ -z "${INDEXNOW_KEY}" ]; then
+            echo "INDEXNOW_KEY is empty; skipping IndexNow notification.";
+            exit 0;
+          fi
+          curl -H "Content-Type: application/json" \
+            -d "{\"host\":\"th3s4mur41.me\",\"key\":\"$INDEXNOW_KEY\",\"urlList\":[\"https://th3s4mur41.me/sitemap-index.xml\"]}" \
+            https://api.indexnow.org/indexnow
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}

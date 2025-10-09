@@ -1,15 +1,18 @@
 body.blog {
 	main {
+		--grid-columns: [full-width-start] 1fr [margin-start] 1rem [content-start] min(140ch, calc(100vi - 2rem))
+			[content-end] 1rem [margin-end] 1fr [full-width-end];
 		row-gap: 2rem;
 	}
 
 	article {
 		display: grid;
 		grid-template:
+			"image type" auto
 			"image title" auto
-			"image teaser" auto
+			"image teaser" 1fr
 			"image date" auto
-			/ 15em 1fr;
+			/ minmax(40%, 15em) 1fr;
 		gap: 1rem 1.5rem;
 
 		&:not(:has(> img)) {
@@ -26,10 +29,20 @@ body.blog {
 		}
 		& img {
 			grid-area: image;
-			width: 100%;
-			height: 100%;
+			inline-size: 100%;
+			/* min-block-size: 80%; */
+			block-size: auto;
+			max-block-size: 100%;
 			object-fit: cover;
 			border-radius: 0.5rem;
+		}
+		& .type {
+			grid-area: type;
+			justify-self: start;
+			padding-inline: 0.75ch;
+			font-size: 0.875rem;
+			background: var(--color-highlight);
+			border-radius: 0.25em;
 		}
 		& p {
 			grid-area: teaser;
@@ -44,17 +57,17 @@ body.blog {
 		@container (width <= 40rem) {
 			/*  biome-ignore lint/suspicious/noDuplicateProperties: https://github.com/biomejs/biome/issues/6014 */
 			grid-template:
-				"image" auto
-				"title" auto
-				"teaser" auto
-				"date" auto
+				"image image" auto
+				"title title" auto
+				"teaser teaser" 1fr
+				"date type" auto
 				/ 1fr;
 		}
 	}
 }
 
 /* individual blog pages */
-body[class^="blog-"] {
+body:is([class^="blog-"], [class^="talks-"]) {
 	article {
 		grid-column: full-width;
 		display: grid;
@@ -79,8 +92,17 @@ body[class^="blog-"] {
 			}
 		}
 		& > footer {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			column-gap: 2rem;
+			margin-block: 1em;
 			font-size: 0.875rem;
 			color: var(--color-subtle-text);
+
+			> p {
+				margin: unset;
+			}
 		}
 	}
 }
@@ -113,4 +135,13 @@ pre {
 	border-radius: 0.5rem;
 	padding-inline: 1.5rem;
 	padding-block: 1.5rem;
+}
+
+h2#update::before {
+	content: "⟳"; /* Unicode symbol for update */
+	/* biome-ignore lint/suspicious/noDuplicateProperties: Version without alternative text as fallback */
+	content: "⟳" / "";
+	margin-inline-end: 0.2em;
+	font-size: 1.2em;
+	color: var(--color-accent);
 }
