@@ -1,3 +1,10 @@
+# [2.14.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.13.1...v2.14.0) (2025-10-10)
+
+
+### Features
+
+* update favicon ([#1904](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1904)) ([e34f770](https://github.com/Th3S4mur41/th3s4mur41.me/commit/e34f770bac2463476c2b7e9610adfc0a9362189b))
+
 ## [2.13.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.13.0...v2.13.1) (2025-10-02)
 
 
