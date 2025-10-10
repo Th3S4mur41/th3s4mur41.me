@@ -1,3 +1,9 @@
+@property --hr-slash {
+	syntax: "<percentage>";
+	inherits: false;
+	initial-value: 0%;
+}
+
 :root {
 	--color-bg: oklch(0.25 0 0);
 	--color-subtle-bg: oklch(0 0 0);
@@ -194,7 +200,17 @@ hr {
 	border: none;
 	block-size: 0.1rem;
 	inline-size: stretch;
-	background: linear-gradient(to right, transparent, var(--color-text), transparent);
+	background: linear-gradient(
+		to right,
+		transparent,
+		var(--color-text) var(--hr-slash),
+		transparent calc(var(--hr-slash) * 2)
+	);
+	transform: rotate(-1deg);
+	@media (prefers-reduced-motion: no-preference) {
+		animation: slash 0.5s linear both;
+		animation-timeline: view(70% 10%);
+	}
 }
 
 a:has(> article) {
