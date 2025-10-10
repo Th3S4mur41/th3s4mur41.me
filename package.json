@@ -24,10 +24,10 @@
 		"@astrojs/sitemap": "^3.6.0",
 		"@fontsource/cascadia-code": "^5.2.3",
 		"@fontsource/nanum-brush-script": "^5.2.8",
-		"astro": "^5.14.1"
+		"astro": "^5.14.3"
 	},
 	"devDependencies": {
-		"@astrojs/mdx": "^4.3.6",
+		"@astrojs/mdx": "^4.3.7",
 		"@babel/core": "^7.28.4",
 		"@babel/preset-env": "^7.28.3",
 		"@biomejs/biome": "2.2.5",
