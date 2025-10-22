@@ -3,7 +3,8 @@
 {
 	"name": "Default Linux Universal",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/universal:linux",
+	// "image": "mcr.microsoft.com/devcontainers/universal:linux",
+	"image": "mcr.microsoft.com/devcontainers/javascript-node",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
