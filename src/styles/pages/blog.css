@@ -77,7 +77,8 @@ body:is([class^="blog-"], [class^="talks-"]) {
 			grid-column: content;
 		}
 		& h1 {
-			view-transition-name: article-title;
+			/* TODO: replace through ident() when available - https://drafts.csswg.org/css-values-5/#funcdef-ident
+			  In the meantime, set view-transition-name inline in template */
 		}
 		/* Treat an image following the h1 as the hero image */
 		& h1 + p:has(img) {
@@ -88,7 +89,8 @@ body:is([class^="blog-"], [class^="talks-"]) {
 				inline-size: 100%;
 				block-size: auto;
 				object-fit: cover;
-				view-transition-name: article-hero-image;
+				/* TODO: replace through ident() when available - https://drafts.csswg.org/css-values-5/#funcdef-ident
+			  In the meantime, set view-transition-name inline in template */
 			}
 		}
 		& > footer {
