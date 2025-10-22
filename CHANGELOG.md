@@ -1,3 +1,10 @@
+## [2.14.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.14.0...v2.14.1) (2025-10-22)
+
+
+### Bug Fixes
+
+* add rehype plugin for unique view-transition names and update templates for smooth transitions ([#1924](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1924)) ([36cf021](https://github.com/Th3S4mur41/th3s4mur41.me/commit/36cf02169253b25b47025579df03741ed3bd578f))
+
 # [2.14.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.13.1...v2.14.0) (2025-10-10)
 
 
