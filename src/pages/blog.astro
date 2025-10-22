@@ -30,11 +30,11 @@ void [combined, blogImages, talksImages, Image, Layout];
 	return (
 		<a href={href} aria-labelledby={`article-header-${section}-${entry.id}`} aria-describedby={`article-description-${section}-${entry.id}`}>
 			<article>
-				<h2 id={`article-header-${section}-${entry.id}`}>
+				<h2 id={`article-header-${section}-${entry.id}`} style={`view-transition-name: article-title-${entry.id};`}>
 					{entry.data.title} 
 				</h2>
 				<span class="type">{entry.data.type}</span>
-				{image && <Image src={image} alt={entry.data.imageAlt || entry.data.title} loading="lazy" />}
+				{image && <Image src={image} alt={entry.data.imageAlt || entry.data.title} loading="lazy" style={`view-transition-name: article-hero-image-${entry.id};`} />}
 				<p id={`article-description-${section}-${entry.id}`}>{entry.data.description}</p>
 				<time datetime={entry.data.date}>{date.toLocaleDateString('en-gb', { year: 'numeric', month: 'short', day: 'numeric' })}</time>
 			</article>
