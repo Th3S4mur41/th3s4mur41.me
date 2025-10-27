@@ -1,0 +1,102 @@
+# Accessibility Testing Workflow
+# This workflow runs accessibility tests on deployed sites
+name: 'A11y scan'
+
+# Controls when the action will run
+on:
+  # Automatic trigger after successful deployment
+  workflow_call:
+    secrets:
+      GH_TOKEN:
+        required: true
+    inputs:
+      url:
+        description: 'Site URL to test (e.g., https://th3s4mur41.me)'
+        required: true
+        default: 'https://th3s4mur41.me'
+        type: string
+
+  # Manual trigger with custom URL
+  workflow_dispatch:
+    inputs:
+      url:
+        description: 'Site URL to test (e.g., https://th3s4mur41.me)'
+        required: true
+        default: 'https://th3s4mur41.me'
+        type: string
+
+jobs:
+  accessibility-test:
+    name: '♿ Accessibility Testing'
+    runs-on: ubuntu-latest
+
+    # Only run if manually triggered OR if the workflow succeeded and wasn't triggered by dependabot
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.actor != 'dependabot[bot]') }}
+
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: '📋 Extract URLs from deployed sitemap'
+        id: extract-urls
+        run: |
+          site_url="${{ github.event.inputs.url }}"
+          sitemap_url="${site_url}/sitemap-0.xml"
+
+          echo "Fetching sitemap from: $sitemap_url"
+
+          # Download the sitemap from the deployed site
+          curl -s "$sitemap_url" -o sitemap.xml
+
+          # Check if sitemap was downloaded successfully
+          if [ ! -f sitemap.xml ] || [ ! -s sitemap.xml ]; then
+            echo "Error: Could not download sitemap from $sitemap_url"
+            exit 1
+          fi
+
+          # Extract URLs using grep and sed (no need for external scripts)
+          urls=$(grep -o '<loc>[^<]*</loc>' sitemap.xml | sed 's/<loc>//g; s/<\/loc>//g')
+
+          if [ -z "$urls" ]; then
+            echo "Error: No URLs found in sitemap"
+            exit 1
+          fi
+
+          # Count URLs
+          url_count=$(echo "$urls" | wc -l)
+          echo "url_count=$url_count" >> $GITHUB_OUTPUT
+
+          # Store URLs for the accessibility scanner (newline-delimited format)
+          echo "urls_list<<EOF" >> $GITHUB_OUTPUT
+          echo "$urls" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+          echo "Found $url_count URLs to test for accessibility:"
+          echo "$urls"
+
+      - name: '♿ Run Accessibility Scanner'
+        uses: github/accessibility-scanner@v2
+        with:
+          # Newline-delimited list of URLs to scan
+          urls: ${{ steps.extract-urls.outputs.urls_list }}
+
+          # Repository where issues will be filed
+          repository: ${{ github.repository }}
+
+          # Token with required permissions (requires PAT, not GITHUB_TOKEN)
+          # You'll need to create a fine-grained PAT and add it as a secret named GH_TOKEN
+          token: ${{ secrets.GH_TOKEN }}
+
+          # Cache key for results
+          cache_key: 'accessibility-scan-${{ github.event.workflow_run.head_branch }}-${{ github.event.workflow_run.head_sha }}'
+
+          # Skip Copilot assignment for now (you can enable this later)
+          skip_copilot_assignment: true
+
+      - name: '✅ Accessibility scan completed'
+        run: |
+          echo "♿ Accessibility scan completed for ${{ steps.extract-urls.outputs.url_count }} URLs"
+          echo "Any accessibility issues found will be automatically filed as GitHub issues"
+          echo "Check the Issues tab for detailed reports and Copilot-suggested fixes"

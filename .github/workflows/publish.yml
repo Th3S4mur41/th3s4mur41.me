@@ -12,6 +12,10 @@ on:
         required: true
       INDEXNOW_KEY:
         required: false
+    outputs:
+      deployment_url:
+        description: 'The URL of the deployed site'
+        value: ${{ jobs.build.outputs.deployment_url }}
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -60,6 +64,7 @@ jobs:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
 
       - name: '🚀 Publish to Cloudflare Pages'
+        id: cloudflare-deploy
         uses: cloudflare/pages-action@1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -67,6 +72,11 @@ jobs:
           projectName: th3s4mur41-me
           directory: ./dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: '📝 Save deployment URL'
+        run: |
+          echo "deployment_url=${{ steps.cloudflare-deploy.outputs.url }}" >> $GITHUB_OUTPUT
+          echo "Deployed to: ${{ steps.cloudflare-deploy.outputs.url }}"
 
       - name: Notify IndexNow
         run: |
