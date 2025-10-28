@@ -30,7 +30,7 @@
 		"@astrojs/mdx": "^4.3.9",
 		"@babel/core": "^7.28.5",
 		"@babel/preset-env": "^7.28.5",
-		"@biomejs/biome": "2.3.1",
+		"@biomejs/biome": "2.3.2",
 		"@commitlint/cli": "^20.1.0",
 		"@commitlint/config-conventional": "^20.0.0",
 		"@csstools/postcss-oklab-function": "^4.0.12",
