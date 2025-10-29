@@ -1,3 +1,10 @@
+# [2.15.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.14.1...v2.15.0) (2025-10-29)
+
+
+### Features
+
+* **prism:** add language label display for code blocks ([#1939](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1939)) ([d1190e1](https://github.com/Th3S4mur41/th3s4mur41.me/commit/d1190e114f82aff8da31dd63a390a02df7fab2c1))
+
 ## [2.14.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.14.0...v2.14.1) (2025-10-22)
 
 
