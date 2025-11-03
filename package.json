@@ -39,6 +39,7 @@
 		"@squoosh/cli": "^0.7.3",
 		"@typescript-eslint/eslint-plugin": "^8.46.2",
 		"@typescript-eslint/parser": "^8.32.1",
+		"astro-compress": "^2.3.8",
 		"autoprefixer": "^10.4.21",
 		"babel-loader": "^10.0.0",
 		"browserslist": "^4.27.0",
