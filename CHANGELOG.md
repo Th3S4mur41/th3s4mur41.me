@@ -1,3 +1,10 @@
+# [2.16.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.15.1...v2.16.0) (2025-11-03)
+
+
+### Features
+
+* **blog:** add mixins article ([#1943](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1943)) ([f56617d](https://github.com/Th3S4mur41/th3s4mur41.me/commit/f56617d572f70cb56cc422253fd8d58a9c53517a))
+
 ## [2.15.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.15.0...v2.15.1) (2025-11-03)
 
 
