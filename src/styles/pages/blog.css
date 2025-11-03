@@ -93,6 +93,9 @@ body:is([class^="blog-"], [class^="talks-"]) {
 			  In the meantime, set view-transition-name inline in template */
 			}
 		}
+		& p:has(img:only-child) {
+			text-align: center;
+		}
 		& > footer {
 			display: flex;
 			flex-wrap: wrap;
