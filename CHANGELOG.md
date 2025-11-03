@@ -1,3 +1,10 @@
+## [2.15.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.15.0...v2.15.1) (2025-11-03)
+
+
+### Bug Fixes
+
+* correct the name of the podcast co-founder and add links to the podcast ([de15745](https://github.com/Th3S4mur41/th3s4mur41.me/commit/de15745dd26138ec3354eee090938b33ef6d8c66))
+
 # [2.15.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.14.1...v2.15.0) (2025-10-29)
 
 
