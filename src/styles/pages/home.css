@@ -37,7 +37,8 @@ body.home {
 		& > h3 {
 			grid-area: title;
 			margin: 0;
-			view-transition-name: article-title;
+			/* TODO: replace through ident() when available - https://drafts.csswg.org/css-values-5/#funcdef-ident
+			  In the meantime, set view-transition-name inline in template */
 		}
 		& img {
 			grid-area: image;
@@ -46,7 +47,8 @@ body.home {
 			max-block-size: 100%;
 			object-fit: cover;
 			border-radius: 0.5rem;
-			view-transition-name: article-hero-image;
+			/* TODO: replace through ident() when available - https://drafts.csswg.org/css-values-5/#funcdef-ident
+			  In the meantime, set view-transition-name inline in template */
 		}
 		& p {
 			grid-area: teaser;

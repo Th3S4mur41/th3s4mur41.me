@@ -39,7 +39,7 @@ jobs:
           persist-credentials: false
 
       - name: '⚙️ Use Node.js'
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
           check-latest: true
@@ -51,7 +51,7 @@ jobs:
         run: npm ci --no-audit --prefer-offline --progress=false
 
       - name: '📎 Download build output'
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         continue-on-error: true # There won't be an artifact in workflow without build job
         with:
           name: build

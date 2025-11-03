@@ -21,7 +21,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: '⚙️ Use Node.js'
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
           check-latest: true
@@ -36,7 +36,7 @@ jobs:
         run: npm run build --if-present
 
       - name: '📎 Upload build output'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: build
           path: |

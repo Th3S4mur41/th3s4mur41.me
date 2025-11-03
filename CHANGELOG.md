@@ -1,3 +1,31 @@
+## [2.15.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.15.0...v2.15.1) (2025-11-03)
+
+
+### Bug Fixes
+
+* correct the name of the podcast co-founder and add links to the podcast ([de15745](https://github.com/Th3S4mur41/th3s4mur41.me/commit/de15745dd26138ec3354eee090938b33ef6d8c66))
+
+# [2.15.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.14.1...v2.15.0) (2025-10-29)
+
+
+### Features
+
+* **prism:** add language label display for code blocks ([#1939](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1939)) ([d1190e1](https://github.com/Th3S4mur41/th3s4mur41.me/commit/d1190e114f82aff8da31dd63a390a02df7fab2c1))
+
+## [2.14.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.14.0...v2.14.1) (2025-10-22)
+
+
+### Bug Fixes
+
+* add rehype plugin for unique view-transition names and update templates for smooth transitions ([#1924](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1924)) ([36cf021](https://github.com/Th3S4mur41/th3s4mur41.me/commit/36cf02169253b25b47025579df03741ed3bd578f))
+
+# [2.14.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.13.1...v2.14.0) (2025-10-10)
+
+
+### Features
+
+* update favicon ([#1904](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1904)) ([e34f770](https://github.com/Th3S4mur41/th3s4mur41.me/commit/e34f770bac2463476c2b7e9610adfc0a9362189b))
+
 ## [2.13.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.13.0...v2.13.1) (2025-10-02)
 
 

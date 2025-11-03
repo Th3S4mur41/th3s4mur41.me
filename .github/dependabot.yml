@@ -11,8 +11,6 @@ updates:
       interval: 'daily'
       time: '00:00'
       timezone: 'Europe/Berlin'
-    reviewers:
-      - 'Th3S4mur41'
     groups:
       babel:
         patterns:
@@ -30,5 +28,3 @@ updates:
       interval: 'daily'
       time: '00:00'
       timezone: 'Europe/Berlin'
-    reviewers:
-      - 'Th3S4mur41'
