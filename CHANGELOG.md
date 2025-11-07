@@ -1,3 +1,10 @@
+## [2.16.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.16.1...v2.16.2) (2025-11-07)
+
+
+### Bug Fixes
+
+* **headers:** update Content-Security-Policy to include additional script hash ([12f8794](https://github.com/Th3S4mur41/th3s4mur41.me/commit/12f8794e4d505b8e733c0d0bcb2b4ede1da1a510))
+
 ## [2.16.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.16.0...v2.16.1) (2025-11-03)
 
 
