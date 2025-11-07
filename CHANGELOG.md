@@ -1,3 +1,10 @@
+## [2.16.3](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.16.2...v2.16.3) (2025-11-07)
+
+
+### Bug Fixes
+
+* **headers:** update Content-Security-Policy to allow unsafe-inline ([437a974](https://github.com/Th3S4mur41/th3s4mur41.me/commit/437a974af859a9c94307cec2827077feb8760570))
+
 ## [2.16.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.16.1...v2.16.2) (2025-11-07)
 
 
