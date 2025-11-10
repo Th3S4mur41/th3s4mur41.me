@@ -42,7 +42,7 @@
 		"astro-compress": "^2.3.8",
 		"autoprefixer": "^10.4.22",
 		"babel-loader": "^10.0.0",
-		"browserslist": "^4.27.0",
+		"browserslist": "^4.28.0",
 		"concurrently": "^9.2.1",
 		"cssnano": "^7.1.2",
 		"cssremedy": "^0.1.0-beta.2",
