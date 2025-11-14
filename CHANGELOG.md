@@ -1,3 +1,13 @@
+## [2.16.4](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.16.3...v2.16.4) (2025-11-14)
+
+
+### Bug Fixes
+
+* **content:** update description for best practices in CSS mixins ([f9f6ef5](https://github.com/Th3S4mur41/th3s4mur41.me/commit/f9f6ef51c0521a7e5fe78c32ae5dccd00ad1f1b9))
+* **layout:** correct about link path to avoid redirect ([3b9da6e](https://github.com/Th3S4mur41/th3s4mur41.me/commit/3b9da6eaa4f18885176f872a256b9f3ecd8d2324))
+* **layout:** enhance alt text for hero image to improve accessibility ([0254868](https://github.com/Th3S4mur41/th3s4mur41.me/commit/0254868516cb774f7407d571423c0fe9e5064d22))
+* **layout:** update favicon paths to be absolute ([c1d979f](https://github.com/Th3S4mur41/th3s4mur41.me/commit/c1d979fd687e2742e240b33c382db6c8c8187cfb))
+
 ## [2.16.3](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.16.2...v2.16.3) (2025-11-07)
 
 
