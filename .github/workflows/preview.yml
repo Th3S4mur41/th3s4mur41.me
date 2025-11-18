@@ -17,7 +17,6 @@ concurrency:
 jobs:
   publish:
     name: '▶️ actions'
-    id: publish
 
     # Publish only if not PR is was not opened by dependabot
     if: github.actor != 'dependabot[bot]'

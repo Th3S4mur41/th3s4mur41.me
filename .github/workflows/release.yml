@@ -24,7 +24,6 @@ jobs:
 
   publish:
     name: '▶️ actions'
-    id: publish
     needs: [semantic-release]
     uses: ./.github/workflows/publish.yml
     secrets:
