@@ -8,13 +8,6 @@ const blog = (await getCollection("blog")).sort(
 	(a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
 );
 
-const dateOptions: Intl.DateTimeFormatOptions = {
-	// weekday: "long",
-	year: "numeric",
-	month: "short",
-	day: "numeric",
-};
-
 const blogImages = import.meta.glob("/src/content/blog/**/*.{jpg,png,webp}", { eager: true }) as Record<
 	string,
 	{ default: any }
@@ -45,7 +38,7 @@ const talkImage = talkImagePath ? talkImages[talkImagePath]?.default : null;
 
 <Layout title="Home">
 	<div class="intro">
-	<a href='/about'><Image class="profile" src={profileImg} alt="michaël holding a katana on a colorful background" /></a>
+	<a href='/about/'><Image class="profile" src={profileImg} alt="michaël holding a katana on a colorful background" /></a>
 	<p>
 		<strong> Hey! My name is Michaël</strong>, I'm a passionate web developer dedicated to crafting accessible and user-friendly interfaces that make a difference. I believe that every user—regardless of abilities or context—should experience seamless, intuitive digital interactions. My love for clean code and exploring the latest HTML and CSS features fuels my drive for innovation. With a background in martial arts, I bring the same discipline, respect, and commitment to my work, ensuring high-quality, future-proof solutions.
 	</p>
@@ -59,7 +52,7 @@ const talkImage = talkImagePath ? talkImages[talkImagePath]?.default : null;
 				{image && <Image src={image} alt="" style={`view-transition-name: article-hero-image-${lastPublishedPost.id};`} />}
 				<p id={`article-description-${lastPublishedPost.id}`}>{lastPublishedPost.data.description}</p>
 				<time datetime={lastPublishedPost.data.date}>
-					{new Date(lastPublishedPost.data.date).toLocaleDateString(undefined, dateOptions)}
+					{new Date(lastPublishedPost.data.date).toLocaleDateString('en-gb', { year: 'numeric', month: 'short', day: 'numeric' })}
 				</time>
 			</article>
 		</a>
@@ -73,7 +66,7 @@ const talkImage = talkImagePath ? talkImages[talkImagePath]?.default : null;
 				{talkImage && <Image src={talkImage} alt="" style={`view-transition-name: article-hero-image-${lastPublishedTalk.id};`} />}
 				<p>{lastPublishedTalk.data.description}</p>
 				<time datetime={lastPublishedTalk.data.date}>
-					{new Date(lastPublishedTalk.data.date).toLocaleDateString(undefined, dateOptions)}
+					{new Date(lastPublishedTalk.data.date).toLocaleDateString('en-gb', { year: 'numeric', month: 'short', day: 'numeric' })}
 				</time>
 			</article>
 		</a>
