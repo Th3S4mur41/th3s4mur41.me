@@ -80,7 +80,7 @@ jobs:
       - name: '📝 Save deployment URL'
         run: |
           echo "Deployed to: ${{ steps.cloudflare-deploy.outputs.deployment-url }}"
-          echor "Alias URL: ${{ steps.cloudflare-deploy.outputs.pages-deployment-alias-url }}"
+          echo "Alias URL: ${{ steps.cloudflare-deploy.outputs.pages-deployment-alias-url }}"
 
       - name: Notify IndexNow
         run: |
