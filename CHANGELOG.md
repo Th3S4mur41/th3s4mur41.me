@@ -1,3 +1,10 @@
+## [2.16.5](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.16.4...v2.16.5) (2025-11-18)
+
+
+### Bug Fixes
+
+* standardize output variable naming for deployment URLs ([f2fad9d](https://github.com/Th3S4mur41/th3s4mur41.me/commit/f2fad9d4099df606b034e41e97cc6fbf9bc19b01))
+
 ## [2.16.4](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.16.3...v2.16.4) (2025-11-14)
 
 
