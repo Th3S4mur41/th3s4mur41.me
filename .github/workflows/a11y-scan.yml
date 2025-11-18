@@ -45,10 +45,13 @@ jobs:
           site_url="${{ inputs.url }}"
           sitemap_index_url="${site_url}/sitemap-index.xml"
 
+          # User-Agent to bypass bot protection
+          user_agent="Mozilla/5.0 (compatible; GitHubActions-AccessibilityBot/1.0)"
+
           echo "Fetching sitemap index from: $sitemap_index_url"
 
           # Download the sitemap index
-          curl -s "$sitemap_index_url" -o sitemap-index.xml
+          curl -s -A "$user_agent" "$sitemap_index_url" -o sitemap-index.xml
 
           # Check if sitemap index was downloaded successfully
           if [ ! -f sitemap-index.xml ] || [ ! -s sitemap-index.xml ]; then
@@ -71,7 +74,7 @@ jobs:
           all_urls=""
           for sitemap_url in $sitemap_urls; do
             echo "Fetching sitemap: $sitemap_url"
-            sitemap_content=$(curl -s "$sitemap_url")
+            sitemap_content=$(curl -s -A "$user_agent" "$sitemap_url")
             
             if [ -z "$sitemap_content" ]; then
               echo "Warning: Could not fetch $sitemap_url"
