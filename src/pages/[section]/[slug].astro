@@ -150,7 +150,7 @@ void [Layout, Content, img, truncatedTitle];
     <Content />
     <footer>
       <p class="published">
-        Published on <time datetime={article.data.date}>{article.data.date.toLocaleDateString()}</time>
+        Published on <time datetime={article.data.date}>{article.data.date.toLocaleDateString('en-gb', { year: 'numeric', month: 'short', day: 'numeric' })}</time>
         {article.data.canonical && (
           <>
             {' '}via <a href={article.data.canonical} target="_blank" rel="noopener noreferrer">
@@ -161,7 +161,7 @@ void [Layout, Content, img, truncatedTitle];
       </p>
       {article.data.updated && (
         <p class="updated">
-          Last updated on <time datetime={article.data.updated}>{article.data.updated.toLocaleDateString()}</time>
+          Last updated on <time datetime={article.data.updated}>{article.data.updated.toLocaleDateString('en-gb', { year: 'numeric', month: 'short', day: 'numeric' })}</time>
         </p>
       )}
     </footer>

@@ -1,6 +1,7 @@
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
+import compress from "astro-compress";
 import { rehypeViewTransitionNames } from "./src/plugins/rehype-view-transition-names.js";
 
 // https://astro.build/config
@@ -19,6 +20,15 @@ export default defineConfig({
 		}),
 		mdx({
 			rehypePlugins: [rehypeViewTransitionNames],
+		}),
+		compress({
+			HTML: {
+				removeComments: true,
+				collapseWhitespace: false,
+				removeAttributeQuotes: false,
+			},
+			CSS: true,
+			JavaScript: true,
 		}),
 	],
 	devToolbar: {

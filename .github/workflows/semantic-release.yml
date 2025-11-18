@@ -51,7 +51,7 @@ jobs:
         run: npm ci --no-audit --prefer-offline --progress=false
 
       - name: '📎 Download build output'
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         continue-on-error: true # There won't be an artifact in workflow without build job
         with:
           name: build

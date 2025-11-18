@@ -2,6 +2,17 @@
  * Based on the prism-a11y-dark theme: https://github.com/PrismJS/prism-themes/blob/master/themes/prism-a11y-dark.css
  */
 
+pre[data-language]::before {
+	content: attr(data-language);
+	display: block;
+	padding-block-end: 0.5em;
+	border-block-end: 1px solid var(--color-subtle-bg);
+	margin-block-end: 1em;
+	font-size: 1.2em;
+	font-weight: 500;
+	text-transform: uppercase;
+}
+
 code[class*="language-"],
 pre[class*="language-"] {
 	color: #f8f8f2;

@@ -1,3 +1,55 @@
+## [2.16.4](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.16.3...v2.16.4) (2025-11-14)
+
+
+### Bug Fixes
+
+* **content:** update description for best practices in CSS mixins ([f9f6ef5](https://github.com/Th3S4mur41/th3s4mur41.me/commit/f9f6ef51c0521a7e5fe78c32ae5dccd00ad1f1b9))
+* **layout:** correct about link path to avoid redirect ([3b9da6e](https://github.com/Th3S4mur41/th3s4mur41.me/commit/3b9da6eaa4f18885176f872a256b9f3ecd8d2324))
+* **layout:** enhance alt text for hero image to improve accessibility ([0254868](https://github.com/Th3S4mur41/th3s4mur41.me/commit/0254868516cb774f7407d571423c0fe9e5064d22))
+* **layout:** update favicon paths to be absolute ([c1d979f](https://github.com/Th3S4mur41/th3s4mur41.me/commit/c1d979fd687e2742e240b33c382db6c8c8187cfb))
+
+## [2.16.3](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.16.2...v2.16.3) (2025-11-07)
+
+
+### Bug Fixes
+
+* **headers:** update Content-Security-Policy to allow unsafe-inline ([437a974](https://github.com/Th3S4mur41/th3s4mur41.me/commit/437a974af859a9c94307cec2827077feb8760570))
+
+## [2.16.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.16.1...v2.16.2) (2025-11-07)
+
+
+### Bug Fixes
+
+* **headers:** update Content-Security-Policy to include additional script hash ([12f8794](https://github.com/Th3S4mur41/th3s4mur41.me/commit/12f8794e4d505b8e733c0d0bcb2b4ede1da1a510))
+
+## [2.16.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.16.0...v2.16.1) (2025-11-03)
+
+
+### Bug Fixes
+
+* update Content-Security-Policy to allow 'unsafe-inline' styles  ([#1944](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1944)) ([3192fd2](https://github.com/Th3S4mur41/th3s4mur41.me/commit/3192fd205030adee5064f91a916ae20d1483b42b))
+
+# [2.16.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.15.1...v2.16.0) (2025-11-03)
+
+
+### Features
+
+* **blog:** add mixins article ([#1943](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1943)) ([f56617d](https://github.com/Th3S4mur41/th3s4mur41.me/commit/f56617d572f70cb56cc422253fd8d58a9c53517a))
+
+## [2.15.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.15.0...v2.15.1) (2025-11-03)
+
+
+### Bug Fixes
+
+* correct the name of the podcast co-founder and add links to the podcast ([de15745](https://github.com/Th3S4mur41/th3s4mur41.me/commit/de15745dd26138ec3354eee090938b33ef6d8c66))
+
+# [2.15.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.14.1...v2.15.0) (2025-10-29)
+
+
+### Features
+
+* **prism:** add language label display for code blocks ([#1939](https://github.com/Th3S4mur41/th3s4mur41.me/issues/1939)) ([d1190e1](https://github.com/Th3S4mur41/th3s4mur41.me/commit/d1190e114f82aff8da31dd63a390a02df7fab2c1))
+
 ## [2.14.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.14.0...v2.14.1) (2025-10-22)
 
 
