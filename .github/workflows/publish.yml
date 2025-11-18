@@ -10,6 +10,8 @@ on:
         required: true
       CLOUDFLARE_API_TOKEN:
         required: true
+      CLOUDFLARE_PROJECT_NAME:
+        required: true
       INDEXNOW_KEY:
         required: false
     outputs:

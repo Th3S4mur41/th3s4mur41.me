@@ -23,8 +23,9 @@ jobs:
 
     uses: ./.github/workflows/publish.yml
     secrets:
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN  }}
-      CLOUDFLARE_ID: ${{ secrets.CLOUDFLARE_ID  }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ID: ${{ secrets.CLOUDFLARE_ID }}
+      CLOUDFLARE_PROJECT_NAME: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
 
   a11y-scan:
     name: '♿ a11y scan'

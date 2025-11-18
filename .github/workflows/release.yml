@@ -29,6 +29,7 @@ jobs:
     secrets:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN  }}
       CLOUDFLARE_ID: ${{ secrets.CLOUDFLARE_ID  }}
+      CLOUDFLARE_PROJECT_NAME: ${{ secrets.CLOUDFLARE_PROJECT_NAME  }}
       INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY  }}
 
   a11y-scan:
