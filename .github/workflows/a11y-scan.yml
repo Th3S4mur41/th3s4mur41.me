@@ -42,7 +42,7 @@ jobs:
       - name: '📋 Extract URLs from deployed sitemap'
         id: extract-urls
         run: |
-          site_url="${{ github.event.inputs.url }}"
+          site_url="${{ inputs.url }}"
           sitemap_url="${site_url}/sitemap-0.xml"
 
           echo "Fetching sitemap from: $sitemap_url"

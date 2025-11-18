@@ -79,8 +79,8 @@ jobs:
 
       - name: '📝 Save deployment URL'
         run: |
-          echo "deployment_url=${{ steps.cloudflare-deploy.outputs.deployment-url }}" >> $GITHUB_OUTPUT
           echo "Deployed to: ${{ steps.cloudflare-deploy.outputs.deployment-url }}"
+          echor "Alias URL: ${{ steps.cloudflare-deploy.outputs.pages-deployment-alias-url }}"
 
       - name: Notify IndexNow
         run: |
