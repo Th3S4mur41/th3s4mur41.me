@@ -45,13 +45,18 @@ jobs:
           site_url="${{ inputs.url }}"
           sitemap_index_url="${site_url}/sitemap-index.xml"
 
-          # User-Agent to bypass bot protection
-          user_agent="Mozilla/5.0 (compatible; GitHubActions-AccessibilityBot/1.0)"
-
           echo "Fetching sitemap index from: $sitemap_index_url"
 
-          # Download the sitemap index
-          curl -s -A "$user_agent" "$sitemap_index_url" -o sitemap-index.xml
+          # Download the sitemap index with headers to bypass Cloudflare
+          curl -s \
+            -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36" \
+            -H "Accept: application/xml,text/xml,*/*" \
+            -H "Accept-Language: en-US,en;q=0.9" \
+            -H "Accept-Encoding: gzip, deflate, br" \
+            -H "Cache-Control: no-cache" \
+            -H "Pragma: no-cache" \
+            --compressed \
+            "$sitemap_index_url" -o sitemap-index.xml
 
           # Check if sitemap index was downloaded successfully
           if [ ! -f sitemap-index.xml ] || [ ! -s sitemap-index.xml ]; then
@@ -81,7 +86,13 @@ jobs:
           all_urls=""
           for sitemap_url in $sitemap_urls; do
             echo "Fetching sitemap: $sitemap_url"
-            sitemap_content=$(curl -s -A "$user_agent" "$sitemap_url")
+            sitemap_content=$(curl -s \
+              -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36" \
+              -H "Accept: application/xml,text/xml,*/*" \
+              -H "Accept-Language: en-US,en;q=0.9" \
+              -H "Accept-Encoding: gzip, deflate, br" \
+              --compressed \
+              "$sitemap_url")
             
             if [ -z "$sitemap_content" ]; then
               echo "Warning: Could not fetch $sitemap_url"
