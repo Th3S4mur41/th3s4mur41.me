@@ -71,7 +71,6 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ID }}
           command: pages deploy ./dist --project-name=${{ secrets.CLOUDFLARE_PROJECT_NAME }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          environment: ${{ inputs.production && 'production (cloudflare)' || 'preview (cloudflare)' }}
 
       - name: '📝 Save deployment URL'
         run: |
