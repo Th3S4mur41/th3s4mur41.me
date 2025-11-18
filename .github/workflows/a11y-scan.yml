@@ -59,11 +59,18 @@ jobs:
             exit 1
           fi
 
+          # Debug: Show what we downloaded
+          echo "Sitemap index content (first 500 chars):"
+          head -c 500 sitemap-index.xml
+          echo ""
+
           # Extract sitemap URLs from the index
-          sitemap_urls=$(grep -o '<loc>[^<]*</loc>' sitemap-index.xml | sed 's/<loc>//g; s/<\/loc>//g')
+          sitemap_urls=$(grep -o '<loc>[^<]*</loc>' sitemap-index.xml | sed 's/<loc>//g; s/<\/loc>//g' | tr -d '\r')
 
           if [ -z "$sitemap_urls" ]; then
             echo "Error: No sitemap URLs found in sitemap index"
+            echo "Full sitemap index content:"
+            cat sitemap-index.xml
             exit 1
           fi
 
