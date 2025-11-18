@@ -24,9 +24,23 @@ jobs:
 
   publish:
     name: '▶️ actions'
+    id: publish
     needs: [semantic-release]
     uses: ./.github/workflows/publish.yml
     secrets:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN  }}
       CLOUDFLARE_ID: ${{ secrets.CLOUDFLARE_ID  }}
       INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY  }}
+
+  a11y-scan:
+    name: '♿ a11y scan'
+    needs: publish
+
+    # Run only if publish job was run
+    if: needs.publish.result == 'success'
+
+    uses: ./.github/workflows/a11y-scan.yml
+    secrets:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    with:
+      url: ${{ needs.publish.outputs.deployment_url }}
