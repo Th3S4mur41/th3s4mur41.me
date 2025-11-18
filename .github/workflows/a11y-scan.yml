@@ -43,38 +43,65 @@ jobs:
         id: extract-urls
         run: |
           site_url="${{ inputs.url }}"
-          sitemap_url="${site_url}/sitemap-0.xml"
+          sitemap_index_url="${site_url}/sitemap-index.xml"
 
-          echo "Fetching sitemap from: $sitemap_url"
+          echo "Fetching sitemap index from: $sitemap_index_url"
 
-          # Download the sitemap from the deployed site
-          curl -s "$sitemap_url" -o sitemap.xml
+          # Download the sitemap index
+          curl -s "$sitemap_index_url" -o sitemap-index.xml
 
-          # Check if sitemap was downloaded successfully
-          if [ ! -f sitemap.xml ] || [ ! -s sitemap.xml ]; then
-            echo "Error: Could not download sitemap from $sitemap_url"
+          # Check if sitemap index was downloaded successfully
+          if [ ! -f sitemap-index.xml ] || [ ! -s sitemap-index.xml ]; then
+            echo "Error: Could not download sitemap index from $sitemap_index_url"
             exit 1
           fi
 
-          # Extract URLs using grep and sed (no need for external scripts)
-          urls=$(grep -o '<loc>[^<]*</loc>' sitemap.xml | sed 's/<loc>//g; s/<\/loc>//g')
+          # Extract sitemap URLs from the index
+          sitemap_urls=$(grep -o '<loc>[^<]*</loc>' sitemap-index.xml | sed 's/<loc>//g; s/<\/loc>//g')
 
-          if [ -z "$urls" ]; then
-            echo "Error: No URLs found in sitemap"
+          if [ -z "$sitemap_urls" ]; then
+            echo "Error: No sitemap URLs found in sitemap index"
+            exit 1
+          fi
+
+          echo "Found sitemaps:"
+          echo "$sitemap_urls"
+
+          # Fetch all URLs from each sitemap
+          all_urls=""
+          for sitemap_url in $sitemap_urls; do
+            echo "Fetching sitemap: $sitemap_url"
+            sitemap_content=$(curl -s "$sitemap_url")
+            
+            if [ -z "$sitemap_content" ]; then
+              echo "Warning: Could not fetch $sitemap_url"
+              continue
+            fi
+            
+            # Extract URLs from this sitemap
+            urls=$(echo "$sitemap_content" | grep -o '<loc>[^<]*</loc>' | sed 's/<loc>//g; s/<\/loc>//g')
+            all_urls="${all_urls}${urls}"$'\n'
+          done
+
+          # Remove empty lines and trailing newline
+          all_urls=$(echo "$all_urls" | sed '/^$/d')
+
+          if [ -z "$all_urls" ]; then
+            echo "Error: No URLs found in any sitemap"
             exit 1
           fi
 
           # Count URLs
-          url_count=$(echo "$urls" | wc -l)
+          url_count=$(echo "$all_urls" | wc -l)
           echo "url_count=$url_count" >> $GITHUB_OUTPUT
 
           # Store URLs for the accessibility scanner (newline-delimited format)
           echo "urls_list<<EOF" >> $GITHUB_OUTPUT
-          echo "$urls" >> $GITHUB_OUTPUT
+          echo "$all_urls" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
           echo "Found $url_count URLs to test for accessibility:"
-          echo "$urls"
+          echo "$all_urls"
 
       - name: '♿ Run Accessibility Scanner'
         uses: github/accessibility-scanner@v2
