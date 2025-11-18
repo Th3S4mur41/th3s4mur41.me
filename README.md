@@ -8,6 +8,17 @@
 
 This repository hosts the code which powers the https://th3s4mur41.me website.
 
+## ♿ Accessibility Testing
+
+This repository includes automated accessibility testing using GitHub Actions. The testing runs automatically after deployments and can also be triggered manually.
+
+**Features:**
+
+- 🔍 Automatic sitemap-based URL discovery
+- 🤖 AI-powered accessibility analysis with GitHub's scanner
+- 📝 Automated issue creation and PR comments
+- 🎯 WCAG 2.1 AA compliance testing
+
 ## Assets & Design
 
 Assets and design belong to [Th3S4mur41](https://github.com/Th3S4mur41/)
