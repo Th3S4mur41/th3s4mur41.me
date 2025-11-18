@@ -38,4 +38,4 @@ jobs:
     secrets:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
     with:
-      url: ${{ needs.publish.outputs.deployment_url }}
+      url: ${{ needs.publish.outputs.deployment-url }}

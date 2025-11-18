@@ -15,9 +15,9 @@ on:
       INDEXNOW_KEY:
         required: false
     outputs:
-      deployment_url:
+      deployment-url:
         description: 'The URL of the deployed site'
-        value: ${{ jobs.build.outputs.deployment_url }}
+        value: ${{ jobs.build.outputs.deployment-url }}
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -26,6 +26,9 @@ jobs:
   build:
     name: '🚀 Publish'
     runs-on: ubuntu-latest
+
+    outputs:
+      deployment-url: ${{ steps.cloudflare-deploy.outputs.deployment-url }}
 
     permissions:
       contents: read
@@ -76,8 +79,8 @@ jobs:
 
       - name: '📝 Save deployment URL'
         run: |
-          echo "deployment_url=${{ steps.cloudflare-deploy.outputs.url }}" >> $GITHUB_OUTPUT
-          echo "Deployed to: ${{ steps.cloudflare-deploy.outputs.url }}"
+          echo "deployment_url=${{ steps.cloudflare-deploy.outputs.deployment-url }}" >> $GITHUB_OUTPUT
+          echo "Deployed to: ${{ steps.cloudflare-deploy.outputs.deployment-url }}"
 
       - name: Notify IndexNow
         run: |
