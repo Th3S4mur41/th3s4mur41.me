@@ -1,3 +1,10 @@
+## [2.16.6](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.16.5...v2.16.6) (2025-11-18)
+
+
+### Bug Fixes
+
+* correct variable reference for site URL extraction in a11y scan workflow ([b2c7c74](https://github.com/Th3S4mur41/th3s4mur41.me/commit/b2c7c74c45d18e5f422002d209aa8404000b8683))
+
 ## [2.16.5](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.16.4...v2.16.5) (2025-11-18)
 
 
