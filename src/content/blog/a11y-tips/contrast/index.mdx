@@ -33,7 +33,7 @@ import { Image } from 'astro:assets';
 
 ![The CSS logo in front of a skeleton UI template](../Practical_Accessibility_Tips_for_Developers.jpg)
 
-Contrast is one of the easiest accessibility aspects to evaluate because it can be measured with algorithms. Whether through automated tools or semi‑automatic checks, developers can quickly verify if text and background combinations meet established standards. This makes contrast a practical starting point for improving accessibility - though, as we'll see, compliance alone doesn't always guarantee the best user experience
+Contrast is one of the easiest accessibility aspects to evaluate because it can be measured with algorithms. Whether through automated tools or semi‑automatic checks, developers can quickly verify if text and background combinations meet established standards. This makes contrast a practical starting point for improving accessibility - though, as we'll see, compliance alone doesn't always guarantee the best user experience.
 
 While [WCAG guidelines](https://medium.com/r/?url=https%3A%2F%2Fwww.w3.org%2FTR%2FWCAG22%2F%23contrast-minimum) provide a solid foundation for color contrast, strict compliance sometimes leads to suboptimal results with certain colors.
 Consider using the [APCA (Accessible Perceptual Contrast Algorithm)](https://medium.com/r/?url=https%3A%2F%2Fapcacontrast.com%2F) as an alternative or in addition to WCAG checks. APCA offers a more nuanced approach to contrast that better reflects human perception.
@@ -65,3 +65,53 @@ Check the CodePen example used for the comparison above: [Contrast: WCAG vs APCA
 </section>
 
 For example, Stack Overflow recently transitioned to APCA for their accessibility design, improving readability and user experience. You can read more about their approach and lessons learned in their blog post: [Accessibility by Design at Stack Overflow](https://medium.com/r/?url=https%3A%2F%2Fstackoverflow.blog%2F2024%2F08%2F07%2Faccessibility-by-design-building-interfaces-for-everyone-at-stack-overflow%2F).
+
+## How to check contrast (DevTools + quick tools)
+
+Even if you run automated checks, it’s useful to spot‑check contrast right in the browser while you build.
+
+### Chrome / Chromium-based browsers
+
+You can see contrast information in a few places:
+
+- Use the element picker (“Select an element in the page to inspect”, usually <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd>) to inspect the text you care about.
+- In the **Styles** panel, open the color picker for the `color` property; DevTools can display contrast results for the foreground/background pairing.
+
+<figure>
+	![Chrome DevTools element picker highlighting a text element and showing the inspect
+	popover.](chrome-inspect-popover.png)
+	<figcaption>Chrome DevTools: use the element picker to target the exact text you want to evaluate.</figcaption>
+</figure>
+
+<figure>
+	![Chrome DevTools color picker showing contrast information for the selected foreground and background
+	colors.](chrome-color-picker.png)
+	<figcaption>
+		Chrome DevTools: the color picker for <code>color</code> can display contrast results.
+	</figcaption>
+</figure>
+
+**Known DevTools issue:** Chrome DevTools has a known issue ([Chromium bug 1414206](https://crbug.com/1414206)) where contrast ratios aren’t displayed if a color is applied to an element containing children (or even a comment node). Until it’s fixed, check contrast directly on the actual text node(s), or use an external checker.
+
+If you want to switch DevTools to the APCA algorithm, open **DevTools Settings** → **Experiments** and enable the APCA contrast option. The main downside is that DevTools typically shows either WCAG _or_ APCA results, not both at once.
+
+### Firefox
+
+Firefox DevTools also shows contrast in the color picker for the `color` property.
+
+<figure>
+	![Firefox DevTools color picker displaying contrast information for the selected text
+	color.](firefox-color-picker.png)
+	<figcaption>
+		Firefox DevTools: check contrast in the color picker for the <code>color</code> property.
+	</figcaption>
+</figure>
+
+### When you want WCAG and APCA side-by-side
+
+[VisBug](https://visbug.web.app/) is a good alternative for quick checks, since its contrast checker shows WCAG and APCA results side by side.
+
+<figure>
+	![VisBug contrast checker showing WCAG and APCA results side by side.](visbug-contrast.png)
+	<figcaption>VisBug: handy for quick spot-checks when you want WCAG and APCA at the same time.</figcaption>
+</figure>

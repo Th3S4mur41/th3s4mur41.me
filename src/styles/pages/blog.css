@@ -117,7 +117,7 @@ figure {
 		margin-block: unset;
 	}
 	& img {
-		inline-size: 100%;
+		max-inline-size: 100%;
 		block-size: auto;
 		border-radius: 0.25rem;
 	}
@@ -131,7 +131,8 @@ figure {
 	}
 }
 
-:not(pre) > code {
+:not(pre) > code,
+kbd {
 	background-color: var(--color-subtle-bg);
 	border-radius: 0.25rem;
 	padding-inline: 0.25rem;
