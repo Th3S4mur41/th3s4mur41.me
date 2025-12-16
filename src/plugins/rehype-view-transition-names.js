@@ -7,7 +7,7 @@
 export function rehypeViewTransitionNames() {
 	return function transformer(tree, file) {
 		// Extract articleId from file path
-		// file.path will be something like "/src/content/blog/my-article/index.mdx"
+		// file.path will be something like "/src/content/blog/my-article/index.mdx" or "/src/content/blog/parent/child/index.mdx"
 		const pathParts = file.path?.split("/") || [];
 		const contentIndex = pathParts.indexOf("content");
 
@@ -16,9 +16,12 @@ export function rehypeViewTransitionNames() {
 			return tree;
 		}
 
-		// The articleId is the folder name (e.g., "my-article" from "content/blog/my-article/index.mdx")
-		const articleId = pathParts[contentIndex + 2];
-
+		// The articleId includes the full path from content type onwards (e.g., "my-article" or "parent/child")
+		// We need to join from after the section (blog/talks) until before the filename
+		const sectionIndex = contentIndex + 1; // index of "blog" or "talks"
+		const fileIndex = pathParts.length - 1; // index of "index.mdx"
+		const articleIdParts = pathParts.slice(sectionIndex + 1, fileIndex);
+		const articleId = articleIdParts.join("/").replace(/\//g, "-");
 		if (!articleId) {
 			return tree;
 		}

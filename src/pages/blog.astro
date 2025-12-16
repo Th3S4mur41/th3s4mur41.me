@@ -27,15 +27,16 @@ void [combined, blogImages, talksImages, Image, Layout];
 	const image = imagePath ? pools[section][imagePath]?.default : undefined;
 	const date = new Date(entry.data.date);
 	const href = `/${section}/${entry.id}/`;
+	const sanitizedId = entry.id.replace(/\//g, '-');
 	return (
-		<a href={href} aria-labelledby={`article-header-${section}-${entry.id}`} aria-describedby={`article-description-${section}-${entry.id}`}>
+		<a href={href} aria-labelledby={`article-header-${section}-${sanitizedId}`} aria-describedby={`article-description-${section}-${sanitizedId}`}>
 			<article>
-				<h2 id={`article-header-${section}-${entry.id}`} style={`view-transition-name: article-title-${entry.id};`}>
+				<h2 id={`article-header-${section}-${sanitizedId}`} style={`view-transition-name: article-title-${sanitizedId};`}>
 					{entry.data.title} 
 				</h2>
 				<span class="type">{entry.data.type}</span>
-				{image && <Image src={image} alt={entry.data.imageAlt || entry.data.title} loading="lazy" style={`view-transition-name: article-hero-image-${entry.id};`} />}
-				<p id={`article-description-${section}-${entry.id}`}>{entry.data.description}</p>
+				{image && <Image src={image} alt={entry.data.imageAlt || entry.data.title} loading="lazy" style={`view-transition-name: article-hero-image-${sanitizedId};`} />}
+				<p id={`article-description-${section}-${sanitizedId}`}>{entry.data.description}</p>
 				<time datetime={entry.data.date}>{date.toLocaleDateString('en-gb', { year: 'numeric', month: 'short', day: 'numeric' })}</time>
 			</article>
 		</a>

@@ -34,6 +34,10 @@ const talkImagePath =
 		? `/src/content/talks/${lastPublishedTalk.id}/${lastPublishedTalk.data.image}`
 		: null;
 const talkImage = talkImagePath ? talkImages[talkImagePath]?.default : null;
+
+// Sanitize IDs for use in HTML attributes and CSS identifiers
+const sanitizedPostId = lastPublishedPost?.id.replace(/\//g, '-');
+const sanitizedTalkId = lastPublishedTalk?.id.replace(/\//g, '-');
 ---
 
 <Layout title="Home">
@@ -46,11 +50,11 @@ const talkImage = talkImagePath ? talkImages[talkImagePath]?.default : null;
 	<hr>
 	<h2>Latest post</h2>
 	{lastPublishedPost && (
-		<a href={`/blog/${lastPublishedPost.id}/`} aria-labelledby={`article-header-${lastPublishedPost.id}`} aria-describedby={`article-description-${lastPublishedPost.id}`}>
+		<a href={`/blog/${lastPublishedPost.id}/`} aria-labelledby={`article-header-${sanitizedPostId}`} aria-describedby={`article-description-${sanitizedPostId}`}>
 			<article>
-				<h3 id={`article-header-${lastPublishedPost.id}`} style={`view-transition-name: article-title-${lastPublishedPost.id};`}>{lastPublishedPost.data.title}</h3>
-				{image && <Image src={image} alt="" style={`view-transition-name: article-hero-image-${lastPublishedPost.id};`} />}
-				<p id={`article-description-${lastPublishedPost.id}`}>{lastPublishedPost.data.description}</p>
+				<h3 id={`article-header-${sanitizedPostId}`} style={`view-transition-name: article-title-${sanitizedPostId};`}>{lastPublishedPost.data.title}</h3>
+				{image && <Image src={image} alt="" style={`view-transition-name: article-hero-image-${sanitizedPostId};`} />}
+				<p id={`article-description-${sanitizedPostId}`}>{lastPublishedPost.data.description}</p>
 				<time datetime={lastPublishedPost.data.date}>
 					{new Date(lastPublishedPost.data.date).toLocaleDateString('en-gb', { year: 'numeric', month: 'short', day: 'numeric' })}
 				</time>
@@ -60,10 +64,10 @@ const talkImage = talkImagePath ? talkImages[talkImagePath]?.default : null;
 	{lastPublishedTalk && (
 		<hr />
 		<h2>Latest talk</h2>
-		<a href={`/talks/${lastPublishedTalk.id}/`} aria-labelledby={`talk-header-${lastPublishedTalk.id}`}>
-			<article aria-labelledby={`talk-header-${lastPublishedTalk.id}`} data-type={lastPublishedTalk.data.type}>
-				<h3 id={`talk-header-${lastPublishedTalk.id}`} style={`view-transition-name: article-title-${lastPublishedTalk.id};`}>{lastPublishedTalk.data.title}</h3>
-				{talkImage && <Image src={talkImage} alt="" style={`view-transition-name: article-hero-image-${lastPublishedTalk.id};`} />}
+		<a href={`/talks/${lastPublishedTalk.id}/`} aria-labelledby={`talk-header-${sanitizedTalkId}`}>
+			<article aria-labelledby={`talk-header-${sanitizedTalkId}`} data-type={lastPublishedTalk.data.type}>
+				<h3 id={`talk-header-${sanitizedTalkId}`} style={`view-transition-name: article-title-${sanitizedTalkId};`}>{lastPublishedTalk.data.title}</h3>
+				{talkImage && <Image src={talkImage} alt="" style={`view-transition-name: article-hero-image-${sanitizedTalkId};`} />}
 				<p>{lastPublishedTalk.data.description}</p>
 				<time datetime={lastPublishedTalk.data.date}>
 					{new Date(lastPublishedTalk.data.date).toLocaleDateString('en-gb', { year: 'numeric', month: 'short', day: 'numeric' })}
