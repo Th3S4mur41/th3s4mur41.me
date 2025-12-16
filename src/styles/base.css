@@ -66,6 +66,21 @@ header {
 	text-wrap: balance;
 }
 
+/* Eyebrow text above main heading */
+.eyebrow {
+	margin-block-end: 0.25rem;
+	font-size: 1rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.1ch;
+	color: var(--color-accent);
+	text-wrap: balance;
+
+	& + h1 {
+		margin-block-start: 0;
+	}
+}
+
 p {
 	text-wrap: pretty;
 

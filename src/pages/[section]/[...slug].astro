@@ -146,6 +146,7 @@ void [Layout, Content, img, truncatedTitle];
   canonical={article.data.canonical ?? undefined}
   noHeader>
   <article>
+    {article.data.eyebrow && <p class="eyebrow">{article.data.eyebrow}</p>}
     {/** Render markdown/MDX content */}
     <Content />
     <footer>
