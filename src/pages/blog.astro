@@ -3,6 +3,20 @@ import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 
+// Helper to normalize paths by resolving .. segments
+function normalizePath(path: string): string {
+	const parts = path.split('/');
+	const normalized: string[] = [];
+	for (const part of parts) {
+		if (part === '..' && normalized.length > 0 && normalized[normalized.length - 1] !== '..') {
+			normalized.pop();
+		} else if (part !== '.' && part !== '') {
+			normalized.push(part);
+		}
+	}
+	return '/' + normalized.join('/');
+}
+
 // Fetch collections
 const blog = (await getCollection("blog")).filter((article) => article.data.published);
 const talks = (await getCollection("talks")).filter((talk) => talk.data.published);
@@ -22,7 +36,7 @@ void [combined, blogImages, talksImages, Image, Layout];
 
 <Layout title="blog">
 {combined.map(({ section, entry }) => {
-	const imagePath = entry.data.image ? `/src/content/${section}/${entry.id}/${entry.data.image}` : undefined;
+	const imagePath = entry.data.image ? normalizePath(`/src/content/${section}/${entry.id}/${entry.data.image}`) : undefined;
 	const pools = { blog: blogImages, talks: talksImages } as const;
 	const image = imagePath ? pools[section][imagePath]?.default : undefined;
 	const date = new Date(entry.data.date);

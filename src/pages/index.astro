@@ -4,6 +4,20 @@ import { getCollection } from "astro:content";
 import profileImg from "/src/assets/michael-profile-colors.jpg";
 import Layout from "../layouts/Layout.astro";
 
+// Helper to normalize paths by resolving .. segments
+function normalizePath(path: string): string {
+	const parts = path.split('/');
+	const normalized: string[] = [];
+	for (const part of parts) {
+		if (part === '..' && normalized.length > 0 && normalized[normalized.length - 1] !== '..') {
+			normalized.pop();
+		} else if (part !== '.' && part !== '') {
+			normalized.push(part);
+		}
+	}
+	return '/' + normalized.join('/');
+}
+
 const blog = (await getCollection("blog")).sort(
 	(a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
 );
@@ -15,7 +29,7 @@ const blogImages = import.meta.glob("/src/content/blog/**/*.{jpg,png,webp}", { e
 
 const lastPublishedPost = blog.find((post) => post.data.published);
 const imagePath = lastPublishedPost
-	? `/src/content/blog/${lastPublishedPost.id}/${lastPublishedPost.data.image}`
+	? normalizePath(`/src/content/blog/${lastPublishedPost.id}/${lastPublishedPost.data.image}`)
 	: null;
 const image = imagePath ? blogImages[imagePath]?.default : null;
 
@@ -31,7 +45,7 @@ const talkImages = import.meta.glob("/src/content/talks/**/*.{jpg,png,webp}", { 
 >;
 const talkImagePath =
 	lastPublishedTalk && lastPublishedTalk.data.image
-		? `/src/content/talks/${lastPublishedTalk.id}/${lastPublishedTalk.data.image}`
+		? normalizePath(`/src/content/talks/${lastPublishedTalk.id}/${lastPublishedTalk.data.image}`)
 		: null;
 const talkImage = talkImagePath ? talkImages[talkImagePath]?.default : null;
 
