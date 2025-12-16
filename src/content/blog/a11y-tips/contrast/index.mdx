@@ -36,20 +36,25 @@ import { Image } from 'astro:assets';
 ![The CSS logo in front of a skeleton UI template](../Practical_Accessibility_Tips_for_Developers.jpg)
 
 Contrast is one of the easiest accessibility aspects to evaluate because it can be measured with algorithms. Whether through automated tools or semi‑automatic checks, developers can quickly verify if text and background combinations meet established standards. This makes contrast a practical starting point for improving accessibility - though, as we'll see, compliance alone doesn't always guarantee the best user experience
-While WCAG guidelines provide a solid foundation for color contrast, strict compliance sometimes leads to suboptimal results with certain colors. Consider using the APCA (Accessible Perceptual Contrast Algorithm) as an alternative or in addition to WCAG checks. APCA offers a more nuanced approach to contrast that better reflects human perception.
+
+While [WCAG guidelines](https://medium.com/r/?url=https%3A%2F%2Fwww.w3.org%2FTR%2FWCAG22%2F%23contrast-minimum) provide a solid foundation for color contrast, strict compliance sometimes leads to suboptimal results with certain colors.
+Consider using the [APCA (Accessible Perceptual Contrast Algorithm)](https://medium.com/r/?url=https%3A%2F%2Fapcacontrast.com%2F) as an alternative or in addition to WCAG checks. APCA offers a more nuanced approach to contrast that better reflects human perception.
 
 <figure>
-	![A comparison of text contrast using WCAG and APCA standards](contrast-wcag-vs-apca.png)
+	![Same background, different verdicts: APCA favors readability of white text on orange background, while WCAG prefers
+	black. A striking example of how contrast standards can diverge.](contrast-wcag-vs-apca.png)
 	<figcaption>
 		Visual clarity vs legacy metrics: Though WCAG favors black text on orange background, users often find white more
 		readable. APCA captures this perceptual nuance, challenging traditional contrast assumptions.
 	</figcaption>
 </figure>
 
-Check the CodePen example used for the comparison above: Contrast: WCAG vs APCA
+Check the CodePen example used for the comparison above: [Contrast: WCAG vs APCA](https://medium.com/r/?url=https%3A%2F%2Fcodepen.io%2Fth3s4mur41%2Fpen%2FKwzRMyJ)
 
-> WCAG Levels in Brief:
-> A - minimum accessibility requirements - no contrast requirements-
-> AA - stronger requirements, widely adopted as the standard baseline - minimum contrast requirements
-> AAA - highest level, often impractical for all content -  enhanced contrast requirements
-> For example, Stack Overflow recently transitioned to APCA for their accessibility design, improving readability and user experience. You can read more about their approach and lessons learned in their blog post: Accessibility by Design at Stack Overflow.
+> ## WCAG Levels in Brief:
+>
+> - **A**  -  minimum accessibility requirements - no contrast requirements-
+> - **AA**  -  stronger requirements, widely adopted as the standard baseline - minimum contrast requirements
+> - **AAA**  -  highest level, often impractical for all content -  enhanced contrast requirements
+
+For example, Stack Overflow recently transitioned to APCA for their accessibility design, improving readability and user experience. You can read more about their approach and lessons learned in their blog post: [Accessibility by Design at Stack Overflow](https://medium.com/r/?url=https%3A%2F%2Fstackoverflow.blog%2F2024%2F08%2F07%2Faccessibility-by-design-building-interfaces-for-everyone-at-stack-overflow%2F).
