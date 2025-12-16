@@ -113,7 +113,7 @@ body:is([class^="blog-"], [class^="talks-"]) {
 }
 
 figure {
-	& > img {
+	& img {
 		inline-size: 100%;
 		block-size: auto;
 		border-radius: 0.25rem;
