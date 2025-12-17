@@ -3,6 +3,7 @@ import "../index.css";
 
 import { Image } from "astro:assets";
 import heroImage from "/src/assets/th3S4mur41_colors_ultrawide.png";
+import OpenGraph from "../components/OpenGraph.astro";
 import Socials from "../components/Socials.astro";
 
 interface Props {
@@ -23,9 +24,6 @@ const pageTitle = title ? `${title} | ${siteName}` : `${siteName}`;
 const header = title ? title : `${siteName}`;
 const currentYear = new Date().getFullYear();
 const slug = Astro.url.pathname.replace(/^\/|\/$/g, "").replace(/\//g, "-") || "home";
-
-const siteBaseUrl = new URL(Astro.url.origin);
-const toAbsoluteUrl = (url: string) => new URL(url, siteBaseUrl).href;
 
 // Default meta description (~150 chars) optimized for primary topics without truncation in SERPs
 const desc =
@@ -48,27 +46,6 @@ const defaultKeywords = [
 	"ux",
 ];
 const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...defaultKeywords]));
-
-// Retrieve metadata for the Open Graph image
-const ogImageMetadata = image
-	? {
-			src: image.src,
-			attributes: {
-				width: image.attributes.width,
-				height: image.attributes.height,
-			},
-			alt: typeof imageAlt === "string" ? imageAlt.trim() : "",
-		}
-	: {
-			src: "/images/opengraph.png",
-			attributes: {
-				width: 1200,
-				height: 630,
-			},
-			alt: `${siteName} logo`,
-		};
-
-const ogImageUrl = toAbsoluteUrl(ogImageMetadata.src);
 ---
 
 <!doctype html>
@@ -104,17 +81,7 @@ const ogImageUrl = toAbsoluteUrl(ogImageMetadata.src);
 		<link rel="apple-touch-icon" href="/icons/favicon-180.png" />
 
 		<!-- Open Graph data -->
-		<meta property="og:title" content={pageTitle} />
-		<meta property="og:description" content={desc} />
-		<meta property="og:url" content={Astro.url.href} />
-		<meta property="og:image" content={ogImageUrl} />
-		<meta property="og:image:width" content={ogImageMetadata.attributes.width} />
-		<meta property="og:image:height" content={ogImageMetadata.attributes.height} />
-		<meta property="og:image:alt" content={ogImageMetadata.alt} />
-		<meta property="og:type" content="website" />
-		<!-- <meta property="article:published_time" content="{currentLocalISODate}" />
-		<meta property="article:modified_time" content="{currentLocalISODate}" /> -->
-		<meta property="og:site_name" content={siteName} />
+		<OpenGraph title={pageTitle} description={desc} siteName={siteName} image={image} imageAlt={imageAlt} />
 
 		<meta name="generator" content={Astro.generator} />
 		<link rel="sitemap" href="/sitemap-index.xml" />
