@@ -1,0 +1,80 @@
+---
+import StructuredData from "./StructuredData.astro";
+
+interface Props {
+	headline: string;
+	description?: string;
+	datePublished: Date;
+	dateModified?: Date;
+	image?: {
+		src: string;
+		attributes?: {
+			width?: number;
+			height?: number;
+		};
+	};
+	url: string;
+	canonical?: string;
+	authorName?: string;
+	siteName?: string;
+}
+
+const {
+	headline,
+	description,
+	datePublished,
+	dateModified,
+	image,
+	url,
+	canonical,
+	authorName = "Michaël Vanderheyden",
+	siteName = "Th3S4mur41.me",
+} = Astro.props;
+
+const origin = Astro.url.origin;
+const absolute = (maybeUrl: string) => new URL(maybeUrl, origin).href;
+
+const jsonLd = {
+	"@context": "https://schema.org",
+	"@type": "BlogPosting",
+	headline,
+	description,
+	datePublished: datePublished.toISOString(),
+	...(dateModified ? { dateModified: dateModified.toISOString() } : {}),
+	mainEntityOfPage: {
+		"@type": "WebPage",
+		"@id": url,
+	},
+	url,
+	...(canonical ? { isBasedOn: canonical } : {}),
+	...(image?.src
+		? {
+			image: {
+				"@type": "ImageObject",
+				url: absolute(image.src),
+				...(image.attributes?.width ? { width: image.attributes.width } : {}),
+				...(image.attributes?.height ? { height: image.attributes.height } : {}),
+			},
+		}
+		: {}),
+	author: {
+		"@type": "Person",
+		name: authorName,
+		url: absolute("/about/"),
+	},
+	publisher: {
+		"@type": "Organization",
+		name: siteName,
+		url: absolute("/"),
+		logo: {
+			"@type": "ImageObject",
+			url: absolute("/icons/favicon-180.png"),
+			width: 180,
+			height: 180,
+		},
+	},
+	inLanguage: "en",
+};
+---
+
+<StructuredData data={jsonLd} />

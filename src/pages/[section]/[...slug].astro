@@ -3,6 +3,8 @@ import { getImage } from "astro:assets";
 import { getCollection, getEntry, render } from "astro:content";
 import path from "node:path";
 import Layout from "../../layouts/Layout.astro";
+import BlogPostingSchema from "../../components/BlogPostingSchema.astro";
+import PodcastEpisodeSchema from "../../components/PodcastEpisodeSchema.astro";
 
 /**
  * Unified dynamic route for both blog posts and talks.
@@ -156,7 +158,7 @@ function truncateTitle(original: string): string {
 const truncatedTitle = truncateTitle(article.data.title);
 // Hint to linter that these identifiers are intentionally used in the template markup below.
 // This keeps zero runtime impact while satisfying static analysis.
-void [Layout, Content, img, truncatedTitle];
+void [Layout, Content, img, truncatedTitle, BlogPostingSchema, PodcastEpisodeSchema];
 ---
 
 <Layout
@@ -189,5 +191,28 @@ void [Layout, Content, img, truncatedTitle];
         </p>
       )}
     </footer>
+
+		{section === "blog" && (
+			<BlogPostingSchema
+				headline={article.data.title}
+				description={article.data.description}
+				datePublished={article.data.date}
+				dateModified={article.data.updated}
+				image={img}
+				url={Astro.url.href}
+				canonical={article.data.canonical}
+			/>
+		)}
+
+		{section === "talks" && article.data.type === "podcast" && (
+			<PodcastEpisodeSchema
+				name={article.data.title}
+				description={article.data.description}
+				datePublished={article.data.date}
+				url={Astro.url.href}
+				canonical={article.data.canonical}
+				image={img}
+			/>
+		)}
   </article>
 </Layout>

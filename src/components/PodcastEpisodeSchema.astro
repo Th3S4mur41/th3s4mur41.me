@@ -1,0 +1,67 @@
+---
+import StructuredData from "./StructuredData.astro";
+
+interface Props {
+	name: string;
+	description?: string;
+	datePublished: Date;
+	url: string;
+	canonical?: string;
+	image?: {
+		src: string;
+		attributes?: {
+			width?: number;
+			height?: number;
+		};
+	};
+	authorName?: string;
+	siteName?: string;
+}
+
+const {
+	name,
+	description,
+	datePublished,
+	url,
+	canonical,
+	image,
+	authorName = "Michaël Vanderheyden",
+	siteName = "Th3S4mur41.me",
+} = Astro.props;
+
+const origin = Astro.url.origin;
+const absolute = (maybeUrl: string) => new URL(maybeUrl, origin).href;
+
+const jsonLd = {
+	"@context": "https://schema.org",
+	"@type": "PodcastEpisode",
+	name,
+	description,
+	datePublished: datePublished.toISOString(),
+	url,
+	...(canonical ? { isBasedOn: canonical } : {}),
+	...(image?.src
+		? {
+			image: {
+				"@type": "ImageObject",
+				url: absolute(image.src),
+				...(image.attributes?.width ? { width: image.attributes.width } : {}),
+				...(image.attributes?.height ? { height: image.attributes.height } : {}),
+			},
+		}
+		: {}),
+	publisher: {
+		"@type": "Organization",
+		name: siteName,
+		url: absolute("/"),
+	},
+	creator: {
+		"@type": "Person",
+		name: authorName,
+		url: absolute("/about/"),
+	},
+	inLanguage: "en",
+};
+---
+
+<StructuredData data={jsonLd} />
