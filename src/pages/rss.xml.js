@@ -1,13 +1,15 @@
 import { getCollection } from "astro:content";
 import rss from "@astrojs/rss";
+import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/contentVisibility";
 
 export async function GET(context) {
-	const now = Date.now();
+	const now = new Date();
+	const previewFuture = isPreviewFutureContentEnabled();
 	const site = context.site ?? new URL("https://th3s4mur41.me");
 
 	const [blogEntries, talkEntries] = await Promise.all([
-		getCollection("blog", ({ data }) => data.published === true && data.date.valueOf() <= now),
-		getCollection("talks", ({ data }) => data.published === true && data.date.valueOf() <= now),
+		getCollection("blog", ({ data }) => isVisibleContent(data, { now, previewFuture })),
+		getCollection("talks", ({ data }) => isVisibleContent(data, { now, previewFuture })),
 	]);
 
 	const items = [

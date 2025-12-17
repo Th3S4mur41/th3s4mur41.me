@@ -5,6 +5,7 @@ import path from "node:path";
 import Layout from "../../layouts/Layout.astro";
 import BlogPostingSchema from "../../components/BlogPostingSchema.astro";
 import PodcastEpisodeSchema from "../../components/PodcastEpisodeSchema.astro";
+import { isPreviewFutureContentEnabled, isVisibleContent } from "../../utils/contentVisibility";
 
 /**
  * Unified dynamic route for both blog posts and talks.
@@ -12,21 +13,21 @@ import PodcastEpisodeSchema from "../../components/PodcastEpisodeSchema.astro";
  * individual route files did. Eliminates duplicated logic (images, title truncation, meta setup).
  */
 export async function getStaticPaths() {
+	const now = new Date();
+	const previewFuture = isPreviewFutureContentEnabled();
+
 	const collections = [
 		{ name: "blog", entries: await getCollection("blog") },
 		{ name: "talks", entries: await getCollection("talks") },
 	];
 
 	const paths = collections.flatMap(({ name, entries }) =>
-		entries.map((entry) => {
-			const base = entry.id; // original entry id (folder name / file stem)
-			const isPublished = entry.data.published === true;
-			const finalSlug = !isPublished && !base.startsWith("_draft-") ? `_draft-${base}` : base;
-			return {
-				params: { section: name, slug: finalSlug },
+		entries
+			.filter((entry) => isVisibleContent(entry.data, { now, previewFuture }))
+			.map((entry) => ({
+				params: { section: name, slug: entry.id },
 				props: { article: entry, section: name },
-			};
-		}),
+			})),
 	);
 
 	return paths;
@@ -45,7 +46,7 @@ if (!section || !SUPPORTED_SECTIONS.includes(section as Section)) {
 	throw new Error(`Invalid section: ${section}`);
 }
 
-// Normalize draft slug back to original entry id.
+// Backward compat: normalize legacy draft slug back to original entry id.
 const normalizedSlug = slug?.startsWith("_draft-") ? slug.slice("_draft-".length) : slug;
 if (!normalizedSlug) {
 	throw new Error("Missing slug param");
@@ -53,6 +54,14 @@ if (!normalizedSlug) {
 const article = await getEntry(section as Section, normalizedSlug);
 if (!article) {
 	throw new Error(`Article not found: ${section}/${normalizedSlug}`);
+}
+
+// Safety: even if someone hits a legacy `_draft-` URL directly, never render unpublished items.
+// Future-dated items are only visible when PREVIEW_FUTURE_CONTENT is enabled at build/runtime.
+const previewFuture = isPreviewFutureContentEnabled();
+const isVisible = isVisibleContent(article.data, { previewFuture });
+if (!isVisible) {
+	throw new Error(`Content not visible: ${section}/${normalizedSlug}`);
 }
 
 // Render MD/MDX content.

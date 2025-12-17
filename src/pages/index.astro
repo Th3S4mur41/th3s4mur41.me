@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import profileImg from "/src/assets/michael-profile-colors.jpg";
 import Layout from "../layouts/Layout.astro";
+import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/contentVisibility";
 
 // Helper to normalize paths by resolving .. segments
 function normalizePath(path: string): string {
@@ -18,7 +19,11 @@ function normalizePath(path: string): string {
 	return "/" + normalized.join("/");
 }
 
-const blog = (await getCollection("blog")).sort(
+
+const now = new Date();
+const previewFuture = isPreviewFutureContentEnabled();
+
+const blog = (await getCollection("blog", ({ data }) => isVisibleContent(data, { now, previewFuture }))).sort(
 	(a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
 );
 
@@ -27,17 +32,17 @@ const blogImages = import.meta.glob("/src/content/blog/**/*.{jpg,png,webp}", { e
 	{ default: any }
 >;
 
-const lastPublishedPost = blog.find((post) => post.data.published);
+const lastPublishedPost = blog[0];
 const imagePath = lastPublishedPost
 	? normalizePath(`/src/content/blog/${lastPublishedPost.id}/${lastPublishedPost.data.image}`)
 	: null;
 const image = imagePath ? blogImages[imagePath]?.default : null;
 
 // Talks: retrieve latest published talk (no inline MDX import required here)
-const talks = (await getCollection("talks")).sort(
+const talks = (await getCollection("talks", ({ data }) => isVisibleContent(data, { now, previewFuture }))).sort(
 	(a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
 );
-const lastPublishedTalk = talks.find((talk) => talk.data.published);
+const lastPublishedTalk = talks[0];
 // Resolve latest talk image similar to blog
 const talkImages = import.meta.glob("/src/content/talks/**/*.{jpg,png,webp}", { eager: true }) as Record<
 	string,

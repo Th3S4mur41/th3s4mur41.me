@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
+import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/contentVisibility";
 
 // Helper to normalize paths by resolving .. segments
 function normalizePath(path: string): string {
@@ -17,9 +18,12 @@ function normalizePath(path: string): string {
 	return "/" + normalized.join("/");
 }
 
+const now = new Date();
+const previewFuture = isPreviewFutureContentEnabled();
+
 // Fetch collections
-const blog = (await getCollection("blog")).filter((article) => article.data.published);
-const talks = (await getCollection("talks")).filter((talk) => talk.data.published);
+const blog = await getCollection("blog", ({ data }) => isVisibleContent(data, { now, previewFuture }));
+const talks = await getCollection("talks", ({ data }) => isVisibleContent(data, { now, previewFuture }));
 
 // Combine with a discriminant for section type
 const combined = [

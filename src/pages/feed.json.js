@@ -1,15 +1,17 @@
 import { getCollection } from "astro:content";
+import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/contentVisibility";
 
 export async function GET(context) {
 	const siteUrl = context.site ?? new URL("https://th3s4mur41.me");
 	const homePageUrl = new URL("/", siteUrl).href;
 	const feedUrl = new URL("/feed.json", siteUrl).href;
 	const authorUrl = new URL("/about/", siteUrl).href;
-	const now = Date.now();
+	const now = new Date();
+	const previewFuture = isPreviewFutureContentEnabled();
 
 	const [blogEntries, talkEntries] = await Promise.all([
-		getCollection("blog", ({ data }) => data.published === true && data.date.valueOf() <= now),
-		getCollection("talks", ({ data }) => data.published === true && data.date.valueOf() <= now),
+		getCollection("blog", ({ data }) => isVisibleContent(data, { now, previewFuture })),
+		getCollection("talks", ({ data }) => isVisibleContent(data, { now, previewFuture })),
 	]);
 
 	const toItem = (section, entry) => {

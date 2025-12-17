@@ -67,7 +67,7 @@
 		"semantic-release": "^25.0.2"
 	},
 	"scripts": {
-		"start": "astro dev",
+		"start": "PREVIEW_FUTURE_CONTENT=true astro dev",
 		"start:prod": "astro preview",
 		"build": "astro build",
 		"build:favicon": "real-favicon check-for-update --fail-on-update faviconData.json",
