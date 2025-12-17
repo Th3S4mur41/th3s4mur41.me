@@ -1,6 +1,7 @@
 ---
 import { getImage } from "astro:assets";
 import { getCollection, getEntry, render } from "astro:content";
+import path from "node:path";
 import Layout from "../../layouts/Layout.astro";
 
 /**
@@ -63,17 +64,38 @@ const imagePools: Record<string, Record<string, unknown>> = {
 	talks: talksImages,
 };
 
-// NOTE: For draft slugs, the folder on disk is named by the normalized slug (without _draft-).
-// The original implementation used the route `slug` (which could include _draft-) when building image paths,
-// which would fail if the folder did not actually have that prefix. We correct this by using `normalizedSlug`.
-const imagePath = article.data.image ? `/src/content/${section}/${normalizedSlug}/${article.data.image}` : undefined;
+function normalizePosix(p: string): string {
+	return path.posix.normalize(p);
+}
 
+// NOTE: `article.data.image` may reference an image in the same folder as the post,
+// but it can also reference shared assets elsewhere inside the collection (e.g. "../hero.png").
+// We resolve by trying a couple of normalized candidates against the eager glob pool.
+let imagePath: string | undefined;
 let resolvedImage: unknown;
-if (imagePath) {
-	const pool = imagePools[section];
-	const mod = pool[imagePath];
-	if (mod && typeof mod === "object" && (mod as { default?: unknown }).default) {
-		resolvedImage = (mod as { default?: unknown }).default;
+
+if (article.data.image) {
+	const raw = typeof article.data.image === "string" ? article.data.image.trim() : "";
+	if (raw) {
+		const pool = imagePools[section];
+		const cleaned = raw.replace(/^\.\//, "");
+		const postDir = `/src/content/${section}/${normalizedSlug}/`;
+		const collectionDir = `/src/content/${section}/`;
+		const candidates = cleaned.startsWith("/")
+			? [normalizePosix(cleaned)]
+			: [
+					normalizePosix(path.posix.join(postDir, cleaned)),
+					normalizePosix(path.posix.join(collectionDir, cleaned)),
+				];
+
+		for (const candidate of candidates) {
+			const mod = pool[candidate];
+			if (mod && typeof mod === "object" && (mod as { default?: unknown }).default) {
+				imagePath = candidate;
+				resolvedImage = (mod as { default?: unknown }).default;
+				break;
+			}
+		}
 	}
 }
 
