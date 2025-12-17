@@ -2,9 +2,9 @@
 import { getImage } from "astro:assets";
 import { getCollection, getEntry, render } from "astro:content";
 import path from "node:path";
-import Layout from "../../layouts/Layout.astro";
 import BlogPostingSchema from "../../components/BlogPostingSchema.astro";
 import PodcastEpisodeSchema from "../../components/PodcastEpisodeSchema.astro";
+import Layout from "../../layouts/Layout.astro";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../../utils/contentVisibility";
 
 /**
@@ -94,10 +94,7 @@ if (article.data.image) {
 		const collectionDir = `/src/content/${section}/`;
 		const candidates = cleaned.startsWith("/")
 			? [normalizePosix(cleaned)]
-			: [
-					normalizePosix(path.posix.join(postDir, cleaned)),
-					normalizePosix(path.posix.join(collectionDir, cleaned)),
-				];
+			: [normalizePosix(path.posix.join(postDir, cleaned)), normalizePosix(path.posix.join(collectionDir, cleaned))];
 
 		for (const candidate of candidates) {
 			const mod = pool[candidate];

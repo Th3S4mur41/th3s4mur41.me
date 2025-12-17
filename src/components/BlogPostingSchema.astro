@@ -49,13 +49,13 @@ const jsonLd = {
 	...(canonical ? { isBasedOn: canonical } : {}),
 	...(image?.src
 		? {
-			image: {
-				"@type": "ImageObject",
-				url: absolute(image.src),
-				...(image.attributes?.width ? { width: image.attributes.width } : {}),
-				...(image.attributes?.height ? { height: image.attributes.height } : {}),
-			},
-		}
+				image: {
+					"@type": "ImageObject",
+					url: absolute(image.src),
+					...(image.attributes?.width ? { width: image.attributes.width } : {}),
+					...(image.attributes?.height ? { height: image.attributes.height } : {}),
+				},
+			}
 		: {}),
 	author: {
 		"@type": "Person",

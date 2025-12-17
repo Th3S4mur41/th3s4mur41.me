@@ -9,15 +9,7 @@ interface Props {
 	imageAlt?: string;
 }
 
-const {
-	title,
-	description,
-	siteName,
-	url,
-	type = "website",
-	image,
-	imageAlt,
-} = Astro.props;
+const { title, description, siteName, url, type = "website", image, imageAlt } = Astro.props;
 
 const siteBaseUrl = new URL(Astro.url.origin);
 const toAbsoluteUrl = (value: string) => new URL(value, siteBaseUrl).href;
