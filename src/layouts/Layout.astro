@@ -22,6 +22,9 @@ const header = title ? title : "Th3S3mur41.me";
 const currentYear = new Date().getFullYear();
 const slug = Astro.url.pathname.replace(/^\/|\/$/g, "").replace(/\//g, "-") || "home";
 
+const siteBaseUrl = new URL(Astro.url.origin);
+const toAbsoluteUrl = (url: string) => new URL(url, siteBaseUrl).href;
+
 // Default meta description (~150 chars) optimized for primary topics without truncation in SERPs
 const desc =
 	description ||
@@ -60,6 +63,8 @@ const ogImageMetadata = image
 				height: 630,
 			},
 		};
+
+const ogImageUrl = toAbsoluteUrl(ogImageMetadata.src);
 ---
 
 <!doctype html>
@@ -98,7 +103,7 @@ const ogImageMetadata = image
 		<meta property="og:title" content={pageTitle} />
 		<meta property="og:description" content={desc} />
 		<meta property="og:url" content={Astro.url.href} />
-		<meta property="og:image" content={ogImageMetadata.src} />
+		<meta property="og:image" content={ogImageUrl} />
 		<meta property="og:image:width" content={ogImageMetadata.attributes.width} />
 		<meta property="og:image:height" content={ogImageMetadata.attributes.height} />
 		<meta property="og:type" content="website" />
