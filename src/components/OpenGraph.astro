@@ -1,0 +1,58 @@
+---
+interface Props {
+	title: string;
+	description: string;
+	siteName: string;
+	url?: string;
+	type?: string;
+	image?: any;
+	imageAlt?: string;
+}
+
+const { title, description, siteName, url, type = "website", image, imageAlt } = Astro.props;
+
+const siteBaseUrl = new URL(Astro.url.origin);
+const toAbsoluteUrl = (value: string) => new URL(value, siteBaseUrl).href;
+
+const fallbackOgImage = {
+	src: "/images/opengraph.png",
+	width: 1200,
+	height: 630,
+	alt: `${siteName} logo`,
+};
+
+const resolvedOgImage = (() => {
+	// Precedence order:
+	// 1) If a per-page OpenGraph image is provided, use it.
+	// 2) Otherwise fall back to the site-wide default image.
+	//
+	// Attribute cascading:
+	// - `src` resolves first and determines whether we're using the fallback.
+	// - `width`/`height` cascade independently (provided image attributes → fallback dimensions).
+	// - `alt` is taken from `imageAlt` only for provided images; fallback image uses its own default alt.
+	const src = typeof image?.src === "string" ? image.src : fallbackOgImage.src;
+	const width = typeof image?.attributes?.width === "number" ? image.attributes.width : fallbackOgImage.width;
+	const height = typeof image?.attributes?.height === "number" ? image.attributes.height : fallbackOgImage.height;
+	const alt = typeof imageAlt === "string" ? imageAlt.trim() : "";
+
+	return {
+		src,
+		width,
+		height,
+		alt: src === fallbackOgImage.src ? fallbackOgImage.alt : alt,
+	};
+})();
+
+const ogImageUrl = toAbsoluteUrl(resolvedOgImage.src);
+const ogUrl = url ?? Astro.url.href;
+---
+
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={ogUrl} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:image:width" content={resolvedOgImage.width} />
+<meta property="og:image:height" content={resolvedOgImage.height} />
+<meta property="og:image:alt" content={resolvedOgImage.alt} />
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={siteName} />

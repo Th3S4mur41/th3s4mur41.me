@@ -113,8 +113,11 @@ body:is([class^="blog-"], [class^="talks-"]) {
 }
 
 figure {
-	& > img {
-		inline-size: 100%;
+	& > p:has(> img:only-child) {
+		margin-block: unset;
+	}
+	& img {
+		max-inline-size: 100%;
 		block-size: auto;
 		border-radius: 0.25rem;
 	}
@@ -128,7 +131,8 @@ figure {
 	}
 }
 
-:not(pre) > code {
+:not(pre) > code,
+kbd {
 	background-color: var(--color-subtle-bg);
 	border-radius: 0.25rem;
 	padding-inline: 0.25rem;
@@ -149,4 +153,32 @@ h2#update::before {
 	margin-inline-end: 0.2em;
 	font-size: 1.2em;
 	color: var(--color-accent);
+}
+
+.sidenote {
+	font-size: 0.875rem;
+	color: var(--color-subtle-text);
+	border-left: 2px solid var(--color-subtle-text);
+	margin-block: 1.5rem;
+	padding-inline-start: 1.5rem;
+	padding-block: 0.5rem;
+
+	& > :is(h2, h3) {
+		margin-block-start: 0;
+	}
+}
+
+dl {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: 0.75rem 1rem;
+	margin-trim: block;
+
+	& dt {
+		font-weight: 600;
+	}
+
+	& dd {
+		margin: 0;
+	}
 }

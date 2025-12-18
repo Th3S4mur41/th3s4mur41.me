@@ -1,0 +1,15 @@
+---
+interface Props {
+	data: unknown;
+}
+
+const { data } = Astro.props;
+
+// JSON-LD is embedded into a <script> element. If any string value contains "</script>",
+// the HTML parser would terminate the element early and treat the remainder as markup.
+// Escaping '<' as a Unicode sequence keeps semantics for JSON parsers while preventing
+// script-tag breakouts (and avoids relying on HTML sanitizers, which are not meant for JSON).
+const jsonLd = JSON.stringify(data).replace(/</g, "\\u003c");
+---
+
+<script type="application/ld+json" set:html={jsonLd} />

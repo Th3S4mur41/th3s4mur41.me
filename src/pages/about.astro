@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import profileImage from "/src/assets/michael-profile.png";
+import PersonSchema from "../components/PersonSchema.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
@@ -12,6 +13,21 @@ import Layout from "../layouts/Layout.astro";
 	<p>Innovation excites me, and I stay ahead of the curve by experimenting with new HTML and CSS features as soon as they’re available. I enjoy pushing boundaries, exploring fresh techniques, and introducing meaningful enhancements to the projects I work on. Writing clean, maintainable code is a priority—it’s about crafting solutions that stand the test of time and remain intuitive for developers and users alike.</p>
 	<p>Beyond coding, I carry the principles of respect, discipline, and perseverance into every aspect of my professional interactions. Having practiced martial arts for years—including karate, Brazilian Jiu-Jitsu, Luta Livre, and MMA—I understand the value of consistency, focus, and collaboration. These qualities define not only how I approach problem-solving but also how I work within teams, ensuring a productive and supportive development environment.</p>
 	<p>When I’m not building digital experiences, you’ll find me spending time with my family, engaging in sports, and exploring the outdoors—often accompanied by Bellona, our energetic Husky. Whether it's dogtrekking, mountain biking, or snowboarding, I embrace challenges with the same enthusiasm I bring to my work.</p>
+
+	<PersonSchema
+		name="Michaël Vanderheyden"
+		url={Astro.url.href}
+		sameAs={[
+			"https://www.linkedin.com/in/michaelvanderheyden/",
+			"https://bsky.app/profile/th3s4mur41.me",
+			"https://github.com/Th3S4mur41",
+			"https://codepen.io/th3s4mur41/",
+			"https://th3s4mur41.medium.com/",
+			"https://www.instagram.com/th3s4mur41/",
+			"https://twitter.com/Th3S4mur41",
+		]}
+		image={profileImage}
+	/>
 	
 
 </Layout>
