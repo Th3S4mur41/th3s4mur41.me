@@ -7,6 +7,8 @@ interface Props {
 	datePublished: Date;
 	url: string;
 	canonical?: string;
+	publisherName?: string;
+	publisherUrl?: string;
 	image?: {
 		src: string;
 		attributes?: {
@@ -24,6 +26,8 @@ const {
 	datePublished,
 	url,
 	canonical,
+	publisherName,
+	publisherUrl,
 	image,
 	authorName = "Michaël Vanderheyden",
 	siteName = "Th3S4mur41.me",
@@ -52,8 +56,8 @@ const jsonLd = {
 		: {}),
 	publisher: {
 		"@type": "Organization",
-		name: siteName,
-		url: absolute("/"),
+		name: publisherName ?? siteName,
+		url: publisherUrl ? absolute(publisherUrl) : absolute("/"),
 	},
 	creator: {
 		"@type": "Person",

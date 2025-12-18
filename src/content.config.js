@@ -32,6 +32,9 @@ const talksSchema = z.object({
 	tags: z.array(z.string()).optional(),
 	keywords: z.array(z.string()).optional(),
 	canonical: z.string().optional(),
+	// Optional override for content published/hosted elsewhere.
+	publisherName: z.string().optional(),
+	publisherUrl: z.string().url().optional(),
 });
 
 // 4. Define your collection(s)
