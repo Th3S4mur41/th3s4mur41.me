@@ -24,7 +24,7 @@ export function isVisibleContent(
 		previewFuture?: boolean;
 	},
 ): boolean {
-	if (data.published !== true) return false;
+	if (data.published === false) return false; // Explicitly unpublished content is never visible.
 	const now = options?.now ?? new Date();
 	const previewFuture = options?.previewFuture ?? isPreviewFutureContentEnabled();
 	return previewFuture ? true : data.date.valueOf() <= now.valueOf();
