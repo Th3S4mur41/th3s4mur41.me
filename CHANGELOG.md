@@ -1,3 +1,10 @@
+# [2.17.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.16.6...v2.17.0) (2025-12-18)
+
+
+### Features
+
+* improve seo, OpenGraph and add RSS+JSON feed ([#2003](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2003)) ([55926ae](https://github.com/Th3S4mur41/th3s4mur41.me/commit/55926ae85fec80c41d2dbf4f1ede801389e76e09))
+
 ## [2.16.6](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.16.5...v2.16.6) (2025-11-18)
 
 
