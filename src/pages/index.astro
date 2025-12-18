@@ -2,22 +2,9 @@
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import profileImg from "/src/assets/michael-profile-colors.jpg";
+import ArticleCard from "../components/ArticleCard.astro";
 import Layout from "../layouts/Layout.astro";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/contentVisibility";
-
-// Helper to normalize paths by resolving .. segments
-function normalizePath(path: string): string {
-	const parts = path.split("/");
-	const normalized: string[] = [];
-	for (const part of parts) {
-		if (part === ".." && normalized.length > 0 && normalized[normalized.length - 1] !== "..") {
-			normalized.pop();
-		} else if (part !== "." && part !== "") {
-			normalized.push(part);
-		}
-	}
-	return "/" + normalized.join("/");
-}
 
 const now = new Date();
 const previewFuture = isPreviewFutureContentEnabled();
@@ -26,36 +13,16 @@ const blog = (await getCollection("blog", ({ data }) => isVisibleContent(data, {
 	(a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
 );
 
-const blogImages = import.meta.glob("/src/content/blog/**/*.{jpg,png,webp}", { eager: true }) as Record<
-	string,
-	{ default: any }
->;
-
 const lastPublishedPost = blog[0];
-const imagePath = lastPublishedPost
-	? normalizePath(`/src/content/blog/${lastPublishedPost.id}/${lastPublishedPost.data.image}`)
-	: null;
-const image = imagePath ? blogImages[imagePath]?.default : null;
 
 // Talks: retrieve latest published talk (no inline MDX import required here)
 const talks = (await getCollection("talks", ({ data }) => isVisibleContent(data, { now, previewFuture }))).sort(
 	(a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
 );
 const lastPublishedTalk = talks[0];
-// Resolve latest talk image similar to blog
-const talkImages = import.meta.glob("/src/content/talks/**/*.{jpg,png,webp}", { eager: true }) as Record<
-	string,
-	{ default: any }
->;
-const talkImagePath =
-	lastPublishedTalk && lastPublishedTalk.data.image
-		? normalizePath(`/src/content/talks/${lastPublishedTalk.id}/${lastPublishedTalk.data.image}`)
-		: null;
-const talkImage = talkImagePath ? talkImages[talkImagePath]?.default : null;
 
-// Sanitize IDs for use in HTML attributes and CSS identifiers
-const sanitizedPostId = lastPublishedPost?.id.replace(/\//g, "-");
-const sanitizedTalkId = lastPublishedTalk?.id.replace(/\//g, "-");
+// Biome currently doesn't reliably detect Astro template usage.
+void [Image, profileImg, ArticleCard, Layout, lastPublishedPost, lastPublishedTalk];
 ---
 
 <Layout title="Home">
@@ -68,29 +35,21 @@ const sanitizedTalkId = lastPublishedTalk?.id.replace(/\//g, "-");
 	<hr>
 	<h2>Latest post</h2>
 	{lastPublishedPost && (
-		<a href={`/blog/${lastPublishedPost.id}/`} aria-labelledby={`article-header-${sanitizedPostId}`} aria-describedby={`article-description-${sanitizedPostId}`}>
-			<article>
-				<h3 id={`article-header-${sanitizedPostId}`} style={`view-transition-name: article-title-${sanitizedPostId};`}>{lastPublishedPost.data.title}</h3>
-				{image && <Image src={image} alt="" style={`view-transition-name: article-hero-image-${sanitizedPostId};`} />}
-				<p id={`article-description-${sanitizedPostId}`}>{lastPublishedPost.data.description}</p>
-				<time datetime={lastPublishedPost.data.date}>
-					{new Date(lastPublishedPost.data.date).toLocaleDateString('en-gb', { year: 'numeric', month: 'short', day: 'numeric' })}
-				</time>
-			</article>
-		</a>
+		<ArticleCard
+			article={lastPublishedPost}
+			section="blog"
+			headingOffset={1}
+		/>
 	)}
 	{lastPublishedTalk && (
-		<hr />
-		<h2>Latest talk</h2>
-		<a href={`/talks/${lastPublishedTalk.id}/`} aria-labelledby={`talk-header-${sanitizedTalkId}`}>
-			<article aria-labelledby={`talk-header-${sanitizedTalkId}`} data-type={lastPublishedTalk.data.type}>
-				<h3 id={`talk-header-${sanitizedTalkId}`} style={`view-transition-name: article-title-${sanitizedTalkId};`}>{lastPublishedTalk.data.title}</h3>
-				{talkImage && <Image src={talkImage} alt="" style={`view-transition-name: article-hero-image-${sanitizedTalkId};`} />}
-				<p>{lastPublishedTalk.data.description}</p>
-				<time datetime={lastPublishedTalk.data.date}>
-					{new Date(lastPublishedTalk.data.date).toLocaleDateString('en-gb', { year: 'numeric', month: 'short', day: 'numeric' })}
-				</time>
-			</article>
-		</a>
+		<>
+			<hr />
+			<h2>Latest talk</h2>
+			<ArticleCard
+				article={lastPublishedTalk}
+				section="talks"
+				headingOffset={1}
+			/>
+		</>
 	)}
 </Layout>

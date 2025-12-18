@@ -1,0 +1,114 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import { normalizePath } from "../utils/normalizePath";
+
+interface Props {
+	article: {
+		id: string;
+		data: {
+			title: string;
+			description: string;
+			date: string | Date;
+			type?: string;
+			image?: string;
+			imageAlt?: string;
+		};
+	};
+	/** Section slug used to build default href and to scope generated IDs. */
+	section: string;
+	/** Optional override for the card link. Defaults to `/${section}/${article.id}/`. */
+	href?: string;
+
+	/**
+	 * Heading offset from the default (h2).
+	 * - `0` (default) -> `h2`
+	 * - `1` -> `h3`
+	 */
+	headingOffset?: number;
+
+	imageLoading?: "lazy" | "eager";
+
+	showType?: boolean;
+	type?: string;
+}
+
+const props = Astro.props as Props;
+
+const blogImages = import.meta.glob("/src/content/blog/**/*.{jpg,png,webp}", { eager: true }) as Record<
+	string,
+	{ default: ImageMetadata }
+>;
+const talksImages = import.meta.glob("/src/content/talks/**/*.{jpg,png,webp}", { eager: true }) as Record<
+	string,
+	{ default: ImageMetadata }
+>;
+
+const { article, section, href, headingOffset = 0, imageLoading, showType = false, type } = props;
+
+const resolvedHref = href ?? `/${section}/${article.id}/`;
+const sanitizedId = article.id.replace(/\//g, "-");
+const headerId = `article-header-${section}-${sanitizedId}`;
+const descriptionId = `article-description-${section}-${sanitizedId}`;
+const transitionId = sanitizedId;
+
+const dateValue = typeof article.data.date === "string" ? article.data.date : article.data.date.toISOString();
+const dateObj = new Date(article.data.date);
+const resolvedType = type ?? article.data.type;
+
+type HeadingTagName = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+const headingLevel = Math.min(6, Math.max(1, 2 + headingOffset));
+const HeadingTag = `h${headingLevel}` as HeadingTagName;
+
+const imagePools = { blog: blogImages, talks: talksImages } as const;
+const resolvedImage = (() => {
+	if (!article.data.image) return undefined;
+	const imagePath = normalizePath(`/src/content/${section}/${article.id}/${article.data.image}`);
+	const pool = (imagePools as Record<string, Record<string, { default: ImageMetadata }>>)[section];
+	return pool?.[imagePath]?.default;
+})();
+
+const resolvedImageAlt = article.data.imageAlt ?? "";
+
+// Biome currently doesn't reliably detect Astro template usage.
+void [
+	article,
+	section,
+	resolvedHref,
+	sanitizedId,
+	showType,
+	resolvedType,
+	dateValue,
+	dateObj,
+	headerId,
+	descriptionId,
+	headingOffset,
+	HeadingTag,
+	transitionId,
+	resolvedImage,
+	resolvedImageAlt,
+	imageLoading,
+	Image,
+	normalizePath,
+];
+---
+
+
+<a href={resolvedHref} aria-labelledby={headerId} aria-describedby={descriptionId}>
+	<article aria-labelledby={headerId}>
+		<HeadingTag id={headerId} style={`view-transition-name: article-title-${transitionId};`}>{article.data.title}</HeadingTag>
+		{showType && resolvedType && <span class="type">{resolvedType}</span>}
+		{resolvedImage && (
+			<Image
+				src={resolvedImage}
+				alt={resolvedImageAlt}
+				loading={imageLoading}
+				style={`view-transition-name: article-hero-image-${transitionId};`}
+			/>
+		)}
+		<p id={descriptionId}>{article.data.description}</p>
+		<time datetime={dateValue}>
+			{dateObj.toLocaleDateString("en-gb", { year: "numeric", month: "short", day: "numeric" })}
+		</time>
+	</article>
+</a>
