@@ -5,7 +5,7 @@ import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/conten
 export async function GET(context) {
 	const now = new Date();
 	const previewFuture = isPreviewFutureContentEnabled();
-	const site = context.site ?? new URL("https://th3s4mur41.me");
+	const site = context.site ?? new URL(new URL(context.request.url).origin);
 
 	const [blogEntries, talkEntries] = await Promise.all([
 		getCollection("blog", ({ data }) => isVisibleContent(data, { now, previewFuture })),

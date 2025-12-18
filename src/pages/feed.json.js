@@ -2,7 +2,7 @@ import { getCollection } from "astro:content";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/contentVisibility";
 
 export async function GET(context) {
-	const siteUrl = context.site ?? new URL("https://th3s4mur41.me");
+	const siteUrl = context.site ?? new URL(new URL(context.request.url).origin);
 	const homePageUrl = new URL("/", siteUrl).href;
 	const feedUrl = new URL("/feed.json", siteUrl).href;
 	const authorUrl = new URL("/about/", siteUrl).href;
