@@ -2,6 +2,7 @@
 import "../index.css";
 
 import { Image } from "astro:assets";
+import logo from "/src/assets/logo.png";
 import heroImage from "/src/assets/th3S4mur41_colors_ultrawide.png";
 import OpenGraph from "../components/OpenGraph.astro";
 import Socials from "../components/Socials.astro";
@@ -113,9 +114,23 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 	</main>
 	<footer>
 		<Socials />
-			<small>
-				<div class="copyright">© 2024-{currentYear} Th3S4mur41.me</div>
-				<a href="#" class="to-top">To the top</a>
+		<small>
+			<a href="#" class="to-top">To the top</a>
+					<nav aria-label="footer">
+			<a href="https://github.com/Th3S4mur41/th3s4mur41.me/issues" target="_blank" rel="noopener noreferrer">Feedback</a>
+			<a href="/rss.xml">RSS</a>
+			<a href="/feed.json">JSON feed</a>
+		</nav>
+			<div class="copyright">
+				<Image
+					src={logo}
+					alt="Th3S4mur41.me logo"
+					loading="lazy"
+					decoding="async"
+				/>
+			<span>© 2024-{currentYear}</div>
+		</div>
+
 			</small>
 	</footer>
 	</body>

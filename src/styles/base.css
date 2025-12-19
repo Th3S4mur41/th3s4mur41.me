@@ -185,13 +185,42 @@ body > footer {
 		grid-column: content;
 	}
 	& > small {
-		display: flex;
-		justify-content: space-between;
+		display: grid;
+		grid-template: "nav to-top" "copyright copyright" / 1fr auto;
+		row-gap: 1.5rem;
+		justify-items: center;
 
 		padding-block-start: 1rem;
 		margin-block-start: 1rem;
 		border-block-start: 1px solid oklch(0.5 0 0);
+
+		& > .to-top {
+			grid-area: to-top;
+			justify-self: end;
+		}
+		& > nav {
+			grid-area: nav;
+			justify-self: start;
+			display: flex;
+			gap: 1.5ch;
+		}
+		& > .copyright {
+			grid-area: copyright;
+			display: flex;
+			flex-direction: column;
+			gap: 1em;
+			align-items: center;
+
+			& > img {
+				inline-size: 15em;
+				block-size: auto;
+			}
+		}
 	}
+}
+
+a {
+	text-underline-offset: 0.2em;
 }
 
 a.to-top {
