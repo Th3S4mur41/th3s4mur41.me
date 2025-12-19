@@ -123,6 +123,24 @@ Firefox DevTools also shows contrast in the color picker for the `color` propert
 	<figcaption>VisBug: handy for quick spot-checks when you want WCAG and APCA at the same time.</figcaption>
 </figure>
 
+## Warning: Contrast tools have limits
+
+All of these tools are helpful, but they have a limitation: they can only reliably validate contrast by following the
+normal DOM and paint flow to determine the “effective” background behind text.
+
+If you use visual stacking (for example via CSS Grid overlap, positioned layers, or a background created with a
+pseudo-element like `::before`) where the foreground and background colors live on different elements, tools can pick
+the wrong background to compare against.
+
+In the following demo, both boxes look identical, but most tools report a contrast of 1 (no contrast) for the second box because they compare
+the text against the page background (e.g. `body`) rather than the yellow background painted by `::before`
+<p class="codepen" data-height="400" data-default-tab="result" data-slug-hash="zxqgLYR" data-pen-title="No contrast on stacking" data-preview="true" data-user="th3s4mur41" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+      <span>See the Pen <a href="https://codepen.io/th3s4mur41/pen/zxqgLYR">
+  No contrast on stacking</a> by Th3S4mur41 (<a href="https://codepen.io/th3s4mur41">@th3s4mur41</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+      </p>
+      <script async src="https://public.codepenassets.com/embed/index.js"></script>
+
 ## Conclusion
 
 Tools and rules are there to help you make better decisions, not to replace judgment. The real goal of contrast work isn’t “passing a checker”, it’s making content that people can comfortably read and use.
