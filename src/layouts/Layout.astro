@@ -95,44 +95,44 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 	</head>
 	<body class={slug}>
 		<!-- <a href="#main" class="skip-link">Skip to main content</a> -->
-	{!Astro.props.noHeader && (
-		<header>
-			<h1>{header}</h1>
-			<Image src={heroImage} alt="Modern-day samurai kneeling in traditional armor, sword in hand, against a vibrant wall of multicolored paint splashes — symbolizing the fusion of ancient warrior spirit with contemporary creativity." loading="eager" fetchpriority="high" />
-		</header>
-	)}
-	<nav aria-label="main">
-		<ul>
-			<li><a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Home</a></li>
-			<li><a href="/blog/" aria-current={Astro.url.pathname === '/blog/' ? 'page' : undefined}>Blog</a></li>
-			<!-- <li><a href="/projects">Projects</a></li> -->
-			<li><a href="/about/" aria-current={Astro.url.pathname === '/about/' ? 'page' : undefined}>About me</a></li>
-		</ul>
-	</nav>
-	<main id="main">
-		<slot />
-	</main>
-	<footer>
-		<Socials />
-		<small>
-			<a href="#" class="to-top">To the top</a>
-					<nav aria-label="footer">
-			<a href="https://github.com/Th3S4mur41/th3s4mur41.me/issues" target="_blank" rel="noopener noreferrer">Feedback</a>
-			<a href="/rss.xml">RSS</a>
-			<a href="/feed.json">JSON feed</a>
+		{!Astro.props.noHeader && (
+			<header>
+				<h1>{header}</h1>
+				<Image src={heroImage} alt="Modern-day samurai kneeling in traditional armor, sword in hand, against a vibrant wall of multicolored paint splashes — symbolizing the fusion of ancient warrior spirit with contemporary creativity." loading="eager" fetchpriority="high" />
+			</header>
+		)}
+		<nav aria-label="main">
+			<ul>
+				<li><a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Home</a></li>
+				<li><a href="/blog/" aria-current={Astro.url.pathname === '/blog/' ? 'page' : undefined}>Blog</a></li>
+				<!-- <li><a href="/projects">Projects</a></li> -->
+				<li><a href="/about/" aria-current={Astro.url.pathname === '/about/' ? 'page' : undefined}>About me</a></li>
+			</ul>
 		</nav>
-			<div class="copyright">
-				<Image
-					src={logo}
-					alt="Th3S4mur41.me logo"
-					loading="lazy"
-					decoding="async"
-				/>
-			<span>© 2024-{currentYear}</div>
-		</div>
+		<main id="main">
+			<slot />
+		</main>
+		<footer>
+			<Socials />
+			<small>
+				<a href="#" class="to-top">To the top</a>
+				<nav aria-label="footer">
+					<a href="https://github.com/Th3S4mur41/th3s4mur41.me/issues" target="_blank" rel="noopener noreferrer">Feedback</a>
+					<a href="/rss.xml">RSS</a>
+					<a href="/feed.json">JSON feed</a>
+				</nav>
+				<div class="copyright">
+					<Image
+						src={logo}
+						alt="Th3S4mur41.me logo"
+						loading="lazy"
+						decoding="async"
+					/>
+					<span>© 2024-{currentYear}</span>
+				</div>
 
 			</small>
-	</footer>
+		</footer>
 	</body>
 </html>
 
