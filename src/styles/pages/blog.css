@@ -182,3 +182,14 @@ dl {
 		margin: 0;
 	}
 }
+
+figure > p:has(img + img) {
+	display: flex;
+	gap: 5ch;
+	justify-content: space-evenly;
+
+	& > img {
+		width: 100%;
+		height: auto;
+	}
+}
