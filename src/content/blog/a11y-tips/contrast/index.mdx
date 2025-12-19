@@ -1,9 +1,8 @@
 ---
 title: 'Contrast: Beyond WCAG Compliance'
 eyebrow: 'Practical Accessibility Tips for Developers'
-date: 2025-01-14T10:00:00Z
+date: 2026-01-14T10:00:00Z
 image: ../Practical_Accessibility_Tips_for_Developers.jpg
-published: false
 description: 'Discover why APCA offers a more perceptually accurate approach to color contrast than traditional WCAG standards for better readability.'
 tags:
   - Accessibility
@@ -35,8 +34,8 @@ import { Image } from 'astro:assets';
 
 Contrast is one of the easiest accessibility aspects to evaluate because it can be measured with algorithms. Whether through automated tools or semi‑automatic checks, developers can quickly verify if text and background combinations meet established standards. This makes contrast a practical starting point for improving accessibility - though, as we'll see, compliance alone doesn't always guarantee the best user experience.
 
-While [WCAG guidelines](https://medium.com/r/?url=https%3A%2F%2Fwww.w3.org%2FTR%2FWCAG22%2F%23contrast-minimum) provide a solid foundation for color contrast, strict compliance sometimes leads to suboptimal results with certain colors.
-Consider using the [APCA (Accessible Perceptual Contrast Algorithm)](https://medium.com/r/?url=https%3A%2F%2Fapcacontrast.com%2F) as an alternative or in addition to WCAG checks. APCA offers a more nuanced approach to contrast that better reflects human perception.
+While [WCAG guidelines](https://www.w3.org/TR/WCAG22/%23contrast-minimum) provide a solid foundation for color contrast, strict compliance sometimes leads to suboptimal results with certain colors.
+Consider using the [APCA (Accessible Perceptual Contrast Algorithm)](https://apcacontrast.com/) as an alternative or in addition to WCAG checks. APCA offers a more nuanced approach to contrast that better reflects human perception.
 
 <figure>
 	![Same background, different verdicts: APCA favors readability of white text on orange background, while WCAG prefers
@@ -47,7 +46,14 @@ Consider using the [APCA (Accessible Perceptual Contrast Algorithm)](https://med
 	</figcaption>
 </figure>
 
-Check the CodePen example used for the comparison above: [Contrast: WCAG vs APCA](https://medium.com/r/?url=https%3A%2F%2Fcodepen.io%2Fth3s4mur41%2Fpen%2FKwzRMyJ)
+Try the demo interactively:
+
+<p class="codepen" data-height="500" data-default-tab="result" data-slug-hash="KwzRMyJ" data-pen-title="Contrast: WCAG vs APCA" data-preview="true" data-user="th3s4mur41" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+      <span>See the Pen <a href="https://codepen.io/th3s4mur41/pen/KwzRMyJ">
+  Contrast: WCAG vs APCA</a> by Th3S4mur41 (<a href="https://codepen.io/th3s4mur41">@th3s4mur41</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+      </p>
+      <script async src="https://public.codepenassets.com/embed/index.js"></script>
 
 <section class="sidenote">
 
@@ -64,7 +70,7 @@ Check the CodePen example used for the comparison above: [Contrast: WCAG vs APCA
 
 </section>
 
-For example, Stack Overflow recently transitioned to APCA for their accessibility design, improving readability and user experience. You can read more about their approach and lessons learned in their blog post: [Accessibility by Design at Stack Overflow](https://medium.com/r/?url=https%3A%2F%2Fstackoverflow.blog%2F2024%2F08%2F07%2Faccessibility-by-design-building-interfaces-for-everyone-at-stack-overflow%2F).
+For example, Stack Overflow recently transitioned to APCA for their accessibility design, improving readability and user experience. You can read more about their approach and lessons learned in their blog post: [Accessibility by Design at Stack Overflow](https://stackoverflow.blog/2024/08/07/accessibility-by-design-building-interfaces-for-everyone-at-stack-overflow/).
 
 ## How to check contrast (DevTools + quick tools)
 
