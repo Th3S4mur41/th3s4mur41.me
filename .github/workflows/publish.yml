@@ -31,6 +31,7 @@ jobs:
       deployment-url: ${{ steps.cloudflare-deploy.outputs.deployment-url }}
 
     permissions:
+      actions: read
       contents: read
       deployments: write
 
@@ -40,28 +41,13 @@ jobs:
         with:
           ref: ${{ github.event.workflow_run.head_branch || github.event.pull_request.base.ref }}
 
-      - name: '⚙️ Use Node.js'
-        uses: actions/setup-node@v6
+      - name: '📎 Download build output'
+        uses: actions/download-artifact@v7
         with:
-          node-version-file: '.nvmrc'
-          check-latest: true
-          cache: 'npm'
-
-      - name: '⛓️ Install dependencies'
-        env:
-          HUSKY: 0
-        run: npm ci --no-audit --prefer-offline --progress=false
-
-      # In this repository, building is much faster than the upload/download of the artifact
-      - name: '🛠️ Build'
-        run: npm run build --if-present
-
-      # - name: '📎 Download build output'
-      #   uses: actions/download-artifact@v3
-      #   continue-on-error: true # There won't be an artifact in workflow without build job
-      #   with:
-      #     name: build
-      #     path: dist
+          name: build
+          path: dist
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create IndexNow key file
         run: echo $INDEXNOW_KEY > dist/$INDEXNOW_KEY.txt
