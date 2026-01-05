@@ -184,7 +184,8 @@ body > footer {
 			160% 240% at 50% 120%,
 			color-mix(in oklch, var(--footer-ink) 70%, var(--color-bg)) 0%,
 			var(--color-bg) 66%
-		), linear-gradient(to bottom, color-mix(in oklch, var(--color-text) 3%, var(--color-bg)) 0%, var(--color-bg) 55%),
+		),
+		linear-gradient(to bottom, color-mix(in oklch, var(--color-text) 3%, var(--color-bg)) 0%, var(--color-bg) 55%),
 		var(--footer-surface);
 	background-clip: padding-box, border-box;
 	background-origin: padding-box, border-box;
