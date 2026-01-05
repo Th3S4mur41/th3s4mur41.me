@@ -54,11 +54,12 @@ jobs:
         run: npm ci --no-audit --prefer-offline --progress=false
 
       - name: '📎 Download build output'
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: build
           path: dist
           run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create IndexNow key file
         run: echo $INDEXNOW_KEY > dist/$INDEXNOW_KEY.txt
