@@ -86,7 +86,7 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 
 		<meta name="generator" content={Astro.generator} />
 		<link rel="sitemap" href="/sitemap-index.xml" />
-		<link rel="alternate" type="application/rss+xml" title="Th3S4mur41.me RSS" href="/rss.xml" />
+		<link rel="alternate" type="application/rss+xml" title="Th3S4mur41.me RSS" href="/feed.xml" />
 		<link rel="alternate" type="application/feed+json" title="Th3S4mur41.me JSON Feed" href="/feed.json" />
 		<title>{pageTitle}</title>
 
@@ -118,7 +118,7 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 				<a href="#" class="to-top">To the top</a>
 				<nav aria-label="footer">
 					<a href="https://github.com/Th3S4mur41/th3s4mur41.me/issues" target="_blank" rel="noopener noreferrer">Feedback</a>
-					<a href="/rss.xml">RSS</a>
+					<a href="/feed.xml">RSS</a>
 					<a href="/feed.json">JSON feed</a>
 				</nav>
 				<div class="copyright">
