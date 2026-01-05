@@ -1,7 +1,6 @@
 .social {
 	display: flex;
 	flex-direction: row;
-	flex-wrap: wrap;
 	justify-content: center;
 	gap: min(0.5em, 1vi);
 
@@ -19,7 +18,7 @@
 		& > svg {
 			anchor-name: --social-link;
 			stroke-width: 0.1rem;
-			inline-size: clamp(2rem, 10vi, 3rem);
+			inline-size: 100%;
 			@media (prefers-reduced-motion: no-preference) {
 				transition:
 					stroke-width 0.2s ease-out,

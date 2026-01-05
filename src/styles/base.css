@@ -168,11 +168,25 @@ body > nav {
 }
 
 body > footer {
+	--footer-surface: linear-gradient(var(--color-bg), var(--color-subtle-bg));
+	--footer-ink: color-mix(in oklch, var(--color-highlight) 26%, var(--color-bg));
+	--footer-splash: var(--color-subtle-bg);
 	padding-block: 2rem;
 	border-block-start: 2px solid transparent;
+	/* Soft, full-width “ink wash” layers (no busy pattern) */
 	background:
-		radial-gradient(circle at 50% 250%, var(--color-subtle-bg), var(--color-bg)),
-		linear-gradient(var(--color-bg), var(--color-subtle-bg));
+		radial-gradient(
+			140% 240% at 50% -20%,
+			color-mix(in oklch, var(--footer-splash) 70%, var(--color-bg)) 0%,
+			var(--color-bg) 68%
+		),
+		radial-gradient(
+			160% 240% at 50% 120%,
+			color-mix(in oklch, var(--footer-ink) 70%, var(--color-bg)) 0%,
+			var(--color-bg) 66%
+		),
+		linear-gradient(to bottom, color-mix(in oklch, var(--color-text) 3%, var(--color-bg)) 0%, var(--color-bg) 55%),
+		var(--footer-surface);
 	background-clip: padding-box, border-box;
 	background-origin: padding-box, border-box;
 	box-shadow:
@@ -185,13 +199,62 @@ body > footer {
 		grid-column: content;
 	}
 	& > small {
-		display: flex;
-		justify-content: space-between;
+		display: grid;
+		grid-template: "nav to-top" "copyright copyright" / 1fr auto;
+		row-gap: 1.5rem;
+		justify-items: center;
 
 		padding-block-start: 1rem;
 		margin-block-start: 1rem;
 		border-block-start: 1px solid oklch(0.5 0 0);
+
+		& > .to-top {
+			grid-area: to-top;
+			justify-self: end;
+		}
+		& > nav {
+			grid-area: nav;
+			justify-self: start;
+			display: flex;
+			gap: 1.5ch;
+		}
+		& > .copyright {
+			grid-area: copyright;
+			display: flex;
+			flex-direction: column;
+			gap: 1em;
+			align-items: center;
+
+			& > img {
+				inline-size: 15em;
+				block-size: auto;
+			}
+		}
 	}
+}
+
+@supports (color: oklch(from white l c h / 0.5)) {
+	body > footer {
+		--footer-ink-a: oklch(from var(--footer-ink) l c h / 0.22);
+		--footer-splash-a: oklch(from var(--footer-splash) l c h / 0.2);
+		--footer-text-a: oklch(from var(--color-text) l c h / 0.04);
+		background:
+			radial-gradient(140% 240% at 50% -20%, oklch(from var(--footer-splash-a) l c h / 1) 0%, var(--color-bg) 68%),
+			radial-gradient(160% 240% at 50% 120%, oklch(from var(--footer-ink-a) l c h / 1) 0%, var(--color-bg) 66%),
+			linear-gradient(to bottom, var(--footer-text-a) 0%, transparent 55%), var(--footer-surface);
+	}
+}
+
+@media (prefers-contrast: more) {
+	body > footer {
+		background:
+			radial-gradient(140% 240% at 50% -20%, var(--footer-splash) 0%, var(--color-bg) 68%),
+			radial-gradient(160% 240% at 50% 120%, var(--footer-ink) 0%, var(--color-bg) 66%), var(--footer-surface);
+	}
+}
+
+a {
+	text-underline-offset: 0.2em;
 }
 
 a.to-top {

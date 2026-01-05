@@ -1,3 +1,10 @@
+# [2.18.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.17.0...v2.18.0) (2025-12-19)
+
+
+### Features
+
+* improve footer layout and content ([#2005](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2005)) ([077cb87](https://github.com/Th3S4mur41/th3s4mur41.me/commit/077cb871e8bb074cfbda88943c13aa64c7cdf852))
+
 # [2.17.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.16.6...v2.17.0) (2025-12-18)
 
 
