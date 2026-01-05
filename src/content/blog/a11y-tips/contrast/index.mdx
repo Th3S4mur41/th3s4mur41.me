@@ -34,7 +34,7 @@ import { Image } from 'astro:assets';
 
 Contrast is one of the easiest accessibility aspects to evaluate because it can be measured with algorithms. Whether through automated tools or semi‑automatic checks, developers can quickly verify if text and background combinations meet established standards. This makes contrast a practical starting point for improving accessibility - though, as we'll see, compliance alone doesn't always guarantee the best user experience.
 
-While [WCAG guidelines](https://www.w3.org/TR/WCAG22/%23contrast-minimum) provide a solid foundation for color contrast, strict compliance sometimes leads to suboptimal results with certain colors.
+While [WCAG guidelines](https://www.w3.org/TR/WCAG22/#contrast-minimum) provide a solid foundation for color contrast, strict compliance sometimes leads to suboptimal results with certain colors.
 Consider using the [APCA (Accessible Perceptual Contrast Algorithm)](https://git.apcacontrast.com/documentation/APCAeasyIntro) as an alternative or in addition to WCAG checks. APCA offers a more nuanced approach to contrast that better reflects human perception.
 
 <figure>
@@ -133,7 +133,7 @@ pseudo-element like `::before`) where the foreground and background colors live 
 the wrong background to compare against.
 
 In the following demo, both boxes look identical, but most tools report a contrast of 1 (no contrast) for the second box because they compare
-the text against the page background (e.g. `body`) rather than the yellow background painted by `::before`
+the text against the page background (e.g. `body`) rather than the yellow background painted by `::before`.
 <p class="codepen" data-height="400" data-default-tab="result" data-slug-hash="zxqgLYR" data-pen-title="No contrast on stacking" data-preview="true" data-user="th3s4mur41" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
       <span>See the Pen <a href="https://codepen.io/th3s4mur41/pen/zxqgLYR">
   No contrast on stacking</a> by Th3S4mur41 (<a href="https://codepen.io/th3s4mur41">@th3s4mur41</a>)

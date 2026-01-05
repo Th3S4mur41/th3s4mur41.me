@@ -184,7 +184,8 @@ dl {
 }
 
 figure > p:has(img + img) {
-	display: flex;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(20ch, 100%), 1fr));
 	gap: 5ch;
 	justify-content: space-evenly;
 
