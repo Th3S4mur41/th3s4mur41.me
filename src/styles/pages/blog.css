@@ -194,3 +194,7 @@ figure > p:has(img + img) {
 		height: auto;
 	}
 }
+
+iframe {
+	border-radius: 0.25rem;
+}
