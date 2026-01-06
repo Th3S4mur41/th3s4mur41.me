@@ -69,9 +69,11 @@ if (!slugHash) {
 	</p>
 
 		<figcaption>
-			{description} <a href={href}>Open “{title}” on CodePen</a> if the embedded preview is not available.
+			{description && (
+				<>{description} <br></>
+
+			)} <a href={href}>Open “{title}” on CodePen</a> if the embedded preview is not available.
 		</figcaption>
-	)
 </figure>
 
 <script is:inline>
