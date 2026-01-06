@@ -4,7 +4,7 @@ import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/conten
 
 const escapeXmlText = (value) =>
 	value
-		.replace(/&(?!(?:[a-zA-Z]+|#\d+|#x[0-9a-fA-F]+);)/g, "&amp;")
+		.replace(/&(?!(?:[a-zA-Z]+|#\d+|#[xX][0-9a-fA-F]+);)/g, "&amp;")
 		.replace(/</g, "&lt;")
 		.replace(/>/g, "&gt;");
 

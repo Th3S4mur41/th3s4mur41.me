@@ -32,8 +32,8 @@ try {
 		const penIndex = parts.indexOf("pen");
 		if (penIndex !== -1 && parts[penIndex + 1]) slugHash = parts[penIndex + 1];
 	}
-} catch {
-	// ignore
+} catch (error) {
+	console.error("CodePen: failed to parse href for embed", { href, error });
 }
 
 if (!user) {
@@ -44,7 +44,7 @@ if (!user) {
 
 if (!slugHash) {
 	throw new Error(
-		"CodePen: missing slug hash (pass `slugHash` or use a CodePen href like https://codepen.io/<user>/pen/<hash>)",
+		"CodePen: missing slug hash (pass `slugHash` or use a CodePen href, e.g. https://codepen.io/<user>/pen/<hash>)",
 	);
 }
 ---
@@ -65,11 +65,10 @@ if (!slugHash) {
 		</span>
 	</p>
 
-	{description ? (
 		<figcaption>
 			{description} <a href={href}>Open “{title}” on CodePen</a> if the embedded preview is not available.
 		</figcaption>
-	) : null}
+	)
 </figure>
 
 <script is:inline>
