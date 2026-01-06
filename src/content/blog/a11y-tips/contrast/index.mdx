@@ -1,9 +1,8 @@
 ---
 title: 'Contrast: Beyond WCAG Compliance'
 eyebrow: 'Practical Accessibility Tips for Developers'
-date: 2025-01-14T10:00:00Z
+date: 2026-01-14T10:00:00Z
 image: ../Practical_Accessibility_Tips_for_Developers.jpg
-published: false
 description: 'Discover why APCA offers a more perceptually accurate approach to color contrast than traditional WCAG standards for better readability.'
 tags:
   - Accessibility
@@ -28,6 +27,7 @@ keywords:
 ---
 
 import { Image } from 'astro:assets';
+import CodePen from '../../../../components/CodePen.astro';
 
 # Contrast: Beyond WCAG Compliance
 
@@ -35,8 +35,10 @@ import { Image } from 'astro:assets';
 
 Contrast is one of the easiest accessibility aspects to evaluate because it can be measured with algorithms. Whether through automated tools or semi‑automatic checks, developers can quickly verify if text and background combinations meet established standards. This makes contrast a practical starting point for improving accessibility - though, as we'll see, compliance alone doesn't always guarantee the best user experience.
 
-While [WCAG guidelines](https://medium.com/r/?url=https%3A%2F%2Fwww.w3.org%2FTR%2FWCAG22%2F%23contrast-minimum) provide a solid foundation for color contrast, strict compliance sometimes leads to suboptimal results with certain colors.
-Consider using the [APCA (Accessible Perceptual Contrast Algorithm)](https://medium.com/r/?url=https%3A%2F%2Fapcacontrast.com%2F) as an alternative or in addition to WCAG checks. APCA offers a more nuanced approach to contrast that better reflects human perception.
+## WCAG vs APCA: Understanding the Difference
+
+While [WCAG guidelines](https://www.w3.org/TR/WCAG22/#contrast-minimum) provide a solid foundation for color contrast, strict compliance sometimes leads to suboptimal results with certain colors.
+Consider using the [APCA (Accessible Perceptual Contrast Algorithm)](https://git.apcacontrast.com/documentation/APCAeasyIntro) as an alternative or in addition to WCAG checks. APCA offers a more nuanced approach to contrast that better reflects human perception.
 
 <figure>
 	![Same background, different verdicts: APCA favors readability of white text on orange background, while WCAG prefers
@@ -47,11 +49,18 @@ Consider using the [APCA (Accessible Perceptual Contrast Algorithm)](https://med
 	</figcaption>
 </figure>
 
-Check the CodePen example used for the comparison above: [Contrast: WCAG vs APCA](https://medium.com/r/?url=https%3A%2F%2Fcodepen.io%2Fth3s4mur41%2Fpen%2FKwzRMyJ)
+Try the demo interactively:
+
+<CodePen
+	title="Contrast: WCAG vs APCA"
+	href="https://codepen.io/th3s4mur41/pen/KwzRMyJ"
+	height={500}
+	description="Interactive CodePen demo comparing contrast outcomes for WCAG vs APCA."
+/>
 
 <section class="sidenote">
 
-## WCAG Levels in Brief
+### WCAG Levels in Brief
 
 <dl>
 	<dt>A</dt>
@@ -64,7 +73,11 @@ Check the CodePen example used for the comparison above: [Contrast: WCAG vs APCA
 
 </section>
 
-For example, Stack Overflow recently transitioned to APCA for their accessibility design, improving readability and user experience. You can read more about their approach and lessons learned in their blog post: [Accessibility by Design at Stack Overflow](https://medium.com/r/?url=https%3A%2F%2Fstackoverflow.blog%2F2024%2F08%2F07%2Faccessibility-by-design-building-interfaces-for-everyone-at-stack-overflow%2F).
+### Real-world example: Stack Overflow
+
+For example, Stack Overflow recently transitioned to APCA for their accessibility design, improving readability and user experience. You can read more about their approach and lessons learned in their blog post: [Accessibility by Design at Stack Overflow](https://stackoverflow.blog/2024/08/07/accessibility-by-design-building-interfaces-for-everyone-at-stack-overflow/).
+
+To keep contrast checks in their automated accessibility testing, they also built custom Axe rules that validate APCA contrast levels (instead of the traditional WCAG contrast ratio checks). That work is available publicly as [StackExchange/apca-check](https://github.com/StackExchange/apca-check/tree/main).
 
 ## How to check contrast (DevTools + quick tools)
 
@@ -80,14 +93,11 @@ You can see contrast information in a few places:
 <figure>
 	![Chrome DevTools element picker highlighting a text element and showing the inspect
 	popover.](chrome-inspect-popover.png)
-	<figcaption>Chrome DevTools: use the element picker to target the exact text you want to evaluate.</figcaption>
-</figure>
-
-<figure>
 	![Chrome DevTools color picker showing contrast information for the selected foreground and background
 	colors.](chrome-color-picker.png)
 	<figcaption>
-		Chrome DevTools: the color picker for <code>color</code> can display contrast results.
+		Chrome DevTools: use the element picker to target the exact text you want to evaluate, or use the
+		<code>color</code> picker to view contrast results.
 	</figcaption>
 </figure>
 
@@ -115,6 +125,25 @@ Firefox DevTools also shows contrast in the color picker for the `color` propert
 	![VisBug contrast checker showing WCAG and APCA results side by side.](visbug-contrast.png)
 	<figcaption>VisBug: handy for quick spot-checks when you want WCAG and APCA at the same time.</figcaption>
 </figure>
+
+## Warning: Contrast tools have limits
+
+All of these tools are helpful, but they have a limitation: they can only reliably validate contrast by following the
+normal DOM and paint flow to determine the “effective” background behind text.
+
+If you use visual stacking (for example via CSS Grid overlap, positioned layers, or a background created with a
+pseudo-element like `::before`) where the foreground and background colors live on different elements, tools can pick
+the wrong background to compare against.
+
+In the following demo, both boxes look identical, but most tools report a contrast of 1 (no contrast) for the second box because they compare
+the text against the page background (e.g. `body`) rather than the yellow background painted by `::before`.
+
+<CodePen
+	title="No contrast on stacking"
+	href="https://codepen.io/th3s4mur41/pen/zxqgLYR"
+	height={500}
+	description="Interactive CodePen demo showing contrast checking issues with stacking contexts."
+/>
 
 ## Conclusion
 

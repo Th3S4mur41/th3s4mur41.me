@@ -182,3 +182,19 @@ dl {
 		margin: 0;
 	}
 }
+
+figure > p:has(img + img) {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(20ch, 100%), 1fr));
+	gap: 5ch;
+	justify-content: space-evenly;
+
+	& > img {
+		width: 100%;
+		height: auto;
+	}
+}
+
+iframe {
+	border-radius: 0.25rem;
+}
