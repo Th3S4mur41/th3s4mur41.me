@@ -1,3 +1,10 @@
+# [2.19.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.18.0...v2.19.0) (2026-01-06)
+
+
+### Features
+
+* **a11y-tips:** add contrast post ([#2006](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2006)) ([03bc253](https://github.com/Th3S4mur41/th3s4mur41.me/commit/03bc253b0884201f4100e1627c2f8cdb033b42dd))
+
 # [2.18.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.17.0...v2.18.0) (2025-12-19)
 
 
