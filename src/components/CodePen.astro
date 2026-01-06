@@ -34,6 +34,11 @@ try {
 	}
 } catch (error) {
 	console.error("CodePen: failed to parse href for embed", { href, error });
+	throw new Error(
+		`CodePen: failed to parse href "${href}" for embed: ${
+			error instanceof Error ? error.message : String(error)
+		}`,
+	);
 }
 
 if (!user) {
