@@ -1,3 +1,10 @@
+## [2.19.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.19.1...v2.19.2) (2026-01-12)
+
+
+### Bug Fixes
+
+* **headers:** remove unused Content-Type entries for JSON and XML ([c37a384](https://github.com/Th3S4mur41/th3s4mur41.me/commit/c37a38481fb9532aadbb9f835dacfbfe0ec6d2ff))
+
 ## [2.19.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.19.0...v2.19.1) (2026-01-12)
 
 
