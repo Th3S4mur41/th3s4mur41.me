@@ -1,3 +1,10 @@
+## [2.19.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.19.0...v2.19.1) (2026-01-12)
+
+
+### Bug Fixes
+
+* **headers:** add Content-Type for feed.xml ([3164d5e](https://github.com/Th3S4mur41/th3s4mur41.me/commit/3164d5e7c097d8b3e2727dc6cf8f99c9c1226bed))
+
 # [2.19.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.18.0...v2.19.0) (2026-01-06)
 
 
