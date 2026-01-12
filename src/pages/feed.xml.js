@@ -63,6 +63,7 @@ export async function GET(context) {
 		},
 		customData: [
 			`<atom:link href="${feedUrl}" rel="self" type="application/rss+xml" />`,
+			"<language>en</language>",
 			`<pubDate>${channelPubDate.toUTCString()}</pubDate>`,
 			`<lastBuildDate>${channelLastBuildDate.toUTCString()}</lastBuildDate>`,
 			"<ttl>60</ttl>",
