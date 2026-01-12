@@ -1,3 +1,10 @@
+## [2.19.3](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.19.2...v2.19.3) (2026-01-12)
+
+
+### Bug Fixes
+
+* **feed:** add language tag to feed.xml output ([e73cc42](https://github.com/Th3S4mur41/th3s4mur41.me/commit/e73cc42dd2737f8bbb9765a87a1a0d4559ae2cec))
+
 ## [2.19.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.19.1...v2.19.2) (2026-01-12)
 
 
