@@ -34,7 +34,7 @@
 		"@biomejs/biome": "2.3.11",
 		"@commitlint/cli": "^20.3.1",
 		"@commitlint/config-conventional": "^20.3.1",
-		"@csstools/postcss-oklab-function": "^4.0.12",
+		"@csstools/postcss-oklab-function": "^5.0.0",
 		"@semantic-release/changelog": "^6.0.3",
 		"@semantic-release/git": "^10.0.1",
 		"@squoosh/cli": "^0.7.3",
