@@ -1,3 +1,10 @@
+## [2.19.4](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.19.3...v2.19.4) (2026-01-15)
+
+
+### Bug Fixes
+
+* update alt text for accessibility image in contrast article ([#2026](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2026)) ([5fb363e](https://github.com/Th3S4mur41/th3s4mur41.me/commit/5fb363ed3d907a02ebe861e244dd6e5ea064d8a0))
+
 ## [2.19.3](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.19.2...v2.19.3) (2026-01-12)
 
 
