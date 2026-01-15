@@ -57,7 +57,7 @@
 		"postcss-loader": "^8.2.0",
 		"postcss-nesting": "^14.0.0",
 		"postcss-preset-env": "^11.1.0",
-		"prettier": "^3.7.4",
+		"prettier": "^3.8.0",
 		"typescript": "^5.9.3",
 		"vite": "^7.3.1",
 		"vite-plugin-handlebars": "^2.0.0"
