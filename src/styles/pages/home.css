@@ -60,6 +60,15 @@ body.home {
 			color: var(--color-subtle-text);
 		}
 
+		&.highlight {
+			grid-template:
+				"image" auto
+				"title" auto
+				"teaser" auto
+				"date" auto
+				/ 1fr;
+		}
+
 		@container (width <= 40rem) {
 			/*  biome-ignore lint/suspicious/noDuplicateProperties: https://github.com/biomejs/biome/issues/6014 */
 			grid-template:
