@@ -22,7 +22,7 @@
 	"homepage": "https://th3s4mur41.me",
 	"dependencies": {
 		"@astrojs/rss": "^4.0.15",
-		"@astrojs/sitemap": "^3.6.1",
+		"@astrojs/sitemap": "^3.7.0",
 		"@fontsource/cascadia-code": "^5.2.3",
 		"@fontsource/nanum-brush-script": "^5.2.8",
 		"astro": "^5.16.11"
