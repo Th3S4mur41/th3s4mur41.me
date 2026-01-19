@@ -19,23 +19,28 @@ body.home {
 			font-weight: 600;
 			display: block; /* force line break */
 			margin-block-end: 0.25em;
-
 			text-wrap: balance;
 		}
 		& a {
 			float: left;
-			shape-outside: circle(50%);
+			shape-outside: circle(55%);
+			margin-inline-end: 2rem;
+			margin-block-end: 1rem;
+			/* Positioning with z-index to avoid issues with float and link hover */
+			position: relative;
+			z-index: 1;
 
 			/*  biome-ignore lint/correctness/noUnknownProperty: https://github.com/biomejs/biome/issues/7625 */
 			@supports (corner-shape: squircle) {
 				shape-outside: polygon(0% 0px, 100% 0px, 100% 70%, 70% 100%, 0px 100%);
 			}
 
-			margin-inline-end: 2rem;
-			margin-block-end: 2rem;
-			/* Positioning with z-index to avoid issues with float and link hover */
-			position: relative;
-			z-index: 1;
+			/*  biome-ignore lint/correctness/noUnknownProperty: https://github.com/biomejs/biome/issues/7625 */
+			@supports not (corner-shape: squircle) {
+				/* slighly offset image into circle for non-supporting browsers */
+				margin-block-end: 0.25rem;
+				translate: 5px -5px;
+			}
 		}
 
 		& > p {
