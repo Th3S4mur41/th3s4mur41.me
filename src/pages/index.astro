@@ -36,13 +36,11 @@ void [Image, profileImg, ArticleCard, Layout, allPosts];
 	<hr>
 	<h2>Latest posts</h2>
 	{allPosts.map((post, index) => (
-		<>
 			<ArticleCard
 				article={post}
 				section={post.section}
 				headingOffset={1}
 				highlight={index === 0}
 			/>
-		</>
 	))}
 </Layout>

@@ -9,6 +9,12 @@
 	inherits: false;
 }
 
+@property --color-shadow {
+	syntax: "<color>";
+	initial-value: black;
+	inherits: false;
+}
+
 body.home {
 	.intro {
 		font-size: clamp(1rem, 0.8645rem + 0.6024vw, 1.25rem);
@@ -24,24 +30,12 @@ body.home {
 		}
 		& a {
 			float: left;
-			shape-outside: circle(55%);
 			margin-inline-end: 2rem;
 			margin-block-end: 1rem;
 			/* Positioning with z-index to avoid issues with float and link hover */
 			position: relative;
 			z-index: 1;
-
-			/*  biome-ignore lint/correctness/noUnknownProperty: https://github.com/biomejs/biome/issues/7625 */
-			@supports (corner-shape: squircle) {
-				shape-outside: polygon(0% 0%, 100% 0%, 100% 70%, 70% 100%, 0% 100%);
-			}
-
-			/*  biome-ignore lint/correctness/noUnknownProperty: https://github.com/biomejs/biome/issues/7625 */
-			@supports not (corner-shape: squircle) {
-				/* slightly offset image into circle for non-supporting browsers */
-				margin-block-end: 0.25rem;
-				translate: 5px -5px;
-			}
+			shape-outside: polygon(0 0, 80% 0, 99% 30%, 98% 45%, 85% 75%, 65% 90%, 0 100%);
 		}
 
 		& > p {
@@ -52,9 +46,8 @@ body.home {
 	.profile {
 		--color-border: var(--color-bg);
 		--color-border-2: var(--color-subtle-bg);
-		border-radius: 50%;
+		border-radius: 57% 43% 69% 37% / 50% 52% 57% 46%;
 		/*  biome-ignore lint/correctness/noUnknownProperty: https://github.com/biomejs/biome/issues/7625 */
-		corner-shape: squircle;
 
 		border: 2px solid transparent;
 		background:
@@ -69,12 +62,13 @@ body.home {
 		filter: brightness(0.9);
 		transition:
 			--color-border 0.3s ease-out,
-			--color-border-2 0.3s ease-out;
+			--color-border-2 0.3s ease-out,
+			--color-shadow 0.3s ease-out;
 
 		box-shadow:
-			0 0.75rem 1rem -0.25rem oklch(0 0 0 / 0.1),
-			0 0.25rem 0.375rem -0.125rem oklch(0 0 0 / 0.2),
-			inset 0 0.25rem 0.375rem -0.125rem oklch(0 0 0 / 0.3);
+			0 0.75rem 1rem -0.25rem oklch(from var(--color-shadow) l c h / 0.1),
+			0 0.25rem 0.375rem -0.125rem oklch(from var(--color-shadow) l c h / 0.2),
+			inset 0 0.25rem 0.375rem -0.125rem oklch(from var(--color-shadow) l c h / 0.2);
 
 		& > img {
 			width: 10rem;
@@ -86,7 +80,24 @@ body.home {
 			mask-repeat: no-repeat;
 			transform: scale(1);
 			transform-origin: left bottom;
-			transition: transform 0.25s ease-out;
+			transition: transform 0.3s
+				linear(
+					0,
+					0.447 8.5%,
+					0.793 17.4%,
+					0.927 22%,
+					1.039 26.8%,
+					1.125 31.7%,
+					1.189 36.8%,
+					1.224 41.2%,
+					1.244 45.7%,
+					1.25 50.5%,
+					1.241 55.6%,
+					1.195 65.1%,
+					1.036 88.1%,
+					1.009 94.4%,
+					1
+				);
 			filter: drop-shadow(0 0.25rem 0.375rem oklch(0 0 0 / 0.75));
 		}
 
@@ -94,6 +105,7 @@ body.home {
 			filter: brightness(1);
 			--color-border: var(--color-accent);
 			--color-border-2: var(--color-accent);
+			--color-shadow: var(--color-accent);
 
 			@media (prefers-reduced-motion: no-preference) {
 				outline: none; /* replace default outline through border color change on focus because outline form is inconsistent due to overflowing image */
