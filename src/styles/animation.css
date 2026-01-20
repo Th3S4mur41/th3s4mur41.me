@@ -13,9 +13,9 @@
 
 @keyframes parallax {
 	from {
-		transform: translateY(0vb);
+		transform: translateY(0lvb);
 	}
 	to {
-		transform: translateY(20vb);
+		transform: translateY(20lvb);
 	}
 }

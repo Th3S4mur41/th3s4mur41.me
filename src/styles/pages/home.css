@@ -33,12 +33,12 @@ body.home {
 
 			/*  biome-ignore lint/correctness/noUnknownProperty: https://github.com/biomejs/biome/issues/7625 */
 			@supports (corner-shape: squircle) {
-				shape-outside: polygon(0% 0px, 100% 0px, 100% 70%, 70% 100%, 0px 100%);
+				shape-outside: polygon(0% 0%, 100% 0%, 100% 70%, 70% 100%, 0% 100%);
 			}
 
 			/*  biome-ignore lint/correctness/noUnknownProperty: https://github.com/biomejs/biome/issues/7625 */
 			@supports not (corner-shape: squircle) {
-				/* slighly offset image into circle for non-supporting browsers */
+				/* slightly offset image into circle for non-supporting browsers */
 				margin-block-end: 0.25rem;
 				translate: 5px -5px;
 			}
@@ -62,9 +62,9 @@ body.home {
 			linear-gradient(var(--color-border), var(--color-border-2));
 		background-clip: padding-box, padding-box, border-box;
 		background-origin: padding-box, padding-box, border-box;
-		background-size: 100%, 100%;
-		background-repeat: no-repeat, no-repeat;
-		background-position: bottom;
+		background-size: 100%, 100%, 100%;
+		background-repeat: no-repeat, no-repeat, no-repeat;
+		background-position: bottom, center, center;
 
 		filter: brightness(0.9);
 		transition:
@@ -96,7 +96,7 @@ body.home {
 			--color-border-2: var(--color-accent);
 
 			@media (prefers-reduced-motion: no-preference) {
-				outline: none;
+				outline: none; /* replace default outline through border color change on focus because outline form is incosistent due to overflowing image */
 
 				& > img {
 					transform: scale(1.2);

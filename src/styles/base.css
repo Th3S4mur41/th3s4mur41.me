@@ -56,7 +56,7 @@ header {
 
 	/* hero image */
 	& > img {
-		margin-block-start: 10vb;
+		margin-block-start: 10lvb;
 		margin-block-end: 1rem;
 		width: 100%;
 		height: auto;
