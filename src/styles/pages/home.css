@@ -13,7 +13,7 @@ body.home {
 	.intro {
 		font-size: clamp(1rem, 0.8645rem + 0.6024vw, 1.25rem);
 		font-weight: 300;
-		isolation: isolate; /* avoid profile image bleding on top of nav */
+		isolation: isolate; /* avoid profile image bleeding on top of nav */
 
 		& strong {
 			font-size: 1.25em;
@@ -96,7 +96,7 @@ body.home {
 			--color-border-2: var(--color-accent);
 
 			@media (prefers-reduced-motion: no-preference) {
-				outline: none; /* replace default outline through border color change on focus because outline form is incosistent due to overflowing image */
+				outline: none; /* replace default outline through border color change on focus because outline form is inconsistent due to overflowing image */
 
 				& > img {
 					transform: scale(1.2);
