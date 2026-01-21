@@ -47,8 +47,6 @@ body.home {
 		--color-border: var(--color-bg);
 		--color-border-2: var(--color-subtle-bg);
 		border-radius: 57% 43% 69% 37% / 50% 52% 57% 46%;
-		/*  biome-ignore lint/correctness/noUnknownProperty: https://github.com/biomejs/biome/issues/7625 */
-
 		border: 2px solid transparent;
 		background:
 			url("/images/colo-splash-bg.jpg"), radial-gradient(circle at 50% 250%, var(--color-subtle-bg), var(--color-bg)),
