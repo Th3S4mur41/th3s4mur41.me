@@ -1,20 +1,37 @@
 body.about {
-	font-size: clamp(1rem, 0.8645rem + 0.6024vw, 1.25rem);
-	font-weight: 300;
+	#bio {
+		font-size: clamp(1rem, 0.8645rem + 0.6024vw, 1.25rem);
+		font-weight: 300;
+
+		& > img {
+			display: block;
+			inline-size: clamp(20rem, 50%, 40rem);
+			height: auto;
+			margin-inline: auto;
+			margin-block: 1rem;
+			filter: drop-shadow(0 0.25rem 0.375rem oklch(0 0 0 / 0.75));
+
+			@media (width >= 500px) {
+				margin-inline: 1rem;
+			}
+		}
+	}
 
 	.profile {
-		display: block;
-		inline-size: clamp(20rem, 50%, 40rem);
-		height: auto;
 		mask-image: linear-gradient(to bottom, black 80%, transparent 99%);
-		margin-inline: auto;
-		margin-block: 1rem;
 
 		@media (width >= 500px) {
 			float: right;
 			shape-outside: polygon(48% 20%, 64% 20%, 69% 52%, 100% 80%, 99% 92%, 7% 88%, 12% 44%, 40% 45%);
 			shape-margin: 0.5em;
-			margin-inline: 1rem;
+		}
+	}
+
+	.dog {
+		@media (width >= 500px) {
+			float: left;
+			shape-outside: polygon(62% 1%, 80% 18%, 79% 39%, 81% 53%, 90% 67%, 90% 85%, 69% 92%, 5% 84%, 1% 40%, 16% 10.%);
+			shape-margin: 1.5em;
 		}
 	}
 }

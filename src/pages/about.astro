@@ -1,21 +1,21 @@
 ---
 import { Image } from "astro:assets";
+import bellonaImage from "/src/assets/husky.png";
 import profileImage from "/src/assets/michael-profile-2022-katana.png";
 import PersonSchema from "../components/PersonSchema.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="About me">
-
-	<section>
-
+	<section id="bio">
 		<Image class="profile" src={profileImage} alt="Michael's profile picture" />
-	<p>As a web developer with a strong focus on UI/UX, I create digital experiences that prioritize accessibility and user preferences, aiming to make every interaction smoother and more inclusive. I firmly believe that technology should adapt to people, not the other way around, and I am committed to designing interfaces that improve users’ lives, regardless of their abilities or browsing context.</p>
-	
-	<p>Innovation excites me, and I stay ahead of the curve by experimenting with new HTML and CSS features as soon as they’re available. I enjoy pushing boundaries, exploring fresh techniques, and introducing meaningful enhancements to the projects I work on. Writing clean, maintainable code is a priority—it’s about crafting solutions that stand the test of time and remain intuitive for developers and users alike.</p>
-	<p>Beyond coding, I carry the principles of respect, discipline, and perseverance into every aspect of my professional interactions. Having practiced martial arts for years—including karate, Brazilian Jiu-Jitsu, Luta Livre, and MMA—I understand the value of consistency, focus, and collaboration. These qualities define not only how I approach problem-solving but also how I work within teams, ensuring a productive and supportive development environment.</p>
-	<p>When I’m not building digital experiences, you’ll find me spending time with my family, engaging in sports, and exploring the outdoors—often accompanied by Bellona, our energetic Husky. Whether it's dogtrekking, mountain biking, or snowboarding, I embrace challenges with the same enthusiasm I bring to my work.</p>
-
+		<p>As a web developer with a strong focus on UI/UX, I create digital experiences that prioritize accessibility, clarity, and user autonomy. I believe technology should adapt to people—not the other way around—and I’m committed to building interfaces that remain inclusive and dependable across abilities, devices, and browsing contexts.</p>
+		<p>I’m passionate about modern web standards and enjoy exploring new HTML and CSS capabilities as they emerge. Experimenting with fresh techniques, pushing boundaries, and refining patterns is part of my daily work. Clean, maintainable code matters to me because it leads to solutions that are resilient, intuitive, and enjoyable for both users and developers.</p>
+		<Image class="dog" src={bellonaImage} alt="Bellona, our family husky lying in the snow" />
+		<p>My approach is shaped by the discipline and perseverance I’ve developed through years of practicing martial arts, including karate, Brazilian Jiu-Jitsu, Luta Livre, and MMA. These principles influence how I solve problems, collaborate with teams, and navigate complex challenges with focus, respect, and consistency.</p>
+		<p>Outside of work, I recharge by spending time with my family and staying active. Whether I’m dog‑trekking, mountain biking, snowboarding, or exploring the outdoors with Bellona—our endlessly energetic Husky—I bring the same curiosity and enthusiasm that drive my work in tech</p>
+	</section>
+	<section id="badges"></section>
 	<PersonSchema
 		name="Michaël Vanderheyden"
 		url={Astro.url.href}
@@ -30,6 +30,4 @@ import Layout from "../layouts/Layout.astro";
 		]}
 		image={profileImage}
 	/>
-	
-	</section>
 </Layout>
