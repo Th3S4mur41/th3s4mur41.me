@@ -31,12 +31,17 @@ body {
 	flex-direction: column;
 	justify-content: stretch;
 	background-color: var(--color-bg);
-	font-family: sans-serif;
-	line-height: 1.5;
+	font-family: system-ui, sans-serif;
+	/* Keep line-height at 1.5 unless font-size exceeds 24px, then ease toward 1.2 */
+	line-height: clamp(1.2, calc(36px / 1em), 1.5);
 	color: var(--color-text);
 }
 
 header {
+	overflow-y: clip;
+	mask-image: linear-gradient(to bottom, black 90%, transparent 98%);
+	mask-size: 100% 100%;
+	mask-repeat: no-repeat;
 	/* TODO: replace with good layout */
 	& > h1 {
 		position: fixed;
@@ -51,10 +56,22 @@ header {
 
 	/* hero image */
 	& > img {
+		margin-block-start: 10lvb;
+		margin-block-end: 1rem;
 		width: 100%;
 		height: auto;
-		object-fit: cover;
+		max-height: 50lvb;
+		object-fit: contain;
+		filter: drop-shadow(0 0.25rem 0.375rem oklch(0 0 0 / 0.75));
 		view-transition-name: hero-image;
+
+		@media (prefers-reduced-motion: no-preference) {
+			@supports (animation-timeline: view()) {
+				animation: parallax 1ms linear both;
+				animation-timeline: view();
+				animation-range: exit 0% exit 100%;
+			}
+		}
 	}
 }
 

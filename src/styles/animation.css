@@ -10,3 +10,12 @@
 		transform: translateY(-100%) scaleY(0);
 	}
 }
+
+@keyframes parallax {
+	from {
+		transform: translateY(0lvb);
+	}
+	to {
+		transform: translateY(20lvb);
+	}
+}

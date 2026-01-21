@@ -31,6 +31,8 @@ interface Props {
 
 	showType?: boolean;
 	type?: string;
+
+	highlight?: boolean;
 }
 
 const props = Astro.props as Props;
@@ -44,7 +46,7 @@ const talksImages = import.meta.glob("/src/content/talks/**/*.{jpg,png,webp}", {
 	{ default: ImageMetadata }
 >;
 
-const { article, section, href, headingOffset = 0, imageLoading, showType = false, type } = props;
+const { article, section, href, headingOffset = 0, imageLoading, showType = false, type, highlight = false } = props;
 
 const resolvedHref = href ?? `/${section}/${article.id}/`;
 const sanitizedId = article.id.replace(/\//g, "-");
@@ -94,8 +96,8 @@ void [
 ---
 
 
-<a href={resolvedHref} aria-labelledby={headerId} aria-describedby={descriptionId}>
-	<article aria-labelledby={headerId}>
+<a class="card post" href={resolvedHref} aria-labelledby={headerId} aria-describedby={descriptionId}>
+	<article class:list={[{ highlight }]} aria-labelledby={headerId}>
 		<HeadingTag id={headerId} style={`view-transition-name: article-title-${transitionId};`}>{article.data.title}</HeadingTag>
 		{showType && resolvedType && <span class="type">{resolvedType}</span>}
 		{resolvedImage && (
