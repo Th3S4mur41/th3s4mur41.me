@@ -14,6 +14,7 @@
 		flex-direction: column;
 		align-items: center;
 		anchor-scope: --social-link;
+		outline-offset: 0;
 
 		& > svg {
 			anchor-name: --social-link;

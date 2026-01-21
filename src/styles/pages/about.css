@@ -48,6 +48,11 @@ body.about {
 		}
 		a {
 			text-decoration: none;
+			border-radius: 0.5rem;
+			outline-offset: 0.25rem;
+			outline-color: var(--color-accent);
+			transition: scale 0.15s ease-out;
+
 			@media (prefers-reduced-motion: no-preference) {
 				/* biome-ignore lint/correctness/noUnknownFunction: progressive enhancement */
 				animation: slideUp 0.15s calc(0.1s * sibling-index()) ease-out both;
@@ -57,6 +62,12 @@ body.about {
 				timeline-trigger: --t view() entry 75% exit 10%;
 				/* biome-ignore lint/correctness/noUnknownProperty: progressive enhancement */
 				trigger-scope: --t;
+			}
+
+			&:hover:not(:active) {
+				@media (prefers-reduced-motion: no-preference) {
+					scale: 1.075;
+				}
 			}
 		}
 		img {

@@ -165,6 +165,7 @@ body > nav {
 			color: var(--color-text);
 			text-decoration: none;
 			text-transform: uppercase;
+			outline-offset: 0;
 
 			&[aria-current] {
 				font-weight: bold;
@@ -274,6 +275,12 @@ body > footer {
 
 a {
 	text-underline-offset: 0.2em;
+
+	&:where(:focus-visible) {
+		border-radius: 0.125em;
+		outline: 2px solid var(--color-accent);
+		outline-offset: 0.5em;
+	}
 }
 
 a.to-top {
