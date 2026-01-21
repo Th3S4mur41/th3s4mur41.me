@@ -34,7 +34,7 @@ body.about {
 	.dog {
 		@media (width >= 500px) {
 			float: left;
-			shape-outside: polygon(62% 1%, 80% 18%, 79% 39%, 81% 53%, 90% 67%, 90% 85%, 69% 92%, 5% 84%, 1% 40%, 16% 10.%);
+			shape-outside: polygon(62% 1%, 80% 18%, 79% 39%, 81% 53%, 90% 67%, 90% 85%, 69% 92%, 5% 84%, 1% 40%, 16% 10%);
 			shape-margin: 1.5em;
 		}
 	}
