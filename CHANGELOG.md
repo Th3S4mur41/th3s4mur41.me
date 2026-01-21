@@ -1,3 +1,10 @@
+# [2.20.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.19.4...v2.20.0) (2026-01-21)
+
+
+### Features
+
+* improve landing page layout ([#2034](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2034)) ([d9b61f4](https://github.com/Th3S4mur41/th3s4mur41.me/commit/d9b61f42fad2a872ee4f74a213af2c4302a33991))
+
 ## [2.19.4](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.19.3...v2.19.4) (2026-01-15)
 
 
