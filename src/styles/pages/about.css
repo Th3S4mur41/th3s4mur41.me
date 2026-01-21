@@ -1,8 +1,20 @@
 body.about {
+	font-size: clamp(1rem, 0.8645rem + 0.6024vw, 1.25rem);
+	font-weight: 300;
+
 	.profile {
-		inline-size: 100%;
+		display: block;
+		inline-size: clamp(20rem, 50%, 40rem);
 		height: auto;
 		mask-image: linear-gradient(to bottom, black 80%, transparent 99%);
-		margin-block-end: 4rem;
+		margin-inline: auto;
+		margin-block: 1rem;
+
+		@media (width >= 500px) {
+			float: right;
+			shape-outside: polygon(48% 20%, 64% 20%, 69% 52%, 100% 80%, 99% 92%, 7% 88%, 12% 44%, 40% 45%);
+			shape-margin: 0.5em;
+			margin-inline: 1rem;
+		}
 	}
 }
