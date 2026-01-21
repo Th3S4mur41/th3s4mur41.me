@@ -1,3 +1,10 @@
+## [2.20.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.20.0...v2.20.1) (2026-01-21)
+
+
+### Bug Fixes
+
+* add missing imageAlt attribute for accessibility ([45c233d](https://github.com/Th3S4mur41/th3s4mur41.me/commit/45c233d0cae7dfe2e798d2a5c26e1b004feee692))
+
 # [2.20.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.19.4...v2.20.0) (2026-01-21)
 
 
