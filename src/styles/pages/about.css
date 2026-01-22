@@ -1,8 +1,84 @@
 body.about {
+	#bio {
+		font-size: clamp(1rem, 0.8645rem + 0.6024vw, 1.25rem);
+		font-weight: 300;
+
+		& > img {
+			display: block;
+			inline-size: clamp(20rem, 50%, 40rem);
+			height: auto;
+			margin-inline: auto;
+			margin-block: 1rem;
+			filter: drop-shadow(0 0.25rem 0.375rem oklch(0 0 0 / 0.75));
+
+			animation: fadeIn 1ms ease-out both;
+			animation-timeline: view();
+			animation-range: entry 25% entry 125%;
+
+			@media (width >= 500px) {
+				margin-inline: 1rem;
+			}
+		}
+	}
+
 	.profile {
-		inline-size: 100%;
-		height: auto;
 		mask-image: linear-gradient(to bottom, black 80%, transparent 99%);
-		margin-block-end: 4rem;
+
+		@media (width >= 500px) {
+			float: right;
+			shape-outside: polygon(48% 20%, 64% 20%, 69% 52%, 100% 80%, 99% 92%, 7% 88%, 12% 44%, 40% 45%);
+			shape-margin: 0.5em;
+		}
+	}
+
+	.dog {
+		@media (width >= 500px) {
+			float: left;
+			shape-outside: polygon(62% 1%, 80% 18%, 79% 39%, 81% 53%, 90% 67%, 90% 85%, 69% 92%, 5% 84%, 1% 40%, 16% 10%);
+			shape-margin: 1.5em;
+		}
+	}
+
+	#badges {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr) minmax(8rem, 1fr));
+		gap: 1.5rem 3rem;
+		h2 {
+			grid-column: 1 / -1;
+		}
+		a {
+			text-decoration: none;
+			border-radius: 0.5rem;
+			outline-offset: 0.25rem;
+			outline-color: var(--color-accent);
+			transition: scale 0.15s ease-out;
+
+			@media (prefers-reduced-motion: no-preference) {
+				/* biome-ignore lint/correctness/noUnknownFunction: progressive enhancement */
+				animation: slideUp 0.15s calc(0.1s * sibling-index()) ease-out both;
+				/* biome-ignore lint/correctness/noUnknownProperty: progressive enhancement */
+				animation-trigger: --t play-forwards play-backwards;
+				/* biome-ignore lint/correctness/noUnknownProperty: progressive enhancement */
+				timeline-trigger: --t view() entry 75% exit 10%;
+				/* biome-ignore lint/correctness/noUnknownProperty: progressive enhancement */
+				trigger-scope: --t;
+			}
+
+			&:hover:not(:active) {
+				@media (prefers-reduced-motion: no-preference) {
+					scale: 1.075;
+				}
+			}
+		}
+		img {
+			width: 100%;
+			height: auto;
+			filter: drop-shadow(0 0.25rem 0.375rem oklch(0 0 0 / 0.75));
+		}
+
+		.lida {
+			/* ensure legibility of dark text in logo */
+			background: radial-gradient(white 65%, transparent 70%);
+		}
 	}
 }

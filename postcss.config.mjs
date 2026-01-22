@@ -6,9 +6,19 @@ export default () => {
 			"@csstools/postcss-oklab-function": {},
 			"postcss-preset-env": {
 				preserve: true,
+				features: {
+					"media-query-ranges": true,
+				},
 			},
 			cssnano: {
-				preset: "default",
+				preset: [
+					"default",
+					{
+						discardComments: {
+							removeAll: true,
+						},
+					},
+				],
 			},
 		},
 	};

@@ -6,8 +6,9 @@
 	--color-subtle-text: oklch(0.8 0 0);
 	--color-accent: oklch(0.86 0.18 90.53);
 
-	--grid-columns: [full-width-start] 1fr [margin-start] 1rem [content-start] min(80ch, calc(100vi - 2rem)) [content-end]
-		1rem [margin-end] 1fr [full-width-end];
+	--main-margin: 1.5rem;
+	--grid-columns: [full-width-start] 1fr [margin-start] var(--main-margin) [content-start]
+		min(80ch, calc(100vi - var(--main-margin) * 2)) [content-end] var(--main-margin) [margin-end] 1fr [full-width-end];
 }
 
 @view-transition {
@@ -21,6 +22,7 @@
 	}
 	html {
 		scroll-behavior: smooth;
+		scrollbar-gutter: stable;
 	}
 }
 
@@ -163,6 +165,7 @@ body > nav {
 			color: var(--color-text);
 			text-decoration: none;
 			text-transform: uppercase;
+			outline-offset: 0;
 
 			&[aria-current] {
 				font-weight: bold;
@@ -272,6 +275,12 @@ body > footer {
 
 a {
 	text-underline-offset: 0.2em;
+
+	&:where(:focus-visible) {
+		border-radius: 0.125em;
+		outline: 2px solid var(--color-accent);
+		outline-offset: 0.5em;
+	}
 }
 
 a.to-top {

@@ -11,6 +11,13 @@
 	}
 }
 
+@keyframes slideUp {
+	from {
+		opacity: 0;
+		transform: translateY(100%);
+	}
+}
+
 @keyframes parallax {
 	from {
 		transform: translateY(0lvb);
