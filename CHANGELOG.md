@@ -1,3 +1,10 @@
+# [2.21.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.20.1...v2.21.0) (2026-01-22)
+
+
+### Features
+
+* improve bio layout and content ([#2036](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2036)) ([f82e40e](https://github.com/Th3S4mur41/th3s4mur41.me/commit/f82e40e0b649d8ba5659d7285a3f22d501c26f8d))
+
 ## [2.20.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.20.0...v2.20.1) (2026-01-21)
 
 
