@@ -100,6 +100,7 @@ body:is([class^="blog-"], [class^="talks-"]) {
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: space-between;
+			align-items: center;
 			column-gap: 2rem;
 			margin-block: 1em;
 			font-size: 0.875rem;
@@ -197,4 +198,22 @@ figure > p:has(img + img) {
 
 iframe {
 	border-radius: 0.25rem;
+}
+
+.share-button {
+	&.hidden {
+		display: none;
+	}
+
+	padding-inline: 0.5em;
+	padding-block: 0.25em;
+	font-size: 1rem;
+	cursor: pointer;
+
+	& > svg {
+		inline-size: auto;
+		block-size: 1.2em;
+		fill: currentcolor;
+		vertical-align: sub;
+	}
 }
