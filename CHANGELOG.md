@@ -1,3 +1,10 @@
+# [2.23.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.22.0...v2.23.0) (2026-01-22)
+
+
+### Features
+
+* add share button to blog pages ([#2042](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2042)) ([2d9ea98](https://github.com/Th3S4mur41/th3s4mur41.me/commit/2d9ea982b3b10744a81e3a75fae3c2b01b0ba0f5))
+
 # [2.22.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.21.0...v2.22.0) (2026-01-22)
 
 
