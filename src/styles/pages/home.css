@@ -118,10 +118,10 @@ body.home {
 	article {
 		display: grid;
 		grid-template:
-			"image title" auto
-			"image teaser" auto
-			"image date" auto
-			/ 15em 1fr;
+			"image image title" auto
+			"image image teaser" auto
+			"type date teaser" auto
+			/ 15ch 15ch 1fr;
 		gap: 1rem 1.5rem;
 
 		& > h3 {
@@ -140,6 +140,15 @@ body.home {
 			/* TODO: replace through ident() when available - https://drafts.csswg.org/css-values-5/#funcdef-ident
 			  In the meantime, set view-transition-name inline in template */
 		}
+		& .type {
+			grid-area: type;
+			justify-self: start;
+			align-self: start;
+			padding-inline: 0.75ch;
+			font-size: 0.875rem;
+			background: var(--color-highlight);
+			border-radius: 0.25em;
+		}
 		& p {
 			grid-area: teaser;
 			margin: 0;
@@ -148,25 +157,26 @@ body.home {
 			grid-area: date;
 			font-size: 0.875rem;
 			color: var(--color-subtle-text);
+			justify-self: end;
 		}
 
 		&.highlight {
 			grid-template:
-				"image" auto
-				"title" auto
-				"teaser" auto
-				"date" auto
-				/ 1fr;
+				"image image" auto
+				"type date" auto
+				"title title" auto
+				"teaser teaser" auto
+				/ 1fr auto;
 		}
 
 		@container (width <= 40rem) {
 			/*  biome-ignore lint/suspicious/noDuplicateProperties: https://github.com/biomejs/biome/issues/6014 */
 			grid-template:
-				"image" auto
-				"title" auto
-				"teaser" auto
-				"date" auto
-				/ 1fr;
+				"image image" auto
+				"type date" auto
+				"title title" auto
+				"teaser teaser" auto
+				/ 1fr auto;
 		}
 	}
 }
