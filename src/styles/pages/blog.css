@@ -248,13 +248,7 @@ body:is([class^="blog-"], [class^="talks-"]) {
 					In the meantime, set view-transition-name inline in template */
 			}
 			& .type {
-				grid-area: type;
-				justify-self: start;
-				align-self: start;
-				padding-inline: 0.75ch;
-				font-size: 0.875rem;
-				background: var(--color-highlight);
-				border-radius: 0.25em;
+				display: none;
 			}
 			& p {
 				grid-area: teaser;

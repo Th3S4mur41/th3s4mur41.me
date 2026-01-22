@@ -110,9 +110,12 @@ p {
 	}
 }
 
+main {
+	flex-grow: 1;
+}
+
 main,
 aside {
-	flex-grow: 1;
 	display: grid;
 	grid-template-columns: var(--grid-columns);
 	grid-auto-rows: min-content;
