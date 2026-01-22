@@ -23,13 +23,20 @@ const { currentArticle, section, count = 3 } = Astro.props;
 const currentTags = (currentArticle.data.tags ?? []).map((tag) => tag.toLowerCase());
 const previewFuture = isPreviewFutureContentEnabled();
 
-const allEntriesInSection = section === "blog" ? await getCollection("blog") : await getCollection("talks");
+// Fetch both collections to enable cross-referencing between blog and talks
+const [blogEntries, talksEntries] = await Promise.all([getCollection("blog"), getCollection("talks")]);
+
+// Combine all entries with their section information
+const allEntries = [
+	...blogEntries.map((entry) => ({ entry, section: "blog" as const })),
+	...talksEntries.map((entry) => ({ entry, section: "talks" as const })),
+];
 
 const relatedArticles =
 	currentTags.length === 0
 		? []
-		: allEntriesInSection
-				.filter((entry) => {
+		: allEntries
+				.filter(({ entry }) => {
 					// Filter out current article
 					if (entry.id === currentArticle.id) return false;
 					// Filter out non-visible content
@@ -38,10 +45,10 @@ const relatedArticles =
 					const entryTags = entry.data.tags ?? [];
 					return entryTags.some((tag) => currentTags.includes(tag.toLowerCase()));
 				})
-				.map((entry) => {
+				.map(({ entry, section: entrySection }) => {
 					const entryTags = entry.data.tags ?? [];
 					const matchingTagsCount = entryTags.filter((tag) => currentTags.includes(tag.toLowerCase())).length;
-					return { entry, matchingTagsCount };
+					return { entry, section: entrySection, matchingTagsCount };
 				})
 				.sort((a, b) => {
 					// First, sort by number of matching tags (descending)
@@ -53,16 +60,15 @@ const relatedArticles =
 					const dateB = new Date(b.entry.data.date);
 					return dateB.getTime() - dateA.getTime();
 				})
-				.slice(0, count)
-				.map(({ entry }) => entry);
+				.slice(0, count);
 ---
 
 {relatedArticles.length > 0 && (
 	<>
-		{relatedArticles.map((relatedArticle) => (
+		{relatedArticles.map(({ entry: relatedArticle, section: articleSection }) => (
 			<ArticleCard
 				article={relatedArticle}
-				section={section}
+				section={articleSection}
 				headingOffset={1}
 				imageLoading="lazy"
 			/>
