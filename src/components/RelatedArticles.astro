@@ -20,7 +20,7 @@ interface Props {
 
 const { currentArticle, section, count = 3 } = Astro.props;
 
-const currentTags = currentArticle.data.tags ?? [];
+const currentTags = (currentArticle.data.tags ?? []).map((tag) => tag.toLowerCase());
 const previewFuture = isPreviewFutureContentEnabled();
 
 const allEntriesInSection = section === "blog" ? await getCollection("blog") : await getCollection("talks");
@@ -36,11 +36,11 @@ const relatedArticles =
 					if (!isVisibleContent(entry.data, { previewFuture })) return false;
 					// Must have at least one matching tag
 					const entryTags = entry.data.tags ?? [];
-					return entryTags.some((tag) => currentTags.includes(tag));
+					return entryTags.some((tag) => currentTags.includes(tag.toLowerCase()));
 				})
 				.map((entry) => {
 					const entryTags = entry.data.tags ?? [];
-					const matchingTagsCount = entryTags.filter((tag) => currentTags.includes(tag)).length;
+					const matchingTagsCount = entryTags.filter((tag) => currentTags.includes(tag.toLowerCase())).length;
 					return { entry, matchingTagsCount };
 				})
 				.sort((a, b) => {
