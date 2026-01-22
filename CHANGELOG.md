@@ -1,3 +1,10 @@
+# [2.22.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.21.0...v2.22.0) (2026-01-22)
+
+
+### Features
+
+* show related articles on blog posts ([#2041](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2041)) ([4c4a83a](https://github.com/Th3S4mur41/th3s4mur41.me/commit/4c4a83a383cd8683046b6be522215be7fd110032))
+
 # [2.21.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.20.1...v2.21.0) (2026-01-22)
 
 

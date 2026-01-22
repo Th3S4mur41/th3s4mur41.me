@@ -200,6 +200,78 @@ iframe {
 	border-radius: 0.25rem;
 }
 
+body:is([class^="blog-"], [class^="talks-"]) {
+	aside {
+		> h2 {
+			border-block-start: 1px solid oklch(0.5 0 0);
+			padding-block-start: 1em;
+		}
+
+		> a {
+			padding: unset;
+			margin-block-end: 2rem;
+			background:
+				radial-gradient(circle at 50% 250%, var(--color-subtle-bg), var(--color-bg)),
+				linear-gradient(var(--color-subtle-bg), var(--color-bg));
+			background-clip: padding-box, border-box;
+			background-origin: padding-box, border-box;
+
+			box-shadow:
+				0 0.75rem 1rem -0.25rem hsl(var(--hsl-shadow) / 0.06),
+				0 0.25rem 0.375rem -0.125rem hsl(var(--hsl-shadow) / 0.02);
+		}
+
+		article {
+			display: grid;
+			grid-template:
+				"image . ." 0.5em
+				"image title ." auto
+				"image teaser ." auto
+				"image . ." 0.5em
+				/ 35ch 1fr 0.25em;
+			gap: 1rem 1.5rem;
+
+			& > h3 {
+				grid-area: title;
+				margin: 0;
+				/* TODO: replace through ident() when available - https://drafts.csswg.org/css-values-5/#funcdef-ident
+					In the meantime, set view-transition-name inline in template */
+			}
+			& img {
+				grid-area: image;
+				inline-size: 100%;
+				block-size: 100%;
+				max-block-size: 100%;
+				object-fit: cover;
+				border-start-start-radius: 0.5rem;
+				border-end-start-radius: 0.5rem;
+				/* TODO: replace through ident() when available - https://drafts.csswg.org/css-values-5/#funcdef-ident
+					In the meantime, set view-transition-name inline in template */
+			}
+			& .type {
+				display: none;
+			}
+			& p {
+				grid-area: teaser;
+				margin: 0;
+			}
+			& time {
+				display: none;
+			}
+
+			@container (width <= 70ch) {
+				/*  biome-ignore lint/suspicious/noDuplicateProperties: https://github.com/biomejs/biome/issues/6014 */
+				grid-template:
+					"image image image" auto
+					". title ." auto
+					". teaser ." auto
+					". . ." 0.5em
+					/ 0.5em 1fr 0.5em;
+			}
+		}
+	}
+}
+
 .share-button {
 	&.hidden {
 		display: none;

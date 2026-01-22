@@ -112,6 +112,10 @@ p {
 
 main {
 	flex-grow: 1;
+}
+
+main,
+aside {
 	display: grid;
 	grid-template-columns: var(--grid-columns);
 	grid-auto-rows: min-content;
@@ -415,4 +419,9 @@ input {
 		outline: 2px solid var(--color-accent);
 		outline-offset: 0;
 	}
+}
+
+/* hide aside if it has nothing more than a title */
+aside:has(h2:only-child) {
+	display: none;
 }
