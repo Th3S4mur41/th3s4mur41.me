@@ -199,8 +199,7 @@ iframe {
 	border-radius: 0.25rem;
 }
 
-[class^="blog-"],
-[class^="talks-"] {
+body:is([class^="blog-"], [class^="talks-"]) {
 	aside {
 		> h2 {
 			border-block-start: 1px solid oklch(0.5 0 0);

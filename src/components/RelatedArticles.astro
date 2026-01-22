@@ -23,44 +23,42 @@ const { currentArticle, section, count = 3 } = Astro.props;
 const currentTags = (currentArticle.data.tags ?? []).map((tag) => tag.toLowerCase());
 const previewFuture = isPreviewFutureContentEnabled();
 
-// Fetch both collections to enable cross-referencing between blog and talks
-const [blogEntries, talksEntries] = await Promise.all([getCollection("blog"), getCollection("talks")]);
-
-// Combine all entries with their section information
-const allEntries = [
-	...blogEntries.map((entry) => ({ entry, section: "blog" as const })),
-	...talksEntries.map((entry) => ({ entry, section: "talks" as const })),
-];
-
-const relatedArticles =
-	currentTags.length === 0
-		? []
-		: allEntries
-				.filter(({ entry }) => {
-					// Filter out current article
-					if (entry.id === currentArticle.id) return false;
-					// Filter out non-visible content
-					if (!isVisibleContent(entry.data, { previewFuture })) return false;
-					// Must have at least one matching tag
-					const entryTags = entry.data.tags ?? [];
-					return entryTags.some((tag) => currentTags.includes(tag.toLowerCase()));
-				})
-				.map(({ entry, section: entrySection }) => {
-					const entryTags = entry.data.tags ?? [];
-					const matchingTagsCount = entryTags.filter((tag) => currentTags.includes(tag.toLowerCase())).length;
-					return { entry, section: entrySection, matchingTagsCount };
-				})
-				.sort((a, b) => {
-					// First, sort by number of matching tags (descending)
-					if (b.matchingTagsCount !== a.matchingTagsCount) {
-						return b.matchingTagsCount - a.matchingTagsCount;
-					}
-					// Then, sort by date (newest first)
-					const dateA = new Date(a.entry.data.date);
-					const dateB = new Date(b.entry.data.date);
-					return dateB.getTime() - dateA.getTime();
-				})
-				.slice(0, count);
+let relatedArticles: { entry: any; section: "blog" | "talks" }[] = [];
+if (currentTags.length > 0) {
+	// Fetch both collections to enable cross-referencing between blog and talks
+	const [blogEntries, talksEntries] = await Promise.all([getCollection("blog"), getCollection("talks")]);
+	// Combine all entries with their section information
+	const allEntries = [
+		...blogEntries.map((entry) => ({ entry, section: "blog" as const })),
+		...talksEntries.map((entry) => ({ entry, section: "talks" as const })),
+	];
+	relatedArticles = allEntries
+		.filter(({ entry }) => {
+			// Filter out current article
+			if (entry.id === currentArticle.id) return false;
+			// Filter out non-visible content
+			if (!isVisibleContent(entry.data, { previewFuture })) return false;
+			// Must have at least one matching tag
+			const entryTags = entry.data.tags ?? [];
+			return entryTags.some((tag) => currentTags.includes(tag.toLowerCase()));
+		})
+		.map(({ entry, section: entrySection }) => {
+			const entryTags = entry.data.tags ?? [];
+			const matchingTagsCount = entryTags.filter((tag) => currentTags.includes(tag.toLowerCase())).length;
+			return { entry, section: entrySection, matchingTagsCount };
+		})
+		.sort((a, b) => {
+			// First, sort by number of matching tags (descending)
+			if (b.matchingTagsCount !== a.matchingTagsCount) {
+				return b.matchingTagsCount - a.matchingTagsCount;
+			}
+			// Then, sort by date (newest first)
+			const dateA = new Date(a.entry.data.date);
+			const dateB = new Date(b.entry.data.date);
+			return dateB.getTime() - dateA.getTime();
+		})
+		.slice(0, count);
+}
 ---
 
 {relatedArticles.length > 0 && (
