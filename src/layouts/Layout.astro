@@ -112,6 +112,7 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 		<main id="main">
 			<slot />
 		</main>
+		<slot name="aside" />
 		<footer>
 			<Socials />
 			<small>

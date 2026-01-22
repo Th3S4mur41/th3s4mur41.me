@@ -1,0 +1,71 @@
+---
+import { getCollection } from "astro:content";
+import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/contentVisibility";
+import ArticleCard from "./ArticleCard.astro";
+
+interface Props {
+	/** Current article to exclude from results and use for tag matching */
+	currentArticle: {
+		id: string;
+		data: {
+			tags?: string[];
+			date: Date;
+		};
+	};
+	/** Section to search in (blog or talks) */
+	section: "blog" | "talks";
+	/** Maximum number of related articles to display */
+	count?: number;
+}
+
+const { currentArticle, section, count = 3 } = Astro.props;
+
+const currentTags = currentArticle.data.tags ?? [];
+const previewFuture = isPreviewFutureContentEnabled();
+
+const allEntriesInSection = section === "blog" ? await getCollection("blog") : await getCollection("talks");
+
+const relatedArticles =
+	currentTags.length === 0
+		? []
+		: allEntriesInSection
+				.filter((entry) => {
+					// Filter out current article
+					if (entry.id === currentArticle.id) return false;
+					// Filter out non-visible content
+					if (!isVisibleContent(entry.data, { previewFuture })) return false;
+					// Must have at least one matching tag
+					const entryTags = entry.data.tags ?? [];
+					return entryTags.some((tag) => currentTags.includes(tag));
+				})
+				.map((entry) => {
+					const entryTags = entry.data.tags ?? [];
+					const matchingTagsCount = entryTags.filter((tag) => currentTags.includes(tag)).length;
+					return { entry, matchingTagsCount };
+				})
+				.sort((a, b) => {
+					// First, sort by number of matching tags (descending)
+					if (b.matchingTagsCount !== a.matchingTagsCount) {
+						return b.matchingTagsCount - a.matchingTagsCount;
+					}
+					// Then, sort by date (newest first)
+					const dateA = new Date(a.entry.data.date);
+					const dateB = new Date(b.entry.data.date);
+					return dateB.getTime() - dateA.getTime();
+				})
+				.slice(0, count)
+				.map(({ entry }) => entry);
+---
+
+{relatedArticles.length > 0 && (
+	<>
+		{relatedArticles.map((relatedArticle) => (
+			<ArticleCard
+				article={relatedArticle}
+				section={section}
+				headingOffset={1}
+				imageLoading="lazy"
+			/>
+		))}
+	</>
+)}

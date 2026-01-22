@@ -110,7 +110,8 @@ p {
 	}
 }
 
-main {
+main,
+aside {
 	flex-grow: 1;
 	display: grid;
 	grid-template-columns: var(--grid-columns);
@@ -386,4 +387,9 @@ ol > li {
 		block-size: 1lh;
 		z-index: -1;
 	}
+}
+
+/* hide aside if it has nothing more than a title */
+aside:has(h2:only-child) {
+	display: none;
 }

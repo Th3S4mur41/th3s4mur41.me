@@ -4,6 +4,7 @@ import { getCollection, getEntry, render } from "astro:content";
 import path from "node:path";
 import BlogPostingSchema from "../../components/BlogPostingSchema.astro";
 import PodcastEpisodeSchema from "../../components/PodcastEpisodeSchema.astro";
+import RelatedArticles from "../../components/RelatedArticles.astro";
 import Layout from "../../layouts/Layout.astro";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../../utils/contentVisibility";
 
@@ -223,4 +224,8 @@ void [Layout, Content, img, truncatedTitle, BlogPostingSchema, PodcastEpisodeSch
 			/>
 		)}
   </article>
+	<aside slot="aside">
+		<h2>You might also like</h2>
+		<RelatedArticles currentArticle={article} section={section as "blog" | "talks"} />
+	</aside>
 </Layout>
