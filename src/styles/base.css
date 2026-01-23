@@ -23,6 +23,8 @@
 	html {
 		scroll-behavior: smooth;
 		scrollbar-gutter: stable;
+
+		container-type: scroll-state;
 	}
 }
 
@@ -129,10 +131,24 @@ aside {
 
 /* main navigation */
 body > nav {
+	--spacing-top: 0.25rem;
 	justify-items: center;
 	position: sticky;
+	top: var(--spacing-top);
 	z-index: 1;
-	top: 0.25rem;
+	transition: translate 0.3s;
+
+	@supports (container-type: scroll-state) {
+		/* Hide when you scroll down */
+		@container scroll-state (scrolled: bottom) {
+			translate: 0 calc(-100% - var(--spacing-top));
+		}
+
+		/* appear when you scroll back up */
+		@container scroll-state (scrolled: top) {
+			translate: 0 0;
+		}
+	}
 
 	& > ul {
 		display: flex;
