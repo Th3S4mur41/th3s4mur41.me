@@ -259,6 +259,7 @@ body > nav {
 				background-color: var(--color-accent);
 				color: var(--color-bg);
 				font-weight: 700;
+				view-transition-name: main-nav-current;
 			}
 		}
 
