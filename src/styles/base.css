@@ -212,10 +212,11 @@ body > nav {
 
 		anchor-name: --main-nav;
 
-		@container scroll-state (stuck: top) {
+		/* TODO: Fix when biome bug is resolved: https://github.com/biomejs/biome/issues/8840 */
+		/* @container sticky-nav scroll-state(stuck: top) {
 			background: none;
 			box-shadow: none;
-		}
+		} */
 
 		@media (prefers-reduced-motion: no-preference) {
 			&::before {
