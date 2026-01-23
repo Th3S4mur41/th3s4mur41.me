@@ -138,16 +138,9 @@ body > nav {
 	z-index: 1;
 	transition: translate 0.3s;
 
-	@supports (container-type: scroll-state) {
-		/* Hide when you scroll down */
-		@container scroll-state (scrolled: bottom) {
-			translate: 0 calc(-100% - var(--spacing-top));
-		}
-
-		/* appear when you scroll back up */
-		@container scroll-state (scrolled: top) {
-			translate: 0 0;
-		}
+	/* Hide when you scroll down */
+	@container scroll-state (scrolled: bottom) {
+		translate: 0 calc(-100% - var(--spacing-top));
 	}
 
 	& > ul {
