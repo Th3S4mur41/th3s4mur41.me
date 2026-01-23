@@ -262,7 +262,8 @@ body > nav {
 				background-color: var(--color-accent);
 				color: var(--color-bg);
 				font-weight: 700;
-				view-transition-name: main-nav-current;
+				/* TODO: investigate further - just setting view-transition-name on the link itself causes jumpy link */
+				/* view-transition-name: main-nav-current; */
 			}
 		}
 
