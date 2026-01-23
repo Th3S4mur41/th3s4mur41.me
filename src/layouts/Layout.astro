@@ -102,6 +102,7 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 			</header>
 		)}
 		<nav aria-label="main">
+			<Image class="logo" src={logo} alt="" />
 			<ul>
 				<li><a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Home</a></li>
 				<li><a href="/blog/" aria-current={Astro.url.pathname === '/blog/' ? 'page' : undefined}>Blog</a></li>
