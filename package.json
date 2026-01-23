@@ -1,7 +1,7 @@
 {
 	"name": "th3s4mur41.me",
 	"type": "module",
-	"version": "2.22.0",
+	"version": "2.24.0",
 	"license": "LICENSE",
 	"private": true,
 	"description": "th3s4mur41.me website",
@@ -25,7 +25,7 @@
 		"@astrojs/sitemap": "^3.7.0",
 		"@fontsource/cascadia-code": "^5.2.3",
 		"@fontsource/nanum-brush-script": "^5.2.8",
-		"astro": "^5.16.12"
+		"astro": "^5.16.14"
 	},
 	"devDependencies": {
 		"@astrojs/mdx": "^4.3.13",
