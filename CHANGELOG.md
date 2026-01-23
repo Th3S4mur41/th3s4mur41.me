@@ -1,3 +1,10 @@
+# [2.24.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.23.0...v2.24.0) (2026-01-23)
+
+
+### Features
+
+* add kb-bfl bade and update layout ([#2044](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2044)) ([b358e86](https://github.com/Th3S4mur41/th3s4mur41.me/commit/b358e864836c6d4dea572e10ece9181916234ee4))
+
 # [2.23.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.22.0...v2.23.0) (2026-01-22)
 
 
