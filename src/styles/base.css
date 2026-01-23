@@ -25,6 +25,7 @@
 		scrollbar-gutter: stable;
 
 		container-type: scroll-state;
+		container-name: html;
 	}
 }
 
@@ -166,10 +167,10 @@ body > nav {
 	}
 
 	/* TODO: Fix when biome bug is resolved: https://github.com/biomejs/biome/issues/8842 */
-	@container scroll-state (scrolled: bottom) {
-		/* Hide when you scroll down */
-		translate: 0 -100%;
-	}
+	/* @container html scroll-state(scrolled: bottom) { */
+	/* Hide when you scroll down */
+	/* translate: 0 -100%;
+	} */
 
 	&::before {
 		grid-column: 1 / -1;
@@ -181,7 +182,7 @@ body > nav {
 		z-index: -1;
 
 		/* TODO: Fix when biome bug is resolved: https://github.com/biomejs/biome/issues/8840 */
-		/* @container scroll-state(stuck: top) {
+		/* @container sticky-nav scroll-state(stuck: top) {
 			background: oklch(0 0 0 /0.7);
 			backdrop-filter: blur(10px);
 			inline-size: stretch;
@@ -226,9 +227,11 @@ body > nav {
 					oklch(from var(--color-bg) calc(l - 0.2) c h)
 				);
 				inset: anchor(inside);
-				border-radius: calc(var(--border-radius)); /* inner radius + padding */
+				border-radius: calc(var(--border-radius));
 				margin: calc(0.25rem + 2px); /* padding + border */
-				transition: all 0.2s;
+				transition:
+					inset 0.2s,
+					margin 0.2s;
 			}
 			&:has(a:is(:hover, :focus-visible))::before {
 				margin: 0;
@@ -253,7 +256,7 @@ body > nav {
 
 			&:is(:hover, :focus-visible) {
 				color: currentcolor;
-				text-shadow: 0.025em 0.025em 0.025em oklch(from currentcolor l c h / 0 5);
+				text-shadow: 0.025em 0.025em 0.025em oklch(from currentcolor l c h / 0.5);
 			}
 			&[aria-current] {
 				background-color: var(--color-accent);
