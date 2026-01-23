@@ -131,24 +131,73 @@ aside {
 
 /* main navigation */
 body > nav {
-	--spacing-top: 0.25rem;
 	justify-items: center;
 	position: sticky;
-	top: var(--spacing-top);
+	top: 0;
 	z-index: 1;
 	transition: translate 0.3s;
+	container-type: scroll-state;
+	container-name: sticky-nav;
 
-	/* Hide when you scroll down */
+	display: grid;
+	grid-template: "logo nav ." / 0 1fr 0;
+	align-items: center;
+
+	& > .logo {
+		grid-area: logo;
+		display: none;
+	}
+
+	@media (width >= 600px) {
+		grid-template: "logo nav ." / 5rem 1fr 5rem;
+
+		& > .logo {
+			display: block;
+			inline-size: 100%;
+			block-size: auto;
+			opacity: 0;
+
+			/* TODO: Fix when biome bug is resolved: https://github.com/biomejs/biome/issues/8840 */
+			/* @container sticky-nav scroll-state(stuck: top) {
+				opacity: 1;
+				transition: opacity 0.3s;
+			} */
+		}
+	}
+
+	/* TODO: Fix when biome bug is resolved: https://github.com/biomejs/biome/issues/8842 */
 	@container scroll-state (scrolled: bottom) {
-		translate: 0 calc(-100% - var(--spacing-top));
+		/* Hide when you scroll down */
+		translate: 0 -100%;
+	}
+
+	&::before {
+		grid-column: 1 / -1;
+		grid-row: 1 / -1;
+		display: block;
+		content: "";
+		inline-size: 100%;
+		block-size: 100%;
+		z-index: -1;
+
+		/* TODO: Fix when biome bug is resolved: https://github.com/biomejs/biome/issues/8840 */
+		/* @container scroll-state(stuck: top) {
+			background: oklch(0 0 0 /0.7);
+			backdrop-filter: blur(10px);
+			inline-size: stretch;
+			transition: background 0.3s;
+		} */
 	}
 
 	& > ul {
+		grid-area: nav;
 		display: flex;
 		list-style: none;
 		justify-content: center;
 		margin: unset;
 		padding: unset;
+		padding-block: 0.5rem;
+		padding-block: 0.5rem;
 	}
 
 	& li {
