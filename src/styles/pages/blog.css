@@ -217,8 +217,8 @@ body:is([class^="blog-"], [class^="talks-"]) {
 			background-origin: padding-box, border-box;
 
 			box-shadow:
-				0 0.75rem 1rem -0.25rem hsl(var(--hsl-shadow) / 0.06),
-				0 0.25rem 0.375rem -0.125rem hsl(var(--hsl-shadow) / 0.02);
+				0 0.75rem 1rem -0.25rem oklch(from black l c h / 0.06),
+				0 0.25rem 0.375rem -0.125rem oklch(from black l c h / 0.02);
 		}
 
 		article {
