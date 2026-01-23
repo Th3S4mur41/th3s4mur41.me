@@ -1,3 +1,10 @@
+# [2.25.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.24.0...v2.25.0) (2026-01-23)
+
+
+### Features
+
+* improve navigation layout and transition ([#2045](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2045)) ([d91408f](https://github.com/Th3S4mur41/th3s4mur41.me/commit/d91408ff80c03e76176cd7562720e5d06308317f))
+
 # [2.24.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.23.0...v2.24.0) (2026-01-23)
 
 
