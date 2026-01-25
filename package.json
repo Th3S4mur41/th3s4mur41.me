@@ -47,7 +47,7 @@
 		"cssremedy": "^0.1.0-beta.2",
 		"eslint": "^9.39.2",
 		"eslint-config-prettier": "^10.1.8",
-		"eslint-plugin-compat": "^6.0.2",
+		"eslint-plugin-compat": "^6.1.0",
 		"hint": "^7.1.13",
 		"html-loader": "^5.1.0",
 		"husky": "^9.1.7",
