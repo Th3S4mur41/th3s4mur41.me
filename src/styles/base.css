@@ -12,7 +12,6 @@
 }
 
 @view-transition {
-	/*  biome-ignore lint/correctness/noUnknownProperty: navigation is a new property for view-transition */
 	navigation: auto;
 }
 

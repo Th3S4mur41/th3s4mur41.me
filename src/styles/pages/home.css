@@ -170,7 +170,6 @@ body.home {
 		}
 
 		@container (width <= 40rem) {
-			/*  biome-ignore lint/suspicious/noDuplicateProperties: https://github.com/biomejs/biome/issues/6014 */
 			grid-template:
 				"image image" auto
 				"type date" auto

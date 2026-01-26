@@ -55,7 +55,6 @@ body.blog {
 		}
 
 		@container (width <= 40rem) {
-			/*  biome-ignore lint/suspicious/noDuplicateProperties: https://github.com/biomejs/biome/issues/6014 */
 			grid-template:
 				"image image" auto
 				"title title" auto
@@ -149,7 +148,6 @@ pre {
 
 h2#update::before {
 	content: "⟳"; /* Unicode symbol for update */
-	/* biome-ignore lint/suspicious/noDuplicateProperties: Version without alternative text as fallback */
 	content: "⟳" / "";
 	margin-inline-end: 0.2em;
 	font-size: 1.2em;
@@ -260,7 +258,6 @@ body:is([class^="blog-"], [class^="talks-"]) {
 			}
 
 			@container (width <= 70ch) {
-				/*  biome-ignore lint/suspicious/noDuplicateProperties: https://github.com/biomejs/biome/issues/6014 */
 				grid-template:
 					"image image image" auto
 					". title ." auto
