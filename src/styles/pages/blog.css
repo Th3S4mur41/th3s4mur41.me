@@ -80,7 +80,8 @@ body:is([class^="blog-"], [class^="talks-"]) {
 			  In the meantime, set view-transition-name inline in template */
 		}
 		/* Treat an image following the h1 as the hero image */
-		& h1 + p:has(img) {
+		& h1 + p:has(img),
+		& .table-of-contents + p:has(img) {
 			grid-row: 1;
 			grid-column: full-width;
 
