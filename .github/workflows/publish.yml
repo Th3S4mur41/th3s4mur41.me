@@ -10,10 +10,13 @@ on:
         required: true
       CLOUDFLARE_API_TOKEN:
         required: true
-      CLOUDFLARE_PROJECT_NAME:
-        required: true
       INDEXNOW_KEY:
         required: false
+    inputs:
+      CLOUDFLARE_PROJECT_NAME:
+        description: 'The Cloudflare Pages project name'
+        required: true
+        type: string
     outputs:
       deployment-url:
         description: 'The URL of the deployed site'
@@ -60,7 +63,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ID }}
-          command: pages deploy ./dist --project-name=${{ secrets.CLOUDFLARE_PROJECT_NAME }}
+          command: pages deploy ./dist --project-name=${{ inputs.CLOUDFLARE_PROJECT_NAME }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: '📝 Save deployment URL'
