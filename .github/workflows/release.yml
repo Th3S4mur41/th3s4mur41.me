@@ -35,6 +35,10 @@ jobs:
       INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY  }}
     with:
       CLOUDFLARE_PROJECT_NAME: ${{ vars.CLOUDFLARE_PROJECT_NAME }}
+    permissions:
+      contents: read
+      actions: read
+      deployments: write
 
   a11y-scan:
     name: '♿ a11y scan'
@@ -48,3 +52,8 @@ jobs:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
     with:
       url: ${{ needs.publish.outputs.deployment-url }}
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+      
