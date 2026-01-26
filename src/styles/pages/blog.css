@@ -113,6 +113,8 @@ body:is([class^="blog-"], [class^="talks-"]) {
 }
 
 figure {
+	margin-inline: unset;
+
 	& > p:has(> img:only-child) {
 		margin-block: unset;
 	}
