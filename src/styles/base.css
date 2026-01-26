@@ -488,25 +488,62 @@ ol > li {
 	}
 }
 
+@property --color-l {
+	syntax: "<color>";
+	initial-value: transparent;
+	inherits: false;
+}
+
+@property --border-angle {
+	syntax: "<angle>";
+	initial-value: 0deg;
+	inherits: false;
+}
+
 button,
 input {
+	--color-l: var(--color-accent);
 	font: inherit;
 	border-radius: 0.5em;
 	border: 2px solid transparent;
+
 	background:
-		radial-gradient(circle at 50% 250%, var(--color-subtle-bg), var(--color-subtle-bg)),
+		linear-gradient(oklch(from var(--color-bg) calc(l + 0.05) c h), oklch(from var(--color-bg) calc(l - 0.2) c h)),
+		conic-gradient(from var(--border-angle), transparent, transparent 12%),
 		linear-gradient(var(--color-bg), var(--color-subtle-bg));
-	background-clip: padding-box, border-box;
-	background-origin: padding-box, border-box;
+	background-clip: padding-box, border-box, border-box;
+	background-origin: padding-box, border-box, border-box;
+
+	transition:
+		--border-angle 0.5s ease-in-out,
+		--color-l 0.6s ease-in-out;
 
 	box-shadow:
 		0 0.75rem 1rem -0.25rem oklch(from black l c h / 0.06),
 		0 0.25rem 0.375rem -0.125rem oklch(from black l c h / 0.02);
 
+	/* disable native tap highlight in favor of active state */
+	-webkit-tap-highlight-color: transparent;
+
 	&:is(:hover, :focus-within) {
 		background:
-			radial-gradient(circle at 50% 250%, var(--color-subtle-bg) 75%, var(--color-highlight)),
-			linear-gradient(var(--color-highlight), var(--color-subtle-bg));
+			linear-gradient(oklch(from var(--color-bg) calc(l + 0.1) c h), oklch(from var(--color-bg) calc(l - 0.1) c h)),
+			conic-gradient(from var(--border-angle), transparent, var(--color-l) 10%, transparent 12%),
+			linear-gradient(var(--color-bg), var(--color-subtle-bg));
+		background-clip: padding-box, border-box;
+		background-origin: padding-box, border-box;
+
+		@media (prefers-reduced-motion: no-preference) {
+			--border-angle: 1turn;
+			--color-l: transparent;
+		}
+	}
+	&:active {
+		--color-l: transparent;
+		background:
+			linear-gradient(oklch(from var(--color-bg) calc(l + 0.05) c h), oklch(from var(--color-bg) calc(l - 0.2) c h)),
+			conic-gradient(from var(--border-angle), transparent, var(--color-l) 10%, transparent 12%),
+			linear-gradient(var(--color-bg), var(--color-subtle-bg));
 		background-clip: padding-box, border-box;
 		background-origin: padding-box, border-box;
 	}
