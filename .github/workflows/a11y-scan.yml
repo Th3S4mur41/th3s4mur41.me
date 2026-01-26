@@ -25,6 +25,9 @@ on:
         default: 'https://th3s4mur41.me'
         type: string
 
+permissions:
+  contents: read
+
 jobs:
   accessibility-test:
     name: '♿ Accessibility Testing'
