@@ -536,8 +536,8 @@ input {
 			linear-gradient(oklch(from var(--color-bg) calc(l + 0.1) c h), oklch(from var(--color-bg) calc(l - 0.1) c h)),
 			conic-gradient(from var(--border-angle), transparent, var(--color-l) 10%, transparent 12%),
 			linear-gradient(var(--color-bg), var(--color-subtle-bg));
-		background-clip: padding-box, border-box;
-		background-origin: padding-box, border-box;
+		background-clip: padding-box, border-box, border-box;
+		background-origin: padding-box, border-box, border-box;
 
 		@media (prefers-reduced-motion: no-preference) {
 			--border-angle: 1turn;
@@ -550,8 +550,8 @@ input {
 			linear-gradient(oklch(from var(--color-bg) calc(l + 0.05) c h), oklch(from var(--color-bg) calc(l - 0.2) c h)),
 			conic-gradient(from var(--border-angle), transparent, var(--color-l) 10%, transparent 12%),
 			linear-gradient(var(--color-bg), var(--color-subtle-bg));
-		background-clip: padding-box, border-box;
-		background-origin: padding-box, border-box;
+		background-clip: padding-box, border-box, border-box;
+		background-origin: padding-box, border-box, border-box;
 	}
 
 	&:where(:focus-visible) {
