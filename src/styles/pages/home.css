@@ -36,6 +36,12 @@ body.home {
 			position: relative;
 			z-index: 1;
 			shape-outside: polygon(0 0, 80% 0, 99% 30%, 98% 45%, 85% 75%, 65% 90%, 0 100%);
+
+			@media (prefers-reduced-motion: no-preference) {
+				animation: fadeIn 1ms linear both;
+				animation-timeline: view();
+				animation-range: entry 10% entry 100%;
+			}
 		}
 
 		& > p {

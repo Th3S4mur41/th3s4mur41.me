@@ -4,6 +4,12 @@
 	}
 }
 
+@keyframes fadeOut {
+	to {
+		opacity: 0;
+	}
+}
+
 @keyframes slideDown {
 	from {
 		opacity: 0;
@@ -24,5 +30,16 @@
 	}
 	to {
 		transform: translateY(20lvb);
+	}
+}
+
+@keyframes fadeBack {
+	from {
+		opacity: 1;
+		transform: translateY(0lvb) scale(1);
+	}
+	to {
+		opacity: 0;
+		transform: translateY(20lvb) scale(0.6);
 	}
 }
