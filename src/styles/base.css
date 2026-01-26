@@ -233,8 +233,14 @@ body > nav {
 					inset 0.2s,
 					margin 0.2s;
 			}
-			&:has(a:is(:hover, :focus-visible))::before {
+			&:has(a:is(:hover, :focus, :active))::before {
 				margin: 0;
+			}
+			&:has(a:active)::before {
+				background: linear-gradient(
+					oklch(from var(--color-bg) calc(l + 0.1) c h),
+					oklch(from var(--color-bg) calc(l - 0.1) c h)
+				);
 			}
 		}
 	}
@@ -254,7 +260,10 @@ body > nav {
 			font-weight: 500;
 			border-radius: var(--border-radius);
 
-			&:is(:hover, :focus-visible) {
+			/* disable native tap highlight in favor of active state */
+			-webkit-tap-highlight-color: transparent;
+
+			&:is(:hover, :focus, :active) {
 				color: currentcolor;
 				text-shadow: 0.025em 0.025em 0.025em oklch(from currentcolor l c h / 0.5);
 			}
@@ -267,7 +276,7 @@ body > nav {
 			}
 		}
 
-		&:has(> a:is(:hover, :focus)) {
+		&:has(> a:is(:hover, :focus, :active)) {
 			anchor-name: --main-nav;
 		}
 	}
