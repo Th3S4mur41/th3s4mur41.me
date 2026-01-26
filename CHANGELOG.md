@@ -1,3 +1,10 @@
+# [2.26.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.25.0...v2.26.0) (2026-01-26)
+
+
+### Features
+
+* minor ui and ux improvements ([#2050](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2050)) ([70bada3](https://github.com/Th3S4mur41/th3s4mur41.me/commit/70bada3cb10d764395a1b387c25127af9fb4222c))
+
 # [2.25.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.24.0...v2.25.0) (2026-01-23)
 
 
