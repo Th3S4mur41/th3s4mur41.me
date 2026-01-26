@@ -24,6 +24,10 @@ jobs:
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN  }}
       GH_TOKEN: ${{ secrets.GH_TOKEN  }}
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
 
   publish:
     name: '▶️ actions'
@@ -56,4 +60,3 @@ jobs:
       contents: read
       issues: write
       pull-requests: write
-      
