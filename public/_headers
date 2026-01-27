@@ -30,5 +30,5 @@
 	Cache-Control: public, immutable, max-age=31536000
 
 /.well-known/webfinger
-  Content-Type: application/jrd+json
-  Access-Control-Allow-Origin: *
+	Content-Type: application/jrd+json
+	Access-Control-Allow-Origin: *
