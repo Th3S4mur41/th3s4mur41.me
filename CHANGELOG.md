@@ -1,3 +1,10 @@
+## [2.27.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.27.0...v2.27.1) (2026-01-27)
+
+
+### Bug Fixes
+
+* update aliases in webfinger.json for improved compatibility ([bcc9e3a](https://github.com/Th3S4mur41/th3s4mur41.me/commit/bcc9e3a646e0db0df4c89da4efeca78eb88c0336))
+
 # [2.27.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.26.0...v2.27.0) (2026-01-27)
 
 
