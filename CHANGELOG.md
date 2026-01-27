@@ -1,3 +1,10 @@
+# [2.27.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.26.0...v2.27.0) (2026-01-27)
+
+
+### Features
+
+* add Mastodon support ([#2060](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2060)) ([9ea64dc](https://github.com/Th3S4mur41/th3s4mur41.me/commit/9ea64dc1d408ac491830d69e2eacec7a53d04243))
+
 # [2.26.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.25.0...v2.26.0) (2026-01-26)
 
 
