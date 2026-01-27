@@ -76,6 +76,9 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 		{Astro.props.canonical && (
 			<link rel="canonical" href={Astro.props.canonical} />
 		)}
+		<!-- Mastodon -->
+		<link rel="me" href="https://fosstodon.org/@Th3S4mur41" />
+		<meta name="fediverse:creator" content="@th3s4mur41@th3s4mur41.me" />
 			
 		<!-- Icon -->
 		<link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" />
