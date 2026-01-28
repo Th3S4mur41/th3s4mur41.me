@@ -9,13 +9,13 @@ interface Props {
 const { includeWebsite = false } = Astro.props;
 
 const personData = getPersonData(Astro.url.origin);
-const websiteData = getWebsiteData();
+const websiteData = getWebsiteData(Astro.url.origin);
 
 const jsonLd = includeWebsite
 	? {
 			"@context": "https://schema.org",
 			"@type": "WebPage",
-			"@id": "https://th3s4mur41.me/",
+			"@id": `${Astro.url.origin}/`,
 			"@graph": [websiteData, personData],
 		}
 	: {

@@ -5,7 +5,7 @@ export const getPersonData = (origin: string) => {
 
 	return {
 		"@type": "Person" as const,
-		"@id": "https://th3s4mur41.me/#person",
+		"@id": `${origin}/#person`,
 		name: "Michaël Vanderheyden",
 		alternateName: "Th3S4mur41",
 		url: "https://th3s4mur41.me/",
@@ -23,15 +23,15 @@ export const getPersonData = (origin: string) => {
 	};
 };
 
-export const getWebsiteData = () => ({
+export const getWebsiteData = (origin: string) => ({
 	"@type": "WebSite" as const,
-	"@id": "https://th3s4mur41.me/#website",
-	url: "https://th3s4mur41.me/",
+	"@id": `${origin}/#website`,
+	url: origin,
 	name: "Th3S4mur41",
 	description:
 		"Personal website and blog of Michaël Vanderheyden - Web developer passionate about accessibility, modern web standards, and user-friendly interfaces",
-	image: "https://th3s4mur41.me/icons/favicon-512.png",
+	image: `${origin}/icons/favicon-512.png`,
 	publisher: {
-		"@id": "https://th3s4mur41.me/#person",
+		"@id": `${origin}/#person`,
 	},
 });

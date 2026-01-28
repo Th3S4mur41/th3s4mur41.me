@@ -24,7 +24,7 @@ const origin = Astro.url.origin;
 const absolute = (maybeUrl: string) => new URL(maybeUrl, origin).href;
 
 const personData = getPersonData(origin);
-const websiteData = getWebsiteData();
+const websiteData = getWebsiteData(origin);
 
 const blogPostingData = {
 	"@type": "BlogPosting",
@@ -50,13 +50,13 @@ const blogPostingData = {
 			}
 		: {}),
 	author: {
-		"@id": "https://th3s4mur41.me/#person",
+		"@id": `${origin}/#person`,
 	},
 	publisher: {
-		"@id": "https://th3s4mur41.me/#website",
+		"@id": `${origin}/#website`,
 	},
 	isPartOf: {
-		"@id": "https://th3s4mur41.me/#website",
+		"@id": `${origin}/#website`,
 	},
 	inLanguage: "en",
 };
