@@ -27,7 +27,8 @@ keywords:
   - a11y
 ---
 
-import { Image } from 'astro:assets';
+import Image from '/src/components/Image.astro';
+export const components = { img: Image };
 import CodePen from '../../../../components/CodePen.astro';
 
 # Contrast: Beyond WCAG Compliance

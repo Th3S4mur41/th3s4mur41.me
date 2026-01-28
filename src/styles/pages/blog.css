@@ -15,7 +15,7 @@ body.blog {
 			/ minmax(40%, 15em) 1fr;
 		gap: 1rem 1.5rem;
 
-		&:not(:has(> img)) {
+		&:not(:has(> :is(img, picture))) {
 			grid-template:
 				"title" auto
 				"teaser" auto
@@ -132,7 +132,7 @@ body:is([class^="blog-"], [class^="talks-"]) {
 figure {
 	margin-inline: unset;
 
-	& > p:has(> img:only-child) {
+	& > p:has(> :is(img, picture):only-child) {
 		margin-block: unset;
 	}
 	& img {
@@ -201,13 +201,14 @@ dl {
 	}
 }
 
-figure > p:has(img + img) {
+figure > p:has(img + img),
+figure > p:has(picture + picture) {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(min(20ch, 100%), 1fr));
 	gap: 5ch;
 	justify-content: space-evenly;
 
-	& > img {
+	& img {
 		width: 100%;
 		height: auto;
 	}

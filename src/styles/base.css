@@ -59,7 +59,8 @@ header {
 	}
 
 	/* hero image */
-	& > img {
+	& > img,
+	& > picture > img {
 		margin-block-start: 10lvb;
 		margin-block-end: 1rem;
 		width: 100%;
@@ -346,7 +347,8 @@ body > footer {
 			gap: 1em;
 			align-items: center;
 
-			& > img {
+			& > img,
+			& > picture > img {
 				inline-size: 15em;
 				block-size: auto;
 			}
