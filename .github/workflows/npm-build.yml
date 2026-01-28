@@ -35,6 +35,9 @@ jobs:
           HUSKY: 0
         run: npm ci --no-audit --prefer-offline --progress=false
 
+      - name: '✅ Lint code'
+        run: npm run lint -- --reporter=github
+
       - name: '🛠️ Build'
         env:
           PREVIEW_FUTURE_CONTENT: ${{ github.event_name == 'pull_request' && 'true' || '' }}
