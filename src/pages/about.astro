@@ -12,15 +12,36 @@ import PersonSchema from "../components/PersonSchema.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="About me">
+<Layout title="About me"
+	description="About Th3S4mur41 (Michaël Vanderheyden): Web developer, martial artist, and accessibility advocate specializing in modern web standards, UI/UX, and inclusive design."
+	keywords={[
+		"Th3S4mur41",
+		"Michaël Vanderheyden",
+		"Michaël",
+		"The Samurai",
+		"web developer",
+		"martial artist",
+		"accessibility specialist",
+		"CPWA",
+		"UX engineer",
+		"web accessibility",
+		"WCAG expert",
+		"frontend developer",
+		"modern web standards",
+		"CSS expert"
+	]}>
 	<section id="bio">
 		<h2>About Me</h2>
-		<Image class="profile" src={profileImage} alt="Michael's profile picture" />
+		<Image class="profile" src={profileImage} alt="Michaël's profile picture" />
 		<p>As a web developer with a strong focus on UI/UX, I create digital experiences that prioritize accessibility, clarity, and user autonomy. I believe technology should adapt to people—not the other way around—and I’m committed to building interfaces that remain inclusive and dependable across abilities, devices, and browsing contexts.</p>
 		<p>I’m passionate about modern web standards and enjoy exploring new HTML and CSS capabilities as they emerge. Experimenting with fresh techniques, pushing boundaries, and refining patterns is part of my daily work. Clean, maintainable code matters to me because it leads to solutions that are resilient, intuitive, and enjoyable for both users and developers.</p>
 		<Image class="dog" src={bellonaImage} alt="Bellona, our family husky lying in the snow" />
 		<p>My approach is shaped by the discipline and perseverance I’ve developed through years of practicing martial arts, including karate, Brazilian Jiu-Jitsu, Luta Livre, and MMA. These principles influence how I solve problems, collaborate with teams, and navigate complex challenges with focus, respect, and consistency.</p>
 		<p>Outside of work, I recharge by spending time with my family and staying active. Whether I’m dog‑trekking, mountain biking, snowboarding, or exploring the outdoors with Bellona—our endlessly energetic Husky—I bring the same curiosity and enthusiasm that drive my work in tech.</p>
+		<section id="name-explanation" class="note">
+			<h3>Why "Th3S4mur41"?</h3>
+			<p>The name <strong>"Th3S4mur41"</strong>—The Samurai—represents my philosophy: the blend of discipline, craftsmanship, and continuous improvement drawn from martial arts and applied to web development. It reflects how I approach every challenge: with intentionality, respect for quality, and unwavering focus.</p>
+		</section>
 	</section>
 	<section id="badges">
 		<h2>Certifications & Badges</h2>
@@ -40,18 +61,6 @@ import Layout from "../layouts/Layout.astro";
 			<Image class="lida" src={lida} alt="Leading in the Digital Age badge from Atos" />
 		</a>
 	</section>
-	<PersonSchema
-		name="Michaël Vanderheyden"
-		url={Astro.url.href}
-		sameAs={[
-			"https://www.linkedin.com/in/michaelvanderheyden/",
-			"https://bsky.app/profile/th3s4mur41.me",
-			"https://github.com/Th3S4mur41",
-			"https://codepen.io/th3s4mur41/",
-			"https://th3s4mur41.medium.com/",
-			"https://www.instagram.com/th3s4mur41/",
-			"https://twitter.com/Th3S4mur41",
-		]}
-		image={profileImage}
-	/>
+	<PersonSchema />
 </Layout>
+
