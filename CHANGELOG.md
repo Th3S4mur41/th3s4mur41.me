@@ -1,3 +1,10 @@
+## [2.27.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.27.1...v2.27.2) (2026-01-28)
+
+
+### Bug Fixes
+
+* improve page SEO and metadata ([#2062](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2062)) ([6e1f4cb](https://github.com/Th3S4mur41/th3s4mur41.me/commit/6e1f4cb74c43e1c07e9ee085cd1f2b9b631f6203))
+
 ## [2.27.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.27.0...v2.27.1) (2026-01-27)
 
 
