@@ -2,6 +2,7 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 import compress from "astro-compress";
+import { rehypeOptimizeFirstImage } from "./src/plugins/rehype-optimize-first-image.js";
 import { rehypeViewTransitionNames } from "./src/plugins/rehype-view-transition-names.js";
 
 // https://astro.build/config
@@ -9,7 +10,7 @@ export default defineConfig({
 	site: "https://th3s4mur41.me",
 	markdown: {
 		syntaxHighlight: "prism",
-		rehypePlugins: [rehypeViewTransitionNames],
+		rehypePlugins: [rehypeViewTransitionNames, rehypeOptimizeFirstImage],
 	},
 	integrations: [
 		sitemap({
@@ -19,7 +20,7 @@ export default defineConfig({
 			filter: (pageUrl) => !pageUrl.includes("/_draft-"),
 		}),
 		mdx({
-			rehypePlugins: [rehypeViewTransitionNames],
+			rehypePlugins: [rehypeViewTransitionNames, rehypeOptimizeFirstImage],
 		}),
 		compress({
 			HTML: {
