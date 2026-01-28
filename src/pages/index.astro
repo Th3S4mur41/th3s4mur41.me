@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import profileImg from "/src/assets/michael-profile-2025-katana.png";
 import ArticleCard from "../components/ArticleCard.astro";
+import PersonSchema from "../components/PersonSchema.astro";
 import Layout from "../layouts/Layout.astro";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/contentVisibility";
 
@@ -46,3 +47,5 @@ void [Image, profileImg, ArticleCard, Layout, allPosts];
 			/>
 	))}
 </Layout>
+
+<PersonSchema includeWebsite={true} />

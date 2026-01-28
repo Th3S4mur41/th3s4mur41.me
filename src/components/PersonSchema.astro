@@ -1,43 +1,60 @@
 ---
+import profileImage from "/src/assets/michael-profile-2022-katana.png";
 import StructuredData from "./StructuredData.astro";
 
 interface Props {
-	name: string;
-	url: string;
-	sameAs?: string[];
-	image?: {
-		src: string;
-		attributes?: {
-			width?: number;
-			height?: number;
-		};
-	};
-	description?: string;
+	includeWebsite?: boolean;
 }
 
-const { name, url, sameAs, image, description } = Astro.props;
+const { includeWebsite = false } = Astro.props;
 
 const origin = Astro.url.origin;
-const absolute = (maybeUrl: string) => new URL(maybeUrl, origin).href;
+const imageUrl = new URL(profileImage.src, origin).href;
 
-const jsonLd = {
-	"@context": "https://schema.org",
+const personData = {
 	"@type": "Person",
-	name,
-	url,
-	...(description ? { description } : {}),
-	...(sameAs?.length ? { sameAs } : {}),
-	...(image?.src
-		? {
-				image: {
-					"@type": "ImageObject",
-					url: absolute(image.src),
-					...(image.attributes?.width ? { width: image.attributes.width } : {}),
-					...(image.attributes?.height ? { height: image.attributes.height } : {}),
-				},
-			}
-		: {}),
+	"@id": "https://th3s4mur41.me/#person",
+	name: "Michaël Vanderheyden",
+	alternateName: "Th3S4mur41",
+	url: "https://th3s4mur41.me/",
+	image: imageUrl,
+	sameAs: [
+		"https://www.linkedin.com/in/michaelvanderheyden/",
+		"https://bsky.app/profile/th3s4mur41.me",
+		"https://github.com/Th3S4mur41",
+		"https://codepen.io/th3s4mur41/",
+		"https://th3s4mur41.medium.com/",
+		"https://www.instagram.com/th3s4mur41/",
+		"https://twitter.com/Th3S4mur41",
+		"https://fosstodon.org/@Th3S4mur41",
+	],
 };
+
+const jsonLd = includeWebsite
+	? {
+			"@context": "https://schema.org",
+			"@type": "WebPage",
+			"@id": "https://th3s4mur41.me/",
+			"@graph": [
+				{
+					"@type": "WebSite",
+					"@id": "https://th3s4mur41.me/#website",
+					url: "https://th3s4mur41.me/",
+					name: "Th3S4mur41",
+					description:
+						"Personal website and blog of Michaël Vanderheyden - Web developer passionate about accessibility, modern web standards, and user-friendly interfaces",
+					image: "https://th3s4mur41.me/icons/favicon-512.png",
+					publisher: {
+						"@id": "https://th3s4mur41.me/#person",
+					},
+				},
+				personData,
+			],
+		}
+	: {
+			"@context": "https://schema.org",
+			...personData,
+		};
 ---
 
 <StructuredData data={jsonLd} />
