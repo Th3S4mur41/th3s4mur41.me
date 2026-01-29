@@ -10,6 +10,13 @@ export const getPersonData = (origin: string) => {
 		alternateName: "Th3S4mur41",
 		url: "https://th3s4mur41.me/",
 		image: imageUrl,
+		description:
+			"Lead UX Engineer specializing in accessibility, modern web standards, and resilient digital experiences.",
+		jobTitle: "Lead UX Engineer",
+		worksFor: {
+			"@type": "Organization",
+			name: "cycos AG",
+		},
 		sameAs: [
 			"https://www.linkedin.com/in/michaelvanderheyden/",
 			"https://bsky.app/profile/th3s4mur41.me",

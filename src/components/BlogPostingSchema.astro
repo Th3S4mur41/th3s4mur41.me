@@ -27,7 +27,7 @@ const personData = getPersonData(origin);
 const websiteData = getWebsiteData(origin);
 
 const blogPostingData = {
-	"@type": "BlogPosting",
+	"@type": "Article",
 	"@id": url,
 	headline,
 	description,
@@ -66,6 +66,7 @@ const jsonLd = {
 	"@type": "WebPage",
 	"@id": url,
 	"@graph": [websiteData, personData, blogPostingData],
+	inLanguage: "en",
 };
 ---
 
