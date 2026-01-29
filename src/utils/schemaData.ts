@@ -1,4 +1,4 @@
-import profileImage from "/src/assets/michael-profile-2022-katana.png";
+import profileImage from "/src/assets/michael-vanderheyden-profile-colors.jpg";
 
 export const getPersonData = (origin: string) => {
 	const imageUrl = new URL(profileImage.src, origin).href;
