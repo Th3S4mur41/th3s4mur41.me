@@ -1,3 +1,10 @@
+# [2.28.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.27.2...v2.28.0) (2026-01-29)
+
+
+### Features
+
+* update profile images and enhance landing page content ([#2068](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2068)) ([2233906](https://github.com/Th3S4mur41/th3s4mur41.me/commit/2233906159b6e3e5900a02a8284e2b62ec8571d2))
+
 ## [2.27.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.27.1...v2.27.2) (2026-01-28)
 
 
