@@ -399,6 +399,7 @@ hr {
 	border: none;
 	block-size: 0.1rem;
 	inline-size: stretch;
+	margin-block: 2.5em;
 	background: linear-gradient(to right, transparent, var(--color-text), transparent);
 }
 
