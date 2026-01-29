@@ -1,36 +1,48 @@
-/* Table of Contents styling */
-.table-of-contents {
-	background-color: var(--color-highlight, oklch(0.4 0 0));
-	border-left: 4px solid var(--color-accent, oklch(0.86 0.18 90.53));
-	padding: 1.5rem;
+/* Table of Contents styling */ .table-of-contents {
+	background-color: var(--color-highlight);
+	padding-inline: 1.5rem;
+	padding-block: 1rem;
 	margin-block: 2rem;
-	border-radius: 0.25rem;
+	border-radius: 0.5rem;
+
+	border-inline-start: 0.25rem solid var(--color-accent);
+
+	/* TODO : replace through @container style(--toc-sidebar: true) { when supported in firefox */
+	@media (width >= 1200px) {
+		grid-column: sidebar !important;
+		grid-row: 4 / span 5;
+
+		margin-block: 1rem;
+		margin-inline-start: 4rem;
+		position: sticky;
+		top: 5rem;
+		align-self: start;
+	}
 
 	header {
-		margin-top: 0;
-		margin-bottom: 1rem;
+		margin-block-start: 0;
+		margin-block-end: 1rem;
 		font-size: 1.25rem;
 		font-weight: 600;
-		color: var(--color-text, oklch(1 0 0));
+		color: var(--color-text);
 	}
 
 	ul {
-		list-style: none;
-		padding-left: 0;
+		list-style-type: "";
+		padding-inline-start: 0;
 		margin: 0;
 	}
 
 	ul ul {
-		padding-left: 1.5rem;
-		margin-top: 0.5rem;
+		padding-inline-start: 2ch;
 	}
 
 	li {
-		margin-bottom: 0.5rem;
+		margin-block: 0.5rem;
 	}
 
 	a {
-		color: var(--color-accent, oklch(0.86 0.18 90.53));
+		color: var(--color-accent);
 		text-decoration: none;
 		transition: color 0.2s ease;
 
@@ -44,6 +56,37 @@
 			outline: 2px solid var(--color-accent, oklch(0.86 0.18 90.53));
 			outline-offset: 2px;
 			border-radius: 2px;
+		}
+	}
+
+	/* biome-ignore lint/correctness/noUnknownProperty: progressive enhancement */
+	@supports (scroll-target-group: auto) {
+		/* biome-ignore lint/correctness/noUnknownProperty: progressive enhancement */
+		scroll-target-group: auto;
+		border: unset;
+
+		& > ul {
+			padding-inline-start: 2ch;
+			margin-inline-start: 1ch;
+			border-inline-start: 2px solid oklch(from var(--color-text) l c h / 0.1);
+			anchor-name: --toc-list;
+
+			&::before {
+				content: "";
+				display: block;
+				width: 4px;
+				position: absolute;
+				inset-block: anchor(--toc-target inside);
+				background-color: var(--color-accent);
+				inset-inline-start: calc(anchor(--toc-list start) - 1px);
+				border-radius: 2px;
+				transition: inset 0.2s ease-out;
+			}
+		}
+
+		/* biome-ignore lint/correctness/noUnknownPseudoClass: progressive enhancement */
+		a:target-current {
+			anchor-name: --toc-target;
 		}
 	}
 }

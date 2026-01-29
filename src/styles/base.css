@@ -7,8 +7,16 @@
 	--color-accent: oklch(0.86 0.18 90.53);
 
 	--main-margin: 1.5rem;
-	--grid-columns: [full-width-start] 1fr [margin-start] var(--main-margin) [content-start]
-		min(80ch, calc(100vi - var(--main-margin) * 2)) [content-end] var(--main-margin) [margin-end] 1fr [full-width-end];
+	--grid-columns: [full-width-start] 1fr [margin-start] var(--main-margin) [content-start title-start]
+		min(80ch, calc(100vi - var(--main-margin) * 2)) [content-end title-end] var(--main-margin) [margin-end] 1fr
+		[full-width-end];
+
+	@media (width >= 1200px) {
+		--grid-columns: [full-width-start] 1fr [margin-start] var(--main-margin) [content-start title-start]
+			min(80ch, calc(100vi - var(--main-margin) * 2)) [content-end sidebar-start] auto [title-end sidebar-end]
+			var(--main-margin) [margin-end] 1fr [full-width-end];
+		--toc-sidebar: true;
+	}
 }
 
 @view-transition {
@@ -92,6 +100,7 @@ header {
 	letter-spacing: 0.05ch;
 	text-transform: uppercase;
 	text-wrap: balance;
+	scroll-margin-block-start: 4rem; /* account for sticky nav */
 }
 
 /* Eyebrow text above main heading */

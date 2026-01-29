@@ -78,6 +78,10 @@ body:is([class^="blog-"], [class^="talks-"]) {
 		& > * {
 			grid-column: content;
 		}
+		& h1,
+		& .eyebrow {
+			grid-column: title;
+		}
 		& h1 {
 			/* TODO: replace through ident() when available - https://drafts.csswg.org/css-values-5/#funcdef-ident
 			  In the meantime, set view-transition-name inline in template */
