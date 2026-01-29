@@ -109,13 +109,24 @@ header {
 	}
 }
 
-p {
+p,
+li {
 	text-wrap: pretty;
 
 	@media (prefers-reduced-motion: no-preference) {
 		animation: fadeIn 1ms linear both;
 		animation-timeline: view();
-		animation-range: entry 10% entry 60%;
+		animation-range: entry 10% entry 50%;
+	}
+}
+
+h1,
+h2,
+h3 {
+	@media (prefers-reduced-motion: no-preference) {
+		animation: fadeIn 1ms linear both;
+		animation-timeline: view();
+		animation-range: entry 10% entry 200%;
 	}
 }
 
