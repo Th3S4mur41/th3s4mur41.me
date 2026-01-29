@@ -1,43 +1,27 @@
 ---
+import { getPersonData, getWebsiteData } from "../utils/schemaData";
 import StructuredData from "./StructuredData.astro";
 
 interface Props {
-	name: string;
-	url: string;
-	sameAs?: string[];
-	image?: {
-		src: string;
-		attributes?: {
-			width?: number;
-			height?: number;
-		};
-	};
-	description?: string;
+	includeWebsite?: boolean;
 }
 
-const { name, url, sameAs, image, description } = Astro.props;
+const { includeWebsite = false } = Astro.props;
 
-const origin = Astro.url.origin;
-const absolute = (maybeUrl: string) => new URL(maybeUrl, origin).href;
+const personData = getPersonData(Astro.url.origin);
+const websiteData = getWebsiteData(Astro.url.origin);
 
-const jsonLd = {
-	"@context": "https://schema.org",
-	"@type": "Person",
-	name,
-	url,
-	...(description ? { description } : {}),
-	...(sameAs?.length ? { sameAs } : {}),
-	...(image?.src
-		? {
-				image: {
-					"@type": "ImageObject",
-					url: absolute(image.src),
-					...(image.attributes?.width ? { width: image.attributes.width } : {}),
-					...(image.attributes?.height ? { height: image.attributes.height } : {}),
-				},
-			}
-		: {}),
-};
+const jsonLd = includeWebsite
+	? {
+			"@context": "https://schema.org",
+			"@type": "WebPage",
+			"@id": `${Astro.url.origin}/`,
+			"@graph": [websiteData, personData],
+		}
+	: {
+			"@context": "https://schema.org",
+			...personData,
+		};
 ---
 
 <StructuredData data={jsonLd} />

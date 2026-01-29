@@ -67,6 +67,9 @@ body.blog {
 
 /* individual blog pages */
 body:is([class^="blog-"], [class^="talks-"]) {
+	main {
+		margin-block-start: 0;
+	}
 	article {
 		grid-column: full-width;
 		display: grid;
@@ -84,6 +87,8 @@ body:is([class^="blog-"], [class^="talks-"]) {
 		& .table-of-contents + p:has(img) {
 			grid-row: 1;
 			grid-column: full-width;
+			margin-block-start: 0;
+			overflow: clip;
 
 			& img {
 				inline-size: 100%;
@@ -91,6 +96,18 @@ body:is([class^="blog-"], [class^="talks-"]) {
 				object-fit: cover;
 				/* TODO: replace through ident() when available - https://drafts.csswg.org/css-values-5/#funcdef-ident
 			  In the meantime, set view-transition-name inline in template */
+
+				@supports (animation-timeline: view()) {
+					animation: fadeOut 1ms linear both;
+					animation-timeline: view();
+					animation-range: exit 0% exit 100%;
+
+					@media (prefers-reduced-motion: no-preference) {
+						animation: fadeBack 1ms linear both;
+						animation-timeline: view();
+						animation-range: exit 0% exit 100%;
+					}
+				}
 			}
 		}
 		& p:has(img:only-child) {
@@ -114,6 +131,8 @@ body:is([class^="blog-"], [class^="talks-"]) {
 }
 
 figure {
+	margin-inline: unset;
+
 	& > p:has(> img:only-child) {
 		margin-block: unset;
 	}

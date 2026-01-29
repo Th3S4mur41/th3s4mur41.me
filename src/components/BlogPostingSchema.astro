@@ -1,4 +1,5 @@
 ---
+import { getPersonData, getWebsiteData } from "../utils/schemaData";
 import StructuredData from "./StructuredData.astro";
 
 interface Props {
@@ -15,28 +16,19 @@ interface Props {
 	};
 	url: string;
 	canonical?: string;
-	authorName?: string;
-	siteName?: string;
 }
 
-const {
-	headline,
-	description,
-	datePublished,
-	dateModified,
-	image,
-	url,
-	canonical,
-	authorName = "Michaël Vanderheyden",
-	siteName = "Th3S4mur41.me",
-} = Astro.props;
+const { headline, description, datePublished, dateModified, image, url, canonical } = Astro.props;
 
 const origin = Astro.url.origin;
 const absolute = (maybeUrl: string) => new URL(maybeUrl, origin).href;
 
-const jsonLd = {
-	"@context": "https://schema.org",
-	"@type": "BlogPosting",
+const personData = getPersonData(origin);
+const websiteData = getWebsiteData(origin);
+
+const blogPostingData = {
+	"@type": "Article",
+	"@id": url,
 	headline,
 	description,
 	datePublished: datePublished.toISOString(),
@@ -58,21 +50,22 @@ const jsonLd = {
 			}
 		: {}),
 	author: {
-		"@type": "Person",
-		name: authorName,
-		url: absolute("/about/"),
+		"@id": `${origin}/#person`,
 	},
 	publisher: {
-		"@type": "Organization",
-		name: siteName,
-		url: absolute("/"),
-		logo: {
-			"@type": "ImageObject",
-			url: absolute("/icons/favicon-180.png"),
-			width: 180,
-			height: 180,
-		},
+		"@id": `${origin}/#website`,
 	},
+	isPartOf: {
+		"@id": `${origin}/#website`,
+	},
+	inLanguage: "en",
+};
+
+const jsonLd = {
+	"@context": "https://schema.org",
+	"@type": "WebPage",
+	"@id": url,
+	"@graph": [websiteData, personData, blogPostingData],
 	inLanguage: "en",
 };
 ---

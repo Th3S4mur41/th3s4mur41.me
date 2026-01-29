@@ -1,8 +1,9 @@
 ---
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
-import profileImg from "/src/assets/michael-profile-2025-katana.png";
+import profileImg from "/src/assets/michael-vanderheyden-profile-2025-katana.png";
 import ArticleCard from "../components/ArticleCard.astro";
+import PersonSchema from "../components/PersonSchema.astro";
 import Layout from "../layouts/Layout.astro";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/contentVisibility";
 
@@ -29,10 +30,23 @@ void [Image, profileImg, ArticleCard, Layout, allPosts];
 <Layout title="Home">
 	<div class="intro">
 	<a href='/about/' class="profile"><Image src={profileImg} alt="Michaël holding a katana on a colorful background" /></a>
-	<p>
-		<strong>Hey! My name is Michaël,</strong> I'm a passionate web developer dedicated to crafting accessible and user-friendly interfaces that make a difference. I believe that every user—regardless of abilities or context—should experience seamless, intuitive digital interactions. My love for clean code and exploring the latest HTML and CSS features fuels my drive for innovation. With a background in martial arts, I bring the same discipline, respect, and commitment to my work, ensuring high-quality, future-proof solutions.
-	</p>
+	<h2>Hey! My name is Michaël.</h2> 
+	<p>I'm a passionate web developer dedicated to crafting accessible and user-friendly interfaces that make a difference. I believe that every user—regardless of abilities or context—should experience seamless, intuitive digital interactions. My love for clean code and exploring the latest HTML and CSS features fuels my drive for innovation. With a background in martial arts, I bring the same discipline, respect, and commitment to my work, ensuring high-quality, future-proof solutions.</p>
 	</div>
+	<div class="website">
+<h2 class="catchphrase">The web is my dojo</h2>
+<p>This website is my personal training ground. Beyond being a home for my blog, it serves as a laboratory where I experiment with the latest web techniques—specifically pushing the boundaries of modern HTML and CSS.</p>
+
+<ul>
+<li><strong>Modern First:</strong> To see the full extent of these experiments, I recommend using an up-to-date browser.</li>
+
+<li><strong>Built to Last:</strong> I use Progressive Enhancement to ensure that while the "flair" is modern, the content remains accessible to everyone, regardless of their tech.</li>
+
+<li><strong>Inclusive Design:</strong> I strive to follow WCAG guidelines to keep this dojo open and accessible to all visitors.</li>
+</ul>
+<h3>Help me improve</h3>
+<p>Since this site is a playground for experimentation, things might occasionally break in unexpected ways. If you find a bug or an accessibility barrier, please <a href="https://github.com/Th3S4mur41/th3s4mur41.me/issues">report it via GitHub issues</a>. Your feedback helps me sharpen my craft and ensures a better experience for everyone.</p>
+</div>
 	<hr>
 	<h2>Latest posts</h2>
 	{allPosts.map((post, index) => (
@@ -45,4 +59,6 @@ void [Image, profileImg, ArticleCard, Layout, allPosts];
 				highlight={index === 0}
 			/>
 	))}
+	<PersonSchema includeWebsite={true} />
 </Layout>
+

@@ -1,3 +1,31 @@
+## [2.27.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.27.1...v2.27.2) (2026-01-28)
+
+
+### Bug Fixes
+
+* improve page SEO and metadata ([#2062](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2062)) ([6e1f4cb](https://github.com/Th3S4mur41/th3s4mur41.me/commit/6e1f4cb74c43e1c07e9ee085cd1f2b9b631f6203))
+
+## [2.27.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.27.0...v2.27.1) (2026-01-27)
+
+
+### Bug Fixes
+
+* update aliases in webfinger.json for improved compatibility ([bcc9e3a](https://github.com/Th3S4mur41/th3s4mur41.me/commit/bcc9e3a646e0db0df4c89da4efeca78eb88c0336))
+
+# [2.27.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.26.0...v2.27.0) (2026-01-27)
+
+
+### Features
+
+* add Mastodon support ([#2060](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2060)) ([9ea64dc](https://github.com/Th3S4mur41/th3s4mur41.me/commit/9ea64dc1d408ac491830d69e2eacec7a53d04243))
+
+# [2.26.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.25.0...v2.26.0) (2026-01-26)
+
+
+### Features
+
+* minor ui and ux improvements ([#2050](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2050)) ([70bada3](https://github.com/Th3S4mur41/th3s4mur41.me/commit/70bada3cb10d764395a1b387c25127af9fb4222c))
+
 # [2.25.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.24.0...v2.25.0) (2026-01-23)
 
 

@@ -16,6 +16,9 @@
 		anchor-scope: --social-link;
 		outline-offset: 0;
 
+		/* disable native tap highlight in favor of active state */
+		-webkit-tap-highlight-color: transparent;
+
 		& > svg {
 			anchor-name: --social-link;
 			stroke-width: 0.1rem;
@@ -50,6 +53,11 @@
 						animation: slideDown 0.3s linear(0, 1.5, 0.5, 1.2, 0.8, 1) backwards;
 					}
 				}
+			}
+		}
+		&:active {
+			& > svg {
+				stroke-width: 0.1rem;
 			}
 		}
 	}
