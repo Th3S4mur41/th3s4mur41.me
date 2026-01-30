@@ -2,6 +2,7 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 import compress from "astro-compress";
+import { rehypeGithubAlerts } from "rehype-github-alerts";
 import { rehypeInjectToc } from "./src/plugins/rehype-inject-toc.js";
 import { rehypeViewTransitionNames } from "./src/plugins/rehype-view-transition-names.js";
 
@@ -20,7 +21,7 @@ export default defineConfig({
 			filter: (pageUrl) => !pageUrl.includes("/_draft-"),
 		}),
 		mdx({
-			rehypePlugins: [rehypeInjectToc, rehypeViewTransitionNames],
+			rehypePlugins: [rehypeInjectToc, rehypeViewTransitionNames, rehypeGithubAlerts],
 		}),
 		compress({
 			HTML: {

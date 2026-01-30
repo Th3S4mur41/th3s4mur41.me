@@ -24,7 +24,8 @@
 		"@astrojs/rss": "^4.0.15",
 		"@astrojs/sitemap": "^3.7.0",
 		"@fontsource/cascadia-code": "^5.2.3",
-		"astro": "^5.17.1"
+		"astro": "^5.17.1",
+		"rehype-github-alerts": "^4.2.0"
 	},
 	"devDependencies": {
 		"@astrojs/mdx": "^4.3.13",
@@ -48,7 +49,7 @@
 		"semantic-release": "^25.0.2"
 	},
 	"scripts": {
-		"start": "PREVIEW_FUTURE_CONTENT=true astro dev",
+		"start": "astro dev",
 		"start:prod": "astro preview",
 		"build": "astro build",
 		"build:favicon": "real-favicon check-for-update --fail-on-update faviconData.json",
