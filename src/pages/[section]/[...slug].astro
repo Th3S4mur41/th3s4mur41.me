@@ -242,16 +242,23 @@ void [Layout, Content, img, truncatedTitle, BlogPostingSchema, PodcastEpisodeSch
       }
 
       // Observe each pre element for resize events
-      const resizeObserver = new ResizeObserver((entries) => {
-        for (const entry of entries) {
-          updatePreTabIndex(entry.target);
-        }
-      });
+      if ('ResizeObserver' in window) {
+        const resizeObserver = new ResizeObserver((entries) => {
+          for (const entry of entries) {
+            updatePreTabIndex(entry.target);
+          }
+        });
 
-      document.querySelectorAll('pre').forEach((pre) => {
-        updatePreTabIndex(pre);
-        resizeObserver.observe(pre);
-      });
+        document.querySelectorAll('pre').forEach((pre) => {
+          updatePreTabIndex(pre);
+          resizeObserver.observe(pre);
+        });
+      } else {
+        // Fallback: just set initial tabindex without observation
+        document.querySelectorAll('pre').forEach((pre) => {
+          updatePreTabIndex(pre);
+        });
+      }
     </script>
 
 		{section === "blog" && (
