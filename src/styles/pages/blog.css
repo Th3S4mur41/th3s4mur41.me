@@ -131,8 +131,6 @@ body:is([class^="blog-"], [class^="talks-"]) {
 				margin: unset;
 				flex-grow: 100;
 			}
-			> * {
-			}
 		}
 	}
 	img {
