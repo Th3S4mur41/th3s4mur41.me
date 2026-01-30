@@ -1,3 +1,10 @@
+# [2.29.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.28.0...v2.29.0) (2026-01-30)
+
+
+### Features
+
+* add Table of Contents functionality and styling ([#2069](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2069)) ([7d1dcfb](https://github.com/Th3S4mur41/th3s4mur41.me/commit/7d1dcfbf6159b9312893010c30505916bfb7aec0))
+
 # [2.28.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.27.2...v2.28.0) (2026-01-29)
 
 
