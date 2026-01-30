@@ -122,13 +122,16 @@ body:is([class^="blog-"], [class^="talks-"]) {
 			flex-wrap: wrap;
 			justify-content: space-between;
 			align-items: center;
-			column-gap: 2rem;
+			gap: 2rem;
 			margin-block: 1em;
 			font-size: 0.875rem;
 			color: var(--color-subtle-text);
 
 			> p {
 				margin: unset;
+				flex-grow: 100;
+			}
+			> * {
 			}
 		}
 	}
@@ -303,6 +306,7 @@ body:is([class^="blog-"], [class^="talks-"]) {
 		display: none;
 	}
 
+	flex-grow: 1;
 	padding-inline: 0.5em;
 	padding-block: 0.25em;
 	font-size: 1rem;
