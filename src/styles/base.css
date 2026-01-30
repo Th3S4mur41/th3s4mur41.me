@@ -13,7 +13,7 @@
 
 	@media (width >= 1200px) {
 		--grid-columns: [full-width-start] 1fr [margin-start] var(--main-margin) [content-start title-start]
-			min(80ch, calc(100vi - var(--main-margin) * 2)) [content-end sidebar-start] auto [title-end sidebar-end]
+			min(80ch, calc(100vi - var(--main-margin) * 2)) [content-end title-end sidebar-start] auto [sidebar-end]
 			var(--main-margin) [margin-end] 1fr [full-width-end];
 		--toc-sidebar: true;
 	}
