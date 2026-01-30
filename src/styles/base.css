@@ -49,7 +49,7 @@ body {
 	color: var(--color-text);
 }
 
-header {
+body > header {
 	overflow-y: clip;
 	mask-image: linear-gradient(to bottom, black 95%, transparent 99%);
 	mask-size: 100% 100%;
@@ -94,7 +94,7 @@ header {
 	}
 }
 
-:is(h1, h2, h3) {
+:is(h1, h2, h3, h4, h5, h6) {
 	font-weight: 300;
 	line-height: 1.25;
 	letter-spacing: 0.05ch;
