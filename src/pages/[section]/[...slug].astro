@@ -223,6 +223,35 @@ void [Layout, Content, img, truncatedTitle, BlogPostingSchema, PodcastEpisodeSch
           shareButton.classList.remove('hidden');
         }
       }
+
+      /**
+			 * A11y: Add tabindex="0" to horizontally scrollable <pre> blocks
+			 * https://www.w3.org/WAI/standards-guidelines/act/rules/0ssw9k/
+			 */
+      function updatePreTabIndex(pre) {
+        if (pre.scrollWidth > pre.clientWidth) {
+          if (!pre.hasAttribute('tabindex')) {
+            pre.setAttribute('tabindex', '0');
+          }
+        } else {
+          // Remove tabindex if no longer scrollable
+          if (pre.getAttribute('tabindex') === '0') {
+            pre.removeAttribute('tabindex');
+          }
+        }
+      }
+
+      // Observe each pre element for resize events
+      const resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          updatePreTabIndex(entry.target);
+        }
+      });
+
+      document.querySelectorAll('pre').forEach((pre) => {
+        updatePreTabIndex(pre);
+        resizeObserver.observe(pre);
+      });
     </script>
 
 		{section === "blog" && (
