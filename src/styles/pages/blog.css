@@ -11,6 +11,7 @@ body.blog {
 			"image type" auto
 			"image title" auto
 			"image teaser" 1fr
+			"image meta" auto
 			"image date" auto
 			/ minmax(40%, 15em) 1fr;
 		gap: 1rem 1.5rem;
@@ -19,6 +20,7 @@ body.blog {
 			grid-template:
 				"title" auto
 				"teaser" auto
+				"meta" auto
 				"date" auto
 				/ 1fr;
 		}
@@ -44,9 +46,15 @@ body.blog {
 			background: var(--color-highlight);
 			border-radius: 0.25em;
 		}
-		& p {
+		& p:not(.reading-meta) {
 			grid-area: teaser;
 			margin: 0;
+		}
+		& .reading-meta {
+			grid-area: meta;
+			margin: 0;
+			font-size: 0.875rem;
+			color: var(--color-subtle-text);
 		}
 		& time {
 			grid-area: date;
@@ -59,6 +67,7 @@ body.blog {
 				"image image" auto
 				"title title" auto
 				"teaser teaser" 1fr
+				"meta meta" auto
 				"date type" auto
 				/ 1fr;
 		}
@@ -81,6 +90,12 @@ body:is([class^="blog-"], [class^="talks-"]) {
 		& h1,
 		& .eyebrow {
 			grid-column: title;
+		}
+		& .reading-meta {
+			grid-column: title;
+			margin-block: 0.5rem 1rem;
+			font-size: 0.875rem;
+			color: var(--color-subtle-text);
 		}
 		& h1 {
 			/* TODO: replace through ident() when available - https://drafts.csswg.org/css-values-5/#funcdef-ident
@@ -255,6 +270,7 @@ body:is([class^="blog-"], [class^="talks-"]) {
 				"image . ." 0.5em
 				"image title ." auto
 				"image teaser ." auto
+				"image meta ." auto
 				"image . ." 0.5em
 				/ 35ch 1fr 0.25em;
 			gap: 1rem 1.5rem;
@@ -279,9 +295,15 @@ body:is([class^="blog-"], [class^="talks-"]) {
 			& .type {
 				display: none;
 			}
-			& p {
+			& p:not(.reading-meta) {
 				grid-area: teaser;
 				margin: 0;
+			}
+			& .reading-meta {
+				grid-area: meta;
+				margin: 0;
+				font-size: 0.8125rem;
+				color: var(--color-subtle-text);
 			}
 			& time {
 				display: none;
@@ -292,6 +314,7 @@ body:is([class^="blog-"], [class^="talks-"]) {
 					"image image image" auto
 					". title ." auto
 					". teaser ." auto
+					". meta ." auto
 					". . ." 0.5em
 					/ 0.5em 1fr 0.5em;
 			}

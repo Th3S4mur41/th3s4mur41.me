@@ -157,7 +157,8 @@ body.home {
 		grid-template:
 			"image image title" auto
 			"image image teaser" auto
-			"type date teaser" auto
+			"type meta teaser" auto
+			"date date teaser" auto
 			/ 15ch 15ch 1fr;
 		gap: 1rem 1.5rem;
 
@@ -186,9 +187,15 @@ body.home {
 			background: var(--color-highlight);
 			border-radius: 0.25em;
 		}
-		& p {
+		& p:not(.reading-meta) {
 			grid-area: teaser;
 			margin: 0;
+		}
+		& .reading-meta {
+			grid-area: meta;
+			margin: 0;
+			font-size: 0.875rem;
+			color: var(--color-subtle-text);
 		}
 		& time {
 			grid-area: date;
@@ -200,7 +207,8 @@ body.home {
 		&.highlight {
 			grid-template:
 				"image image" auto
-				"type date" auto
+				"type meta" auto
+				"date date" auto
 				"title title" auto
 				"teaser teaser" auto
 				/ 1fr auto;
@@ -209,7 +217,8 @@ body.home {
 		@container (width <= 40rem) {
 			grid-template:
 				"image image" auto
-				"type date" auto
+				"type meta" auto
+				"date date" auto
 				"title title" auto
 				"teaser teaser" auto
 				/ 1fr auto;
