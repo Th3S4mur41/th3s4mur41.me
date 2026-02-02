@@ -1,3 +1,10 @@
+## [2.29.3](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.29.2...v2.29.3) (2026-02-02)
+
+
+### Bug Fixes
+
+* **webfinger:** move to bluesky brdige account ([9974312](https://github.com/Th3S4mur41/th3s4mur41.me/commit/9974312c9d7c2d93a186240154a43465841ab6aa))
+
 ## [2.29.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.29.1...v2.29.2) (2026-02-02)
 
 
