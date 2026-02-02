@@ -28,36 +28,47 @@ const {
 	fetchpriority,
 } = Astro.props;
 
-// Generate AVIF images for all sizes
-const avifSmall = await getImage({
-	src,
-	width: widths.small,
-	format: "avif",
-});
-const avifMedium = await getImage({
-	src,
-	width: widths.medium,
-	format: "avif",
-});
-const avifLarge = await getImage({
-	src,
-	width: widths.large,
-	format: "avif",
-});
+// Get original image size
+const originalImage = await getImage({ src });
+const originalWidth = originalImage.attributes.width;
+
+// Generate AVIF images for all sizes based on original size
+const avifSmallWidth = Math.min(originalWidth, widths.small);
+const avifMediumWidth = Math.min(originalWidth, widths.medium);
+const avifLargeWidth = Math.min(originalWidth, widths.large);
+
+const avifSmall = await getImage({ src, width: avifSmallWidth, format: "avif" });
+const avifMedium = await getImage({ src, width: avifMediumWidth, format: "avif" });
+const avifLarge = await getImage({ src, width: avifLargeWidth, format: "avif" });
 
 // Generate JPG fallback (medium size)
 const jpgFallback = await getImage({
 	src,
-	width: widths.medium,
+	width: originalWidth < widths.medium ? originalWidth : widths.medium,
 	format: "jpg",
 });
 
-// Create AVIF srcset string
-const avifSrcset = `${avifSmall.src} ${widths.small}w, ${avifMedium.src} ${widths.medium}w, ${avifLarge.src} ${widths.large}w`;
+// Create AVIF srcset string based on original size
+let avifSrcset = "";
+let computedSizes = sizes;
+
+if (originalWidth < widths.small) {
+	avifSrcset = `${originalImage.src} ${originalWidth}w`;
+	computedSizes = `${originalWidth}px`;
+} else if (originalWidth < widths.medium) {
+	avifSrcset = `${avifSmall.src} ${widths.small}w, ${originalImage.src} ${originalWidth}w`;
+	computedSizes = `(max-width: ${widths.small}px) ${widths.small}px, ${originalWidth}px`;
+} else if (originalWidth < widths.large) {
+	avifSrcset = `${avifSmall.src} ${widths.small}w, ${avifMedium.src} ${widths.medium}w, ${originalImage.src} ${originalWidth}w`;
+	computedSizes = `(max-width: ${widths.small}px) ${widths.small}px, (max-width: ${widths.medium}px) ${widths.medium}px, ${originalWidth}px`;
+} else {
+	avifSrcset = `${avifSmall.src} ${widths.small}w, ${avifMedium.src} ${widths.medium}w, ${avifLarge.src} ${widths.large}w`;
+	computedSizes = sizes;
+}
 ---
 
 <picture>
-	<source type="image/avif" srcset={avifSrcset} sizes={sizes} />
+	<source type="image/avif" srcset={avifSrcset} sizes={computedSizes} />
 	<img
 		src={jpgFallback.src}
 		alt={alt}
