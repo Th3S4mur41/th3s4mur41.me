@@ -1,3 +1,10 @@
+## [2.29.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.29.1...v2.29.2) (2026-02-02)
+
+
+### Bug Fixes
+
+* **layout:** correct casing in fediverse creator meta tag ([5bcd1cc](https://github.com/Th3S4mur41/th3s4mur41.me/commit/5bcd1ccc9ae6d3015600b9a8f6dd2ec8ebad48ae))
+
 ## [2.29.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.29.0...v2.29.1) (2026-02-02)
 
 
