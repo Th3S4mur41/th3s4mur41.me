@@ -1,3 +1,10 @@
+## [2.29.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.29.0...v2.29.1) (2026-02-02)
+
+
+### Bug Fixes
+
+* **mastodon:** correct casing in webfinger subject and aliases ([379206a](https://github.com/Th3S4mur41/th3s4mur41.me/commit/379206a90ed35d915a4c1a2ee0a3da9554c9d99f))
+
 # [2.29.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.28.0...v2.29.0) (2026-01-30)
 
 
