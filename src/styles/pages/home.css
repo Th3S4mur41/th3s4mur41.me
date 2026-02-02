@@ -138,8 +138,10 @@ body.home {
 			/* TODO: replace through ident() when available - https://drafts.csswg.org/css-values-5/#funcdef-ident
 			  In the meantime, set view-transition-name inline in template */
 		}
-		& img {
+		& > :is(picture, img) {
 			grid-area: image;
+		}
+		& img {
 			inline-size: 100%;
 			block-size: auto;
 			max-block-size: 100%;
