@@ -150,7 +150,7 @@ body > nav {
 	grid-template: "logo nav ." / 0 1fr 0;
 	align-items: center;
 
-	& > .logo {
+	& .logo {
 		grid-area: logo;
 		display: none;
 	}
@@ -158,7 +158,7 @@ body > nav {
 	@media (width >= 600px) {
 		grid-template: "logo nav ." / 5rem 1fr 5rem;
 
-		& > .logo {
+		& .logo {
 			display: block;
 			inline-size: 100%;
 			block-size: auto;
