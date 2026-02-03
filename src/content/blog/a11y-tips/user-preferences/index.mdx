@@ -1,0 +1,78 @@
+---
+title: 'User Preferences Aren’t Optional'
+eyebrow: 'Practical Accessibility Tips for Developers'
+date: 2026-01-18T10:00:00Z
+image: ../Practical_Accessibility_Tips_for_Developers.jpg
+imageAlt: 'Comic-style illustration of a bearded developer wearing a baseball cap and samurai-themed shirt, working on a laptop with a samurai sticker. To the side, accessibility icons and the hashtag #A11yTips promote practical accessibility tips for developers.'
+description: 'User preferences are essential for accessibility and good UX. Explore all available CSS preference queries and how to design flexible, adaptive interfaces.'
+tags:
+  - Accessibility
+  - WCAG
+  - UX
+  - User-Preferences
+  - Personalization
+keywords:
+  - accessibility
+  - CSS
+  - prefers reduced motion
+  - prefers color scheme
+  - prefers contrast
+  - a11y tips
+  - user experience
+  - UX
+  - user preferences
+  - WCAG
+  - inclusive design
+  - accessible design
+  - web accessibility
+  - a11y
+---
+
+import CodePen from '../../../../components/CodePen.astro';
+
+# User Preferences
+
+![Comic-style illustration of a bearded developer wearing a baseball cap and samurai-themed shirt, working on a laptop with a samurai sticker. To the side, accessibility icons and the hashtag #A11yTips promote practical accessibility tips for developers.](../Practical_Accessibility_Tips_for_Developers.jpg)
+
+A few days ago, a post on LinkedIn nudged me into writing something I’ve been meaning to cover for a while: user preferences. Not just reduced motion, but the entire set of preferences modern browsers expose to us as developers — signals that tell us something about how a user wants or needs to experience the web.
+These preferences aren’t decorative.
+For some people, they’re the difference between being able to use an interface or abandoning it entirely. For others, they’re simply a matter of comfort or convenience. But in every case, they represent a deliberate choice the user made about how they want their device — and by extension, your app — to behave.
+Respecting those choices isn’t optional. It’s part of building for real humans.
+And respecting them doesn’t mean throwing your design vision out the window. It means making that vision flexible enough to adapt. In the same way responsive design adapts to different screen sizes and environments, preference‑based design adapts to different user needs and expectations. It’s still your design — just more resilient, more thoughtful, and more inclusive.
+In this post, I want to walk through the user preferences available today, explain why each one matters, and share how to use them in a way that enhances your product rather than restricting it. When we get to prefers-reduced-motion, I’ll reference the LinkedIn post that sparked this whole deep dive.
+Because at the end of the day, accessibility isn’t about limiting creativity.
+It’s about designing with enough intention that your work can meet people where they are.
+
+## prefers-color-scheme
+
+<baseline-status featureId="prefers-reduced-motion" client:only="js"></baseline-status>
+
+[light-dark() isn't always the same as prefers-color-scheme](https://www.stefanjudis.com/today-i-learned/light-dark-isnt-the-same-as-prefers-color-scheme/)
+
+## prefers-reduced-motion
+
+<baseline-status featureId="prefers-reduced-motion" client:only="js"></baseline-status>
+
+[Natalie MacLees](https://www.linkedin.com/in/nataliemac?miniProfileUrn=urn%3Ali%3Afsd_profile%3AACoAAAEh0qEBB5NL5Z7fN1IQ0DfXfF-7kO_5MIs&lipi=urn%3Ali%3Apage%3Ad_flagship3_detail_base%3B%2FsKZPC9lQrKCZZrRU9LbgA%3D%3D) recently posted the following [snippet on LinkedIn regarding respecting user preferences for reduced motion](https://www.linkedin.com/posts/nataliemac_accessibility-webdevelopment-css-activity-7423003597153456128-xKKM?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAWo-P0BvlADJMA6Z1B9F6OVIQNNcAvD31s
+) in web design:
+
+```css
+@media (prefers-reduced-motion: reduce) {
+ *, *::before, *::after {
+ animation-duration: 0ms !important;
+ transition-duration: 0ms !important;
+ }
+}
+```
+
+## prefers-contrast
+
+<baseline-status featureId="prefers-contrast" client:only="js"></baseline-status>
+
+## prefers-reduced-transparency
+
+<baseline-status featureId="prefers-reduced-transparency" client:only="js"></baseline-status>
+
+## prefers-reduced-data
+
+<baseline-status featureId="prefers-reduced-data" client:only="js"></baseline-status>
