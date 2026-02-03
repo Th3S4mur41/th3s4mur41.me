@@ -1,3 +1,11 @@
+## [2.29.4](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.29.3...v2.29.4) (2026-02-03)
+
+
+### Bug Fixes
+
+* update fediverse links to include Bluesky and mastodon bridge ([e3ca123](https://github.com/Th3S4mur41/th3s4mur41.me/commit/e3ca123f5f1cc52cf03ee89fb420a93efbf52dd8))
+* **webfinger:** add Fosstodon alias to webfinger.json ([12e5a24](https://github.com/Th3S4mur41/th3s4mur41.me/commit/12e5a24e81f9a55671c706ea8d007155a0a375ed))
+
 ## [2.29.3](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.29.2...v2.29.3) (2026-02-02)
 
 
