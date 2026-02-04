@@ -1,0 +1,162 @@
+---
+// src/components/BlueskyReactions.astro
+const { reactions = [] } = Astro.props;
+
+// Extract values from the array of objects
+const bskyUrl = reactions.find((r) => r.bluesky)?.bluesky;
+const mastodonUrl = reactions.find((r) => r.mastodon)?.mastodon;
+
+const getAtUri = (url: string) => {
+	const parts = url.replace("https://bsky.app/profile/", "").split("/post/");
+	return `at://${parts[0]}/app.bsky.feed.post/${parts[1]}`;
+};
+
+const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
+---
+
+{atUri && (
+  <div class="reactions" data-uri={atUri}>
+    <div id="likes">
+       <span class="count">0</span> Likes
+       <div class="avatars" id="like-avatars"></div>
+    </div>
+
+    <div id="reposts">
+       <span class="count">0</span> Reposts
+       <div class="avatars" id="repost-avatars"></div>
+    </div>
+
+    <p>
+      Join the conversation on 
+      <a href={bskyUrl} target="_blank">Bluesky</a>
+      {mastodonUrl && <> or <a href={mastodonUrl} target="_blank">Mastodon</a></>}
+    </p>
+    
+  </div>
+)}
+
+<script>
+  // Fetch Bluesky post data and display reactions
+  async function fetchBlueskyReactions() {
+    const container = document.querySelector('.reactions');
+    if (!container) return;
+
+    const atUri = container.getAttribute('data-uri');
+    if (!atUri) return;
+
+    try {
+      // Parse AT URI to get repo and rkey
+      const uriMatch = atUri.match(/at:\/\/([^/]+)\/app\.bsky\.feed\.post\/([^/]+)/);
+      if (!uriMatch) {
+        console.error('Invalid AT URI format:', atUri);
+        return;
+      }
+
+      const [, repo, rkey] = uriMatch;
+
+      // Fetch post thread to get like/repost counts
+      const response = await fetch(
+        `https://public.api.bsky.app/xrpc/app.bsky.feed.getPostThread?uri=${encodeURIComponent(atUri)}&depth=0`
+      );
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch post: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const post = data.thread?.post;
+
+      if (!post) {
+        console.error('No post data found');
+        return;
+      }
+
+      const postUri = post.uri || atUri;
+
+      // Update like count
+      const likeCount = post.likeCount || 0;
+      const likeCountEl = document.querySelector('#likes .count');
+      if (likeCountEl) {
+        likeCountEl.textContent = likeCount.toString();
+      }
+
+      // Update repost count
+      const repostCount = post.repostCount || 0;
+      const repostCountEl = document.querySelector('#reposts .count');
+      if (repostCountEl) {
+        repostCountEl.textContent = repostCount.toString();
+      }
+
+      // Fetch likes to show avatars
+      if (likeCount > 0) {
+        try {
+          const likesResponse = await fetch(
+            `https://public.api.bsky.app/xrpc/app.bsky.feed.getLikes?uri=${encodeURIComponent(postUri)}&limit=10`
+          );
+
+          if (likesResponse.ok) {
+            const likesData = await likesResponse.json();
+            const likeAvatarsEl = document.getElementById('like-avatars');
+
+            if (likeAvatarsEl && likesData.likes) {
+              likeAvatarsEl.innerHTML = likesData.likes
+                .map(like => {
+                  const avatar = like.actor?.avatar || '';
+                  const handle = like.actor?.handle || 'unknown';
+                  const displayName = like.actor?.displayName || handle;
+                  return avatar
+                    ? `<img src="${avatar}" alt="${displayName}" title="${displayName} (@${handle})" width="32" height="32" loading="lazy" />`
+                    : '';
+                })
+                .join('');
+            }
+          } else {
+            console.warn('Failed to fetch Bluesky likes:', likesResponse.status);
+          }
+        } catch (error) {
+          console.warn('Error fetching Bluesky likes:', error);
+        }
+      }
+
+      // Fetch reposts to show avatars
+      if (repostCount > 0) {
+        try {
+          const repostsResponse = await fetch(
+            `https://public.api.bsky.app/xrpc/app.bsky.feed.getRepostedBy?uri=${encodeURIComponent(postUri)}&limit=10`
+          );
+
+          if (repostsResponse.ok) {
+            const repostsData = await repostsResponse.json();
+            const repostAvatarsEl = document.getElementById('repost-avatars');
+
+            if (repostAvatarsEl && repostsData.repostedBy) {
+              repostAvatarsEl.innerHTML = repostsData.repostedBy
+                .map(actor => {
+                  const avatar = actor.avatar || '';
+                  const handle = actor.handle || 'unknown';
+                  const displayName = actor.displayName || handle;
+                  return avatar
+                    ? `<img src="${avatar}" alt="${displayName}" title="${displayName} (@${handle})" width="32" height="32" loading="lazy" />`
+                    : '';
+                })
+                .join('');
+            }
+          } else {
+            console.warn('Failed to fetch Bluesky reposts:', repostsResponse.status);
+          }
+        } catch (error) {
+          console.warn('Error fetching Bluesky reposts:', error);
+        }
+      }
+
+    } catch (error) {
+      console.error('Error fetching Bluesky reactions:', error);
+    }
+  }
+
+  // Run on page load
+  fetchBlueskyReactions();
+
+  // Re-run after view transitions (Astro's default navigation)
+  document.addEventListener('astro:page-load', fetchBlueskyReactions);
+</script>

@@ -1,5 +1,5 @@
 /*
-	Content-Security-Policy: default-src 'self'; script-src 'self' https://static.cloudflareinsights.com https://public.codepenassets.com 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://codepen.io https://cdpn.io https://*.codepenassets.com; font-src 'self'; frame-src https://codepen.io https://cdpn.io; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests; connect-src 'self' https://static.cloudflareinsights.com https://cloudflareinsights.com https://*.cloudflareinsights.com https://public.codepenassets.com;
+	Content-Security-Policy: default-src 'self'; script-src 'self' https://static.cloudflareinsights.com https://public.codepenassets.com 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://codepen.io https://cdpn.io https://*.codepenassets.com https://cdn.bsky.app https://*.bsky.app; font-src 'self'; frame-src https://codepen.io https://cdpn.io; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests; connect-src 'self' https://static.cloudflareinsights.com https://cloudflareinsights.com https://*.cloudflareinsights.com https://public.codepenassets.com https://public.api.bsky.app;
 	Referrer-Policy: no-referrer-when-downgrade
 	X-Content-Type-Options: nosniff
 	X-Frame-Options: DENY

@@ -372,3 +372,7 @@ body:is([class^="blog-"], [class^="talks-"]) {
 		z-index: -1;
 	}
 }
+
+.reactions {
+	flex: 1 1 100%;
+}
