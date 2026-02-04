@@ -1,3 +1,10 @@
+# [2.30.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.29.4...v2.30.0) (2026-02-04)
+
+
+### Features
+
+* add old collab tools article ([#2090](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2090)) ([c15ec93](https://github.com/Th3S4mur41/th3s4mur41.me/commit/c15ec93f5e0a3b9b6afe64ee643772f59363ab73))
+
 ## [2.29.4](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.29.3...v2.29.4) (2026-02-03)
 
 
