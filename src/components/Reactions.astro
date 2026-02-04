@@ -39,6 +39,48 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
 )}
 
 <script>
+  const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
+  function getSessionCache(key) {
+    try {
+      const raw = sessionStorage.getItem(key);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      if (!parsed?.ts || Date.now() - parsed.ts > CACHE_TTL_MS) return null;
+      return parsed.data ?? null;
+    } catch {
+      return null;
+    }
+  }
+
+  function setSessionCache(key, data) {
+    try {
+      sessionStorage.setItem(key, JSON.stringify({ ts: Date.now(), data }));
+    } catch {
+      // ignore cache errors
+    }
+  }
+
+  function renderAvatars(container, actors) {
+    if (!container) return;
+    container.textContent = '';
+
+    for (const actor of actors) {
+      if (!actor?.avatar) continue;
+      const img = document.createElement('img');
+      img.src = actor.avatar;
+      img.alt = actor.displayName || actor.handle || 'Bluesky user';
+      img.title = actor.displayName && actor.handle
+        ? `${actor.displayName} (@${actor.handle})`
+        : actor.handle || actor.displayName || 'Bluesky user';
+      img.width = 32;
+      img.height = 32;
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      container.appendChild(img);
+    }
+  }
+
   // Fetch Bluesky post data and display reactions
   async function fetchBlueskyReactions() {
     const container = document.querySelector('.reactions');
@@ -90,62 +132,67 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
         repostCountEl.textContent = repostCount.toString();
       }
 
-      // Fetch likes to show avatars
-      if (likeCount > 0) {
-        try {
-          const likesResponse = await fetch(
+      // Fetch reactions in parallel
+      const likesPromise = likeCount > 0
+        ? fetch(
             `https://public.api.bsky.app/xrpc/app.bsky.feed.getLikes?uri=${encodeURIComponent(postUri)}&limit=10`
-          );
+          )
+        : Promise.resolve(null);
 
-          if (likesResponse.ok) {
+      const repostsPromise = repostCount > 0
+        ? fetch(
+            `https://public.api.bsky.app/xrpc/app.bsky.feed.getRepostedBy?uri=${encodeURIComponent(postUri)}&limit=10`
+          )
+        : Promise.resolve(null);
+
+      const [likesResponse, repostsResponse] = await Promise.all([likesPromise, repostsPromise]);
+
+      // Handle likes avatars
+      if (likeCount > 0) {
+        const likeAvatarsEl = document.getElementById('like-avatars');
+        const likesCacheKey = `bsky-likes:${postUri}`;
+        const cachedLikes = getSessionCache(likesCacheKey);
+        if (cachedLikes) {
+          renderAvatars(likeAvatarsEl, cachedLikes);
+        }
+
+        try {
+          if (likesResponse?.ok) {
             const likesData = await likesResponse.json();
-            const likeAvatarsEl = document.getElementById('like-avatars');
-
-            if (likeAvatarsEl && likesData.likes) {
-              likeAvatarsEl.innerHTML = likesData.likes
-                .map(like => {
-                  const avatar = like.actor?.avatar || '';
-                  const handle = like.actor?.handle || 'unknown';
-                  const displayName = like.actor?.displayName || handle;
-                  return avatar
-                    ? `<img src="${avatar}" alt="${displayName}" title="${displayName} (@${handle})" width="32" height="32" loading="lazy" />`
-                    : '';
-                })
-                .join('');
+            if (likesData.likes?.length) {
+              const actors = likesData.likes
+                .map((like) => like.actor)
+                .filter(Boolean);
+              renderAvatars(likeAvatarsEl, actors);
+              setSessionCache(likesCacheKey, actors);
             }
           } else {
-            console.warn('Failed to fetch Bluesky likes:', likesResponse.status);
+            console.warn('Failed to fetch Bluesky likes:', likesResponse?.status);
           }
         } catch (error) {
           console.warn('Error fetching Bluesky likes:', error);
         }
       }
 
-      // Fetch reposts to show avatars
+      // Handle reposts avatars
       if (repostCount > 0) {
+        const repostAvatarsEl = document.getElementById('repost-avatars');
+        const repostsCacheKey = `bsky-reposts:${postUri}`;
+        const cachedReposts = getSessionCache(repostsCacheKey);
+        if (cachedReposts) {
+          renderAvatars(repostAvatarsEl, cachedReposts);
+        }
+
         try {
-          const repostsResponse = await fetch(
-            `https://public.api.bsky.app/xrpc/app.bsky.feed.getRepostedBy?uri=${encodeURIComponent(postUri)}&limit=10`
-          );
-
-          if (repostsResponse.ok) {
+          if (repostsResponse?.ok) {
             const repostsData = await repostsResponse.json();
-            const repostAvatarsEl = document.getElementById('repost-avatars');
-
-            if (repostAvatarsEl && repostsData.repostedBy) {
-              repostAvatarsEl.innerHTML = repostsData.repostedBy
-                .map(actor => {
-                  const avatar = actor.avatar || '';
-                  const handle = actor.handle || 'unknown';
-                  const displayName = actor.displayName || handle;
-                  return avatar
-                    ? `<img src="${avatar}" alt="${displayName}" title="${displayName} (@${handle})" width="32" height="32" loading="lazy" />`
-                    : '';
-                })
-                .join('');
+            if (repostsData.repostedBy?.length) {
+              const actors = repostsData.repostedBy.filter(Boolean);
+              renderAvatars(repostAvatarsEl, actors);
+              setSessionCache(repostsCacheKey, actors);
             }
           } else {
-            console.warn('Failed to fetch Bluesky reposts:', repostsResponse.status);
+            console.warn('Failed to fetch Bluesky reposts:', repostsResponse?.status);
           }
         } catch (error) {
           console.warn('Error fetching Bluesky reposts:', error);
@@ -157,9 +204,17 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
     }
   }
 
+  function loadReactions() {
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => fetchBlueskyReactions(), { timeout: 2000 });
+    } else {
+      fetchBlueskyReactions();
+    }
+  }
+
   // Run on page load
-  fetchBlueskyReactions();
+  loadReactions();
 
   // Re-run after view transitions (Astro's default navigation)
-  document.addEventListener('astro:page-load', fetchBlueskyReactions);
+  document.addEventListener('astro:page-load', loadReactions);
 </script>
