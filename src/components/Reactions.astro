@@ -99,6 +99,11 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
     }
   }
 
+  function validateCount(value) {
+    const num = typeof value === 'number' ? value : parseInt(value, 10);
+    return !isNaN(num) && num >= 0 ? num : 0;
+  }
+
   function areSameActors(nextActors, cachedActors) {
     if (!Array.isArray(nextActors) || !Array.isArray(cachedActors)) return false;
     if (nextActors.length !== cachedActors.length) return false;
@@ -145,25 +150,25 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
       }
 
       const data = await response.json();
-      const post = data.thread?.post;
+      const post = data?.thread?.post;
 
-      if (!post) {
-        console.error('No post data found');
+      if (!post || typeof post !== 'object') {
+        console.error('Invalid post data structure');
         return;
       }
 
       const postUri = post.uri || atUri;
 
-      // Update like count
-      const likeCount = post.likeCount || 0;
+      // Update like count with validation
+      const likeCount = validateCount(post.likeCount);
       const likeCountEl = document.querySelector('#likes .count');
       if (likeCountEl) {
         const currentCount = parseInt(likeCountEl.textContent) || 0;
         likeCountEl.textContent = (currentCount + likeCount).toString();
       }
 
-      // Update repost count
-      const repostCount = post.repostCount || 0;
+      // Update repost count with validation
+      const repostCount = validateCount(post.repostCount);
       const repostCountEl = document.querySelector('#boosts .count');
       if (repostCountEl) {
         const currentCount = parseInt(repostCountEl.textContent) || 0;
@@ -197,7 +202,7 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
         try {
           if (likesResponse?.ok) {
             const likesData = await likesResponse.json();
-            if (likesData.likes?.length) {
+            if (Array.isArray(likesData?.likes) && likesData.likes.length) {
               const actors = likesData.likes
                 .map((like) => like.actor)
                 .filter(Boolean);
@@ -228,7 +233,7 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
         try {
           if (repostsResponse?.ok) {
             const repostsData = await repostsResponse.json();
-            if (repostsData.repostedBy?.length) {
+            if (Array.isArray(repostsData?.repostedBy) && repostsData.repostedBy.length) {
               const actors = repostsData.repostedBy.filter(Boolean);
               const shouldUpdate = !areSameActors(actors, cachedReposts);
               if (shouldUpdate) {
@@ -292,8 +297,14 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
       }
 
       const status = await statusResponse.json();
-      const likesCount = status.favourites_count || 0;
-      const boostsCount = status.reblogs_count || 0;
+      
+      if (!status || typeof status !== 'object') {
+        console.warn('Invalid Mastodon status data structure');
+        return;
+      }
+      
+      const likesCount = validateCount(status.favourites_count);
+      const boostsCount = validateCount(status.reblogs_count);
 
       // Update counts (add to existing Bluesky counts or create if not present)
       if (likesCount > 0) {
