@@ -18,6 +18,9 @@ const blogSchema = z.object({
 	tags: z.array(z.string()).optional(),
 	keywords: z.array(z.string()).optional(),
 	canonical: z.string().optional(),
+	reactions: z
+		.array(z.union([z.object({ bluesky: z.string().url() }), z.object({ mastodon: z.string().url() })]))
+		.optional(),
 });
 
 const talksSchema = z.object({
@@ -35,6 +38,9 @@ const talksSchema = z.object({
 	// Optional override for content published/hosted elsewhere.
 	publisherName: z.string().optional(),
 	publisherUrl: z.string().url().optional(),
+	reactions: z
+		.array(z.union([z.object({ bluesky: z.string().url() }), z.object({ mastodon: z.string().url() })]))
+		.optional(),
 });
 
 // 4. Define your collection(s)
