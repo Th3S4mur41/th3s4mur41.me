@@ -85,7 +85,6 @@ const mastodonDetails = mastodonUrl ? getMastodonDetails(mastodonUrl) : null;
 
   function renderAvatars(container, actors) {
     if (!container) return;
-    container.textContent = '';
 
     for (const actor of actors) {
       if (!actor?.avatar) continue;
@@ -416,6 +415,12 @@ const mastodonDetails = mastodonUrl ? getMastodonDetails(mastodonUrl) : null;
   }
 
   function loadReactions() {
+    // Clear avatar containers once at the start to ensure a clean slate
+    const likeAvatarsEl = document.getElementById('like-avatars');
+    const repostAvatarsEl = document.getElementById('repost-avatars');
+    if (likeAvatarsEl) likeAvatarsEl.textContent = '';
+    if (repostAvatarsEl) repostAvatarsEl.textContent = '';
+
     if ('requestIdleCallback' in window) {
       requestIdleCallback(() => {
         fetchBlueskyReactions();
