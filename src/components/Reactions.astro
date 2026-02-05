@@ -195,9 +195,6 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
         const likeAvatarsEl = document.getElementById('like-avatars');
         const likesCacheKey = `bsky-likes:${postUri}`;
         const cachedLikes = getSessionCache(likesCacheKey);
-        if (Array.isArray(cachedLikes) && cachedLikes.length) {
-          renderAvatars(likeAvatarsEl, cachedLikes);
-        }
 
         try {
           if (likesResponse?.ok) {
@@ -226,9 +223,6 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
         const repostAvatarsEl = document.getElementById('repost-avatars');
         const repostsCacheKey = `bsky-reposts:${postUri}`;
         const cachedReposts = getSessionCache(repostsCacheKey);
-        if (Array.isArray(cachedReposts) && cachedReposts.length) {
-          renderAvatars(repostAvatarsEl, cachedReposts);
-        }
 
         try {
           if (repostsResponse?.ok) {
@@ -346,11 +340,6 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
         const likesCacheKey = `mastodon-likes:${instance}:${statusId}`;
         const cachedLikes = getSessionCache(likesCacheKey);
         
-        // Render cached data first if available
-        if (Array.isArray(cachedLikes) && cachedLikes.length) {
-          renderAvatars(likeAvatarsEl, cachedLikes);
-        }
-        
         try {
           if (!likesResponse?.ok) {
             console.warn('Failed to fetch Mastodon likes:', likesResponse?.status);
@@ -382,11 +371,6 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
         const boostsCacheKey = `mastodon-boosts:${instance}:${statusId}`;
         const cachedBoosts = getSessionCache(boostsCacheKey);
         
-        // Render cached data first if available
-        if (Array.isArray(cachedBoosts) && cachedBoosts.length) {
-          renderAvatars(boostAvatarsEl, cachedBoosts);
-        }
-        
         try {
           if (!boostsResponse?.ok) {
             console.warn('Failed to fetch Mastodon boosts:', boostsResponse?.status);
@@ -417,12 +401,63 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
     }
   }
 
+  function renderAllCachedData() {
+    const container = document.querySelector('.reactions');
+    if (!container) return;
+
+    const likeAvatarsEl = document.getElementById('like-avatars');
+    const repostAvatarsEl = document.getElementById('repost-avatars');
+
+    // Render Bluesky cached data if available
+    const atUri = container.getAttribute('data-uri');
+    if (atUri) {
+      const bskyLikesCache = getSessionCache(`bsky-likes:${atUri}`);
+      if (Array.isArray(bskyLikesCache) && bskyLikesCache.length) {
+        renderAvatars(likeAvatarsEl, bskyLikesCache);
+      }
+
+      const bskyRepostsCache = getSessionCache(`bsky-reposts:${atUri}`);
+      if (Array.isArray(bskyRepostsCache) && bskyRepostsCache.length) {
+        renderAvatars(repostAvatarsEl, bskyRepostsCache);
+      }
+    }
+
+    // Render Mastodon cached data if available
+    const mastodonUrl = container.getAttribute('data-mastodon-url');
+    if (mastodonUrl) {
+      try {
+        const urlObj = new URL(mastodonUrl);
+        const instance = urlObj.hostname;
+        const pathname = urlObj.pathname.replace(/\/$/, '');
+        const pathParts = pathname.split('/').filter(Boolean);
+        const statusId = pathParts[pathParts.length - 1];
+
+        if (instance && statusId && /^\d+$/.test(statusId)) {
+          const mastodonLikesCache = getSessionCache(`mastodon-likes:${instance}:${statusId}`);
+          if (Array.isArray(mastodonLikesCache) && mastodonLikesCache.length) {
+            renderAvatars(likeAvatarsEl, mastodonLikesCache);
+          }
+
+          const mastodonBoostsCache = getSessionCache(`mastodon-boosts:${instance}:${statusId}`);
+          if (Array.isArray(mastodonBoostsCache) && mastodonBoostsCache.length) {
+            renderAvatars(repostAvatarsEl, mastodonBoostsCache);
+          }
+        }
+      } catch (error) {
+        // Silently skip if URL parsing fails
+      }
+    }
+  }
+
   function loadReactions() {
     // Clear avatar containers once at the start to ensure a clean slate
     const likeAvatarsEl = document.getElementById('like-avatars');
     const repostAvatarsEl = document.getElementById('repost-avatars');
     if (likeAvatarsEl) likeAvatarsEl.textContent = '';
     if (repostAvatarsEl) repostAvatarsEl.textContent = '';
+
+    // Render all cached data once before network requests
+    renderAllCachedData();
 
     if ('requestIdleCallback' in window) {
       requestIdleCallback(() => {
