@@ -21,21 +21,7 @@ const getAtUri = (url: string) => {
 	}
 };
 
-const getMastodonDetails = (url: string) => {
-	try {
-		const urlObj = new URL(url);
-		const instance = urlObj.hostname;
-		// Extract status ID from URL like https://instance/@user/123 or https://instance/bsky/post-id
-		const pathParts = urlObj.pathname.split("/").filter(Boolean);
-		const statusId = pathParts[pathParts.length - 1];
-		return { instance, statusId };
-	} catch {
-		return null;
-	}
-};
-
 const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
-const mastodonDetails = mastodonUrl ? getMastodonDetails(mastodonUrl) : null;
 ---
 
 {(atUri || mastodonUrl) && (
