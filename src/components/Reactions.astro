@@ -7,8 +7,18 @@ const bskyUrl = reactions.find((r) => r.bluesky)?.bluesky;
 const mastodonUrl = reactions.find((r) => r.mastodon)?.mastodon;
 
 const getAtUri = (url: string) => {
-	const parts = url.replace("https://bsky.app/profile/", "").split("/post/");
-	return `at://${parts[0]}/app.bsky.feed.post/${parts[1]}`;
+	try {
+		if (!url.includes("/post/")) {
+			return null;
+		}
+		const parts = url.replace("https://bsky.app/profile/", "").split("/post/");
+		if (parts.length !== 2 || !parts[0] || !parts[1]) {
+			return null;
+		}
+		return `at://${parts[0]}/app.bsky.feed.post/${parts[1]}`;
+	} catch {
+		return null;
+	}
 };
 
 const getMastodonDetails = (url: string) => {
