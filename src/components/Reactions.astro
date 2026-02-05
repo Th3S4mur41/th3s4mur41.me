@@ -261,11 +261,22 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
     try {
       const urlObj = new URL(mastodonUrl);
       const instance = urlObj.hostname;
-      const pathParts = urlObj.pathname.split('/').filter(Boolean);
+      
+      // Remove trailing slash and extract path parts
+      const pathname = urlObj.pathname.replace(/\/$/, '');
+      const pathParts = pathname.split('/').filter(Boolean);
+      
+      // Extract status ID (last path segment, should be numeric)
       const statusId = pathParts[pathParts.length - 1];
-
-      if (!statusId || !instance) {
-        console.warn('Could not parse Mastodon URL:', mastodonUrl);
+      
+      // Validate status ID is numeric and instance exists
+      if (!instance) {
+        console.warn('Could not extract instance from Mastodon URL:', mastodonUrl);
+        return;
+      }
+      
+      if (!statusId || !/^\d+$/.test(statusId)) {
+        console.warn('Could not extract valid numeric status ID from Mastodon URL:', mastodonUrl);
         return;
       }
 
