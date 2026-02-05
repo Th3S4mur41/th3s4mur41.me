@@ -99,6 +99,18 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
     }
   }
 
+  function areSameActors(nextActors, cachedActors) {
+    if (!Array.isArray(nextActors) || !Array.isArray(cachedActors)) return false;
+    if (nextActors.length !== cachedActors.length) return false;
+
+    return nextActors.every((actor, index) => {
+      const cached = cachedActors[index];
+      return actor?.avatar === cached?.avatar
+        && actor?.displayName === cached?.displayName
+        && actor?.handle === cached?.handle;
+    });
+  }
+
   // Fetch Bluesky post data and display reactions
   async function fetchBlueskyReactions() {
     const container = document.querySelector('.reactions');
@@ -170,7 +182,7 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
         const likeAvatarsEl = document.getElementById('like-avatars');
         const likesCacheKey = `bsky-likes:${postUri}`;
         const cachedLikes = getSessionCache(likesCacheKey);
-        if (cachedLikes) {
+        if (Array.isArray(cachedLikes) && cachedLikes.length) {
           renderAvatars(likeAvatarsEl, cachedLikes);
         }
 
@@ -181,9 +193,11 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
               const actors = likesData.likes
                 .map((like) => like.actor)
                 .filter(Boolean);
-              // Clear cached avatars before rendering fresh data to avoid duplicates
-              if (likeAvatarsEl) likeAvatarsEl.textContent = '';
-              renderAvatars(likeAvatarsEl, actors);
+              const shouldUpdate = !areSameActors(actors, cachedLikes);
+              if (shouldUpdate) {
+                if (likeAvatarsEl) likeAvatarsEl.textContent = '';
+                renderAvatars(likeAvatarsEl, actors);
+              }
               setSessionCache(likesCacheKey, actors);
             }
           } else {
@@ -199,7 +213,7 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
         const repostAvatarsEl = document.getElementById('repost-avatars');
         const repostsCacheKey = `bsky-reposts:${postUri}`;
         const cachedReposts = getSessionCache(repostsCacheKey);
-        if (cachedReposts) {
+        if (Array.isArray(cachedReposts) && cachedReposts.length) {
           renderAvatars(repostAvatarsEl, cachedReposts);
         }
 
@@ -208,9 +222,11 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
             const repostsData = await repostsResponse.json();
             if (repostsData.repostedBy?.length) {
               const actors = repostsData.repostedBy.filter(Boolean);
-              // Clear cached avatars before rendering fresh data to avoid duplicates
-              if (repostAvatarsEl) repostAvatarsEl.textContent = '';
-              renderAvatars(repostAvatarsEl, actors);
+              const shouldUpdate = !areSameActors(actors, cachedReposts);
+              if (shouldUpdate) {
+                if (repostAvatarsEl) repostAvatarsEl.textContent = '';
+                renderAvatars(repostAvatarsEl, actors);
+              }
               setSessionCache(repostsCacheKey, actors);
             }
           } else {
@@ -301,7 +317,7 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
         const cachedLikes = getSessionCache(likesCacheKey);
         
         // Render cached data first if available
-        if (cachedLikes) {
+        if (Array.isArray(cachedLikes) && cachedLikes.length) {
           renderAvatars(likeAvatarsEl, cachedLikes);
         }
         
@@ -316,10 +332,12 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
               displayName: account.display_name,
               handle: account.acct,
             })).filter(a => a.avatar);
-            
-            // Clear cached avatars before rendering fresh data to avoid duplicates
-            if (likeAvatarsEl) likeAvatarsEl.textContent = '';
-            renderAvatars(likeAvatarsEl, actors);
+
+            const shouldUpdate = !areSameActors(actors, cachedLikes);
+            if (shouldUpdate) {
+              if (likeAvatarsEl) likeAvatarsEl.textContent = '';
+              renderAvatars(likeAvatarsEl, actors);
+            }
             setSessionCache(likesCacheKey, actors);
             }
           }
@@ -336,7 +354,7 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
         const cachedBoosts = getSessionCache(boostsCacheKey);
         
         // Render cached data first if available
-        if (cachedBoosts) {
+        if (Array.isArray(cachedBoosts) && cachedBoosts.length) {
           renderAvatars(boostAvatarsEl, cachedBoosts);
         }
         
@@ -351,10 +369,12 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
               displayName: account.display_name,
               handle: account.acct,
             })).filter(a => a.avatar);
-            
-            // Clear cached avatars before rendering fresh data to avoid duplicates
-            if (boostAvatarsEl) boostAvatarsEl.textContent = '';
-            renderAvatars(boostAvatarsEl, actors);
+
+            const shouldUpdate = !areSameActors(actors, cachedBoosts);
+            if (shouldUpdate) {
+              if (boostAvatarsEl) boostAvatarsEl.textContent = '';
+              renderAvatars(boostAvatarsEl, actors);
+            }
             setSessionCache(boostsCacheKey, actors);
             }
           }
