@@ -1,5 +1,16 @@
 ---
 // src/components/Reactions.astro
+
+interface Props {
+	/** Array of reaction sources with platform URLs */
+	reactions?: Array<{
+		/** Bluesky post URL (e.g., https://bsky.app/profile/user.bsky.social/post/xyz) */
+		bluesky?: string;
+		/** Mastodon post URL (e.g., https://mastodon.social/@user/123) */
+		mastodon?: string;
+	}>;
+}
+
 const { reactions = [] } = Astro.props;
 
 // Extract values from the array of objects
