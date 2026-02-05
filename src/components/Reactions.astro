@@ -50,9 +50,9 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
     </div>
     <p>
       Join the conversation on 
-      {bskyUrl && <a href={bskyUrl} target="_blank">Bluesky</a>}
+      {bskyUrl && <a href={bskyUrl} target="_blank" rel="external noopener">Bluesky</a>}
       {bskyUrl && mastodonUrl && <> or </>}
-      {mastodonUrl && <a href={mastodonUrl} target="_blank">Mastodon</a>}
+      {mastodonUrl && <a href={mastodonUrl} target="_blank" rel="external noopener">Mastodon</a>}
     </p>
   </section>
 )}
