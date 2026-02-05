@@ -295,11 +295,33 @@ const mastodonDetails = mastodonUrl ? getMastodonDetails(mastodonUrl) : null;
       const [likesResponse, boostsResponse] = await Promise.all([likesPromise, boostsPromise]);
 
       // Handle likes avatars
-      if (likesCount > 0 && likesResponse?.ok) {
+      if (likesCount > 0) {
         const likeAvatarsEl = document.getElementById('like-avatars');
         const likesCacheKey = `mastodon-likes:${instance}:${statusId}`;
+        const cachedLikes = getSessionCache(likesCacheKey);
+        
+        // Render cached data first if available
+        if (cachedLikes && likeAvatarsEl) {
+          for (const actor of cachedLikes) {
+            const img = document.createElement('img');
+            img.src = actor.avatar;
+            img.alt = actor.displayName || actor.handle || 'Mastodon user';
+            img.title = actor.displayName && actor.handle
+              ? `${actor.displayName} (@${actor.handle})`
+              : actor.handle || actor.displayName || 'Mastodon user';
+            img.width = 32;
+            img.height = 32;
+            img.loading = 'lazy';
+            img.decoding = 'async';
+            likeAvatarsEl.appendChild(img);
+          }
+        }
         
         try {
+          if (!likesResponse?.ok) {
+            console.warn('Failed to fetch Mastodon likes:', likesResponse?.status);
+            return;
+          }
           const likesData = await likesResponse.json();
           if (Array.isArray(likesData) && likesData.length > 0) {
             const actors = likesData.map((account) => ({
@@ -332,11 +354,33 @@ const mastodonDetails = mastodonUrl ? getMastodonDetails(mastodonUrl) : null;
       }
 
       // Handle boosts avatars
-      if (boostsCount > 0 && boostsResponse?.ok) {
+      if (boostsCount > 0) {
         const boostAvatarsEl = document.getElementById('repost-avatars');
         const boostsCacheKey = `mastodon-boosts:${instance}:${statusId}`;
+        const cachedBoosts = getSessionCache(boostsCacheKey);
+        
+        // Render cached data first if available
+        if (cachedBoosts && boostAvatarsEl) {
+          for (const actor of cachedBoosts) {
+            const img = document.createElement('img');
+            img.src = actor.avatar;
+            img.alt = actor.displayName || actor.handle || 'Mastodon user';
+            img.title = actor.displayName && actor.handle
+              ? `${actor.displayName} (@${actor.handle})`
+              : actor.handle || actor.displayName || 'Mastodon user';
+            img.width = 32;
+            img.height = 32;
+            img.loading = 'lazy';
+            img.decoding = 'async';
+            boostAvatarsEl.appendChild(img);
+          }
+        }
         
         try {
+          if (!boostsResponse?.ok) {
+            console.warn('Failed to fetch Mastodon boosts:', boostsResponse?.status);
+            return;
+          }
           const boostsData = await boostsResponse.json();
           if (Array.isArray(boostsData) && boostsData.length > 0) {
             const actors = boostsData.map((account) => ({
