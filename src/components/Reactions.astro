@@ -314,9 +314,8 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
         try {
           if (!likesResponse?.ok) {
             console.warn('Failed to fetch Mastodon likes:', likesResponse?.status);
-            return;
-          }
-          const likesData = await likesResponse.json();
+          } else {
+            const likesData = await likesResponse.json();
           if (Array.isArray(likesData) && likesData.length > 0) {
             const actors = likesData.map((account) => ({
               avatar: account.avatar,
@@ -341,6 +340,7 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
               }
               setSessionCache(likesCacheKey, actors);
             }
+          }
           }
         } catch (error) {
           console.warn('Error processing Mastodon likes:', error);
@@ -373,9 +373,8 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
         try {
           if (!boostsResponse?.ok) {
             console.warn('Failed to fetch Mastodon boosts:', boostsResponse?.status);
-            return;
-          }
-          const boostsData = await boostsResponse.json();
+          } else {
+            const boostsData = await boostsResponse.json();
           if (Array.isArray(boostsData) && boostsData.length > 0) {
             const actors = boostsData.map((account) => ({
               avatar: account.avatar,
@@ -400,6 +399,7 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
               }
               setSessionCache(boostsCacheKey, actors);
             }
+          }
           }
         } catch (error) {
           console.warn('Error processing Mastodon boosts:', error);
