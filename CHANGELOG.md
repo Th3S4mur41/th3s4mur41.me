@@ -1,3 +1,10 @@
+# [2.31.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.30.0...v2.31.0) (2026-02-05)
+
+
+### Features
+
+* add reactions support for Bluesky and Mastodon in blog articles ([#2092](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2092)) ([32bfc13](https://github.com/Th3S4mur41/th3s4mur41.me/commit/32bfc13ee21e87cd79f3b3f9b1f7c83c1e10db2b))
+
 # [2.30.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.29.4...v2.30.0) (2026-02-04)
 
 
