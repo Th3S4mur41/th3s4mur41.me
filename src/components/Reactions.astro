@@ -138,14 +138,16 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
       const likeCount = post.likeCount || 0;
       const likeCountEl = document.querySelector('#likes .count');
       if (likeCountEl) {
-        likeCountEl.textContent = likeCount.toString();
+        const currentCount = parseInt(likeCountEl.textContent) || 0;
+        likeCountEl.textContent = (currentCount + likeCount).toString();
       }
 
       // Update repost count
       const repostCount = post.repostCount || 0;
       const repostCountEl = document.querySelector('#boosts .count');
       if (repostCountEl) {
-        repostCountEl.textContent = repostCount.toString();
+        const currentCount = parseInt(repostCountEl.textContent) || 0;
+        repostCountEl.textContent = (currentCount + repostCount).toString();
       }
 
       // Fetch reactions in parallel
