@@ -179,6 +179,8 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
               const actors = likesData.likes
                 .map((like) => like.actor)
                 .filter(Boolean);
+              // Clear cached avatars before rendering fresh data to avoid duplicates
+              if (likeAvatarsEl) likeAvatarsEl.textContent = '';
               renderAvatars(likeAvatarsEl, actors);
               setSessionCache(likesCacheKey, actors);
             }
@@ -204,6 +206,8 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
             const repostsData = await repostsResponse.json();
             if (repostsData.repostedBy?.length) {
               const actors = repostsData.repostedBy.filter(Boolean);
+              // Clear cached avatars before rendering fresh data to avoid duplicates
+              if (repostAvatarsEl) repostAvatarsEl.textContent = '';
               renderAvatars(repostAvatarsEl, actors);
               setSessionCache(repostsCacheKey, actors);
             }
@@ -323,8 +327,8 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
               handle: account.acct,
             })).filter(a => a.avatar);
             
-            // Append Mastodon avatars to existing ones
-            if (likeAvatarsEl && actors.length > 0) {
+            // Clear cached avatars before rendering fresh data to avoid duplicates
+            if (likeAvatarsEl) likeAvatarsEl.textContent = '';
               for (const actor of actors) {
                 const img = document.createElement('img');
                 img.src = actor.avatar;
@@ -382,8 +386,8 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
               handle: account.acct,
             })).filter(a => a.avatar);
             
-            // Append Mastodon avatars to existing ones
-            if (boostAvatarsEl && actors.length > 0) {
+            // Clear cached avatars before rendering fresh data to avoid duplicates
+            if (boostAvatarsEl) boostAvatarsEl.textContent = '';
               for (const actor of actors) {
                 const img = document.createElement('img');
                 img.src = actor.avatar;
