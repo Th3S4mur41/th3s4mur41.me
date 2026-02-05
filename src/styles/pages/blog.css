@@ -424,10 +424,15 @@ body:is([class^="blog-"], [class^="talks-"]) {
 			border-radius: 50%;
 			box-shadow: 0 2px 6px 1px oklch(from var(--color-subtle-bg) l c h / 0.5);
 			border: 1px solid oklch(from var(--color-subtle-bg) l c h / 0.5);
+			animation: fadeIn 0.3s ease-out;
 
 			/* And just for performance */
 			content-visibility: auto;
 			contain-intrinsic-size: 3rem;
+
+			@media (prefers-reduced-motion: no-preference) {
+				animation: scaleIn 0.3s ease-out;
+			}
 		}
 	}
 }
