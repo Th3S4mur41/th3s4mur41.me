@@ -103,12 +103,20 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
     if (!Array.isArray(nextActors) || !Array.isArray(cachedActors)) return false;
     if (nextActors.length !== cachedActors.length) return false;
 
-    return nextActors.every((actor, index) => {
-      const cached = cachedActors[index];
-      return actor?.avatar === cached?.avatar
-        && actor?.displayName === cached?.displayName
-        && actor?.handle === cached?.handle;
-    });
+    // Create Sets of actor identifiers for order-independent comparison
+    const nextSet = new Set(
+      nextActors.map(a => `${a?.avatar}|${a?.displayName || ''}|${a?.handle || ''}`)
+    );
+    const cachedSet = new Set(
+      cachedActors.map(a => `${a?.avatar}|${a?.displayName || ''}|${a?.handle || ''}`)
+    );
+
+    // Check if both sets contain the same actors
+    if (nextSet.size !== cachedSet.size) return false;
+    for (const key of nextSet) {
+      if (!cachedSet.has(key)) return false;
+    }
+    return true;
   }
 
   // Fetch Bluesky post data and display reactions
