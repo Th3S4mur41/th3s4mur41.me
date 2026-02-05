@@ -398,7 +398,6 @@ body:is([class^="blog-"], [class^="talks-"]) {
 	}
 	#likes {
 		color: oklch(0.7 0.25 30);
-		background: var(--color-bg);
 	}
 	#boosts {
 		color: oklch(0.7 0.4 357);

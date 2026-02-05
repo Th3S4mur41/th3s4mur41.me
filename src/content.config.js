@@ -39,12 +39,7 @@ const talksSchema = z.object({
 	publisherName: z.string().optional(),
 	publisherUrl: z.string().url().optional(),
 	reactions: z
-		.array(
-			z.union([
-				z.object({ bluesky: z.string().url() }).optional(),
-				z.object({ mastodon: z.string().url() }).optional(),
-			]),
-		)
+		.array(z.union([z.object({ bluesky: z.string().url() }), z.object({ mastodon: z.string().url() })]))
 		.optional(),
 });
 
