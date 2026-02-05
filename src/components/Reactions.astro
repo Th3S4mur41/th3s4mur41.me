@@ -1,0 +1,475 @@
+---
+// src/components/Reactions.astro
+
+interface Props {
+	/** Array of reaction sources with platform URLs */
+	reactions?: Array<{
+		/** Bluesky post URL (e.g., https://bsky.app/profile/user.bsky.social/post/xyz) */
+		bluesky?: string;
+		/** Mastodon post URL (e.g., https://mastodon.social/@user/123) */
+		mastodon?: string;
+	}>;
+}
+
+const { reactions = [] } = Astro.props;
+
+// Extract values from the array of objects
+const bskyUrl = reactions.find((r) => r.bluesky)?.bluesky;
+const mastodonUrl = reactions.find((r) => r.mastodon)?.mastodon;
+
+const getAtUri = (url: string) => {
+	try {
+		if (!url.includes("/post/")) {
+			return null;
+		}
+		const parts = url.replace("https://bsky.app/profile/", "").split("/post/");
+		if (parts.length !== 2 || !parts[0] || !parts[1]) {
+			return null;
+		}
+		return `at://${parts[0]}/app.bsky.feed.post/${parts[1]}`;
+	} catch {
+		return null;
+	}
+};
+
+const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
+---
+
+{(atUri || mastodonUrl) && (
+  <section class="reactions" {...(atUri ? { 'data-uri': atUri } : {})} {...(mastodonUrl ? { 'data-mastodon-url': mastodonUrl } : {})} aria-labelledby="reactions-header">
+    <header id="reactions-header">Reactions</header>
+    <div id="likes">
+       <svg aria-labelledby="likes-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentcolor" viewBox="0 0 256 256"><title id="likes-icon">Likes</title><path d="M178,40c-20.65,0-38.73,8.88-50,23.89C116.73,48.88,98.65,40,78,40a62.07,62.07,0,0,0-62,62c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,228.66,240,172,240,102A62.07,62.07,0,0,0,178,40ZM128,214.8C109.74,204.16,32,155.69,32,102A46.06,46.06,0,0,1,78,56c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46C224,155.61,146.24,204.15,128,214.8Z"></path></svg>
+       <span class="count">0</span> 
+       <div class="avatars" id="like-avatars" role="group" aria-label="Users who liked this"></div>
+    </div>
+    <div id="boosts">
+       <svg aria-labelledby="boosts-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentcolor" viewBox="0 0 256 256"><title id="boosts-icon">Boosts</title><path d="M223.85,47.12a16,16,0,0,0-15-15c-12.58-.75-44.73.4-71.41,27.07L132.69,64H74.36A15.91,15.91,0,0,0,63,68.68L28.7,103a16,16,0,0,0,9.07,27.16l38.47,5.37,44.21,44.21,5.37,38.49a15.94,15.94,0,0,0,10.78,12.92,16.11,16.11,0,0,0,5.1.83A15.91,15.91,0,0,0,153,227.3L187.32,193A15.91,15.91,0,0,0,192,181.64V123.31l4.77-4.77C223.45,91.86,224.6,59.71,223.85,47.12ZM74.36,80h42.33L77.16,119.52,40,114.34Zm74.41-9.45a76.65,76.65,0,0,1,59.11-22.47,76.46,76.46,0,0,1-22.42,59.16L128,164.68,91.32,128ZM176,181.64,141.67,216l-5.19-37.17L176,139.31Zm-74.16,9.5C97.34,201,82.29,224,40,224a8,8,0,0,1-8-8c0-42.29,23-57.34,32.86-61.85a8,8,0,0,1,6.64,14.56c-6.43,2.93-20.62,12.36-23.12,38.91,26.55-2.5,36-16.69,38.91-23.12a8,8,0,1,1,14.56,6.64Z"></path></svg>
+       <span class="count">0</span> 
+       <div class="avatars" id="repost-avatars" role="group" aria-label="Users who reposted this"></div>
+    </div>
+    <p>
+      Join the conversation on 
+      {bskyUrl && <a href={bskyUrl} target="_blank" rel="external noopener">Bluesky</a>}
+      {bskyUrl && mastodonUrl && <> or </>}
+      {mastodonUrl && <a href={mastodonUrl} target="_blank" rel="external noopener">Mastodon</a>}
+    </p>
+  </section>
+)}
+
+<script>
+  const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
+  function getSessionCache(key) {
+    try {
+      const raw = sessionStorage.getItem(key);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      if (!parsed?.ts || Date.now() - parsed.ts > CACHE_TTL_MS) return null;
+      return parsed.data ?? null;
+    } catch {
+      return null;
+    }
+  }
+
+  function setSessionCache(key, data) {
+    try {
+      sessionStorage.setItem(key, JSON.stringify({ ts: Date.now(), data }));
+    } catch {
+      // ignore cache errors
+    }
+  }
+
+  function renderAvatars(container, actors) {
+    if (!container) return;
+
+    for (const actor of actors) {
+      if (!actor?.avatar) continue;
+      const img = document.createElement('img');
+      img.src = actor.avatar;
+      img.alt = actor.displayName || actor.handle || 'User';
+      img.title = actor.displayName && actor.handle
+        ? `${actor.displayName} (@${actor.handle})`
+        : actor.handle || actor.displayName || 'User';
+      img.width = 32;
+      img.height = 32;
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      container.appendChild(img);
+    }
+  }
+
+  function validateCount(value) {
+    const num = typeof value === 'number' ? value : parseInt(value, 10);
+    return !isNaN(num) && num >= 0 ? num : 0;
+  }
+
+  function areSameActors(nextActors, cachedActors) {
+    if (!Array.isArray(nextActors) || !Array.isArray(cachedActors)) return false;
+    if (nextActors.length !== cachedActors.length) return false;
+
+    // Create Sets of actor identifiers for order-independent comparison
+    const nextSet = new Set(
+      nextActors.map(a => `${a?.avatar}|${a?.displayName || ''}|${a?.handle || ''}`)
+    );
+    const cachedSet = new Set(
+      cachedActors.map(a => `${a?.avatar}|${a?.displayName || ''}|${a?.handle || ''}`)
+    );
+
+    // Check if both sets contain the same actors
+    if (nextSet.size !== cachedSet.size) return false;
+    for (const key of nextSet) {
+      if (!cachedSet.has(key)) return false;
+    }
+    return true;
+  }
+
+  // Fetch Bluesky post data and display reactions
+  async function fetchBlueskyReactions() {
+    const container = document.querySelector('.reactions');
+    if (!container) return;
+
+    const atUri = container.getAttribute('data-uri');
+    if (!atUri) return;
+
+    try {
+      // Parse AT URI to get repo and rkey
+      const uriMatch = atUri.match(/at:\/\/([^/]+)\/app\.bsky\.feed\.post\/([^/]+)/);
+      if (!uriMatch) {
+        console.error('Invalid AT URI format:', atUri);
+        return;
+      }
+
+      // Fetch post thread to get like/repost counts
+      const response = await fetch(
+        `https://public.api.bsky.app/xrpc/app.bsky.feed.getPostThread?uri=${encodeURIComponent(atUri)}&depth=0`
+      );
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch post: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const post = data?.thread?.post;
+
+      if (!post || typeof post !== 'object') {
+        console.error('Invalid post data structure');
+        return;
+      }
+
+      const postUri = post.uri || atUri;
+
+      // Update like count with validation
+      const likeCount = validateCount(post.likeCount);
+      const likeCountEl = document.querySelector('#likes .count');
+      if (likeCountEl) {
+        const currentCount = parseInt(likeCountEl.textContent) || 0;
+        likeCountEl.textContent = (currentCount + likeCount).toString();
+      }
+
+      // Update repost count with validation
+      const repostCount = validateCount(post.repostCount);
+      const repostCountEl = document.querySelector('#boosts .count');
+      if (repostCountEl) {
+        const currentCount = parseInt(repostCountEl.textContent) || 0;
+        repostCountEl.textContent = (currentCount + repostCount).toString();
+      }
+
+      // Fetch reactions in parallel
+      const likesPromise = likeCount > 0
+        ? fetch(
+            `https://public.api.bsky.app/xrpc/app.bsky.feed.getLikes?uri=${encodeURIComponent(postUri)}&limit=10`
+          )
+        : Promise.resolve(null);
+
+      const repostsPromise = repostCount > 0
+        ? fetch(
+            `https://public.api.bsky.app/xrpc/app.bsky.feed.getRepostedBy?uri=${encodeURIComponent(postUri)}&limit=10`
+          )
+        : Promise.resolve(null);
+
+      const [likesResponse, repostsResponse] = await Promise.all([likesPromise, repostsPromise]);
+
+      // Handle likes avatars
+      if (likeCount > 0) {
+        const likeAvatarsEl = document.getElementById('like-avatars');
+        const likesCacheKey = `bsky-likes:${postUri}`;
+        const cachedLikes = getSessionCache(likesCacheKey);
+
+        try {
+          if (likesResponse?.ok) {
+            const likesData = await likesResponse.json();
+            if (Array.isArray(likesData?.likes) && likesData.likes.length) {
+              const actors = likesData.likes
+                .map((like) => like.actor)
+                .filter(Boolean);
+              const shouldUpdate = !areSameActors(actors, cachedLikes);
+              if (shouldUpdate) {
+                if (likeAvatarsEl) likeAvatarsEl.textContent = '';
+                renderAvatars(likeAvatarsEl, actors);
+              }
+              setSessionCache(likesCacheKey, actors);
+            }
+          } else {
+            console.warn('Failed to fetch Bluesky likes:', likesResponse?.status);
+          }
+        } catch (error) {
+          console.warn('Error fetching Bluesky likes:', error);
+        }
+      }
+
+      // Handle reposts avatars
+      if (repostCount > 0) {
+        const repostAvatarsEl = document.getElementById('repost-avatars');
+        const repostsCacheKey = `bsky-reposts:${postUri}`;
+        const cachedReposts = getSessionCache(repostsCacheKey);
+
+        try {
+          if (repostsResponse?.ok) {
+            const repostsData = await repostsResponse.json();
+            if (Array.isArray(repostsData?.repostedBy) && repostsData.repostedBy.length) {
+              const actors = repostsData.repostedBy.filter(Boolean);
+              const shouldUpdate = !areSameActors(actors, cachedReposts);
+              if (shouldUpdate) {
+                if (repostAvatarsEl) repostAvatarsEl.textContent = '';
+                renderAvatars(repostAvatarsEl, actors);
+              }
+              setSessionCache(repostsCacheKey, actors);
+            }
+          } else {
+            console.warn('Failed to fetch Bluesky reposts:', repostsResponse?.status);
+          }
+        } catch (error) {
+          console.warn('Error fetching Bluesky reposts:', error);
+        }
+      }
+
+    } catch (error) {
+      console.error('Error fetching Bluesky reactions:', error);
+    }
+  }
+
+  // Fetch Mastodon post data and display reactions
+  async function fetchMastodonReactions() {
+    const container = document.querySelector('.reactions');
+    if (!container) return;
+
+    const mastodonUrl = container.getAttribute('data-mastodon-url');
+    if (!mastodonUrl) return;
+
+    try {
+      const urlObj = new URL(mastodonUrl);
+      const instance = urlObj.hostname;
+      
+      // Remove trailing slash and extract path parts
+      const pathname = urlObj.pathname.replace(/\/$/, '');
+      const pathParts = pathname.split('/').filter(Boolean);
+      
+      // Extract status ID (last path segment, should be numeric)
+      const statusId = pathParts[pathParts.length - 1];
+      
+      // Validate status ID is numeric and instance exists
+      if (!instance) {
+        console.warn('Could not extract instance from Mastodon URL:', mastodonUrl);
+        return;
+      }
+      
+      if (!statusId || !/^\d+$/.test(statusId)) {
+        console.warn('Could not extract valid numeric status ID from Mastodon URL:', mastodonUrl);
+        return;
+      }
+
+      // Fetch status data to get counts
+      const statusResponse = await fetch(
+        `https://${instance}/api/v1/statuses/${statusId}`,
+        { headers: { Accept: 'application/json' } }
+      );
+
+      if (!statusResponse.ok) {
+        console.warn(`Failed to fetch Mastodon status: ${statusResponse.status}`);
+        return;
+      }
+
+      const status = await statusResponse.json();
+      
+      if (!status || typeof status !== 'object') {
+        console.warn('Invalid Mastodon status data structure');
+        return;
+      }
+      
+      const likesCount = validateCount(status.favourites_count);
+      const boostsCount = validateCount(status.reblogs_count);
+
+      // Update counts (add to existing Bluesky counts or create if not present)
+      if (likesCount > 0) {
+        const likeCountEl = document.querySelector('#likes .count');
+        if (likeCountEl) {
+          const currentCount = parseInt(likeCountEl.textContent) || 0;
+          likeCountEl.textContent = (currentCount + likesCount).toString();
+        }
+      }
+
+      if (boostsCount > 0) {
+        const boostCountEl = document.querySelector('#boosts .count');
+        if (boostCountEl) {
+          const currentCount = parseInt(boostCountEl.textContent) || 0;
+          boostCountEl.textContent = (currentCount + boostsCount).toString();
+        }
+      }
+
+      // Fetch likes and boosts avatars in parallel
+      const likesPromise = likesCount > 0
+        ? fetch(
+            `https://${instance}/api/v1/statuses/${statusId}/favourited_by?limit=10`,
+            { headers: { Accept: 'application/json' } }
+          )
+        : Promise.resolve(null);
+
+      const boostsPromise = boostsCount > 0
+        ? fetch(
+            `https://${instance}/api/v1/statuses/${statusId}/reblogged_by?limit=10`,
+            { headers: { Accept: 'application/json' } }
+          )
+        : Promise.resolve(null);
+
+      const [likesResponse, boostsResponse] = await Promise.all([likesPromise, boostsPromise]);
+
+      // Handle likes avatars
+      if (likesCount > 0) {
+        const likeAvatarsEl = document.getElementById('like-avatars');
+        const likesCacheKey = `mastodon-likes:${instance}:${statusId}`;
+        const cachedLikes = getSessionCache(likesCacheKey);
+        
+        try {
+          if (!likesResponse?.ok) {
+            console.warn('Failed to fetch Mastodon likes:', likesResponse?.status);
+          } else {
+            const likesData = await likesResponse.json();
+            if (Array.isArray(likesData) && likesData.length > 0) {
+              const actors = likesData.map((account) => ({
+                avatar: account.avatar,
+                displayName: account.display_name,
+                handle: account.acct,
+              })).filter(a => a.avatar);
+
+              const shouldUpdate = !areSameActors(actors, cachedLikes);
+              if (shouldUpdate) {
+                if (likeAvatarsEl) likeAvatarsEl.textContent = '';
+                renderAvatars(likeAvatarsEl, actors);
+              }
+              setSessionCache(likesCacheKey, actors);
+            }
+          }
+        } catch (error) {
+          console.warn('Error processing Mastodon likes:', error);
+        }
+      }
+
+      // Handle boosts avatars
+      if (boostsCount > 0) {
+        const boostAvatarsEl = document.getElementById('repost-avatars');
+        const boostsCacheKey = `mastodon-boosts:${instance}:${statusId}`;
+        const cachedBoosts = getSessionCache(boostsCacheKey);
+        
+        try {
+          if (!boostsResponse?.ok) {
+            console.warn('Failed to fetch Mastodon boosts:', boostsResponse?.status);
+          } else {
+            const boostsData = await boostsResponse.json();
+            if (Array.isArray(boostsData) && boostsData.length > 0) {
+              const actors = boostsData.map((account) => ({
+                avatar: account.avatar,
+                displayName: account.display_name,
+                handle: account.acct,
+              })).filter(a => a.avatar);
+
+              const shouldUpdate = !areSameActors(actors, cachedBoosts);
+              if (shouldUpdate) {
+                if (boostAvatarsEl) boostAvatarsEl.textContent = '';
+                renderAvatars(boostAvatarsEl, actors);
+              }
+              setSessionCache(boostsCacheKey, actors);
+            }
+          }
+        } catch (error) {
+          console.warn('Error processing Mastodon boosts:', error);
+        }
+      }
+
+    } catch (error) {
+      console.error('Error fetching Mastodon reactions:', error);
+    }
+  }
+
+  function renderAllCachedData() {
+    const container = document.querySelector('.reactions');
+    if (!container) return;
+
+    const likeAvatarsEl = document.getElementById('like-avatars');
+    const repostAvatarsEl = document.getElementById('repost-avatars');
+
+    // Render Bluesky cached data if available
+    const atUri = container.getAttribute('data-uri');
+    if (atUri) {
+      const bskyLikesCache = getSessionCache(`bsky-likes:${atUri}`);
+      if (Array.isArray(bskyLikesCache) && bskyLikesCache.length) {
+        renderAvatars(likeAvatarsEl, bskyLikesCache);
+      }
+
+      const bskyRepostsCache = getSessionCache(`bsky-reposts:${atUri}`);
+      if (Array.isArray(bskyRepostsCache) && bskyRepostsCache.length) {
+        renderAvatars(repostAvatarsEl, bskyRepostsCache);
+      }
+    }
+
+    // Render Mastodon cached data if available
+    const mastodonUrl = container.getAttribute('data-mastodon-url');
+    if (mastodonUrl) {
+      try {
+        const urlObj = new URL(mastodonUrl);
+        const instance = urlObj.hostname;
+        const pathname = urlObj.pathname.replace(/\/$/, '');
+        const pathParts = pathname.split('/').filter(Boolean);
+        const statusId = pathParts[pathParts.length - 1];
+
+        if (instance && statusId && /^\d+$/.test(statusId)) {
+          const mastodonLikesCache = getSessionCache(`mastodon-likes:${instance}:${statusId}`);
+          if (Array.isArray(mastodonLikesCache) && mastodonLikesCache.length) {
+            renderAvatars(likeAvatarsEl, mastodonLikesCache);
+          }
+
+          const mastodonBoostsCache = getSessionCache(`mastodon-boosts:${instance}:${statusId}`);
+          if (Array.isArray(mastodonBoostsCache) && mastodonBoostsCache.length) {
+            renderAvatars(repostAvatarsEl, mastodonBoostsCache);
+          }
+        }
+      } catch (error) {
+        // Silently skip if URL parsing fails
+      }
+    }
+  }
+
+  function loadReactions() {
+    // Clear avatar containers once at the start to ensure a clean slate
+    const likeAvatarsEl = document.getElementById('like-avatars');
+    const repostAvatarsEl = document.getElementById('repost-avatars');
+    if (likeAvatarsEl) likeAvatarsEl.textContent = '';
+    if (repostAvatarsEl) repostAvatarsEl.textContent = '';
+
+    // Render all cached data once before network requests
+    renderAllCachedData();
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => {
+        fetchBlueskyReactions();
+        fetchMastodonReactions();
+      }, { timeout: 2000 });
+    } else {
+      fetchBlueskyReactions();
+      fetchMastodonReactions();
+    }
+  }
+
+  // Run on page load
+  loadReactions();
+</script>

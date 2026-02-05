@@ -4,6 +4,7 @@ import { getCollection, getEntry, render } from "astro:content";
 import path from "node:path";
 import BlogPostingSchema from "../../components/BlogPostingSchema.astro";
 import PodcastEpisodeSchema from "../../components/PodcastEpisodeSchema.astro";
+import Reactions from "../../components/Reactions.astro";
 import RelatedArticles from "../../components/RelatedArticles.astro";
 import Layout from "../../layouts/Layout.astro";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../../utils/contentVisibility";
@@ -203,6 +204,8 @@ void [Layout, Content, img, truncatedTitle, BlogPostingSchema, PodcastEpisodeSch
 				</svg>
 				<span>Share</span>
 			</button>
+
+			{article.data.reactions && <Reactions reactions={article.data.reactions} />}
     </footer>
 
     <script>
