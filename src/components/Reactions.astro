@@ -326,21 +326,20 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
             console.warn('Failed to fetch Mastodon likes:', likesResponse?.status);
           } else {
             const likesData = await likesResponse.json();
-          if (Array.isArray(likesData) && likesData.length > 0) {
-            const actors = likesData.map((account) => ({
-              avatar: account.avatar,
-              displayName: account.display_name,
-              handle: account.acct,
-            })).filter(a => a.avatar);
+            if (Array.isArray(likesData) && likesData.length > 0) {
+              const actors = likesData.map((account) => ({
+                avatar: account.avatar,
+                displayName: account.display_name,
+                handle: account.acct,
+              })).filter(a => a.avatar);
 
-            const shouldUpdate = !areSameActors(actors, cachedLikes);
-            if (shouldUpdate) {
-              if (likeAvatarsEl) likeAvatarsEl.textContent = '';
-              renderAvatars(likeAvatarsEl, actors);
+              const shouldUpdate = !areSameActors(actors, cachedLikes);
+              if (shouldUpdate) {
+                if (likeAvatarsEl) likeAvatarsEl.textContent = '';
+                renderAvatars(likeAvatarsEl, actors);
+              }
+              setSessionCache(likesCacheKey, actors);
             }
-            setSessionCache(likesCacheKey, actors);
-            }
-          }
           }
         } catch (error) {
           console.warn('Error processing Mastodon likes:', error);
@@ -363,21 +362,20 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
             console.warn('Failed to fetch Mastodon boosts:', boostsResponse?.status);
           } else {
             const boostsData = await boostsResponse.json();
-          if (Array.isArray(boostsData) && boostsData.length > 0) {
-            const actors = boostsData.map((account) => ({
-              avatar: account.avatar,
-              displayName: account.display_name,
-              handle: account.acct,
-            })).filter(a => a.avatar);
+            if (Array.isArray(boostsData) && boostsData.length > 0) {
+              const actors = boostsData.map((account) => ({
+                avatar: account.avatar,
+                displayName: account.display_name,
+                handle: account.acct,
+              })).filter(a => a.avatar);
 
-            const shouldUpdate = !areSameActors(actors, cachedBoosts);
-            if (shouldUpdate) {
-              if (boostAvatarsEl) boostAvatarsEl.textContent = '';
-              renderAvatars(boostAvatarsEl, actors);
+              const shouldUpdate = !areSameActors(actors, cachedBoosts);
+              if (shouldUpdate) {
+                if (boostAvatarsEl) boostAvatarsEl.textContent = '';
+                renderAvatars(boostAvatarsEl, actors);
+              }
+              setSessionCache(boostsCacheKey, actors);
             }
-            setSessionCache(boostsCacheKey, actors);
-            }
-          }
           }
         } catch (error) {
           console.warn('Error processing Mastodon boosts:', error);
