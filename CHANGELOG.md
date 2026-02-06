@@ -1,3 +1,10 @@
+# [2.32.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.31.0...v2.32.0) (2026-02-06)
+
+
+### Features
+
+* add reading time functionality  ([#2080](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2080)) ([124eb5c](https://github.com/Th3S4mur41/th3s4mur41.me/commit/124eb5c37438de2a08ff103f53decd12b64c42b0))
+
 # [2.31.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.30.0...v2.31.0) (2026-02-05)
 
 
