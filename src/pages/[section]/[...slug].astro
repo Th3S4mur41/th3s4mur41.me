@@ -5,6 +5,7 @@ import path from "node:path";
 import Image from "/src/components/Image.astro";
 import BlogPostingSchema from "../../components/BlogPostingSchema.astro";
 import PodcastEpisodeSchema from "../../components/PodcastEpisodeSchema.astro";
+import Reactions from "../../components/Reactions.astro";
 import RelatedArticles from "../../components/RelatedArticles.astro";
 import Layout from "../../layouts/Layout.astro";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../../utils/contentVisibility";
@@ -180,7 +181,7 @@ void [Layout, Content, img, truncatedTitle, BlogPostingSchema, PodcastEpisodeSch
   noHeader>
   <article>
     {article.data.eyebrow && <p class="eyebrow">{article.data.eyebrow}</p>}
-    {/** Render markdown/MDX content */}
+    {/** Render markdown/MDX content (TOC is injected after h1 via rehype plugin) */}
     <Content components={{ img: Image }}/>
     <footer>
       <p class="published">
@@ -204,6 +205,8 @@ void [Layout, Content, img, truncatedTitle, BlogPostingSchema, PodcastEpisodeSch
 				</svg>
 				<span>Share</span>
 			</button>
+
+			{article.data.reactions && <Reactions reactions={article.data.reactions} />}
     </footer>
 
     <script>
@@ -223,6 +226,42 @@ void [Layout, Content, img, truncatedTitle, BlogPostingSchema, PodcastEpisodeSch
           });
           shareButton.classList.remove('hidden');
         }
+      }
+
+      /**
+			 * A11y: Add tabindex="0" to horizontally scrollable <pre> blocks
+			 * https://www.w3.org/WAI/standards-guidelines/act/rules/0ssw9k/
+			 */
+      function updatePreTabIndex(pre) {
+        if (pre.scrollWidth > pre.clientWidth) {
+          if (!pre.hasAttribute('tabindex')) {
+            pre.setAttribute('tabindex', '0');
+          }
+        } else {
+          // Remove tabindex if no longer scrollable
+          if (pre.getAttribute('tabindex') === '0') {
+            pre.removeAttribute('tabindex');
+          }
+        }
+      }
+
+      // Observe each pre element for resize events
+      if ('ResizeObserver' in window) {
+        const resizeObserver = new ResizeObserver((entries) => {
+          for (const entry of entries) {
+            updatePreTabIndex(entry.target);
+          }
+        });
+
+        document.querySelectorAll('pre').forEach((pre) => {
+          updatePreTabIndex(pre);
+          resizeObserver.observe(pre);
+        });
+      } else {
+        // Fallback: just set initial tabindex without observation
+        document.querySelectorAll('pre').forEach((pre) => {
+          updatePreTabIndex(pre);
+        });
       }
     </script>
 

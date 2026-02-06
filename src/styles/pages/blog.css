@@ -8,17 +8,20 @@ body.blog {
 	article {
 		display: grid;
 		grid-template:
-			"image type" auto
-			"image title" auto
-			"image teaser" 1fr
-			"image date" auto
-			/ minmax(40%, 15em) 1fr;
-		gap: 1rem 1.5rem;
+			"image . ." auto
+			"image type type" auto
+			"image title title" auto
+			"image teaser teaser" 1fr
+			"image date meta" auto
+			"image . ." auto
+			/ minmax(40%, 15em) auto 1fr;
+		gap: 0.5rem 1.5rem;
 
 		&:not(:has(> :is(img, picture))) {
 			grid-template:
 				"title" auto
 				"teaser" auto
+				"meta" auto
 				"date" auto
 				/ 1fr;
 		}
@@ -41,14 +44,32 @@ body.blog {
 		& .type {
 			grid-area: type;
 			justify-self: start;
-			padding-inline: 0.75ch;
+			align-self: end;
+			padding-inline: 0.5em;
+			padding-block: 0.5em;
+			margin: 0.5em;
 			font-size: 0.875rem;
+			font-weight: 500;
+			line-height: 1;
 			background: var(--color-highlight);
 			border-radius: 0.25em;
+			z-index: 1;
+			/* biome-ignore lint/correctness/noUnknownProperty: progressive enhancement */
+			@supports (corner-shape: squircle) {
+				border-radius: 100vmax;
+				/* biome-ignore lint/correctness/noUnknownProperty: progressive enhancement */
+				corner-shape: squircle;
+			}
 		}
-		& p {
+		& p:not(.reading-meta) {
 			grid-area: teaser;
 			margin: 0;
+		}
+		& .reading-meta {
+			grid-area: meta;
+			margin: 0;
+			font-size: 0.875rem;
+			color: var(--color-subtle-text);
 		}
 		& time {
 			grid-area: date;
@@ -56,13 +77,15 @@ body.blog {
 			color: var(--color-subtle-text);
 		}
 
-		@container (width <= 40rem) {
-			grid-template:
-				"image image" auto
-				"title title" auto
-				"teaser teaser" 1fr
-				"date type" auto
-				/ 1fr;
+		@container (width <= 50rem) {
+			grid-template: unset;
+			grid-template-columns: [image-start] 0.5em [title-start teaser-start meta-start type-start] 1fr [meta-end date-start] auto [date-end title-end teaser-end type-end] 0.5em [image-end];
+			grid-template-rows: [image-start type-start] auto [image-end type-end meta-start date-start] auto [meta-end date-end title-start] auto [title-end teaser-start] auto [teaser-end] 0.5em;
+			gap: 0.5rem 0;
+
+			.type {
+				justify-self: end;
+			}
 		}
 	}
 }
@@ -80,12 +103,27 @@ body:is([class^="blog-"], [class^="talks-"]) {
 		& > * {
 			grid-column: content;
 		}
+		& h1,
+		& .eyebrow {
+			grid-column: title;
+		}
+		& .reading-meta {
+			grid-column: title;
+			margin-block: unset;
+			font-size: 0.875rem;
+			color: var(--color-subtle-text);
+		}
 		& h1 {
 			/* TODO: replace through ident() when available - https://drafts.csswg.org/css-values-5/#funcdef-ident
 			  In the meantime, set view-transition-name inline in template */
+
+			&:has(+ .reading-meta) {
+				margin-block-end: 0.25em;
+			}
 		}
 		/* Treat an image following the h1 as the hero image */
-		& h1 + p:has(img) {
+		& h1 + p:has(img),
+		& .table-of-contents + p:has(img) {
 			grid-row: 1;
 			grid-column: full-width;
 			margin-block-start: 0;
@@ -119,15 +157,21 @@ body:is([class^="blog-"], [class^="talks-"]) {
 			flex-wrap: wrap;
 			justify-content: space-between;
 			align-items: center;
-			column-gap: 2rem;
+			gap: 2rem;
 			margin-block: 1em;
 			font-size: 0.875rem;
 			color: var(--color-subtle-text);
 
 			> p {
 				margin: unset;
+				flex-grow: 100;
 			}
 		}
+	}
+	img {
+		max-inline-size: 100%;
+		block-size: auto;
+		border-radius: 0.25rem;
 	}
 }
 
@@ -247,6 +291,7 @@ body:is([class^="blog-"], [class^="talks-"]) {
 				"image . ." 0.5em
 				"image title ." auto
 				"image teaser ." auto
+				"image meta ." auto
 				"image . ." 0.5em
 				/ 35ch 1fr 0.25em;
 			gap: 1rem 1.5rem;
@@ -273,9 +318,15 @@ body:is([class^="blog-"], [class^="talks-"]) {
 			& .type {
 				display: none;
 			}
-			& p {
+			& p:not(.reading-meta) {
 				grid-area: teaser;
 				margin: 0;
+			}
+			& .reading-meta {
+				grid-area: meta;
+				margin: 0;
+				font-size: 0.8125rem;
+				color: var(--color-subtle-text);
 			}
 			& time {
 				display: none;
@@ -286,6 +337,7 @@ body:is([class^="blog-"], [class^="talks-"]) {
 					"image image image" auto
 					". title ." auto
 					". teaser ." auto
+					". meta ." auto
 					". . ." 0.5em
 					/ 0.5em 1fr 0.5em;
 			}
@@ -298,6 +350,7 @@ body:is([class^="blog-"], [class^="talks-"]) {
 		display: none;
 	}
 
+	flex-grow: 1;
 	padding-inline: 0.5em;
 	padding-block: 0.25em;
 	font-size: 1rem;
@@ -308,5 +361,124 @@ body:is([class^="blog-"], [class^="talks-"]) {
 		block-size: 1.2em;
 		fill: currentcolor;
 		vertical-align: sub;
+	}
+}
+
+.markdown-alert {
+	--color-alert: var(--color-subtle-text);
+	padding-inline-start: 1rem;
+	border-inline-start: 4px solid var(--color-alert);
+	position: relative;
+	border-radius: 0.25rem;
+	background: var(--color-subtle-bg);
+
+	&.markdown-alert-note {
+		--color-alert: oklch(0.57 0.2 259.67);
+	}
+	&.markdown-alert-tip {
+		--color-alert: oklch(0.55 0.15 146.25);
+	}
+	&.markdown-alert-important {
+		--color-alert: oklch(0.58 0.21 295.57);
+	}
+	&.markdown-alert-warning {
+		--color-alert: oklch(0.57 0.12 74.92);
+	}
+	&.markdown-alert-caution {
+		--color-alert: oklch(0.59 0.2 26.79);
+	}
+
+	& .markdown-alert-title {
+		display: flex;
+		align-items: center;
+		column-gap: 0.5rem;
+		color: oklch(from var(--color-alert) calc(l + 0.1) c h);
+		font-size: 1.125em;
+		font-weight: 600;
+		border-end-start-radius: 0.5rem;
+		border-end-end-radius: 0.5rem;
+	}
+	& > :first-child {
+		margin-block-start: 0.5rem;
+	}
+	& > :last-child {
+		margin-block-end: 0.75rem;
+	}
+	& .octicon {
+		fill: currentColor;
+		position: absolute;
+		inset-block-start: 0;
+		inset-inline-start: 0;
+		translate: -50% 0%;
+		background-color: var(--color-subtle-bg);
+		padding: 0.75em;
+		border-end-end-radius: 50%;
+		overflow: visible;
+		border-radius: 50%;
+		z-index: -1;
+	}
+}
+
+.reactions {
+	flex: 1 1 100%;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+
+	> div {
+		display: flex;
+		flex-wrap: wrap;
+		row-gap: 0.5rem;
+		align-items: center;
+	}
+
+	> header,
+	> p {
+		flex-basis: 100%;
+	}
+	> header {
+		font-size: 1.5em;
+	}
+	> p {
+		margin: unset;
+	}
+	#likes {
+		color: oklch(0.7 0.25 30);
+	}
+	#boosts {
+		color: oklch(0.7 0.4 357);
+	}
+
+	.count {
+		display: inline-block;
+		font-weight: 700;
+		padding-inline: 0.5em;
+		padding-block: 0.25em;
+		border-radius: 100vmax;
+		vertical-align: middle;
+		line-height: 1;
+		font-variant-numeric: tabular-nums;
+	}
+	.avatars {
+		flex-basis: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25em;
+		> img {
+			inline-size: 3rem;
+			aspect-ratio: 1;
+			border-radius: 50%;
+			box-shadow: 0 2px 6px 1px oklch(from var(--color-subtle-bg) l c h / 0.5);
+			border: 1px solid oklch(from var(--color-subtle-bg) l c h / 0.5);
+			animation: fadeIn 0.3s ease-out;
+
+			/* And just for performance */
+			content-visibility: auto;
+			contain-intrinsic-size: 3rem;
+
+			@media (prefers-reduced-motion: no-preference) {
+				animation: scaleIn 0.3s ease-out;
+			}
+		}
 	}
 }

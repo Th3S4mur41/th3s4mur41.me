@@ -1,3 +1,67 @@
+# [2.32.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.31.0...v2.32.0) (2026-02-06)
+
+
+### Features
+
+* add reading time functionality  ([#2080](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2080)) ([124eb5c](https://github.com/Th3S4mur41/th3s4mur41.me/commit/124eb5c37438de2a08ff103f53decd12b64c42b0))
+
+# [2.31.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.30.0...v2.31.0) (2026-02-05)
+
+
+### Features
+
+* add reactions support for Bluesky and Mastodon in blog articles ([#2092](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2092)) ([32bfc13](https://github.com/Th3S4mur41/th3s4mur41.me/commit/32bfc13ee21e87cd79f3b3f9b1f7c83c1e10db2b))
+
+# [2.30.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.29.4...v2.30.0) (2026-02-04)
+
+
+### Features
+
+* add old collab tools article ([#2090](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2090)) ([c15ec93](https://github.com/Th3S4mur41/th3s4mur41.me/commit/c15ec93f5e0a3b9b6afe64ee643772f59363ab73))
+
+## [2.29.4](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.29.3...v2.29.4) (2026-02-03)
+
+
+### Bug Fixes
+
+* update fediverse links to include Bluesky and mastodon bridge ([e3ca123](https://github.com/Th3S4mur41/th3s4mur41.me/commit/e3ca123f5f1cc52cf03ee89fb420a93efbf52dd8))
+* **webfinger:** add Fosstodon alias to webfinger.json ([12e5a24](https://github.com/Th3S4mur41/th3s4mur41.me/commit/12e5a24e81f9a55671c706ea8d007155a0a375ed))
+
+## [2.29.3](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.29.2...v2.29.3) (2026-02-02)
+
+
+### Bug Fixes
+
+* **webfinger:** move to bluesky brdige account ([9974312](https://github.com/Th3S4mur41/th3s4mur41.me/commit/9974312c9d7c2d93a186240154a43465841ab6aa))
+
+## [2.29.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.29.1...v2.29.2) (2026-02-02)
+
+
+### Bug Fixes
+
+* **layout:** correct casing in fediverse creator meta tag ([5bcd1cc](https://github.com/Th3S4mur41/th3s4mur41.me/commit/5bcd1ccc9ae6d3015600b9a8f6dd2ec8ebad48ae))
+
+## [2.29.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.29.0...v2.29.1) (2026-02-02)
+
+
+### Bug Fixes
+
+* **mastodon:** correct casing in webfinger subject and aliases ([379206a](https://github.com/Th3S4mur41/th3s4mur41.me/commit/379206a90ed35d915a4c1a2ee0a3da9554c9d99f))
+
+# [2.29.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.28.0...v2.29.0) (2026-01-30)
+
+
+### Features
+
+* add Table of Contents functionality and styling ([#2069](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2069)) ([7d1dcfb](https://github.com/Th3S4mur41/th3s4mur41.me/commit/7d1dcfbf6159b9312893010c30505916bfb7aec0))
+
+# [2.28.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.27.2...v2.28.0) (2026-01-29)
+
+
+### Features
+
+* update profile images and enhance landing page content ([#2068](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2068)) ([2233906](https://github.com/Th3S4mur41/th3s4mur41.me/commit/2233906159b6e3e5900a02a8284e2b62ec8571d2))
+
 ## [2.27.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.27.1...v2.27.2) (2026-01-28)
 
 

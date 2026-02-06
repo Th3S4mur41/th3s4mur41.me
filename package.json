@@ -1,7 +1,7 @@
 {
 	"name": "th3s4mur41.me",
 	"type": "module",
-	"version": "2.27.2",
+	"version": "2.32.0",
 	"license": "LICENSE",
 	"private": true,
 	"description": "th3s4mur41.me website",
@@ -24,17 +24,19 @@
 		"@astrojs/rss": "^4.0.15",
 		"@astrojs/sitemap": "^3.7.0",
 		"@fontsource/cascadia-code": "^5.2.3",
-		"astro": "^5.16.15",
+		"astro": "^5.17.1",
+		"reading-time": "^1.5.0",
+		"rehype-github-alerts": "^4.2.0",
+		"remark-reading-time": "^2.0.2",
 		"unist-util-visit": "^5.1.0"
 	},
 	"devDependencies": {
 		"@astrojs/mdx": "^4.3.13",
-		"@biomejs/biome": "2.3.13",
-		"@commitlint/cli": "^20.3.1",
-		"@commitlint/config-conventional": "^20.3.1",
+		"@biomejs/biome": "2.3.14",
+		"@commitlint/cli": "^20.4.1",
+		"@commitlint/config-conventional": "^20.4.1",
 		"@semantic-release/changelog": "^6.0.3",
 		"@semantic-release/git": "^10.0.1",
-		"@squoosh/cli": "^0.7.3",
 		"astro-compress": "^2.3.9",
 		"browserslist": "^4.28.1",
 		"concurrently": "^9.2.1",
@@ -47,14 +49,13 @@
 	},
 	"optionalDependencies": {
 		"lint-staged": "^16.2.7",
-		"semantic-release": "^25.0.2"
+		"semantic-release": "^25.0.3"
 	},
 	"scripts": {
-		"start": "PREVIEW_FUTURE_CONTENT=true astro dev",
+		"start": "astro dev",
 		"start:prod": "astro preview",
 		"build": "astro build",
 		"build:favicon": "real-favicon check-for-update --fail-on-update faviconData.json",
-		"images:webp": "squoosh-cli --webp auto --output-dir public/icons public/icons/android*.png",
 		"lint": "prettier --check --ignore-unknown --no-error-on-unmatched-pattern . && biome ci .",
 		"lint:fix": "prettier --write --ignore-unknown --no-error-on-unmatched-pattern . && biome check --write .",
 		"test": "echo No test specified",

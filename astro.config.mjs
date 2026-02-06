@@ -2,6 +2,9 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 import compress from "astro-compress";
+import { rehypeGithubAlerts } from "rehype-github-alerts";
+import remarkReadingTime from "remark-reading-time";
+import { rehypeInjectToc } from "./src/plugins/rehype-inject-toc.js";
 import { rehypeOptimizeFirstImage } from "./src/plugins/rehype-optimize-first-image.js";
 import { rehypeViewTransitionNames } from "./src/plugins/rehype-view-transition-names.js";
 
@@ -10,7 +13,8 @@ export default defineConfig({
 	site: "https://th3s4mur41.me",
 	markdown: {
 		syntaxHighlight: "prism",
-		rehypePlugins: [rehypeViewTransitionNames, rehypeOptimizeFirstImage],
+		remarkPlugins: [remarkReadingTime],
+		rehypePlugins: [rehypeInjectToc, rehypeViewTransitionNames, rehypeOptimizeFirstImage],
 	},
 	integrations: [
 		sitemap({
@@ -20,7 +24,8 @@ export default defineConfig({
 			filter: (pageUrl) => !pageUrl.includes("/_draft-"),
 		}),
 		mdx({
-			rehypePlugins: [rehypeViewTransitionNames, rehypeOptimizeFirstImage],
+			remarkPlugins: [remarkReadingTime],
+			rehypePlugins: [rehypeInjectToc, rehypeViewTransitionNames, rehypeGithubAlerts, rehypeOptimizeFirstImage],
 		}),
 		compress({
 			HTML: {

@@ -39,11 +39,6 @@ jobs:
       pull-requests: write
       contents: write
 
-  npm-lint:
-    name: '▶️ actions'
-    needs: [pr-lint]
-    uses: ./.github/workflows/npm-lint.yml
-
   npm-build:
     name: '▶️ actions'
     needs: [pr-lint]

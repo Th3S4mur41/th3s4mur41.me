@@ -7,8 +7,16 @@
 	--color-accent: oklch(0.86 0.18 90.53);
 
 	--main-margin: 1.5rem;
-	--grid-columns: [full-width-start] 1fr [margin-start] var(--main-margin) [content-start]
-		min(80ch, calc(100vi - var(--main-margin) * 2)) [content-end] var(--main-margin) [margin-end] 1fr [full-width-end];
+	--grid-columns: [full-width-start] 1fr [margin-start] var(--main-margin) [content-start title-start]
+		min(80ch, calc(100vi - var(--main-margin) * 2)) [content-end title-end] var(--main-margin) [margin-end] 1fr
+		[full-width-end];
+
+	@media (width >= 1200px) {
+		--grid-columns: [full-width-start] 1fr [margin-start] var(--main-margin) [content-start title-start]
+			min(80ch, calc(100vi - var(--main-margin) * 2)) [content-end title-end sidebar-start] auto [sidebar-end]
+			var(--main-margin) [margin-end] 1fr [full-width-end];
+		--toc-sidebar: true;
+	}
 }
 
 @view-transition {
@@ -41,9 +49,9 @@ body {
 	color: var(--color-text);
 }
 
-header {
+body > header {
 	overflow-y: clip;
-	mask-image: linear-gradient(to bottom, black 90%, transparent 98%);
+	mask-image: linear-gradient(to bottom, black 95%, transparent 99%);
 	mask-size: 100% 100%;
 	mask-repeat: no-repeat;
 	/* TODO: replace with good layout */
@@ -72,6 +80,11 @@ header {
 		view-transition-name: hero-image;
 		object-position: center bottom;
 
+		/* duplicate mask to avoid image blinking on page navigation */
+		mask-image: linear-gradient(to bottom, black 90%, transparent 98%);
+		mask-size: 100% 100%;
+		mask-repeat: no-repeat;
+
 		@media (prefers-reduced-motion: no-preference) {
 			@supports (animation-timeline: view()) {
 				animation: parallax 1ms linear both;
@@ -82,12 +95,13 @@ header {
 	}
 }
 
-:is(h1, h2, h3) {
+:is(h1, h2, h3, h4, h5, h6) {
 	font-weight: 300;
 	line-height: 1.25;
 	letter-spacing: 0.05ch;
 	text-transform: uppercase;
 	text-wrap: balance;
+	scroll-margin-block-start: 4rem; /* account for sticky nav */
 }
 
 /* Eyebrow text above main heading */
@@ -105,13 +119,24 @@ header {
 	}
 }
 
-p {
+p,
+li {
 	text-wrap: pretty;
 
 	@media (prefers-reduced-motion: no-preference) {
 		animation: fadeIn 1ms linear both;
 		animation-timeline: view();
-		animation-range: entry 10% entry 60%;
+		animation-range: entry 10% entry 50%;
+	}
+}
+
+h1,
+h2,
+h3 {
+	@media (prefers-reduced-motion: no-preference) {
+		animation: fadeIn 1ms linear both;
+		animation-timeline: view();
+		animation-range: entry 10% entry 100%;
 	}
 }
 
@@ -401,6 +426,7 @@ hr {
 	border: none;
 	block-size: 0.1rem;
 	inline-size: stretch;
+	margin-block: 2.5em;
 	background: linear-gradient(to right, transparent, var(--color-text), transparent);
 }
 
@@ -409,8 +435,8 @@ a:has(> article) {
 	text-decoration: none;
 	border: 2px solid transparent;
 	border-radius: 0.5rem;
-	padding-inline: 2rem;
-	padding-block: 1.5rem;
+	margin-block: 1.5em;
+	overflow: clip;
 
 	&:is(:hover, :focus) {
 		background:

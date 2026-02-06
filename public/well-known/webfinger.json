@@ -2,19 +2,20 @@
 	"subject": "acct:th3s4mur41@th3s4mur41.me",
 	"aliases": [
 		"acct:@th3s4mur41@th3s4mur41.me",
-		"https://fosstodon.org/@Th3S4mur41",
-		"https://fosstodon.org/users/Th3S4mur41"
+		"https://bsky.app/profile/th3s4mur41.me",
+		"https://bsky.brid.gy/ap/th3s4mur41.me",
+		"https://fosstodon.org/@Th3S4mur41"
 	],
 	"links": [
 		{
 			"rel": "http://webfinger.net/rel/profile-page",
 			"type": "text/html",
-			"href": "https://fosstodon.org/@Th3S4mur41"
+			"href": "https://bsky.app/profile/th3s4mur41.me"
 		},
 		{
 			"rel": "self",
 			"type": "application/activity+json",
-			"href": "https://fosstodon.org/users/Th3S4mur41"
+			"href": "https://bsky.brid.gy/ap/th3s4mur41.me"
 		}
 	]
 }
