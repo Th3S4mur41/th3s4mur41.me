@@ -78,6 +78,8 @@ const readingStats =
 	section === "blog" && typeof article.body === "string" && article.body.trim().length > 0
 		? readingTime(article.body)
 		: null;
+
+// TODO: consider extracting this formatting logic into a shared utility function (duplicated in ArticlePageHeader) and reusing it across the codebase for consistency)
 const formattedWords = readingStats ? new Intl.NumberFormat("en-GB").format(readingStats.words) : null;
 const readingMeta = readingStats ? `${readingStats.text} • ${formattedWords} words` : null;
 
@@ -107,7 +109,7 @@ void [
 ];
 ---
 
-
+<!-- TODO: Refactor component and layout  for reusability (e.g. container query) and accessibility (move the link inside the article) -->
 <a class="card post" href={resolvedHref} aria-labelledby={headerId} aria-describedby={descriptionId}>
 	<article class:list={[{ highlight }]} aria-labelledby={headerId}>
 		<HeadingTag id={headerId} style={`view-transition-name: article-title-${transitionId};`}>{article.data.title}</HeadingTag>
