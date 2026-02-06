@@ -53,6 +53,7 @@ body.home {
 	.website {
 		ul {
 			list-style-image: url("/icons/kunai.svg");
+			list-style-type: ""; /* prevent screen reader from announcing list items as "text" */
 			::marker {
 				color: var(--color-accent);
 			}
@@ -154,12 +155,8 @@ body.home {
 
 	article {
 		display: grid;
-		grid-template:
-			"image image title" auto
-			"image image teaser" auto
-			"type date teaser" auto
-			/ 15ch 15ch 1fr;
-		gap: 1rem 1.5rem;
+		grid-template-columns: [image-start] 0.5em [type-start meta-start] 20ch [meta-end date-start] 10ch [type-end date-end] 0.5em [image-end] 1em [title-start teaser-start] 1fr [title-end teaser-end] 0.5em;
+		grid-template-rows: [image-start type-start] 0.5em [title-start] auto [title-end] 0.5em [teaser-start] 1fr [image-end type-end] 0.5em [meta-start date-start] auto [meta-end date-end teaser-end] 0.5em;
 
 		& > h3 {
 			grid-area: title;
@@ -179,16 +176,33 @@ body.home {
 		}
 		& .type {
 			grid-area: type;
-			justify-self: start;
-			align-self: start;
-			padding-inline: 0.75ch;
+			justify-self: end;
+			align-self: end;
+			padding-inline: 0.5em;
+			padding-block: 0.5em;
+			margin: 0.5em;
 			font-size: 0.875rem;
-			background: var(--color-highlight);
+			font-weight: 500;
+			line-height: 1;
+			background: var(--color-bg);
 			border-radius: 0.25em;
+			z-index: 1;
+			/* biome-ignore lint/correctness/noUnknownProperty: progressive enhancement */
+			@supports (corner-shape: squircle) {
+				border-radius: 100vmax;
+				/* biome-ignore lint/correctness/noUnknownProperty: progressive enhancement */
+				corner-shape: squircle;
+			}
 		}
-		& p {
+		& p:not(.reading-meta) {
 			grid-area: teaser;
 			margin: 0;
+		}
+		& .reading-meta {
+			grid-area: meta;
+			margin: 0;
+			font-size: 0.875rem;
+			color: var(--color-subtle-text);
 		}
 		& time {
 			grid-area: date;
@@ -198,21 +212,15 @@ body.home {
 		}
 
 		&.highlight {
-			grid-template:
-				"image image" auto
-				"type date" auto
-				"title title" auto
-				"teaser teaser" auto
-				/ 1fr auto;
+			grid-template-columns: [image-start] 0.5em [title-start teaser-start meta-start type-start] 1fr [meta-end date-start] auto [date-end title-end teaser-end type-end] 0.5em [image-end];
+			grid-template-rows: [image-start type-start] auto [image-end type-end meta-start date-start] auto [meta-end date-end title-start] auto [title-end teaser-start] auto [teaser-end] 0.5em;
+			row-gap: 0.5em;
 		}
 
 		@container (width <= 40rem) {
-			grid-template:
-				"image image" auto
-				"type date" auto
-				"title title" auto
-				"teaser teaser" auto
-				/ 1fr auto;
+			grid-template-columns: [image-start] 0.5em [title-start teaser-start meta-start type-start] 1fr [meta-end date-start] auto [date-end title-end teaser-end type-end] 0.5em [image-end];
+			grid-template-rows: [image-start type-start] auto [image-end type-end meta-start date-start] auto [meta-end date-end title-start] auto [title-end teaser-start] auto [teaser-end] 0.5em;
+			row-gap: 0.5em;
 		}
 	}
 }

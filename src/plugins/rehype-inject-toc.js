@@ -3,7 +3,16 @@
  * Collects headings from the AST and builds a nested TOC structure
  */
 export function rehypeInjectToc() {
-	return function transformer(tree) {
+	return function transformer(tree, file) {
+		const normalizePath = (value) => (typeof value === "string" ? value.replaceAll("\\\\", "/") : "");
+		const filePath = normalizePath(file?.path);
+		const isBlog = filePath.includes("/src/content/blog/");
+		const readingTime = isBlog ? file?.data?.readingTime : undefined;
+		const readText = readingTime && typeof readingTime.text === "string" ? readingTime.text : undefined;
+		const wordCount = readingTime && Number.isFinite(readingTime.words) ? readingTime.words : undefined;
+		const formattedWords = typeof wordCount === "number" ? new Intl.NumberFormat("en-GB").format(wordCount) : undefined;
+		const readingMetaText = readText && formattedWords ? `${readText} • ${formattedWords} words` : undefined;
+
 		// Helper function to extract text from heading nodes
 		const getText = (node) => {
 			if (node.type === "text") {
@@ -47,11 +56,6 @@ export function rehypeInjectToc() {
 
 		// Filter out h1 (depth 1) and only keep h2-h6
 		const tocHeadings = headings.filter((h) => h.depth > 1);
-
-		// Skip if there are no headings beyond h1
-		if (tocHeadings.length === 0) {
-			return tree;
-		}
 
 		// Build nested TOC structure
 		const buildNestedToc = (headings) => {
@@ -120,40 +124,57 @@ export function rehypeInjectToc() {
 			return [ulNode];
 		};
 
-		const nestedHeadings = buildNestedToc(tocHeadings);
+		const nestedHeadings = tocHeadings.length > 0 ? buildNestedToc(tocHeadings) : [];
 
-		// Create TOC nav element
-		const tocNode = {
-			type: "element",
-			tagName: "nav",
-			properties: {
-				class: "table-of-contents",
-				"aria-labelledby": "toc-heading",
-			},
-			children: [
-				{
-					type: "element",
-					tagName: "header",
-					properties: { id: "toc-heading" },
-					children: [{ type: "text", value: "On this page" }],
-				},
-				...renderTocList(nestedHeadings),
-			],
-		};
+		// Create TOC nav element (if needed)
+		const tocNode =
+			nestedHeadings.length > 0
+				? {
+						type: "element",
+						tagName: "nav",
+						properties: {
+							class: "table-of-contents",
+							"aria-labelledby": "toc-heading",
+						},
+						children: [
+							{
+								type: "element",
+								tagName: "header",
+								properties: { id: "toc-heading" },
+								children: [{ type: "text", value: "On this page" }],
+							},
+							...renderTocList(nestedHeadings),
+						],
+					}
+				: null;
 
-		// Find the first h1 and insert TOC after it
-		const insertToc = (node, parent, index) => {
+		const readingMetaNode =
+			readingMetaText && isBlog
+				? {
+						type: "element",
+						tagName: "p",
+						properties: { class: "reading-meta" },
+						children: [{ type: "text", value: readingMetaText }],
+					}
+				: null;
+
+		const nodesToInsert = [readingMetaNode, tocNode].filter(Boolean);
+		if (nodesToInsert.length === 0) {
+			return tree;
+		}
+
+		// Find the first h1 and insert nodes after it
+		const insertNodesAfterH1 = (node, parent, index) => {
 			if (node.type === "element" && node.tagName === "h1") {
-				// Insert TOC after the h1
 				if (parent && typeof index === "number") {
-					parent.children.splice(index + 1, 0, tocNode);
+					parent.children.splice(index + 1, 0, ...nodesToInsert);
 					return true;
 				}
 			}
 
 			if (node.children) {
 				for (let i = 0; i < node.children.length; i++) {
-					if (insertToc(node.children[i], node, i)) {
+					if (insertNodesAfterH1(node.children[i], node, i)) {
 						return true;
 					}
 				}
@@ -162,7 +183,7 @@ export function rehypeInjectToc() {
 			return false;
 		};
 
-		insertToc(tree);
+		insertNodesAfterH1(tree);
 
 		return tree;
 	};

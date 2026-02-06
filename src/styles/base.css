@@ -433,8 +433,8 @@ a:has(> article) {
 	text-decoration: none;
 	border: 2px solid transparent;
 	border-radius: 0.5rem;
-	padding-inline: 2rem;
-	padding-block: 1.5rem;
+	margin-block: 1.5em;
+	overflow: clip;
 
 	&:is(:hover, :focus) {
 		background:

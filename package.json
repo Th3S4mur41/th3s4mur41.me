@@ -25,7 +25,9 @@
 		"@astrojs/sitemap": "^3.7.0",
 		"@fontsource/cascadia-code": "^5.2.3",
 		"astro": "^5.17.1",
-		"rehype-github-alerts": "^4.2.0"
+		"reading-time": "^1.5.0",
+		"rehype-github-alerts": "^4.2.0",
+		"remark-reading-time": "^2.0.2"
 	},
 	"devDependencies": {
 		"@astrojs/mdx": "^4.3.13",

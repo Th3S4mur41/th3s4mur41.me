@@ -8,17 +8,20 @@ body.blog {
 	article {
 		display: grid;
 		grid-template:
-			"image type" auto
-			"image title" auto
-			"image teaser" 1fr
-			"image date" auto
-			/ minmax(40%, 15em) 1fr;
-		gap: 1rem 1.5rem;
+			"image . ." auto
+			"image type type" auto
+			"image title title" auto
+			"image teaser teaser" 1fr
+			"image date meta" auto
+			"image . ." auto
+			/ minmax(40%, 15em) auto 1fr;
+		gap: 0.5rem 1.5rem;
 
 		&:not(:has(> img)) {
 			grid-template:
 				"title" auto
 				"teaser" auto
+				"meta" auto
 				"date" auto
 				/ 1fr;
 		}
@@ -39,14 +42,32 @@ body.blog {
 		& .type {
 			grid-area: type;
 			justify-self: start;
-			padding-inline: 0.75ch;
+			align-self: end;
+			padding-inline: 0.5em;
+			padding-block: 0.5em;
+			margin: 0.5em;
 			font-size: 0.875rem;
+			font-weight: 500;
+			line-height: 1;
 			background: var(--color-highlight);
 			border-radius: 0.25em;
+			z-index: 1;
+			/* biome-ignore lint/correctness/noUnknownProperty: progressive enhancement */
+			@supports (corner-shape: squircle) {
+				border-radius: 100vmax;
+				/* biome-ignore lint/correctness/noUnknownProperty: progressive enhancement */
+				corner-shape: squircle;
+			}
 		}
-		& p {
+		& p:not(.reading-meta) {
 			grid-area: teaser;
 			margin: 0;
+		}
+		& .reading-meta {
+			grid-area: meta;
+			margin: 0;
+			font-size: 0.875rem;
+			color: var(--color-subtle-text);
 		}
 		& time {
 			grid-area: date;
@@ -54,13 +75,15 @@ body.blog {
 			color: var(--color-subtle-text);
 		}
 
-		@container (width <= 40rem) {
-			grid-template:
-				"image image" auto
-				"title title" auto
-				"teaser teaser" 1fr
-				"date type" auto
-				/ 1fr;
+		@container (width <= 50rem) {
+			grid-template: unset;
+			grid-template-columns: [image-start] 0.5em [title-start teaser-start meta-start type-start] 1fr [meta-end date-start] auto [date-end title-end teaser-end type-end] 0.5em [image-end];
+			grid-template-rows: [image-start type-start] auto [image-end type-end meta-start date-start] auto [meta-end date-end title-start] auto [title-end teaser-start] auto [teaser-end] 0.5em;
+			gap: 0.5rem 0;
+
+			.type {
+				justify-self: end;
+			}
 		}
 	}
 }
@@ -82,9 +105,19 @@ body:is([class^="blog-"], [class^="talks-"]) {
 		& .eyebrow {
 			grid-column: title;
 		}
+		& .reading-meta {
+			grid-column: title;
+			margin-block: unset;
+			font-size: 0.875rem;
+			color: var(--color-subtle-text);
+		}
 		& h1 {
 			/* TODO: replace through ident() when available - https://drafts.csswg.org/css-values-5/#funcdef-ident
 			  In the meantime, set view-transition-name inline in template */
+
+			&:has(+ .reading-meta) {
+				margin-block-end: 0.25em;
+			}
 		}
 		/* Treat an image following the h1 as the hero image */
 		& h1 + p:has(img),
@@ -255,6 +288,7 @@ body:is([class^="blog-"], [class^="talks-"]) {
 				"image . ." 0.5em
 				"image title ." auto
 				"image teaser ." auto
+				"image meta ." auto
 				"image . ." 0.5em
 				/ 35ch 1fr 0.25em;
 			gap: 1rem 1.5rem;
@@ -279,9 +313,15 @@ body:is([class^="blog-"], [class^="talks-"]) {
 			& .type {
 				display: none;
 			}
-			& p {
+			& p:not(.reading-meta) {
 				grid-area: teaser;
 				margin: 0;
+			}
+			& .reading-meta {
+				grid-area: meta;
+				margin: 0;
+				font-size: 0.8125rem;
+				color: var(--color-subtle-text);
 			}
 			& time {
 				display: none;
@@ -292,6 +332,7 @@ body:is([class^="blog-"], [class^="talks-"]) {
 					"image image image" auto
 					". title ." auto
 					". teaser ." auto
+					". meta ." auto
 					". . ." 0.5em
 					/ 0.5em 1fr 0.5em;
 			}
