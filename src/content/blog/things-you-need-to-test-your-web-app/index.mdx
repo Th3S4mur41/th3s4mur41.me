@@ -2,7 +2,7 @@
 title: Things You Need To Test Your Web App
 date: 2020-12-16T09:38:21.133Z
 image: ''
-published: false
+imageAlt: ''
 description: >-
   Recently I came across some bugs in an app I developed that only affected
   iPhone users
@@ -11,9 +11,11 @@ keywords: []
 canonical: https://medium.com/@th3s4mur41/all-the-things-you-need-to-test-your-web-app-5efbc3028d13
 ---
 
+# Things You Need To Test Your Web App
+
 ![](C:\src\test\medium-export\posts\md_1712848580652\img\0__YGa5XtsuA4IXtR__W.jpg)
 
-#### Recently I came across some bugs in an app I developed that only affected iPhone users.
+#### Recently I came across some bugs in an app I developed that only affected iPhoneHusers.
 
 When encountering a bug, the first step is usually to try to reproduce the issue and then to analyze it with developer tools. iOS however, is the most difficult environment to debug/analyze unless you’re fully committed to Apple and are the proud owner of both an iPhone and a Mac. If you are missing any of those, you get no developer tools to debug. But let’s get back to that a bit later.
 
@@ -33,7 +35,7 @@ Speed has a big impact on user experience and while the overall speed of a websi
 
 In order to check the behavior of your website in those environments or even to understand the pain points of certain users. We need to be able to use your own website with similar network limitations. That is when throttling in DevTools come in handy.
 
-[Chromium](https://www.chromium.org/Home) based browsers (Chrome, Edge, Opera, …) also have an option to simulate “Offline” in the same menu. A similar option is also available in Firefox, although in a quite different place (Menu > More > Work Offline).
+[Chromium](https://www.chromium.org/Home) based browsers (Chrome, Edge, Opera, …) also have an option to simulate “Offline” in the same menu. A similar option is also available in Firefox, although in a quite different place (Menu > More > Work Offline).
 
 Currently, the Firefox implementation has one advantage over Chromium: As soon as “work offline” is activated, all connections including WebSocket are terminated.
 
