@@ -106,7 +106,8 @@ body.home {
 			0 0.25rem 0.375rem -0.125rem oklch(from var(--color-shadow) l c h / 0.2),
 			inset 0 0.25rem 0.375rem -0.125rem oklch(from var(--color-shadow) l c h / 0.2);
 
-		& > img {
+		& > img,
+		& > picture > img {
 			width: 10rem;
 			height: 10rem;
 			object-fit: cover;
@@ -146,7 +147,8 @@ body.home {
 			@media (prefers-reduced-motion: no-preference) {
 				outline: none; /* replace default outline through border color change on focus because outline form is inconsistent due to overflowing image */
 
-				& > img {
+				& > img,
+				& > picture > img {
 					transform: scale(1.2);
 				}
 			}
@@ -164,6 +166,9 @@ body.home {
 			/* TODO: replace through ident() when available - https://drafts.csswg.org/css-values-5/#funcdef-ident
 			  In the meantime, set view-transition-name inline in template */
 		}
+		& > picture {
+			display: contents;
+		}
 		& img {
 			grid-area: image;
 			inline-size: 100%;
@@ -180,7 +185,7 @@ body.home {
 			align-self: end;
 			padding-inline: 0.5em;
 			padding-block: 0.5em;
-			margin: 0.5em;
+			margin-block: 0.5em;
 			font-size: 0.875rem;
 			font-weight: 500;
 			line-height: 1;

@@ -3,7 +3,8 @@ body.about {
 		font-size: clamp(1rem, 0.8645rem + 0.6024vw, 1.25rem);
 		font-weight: 300;
 
-		& > img {
+		& > img,
+		& > picture > img {
 			display: block;
 			inline-size: clamp(20rem, 50%, 40rem);
 			height: auto;

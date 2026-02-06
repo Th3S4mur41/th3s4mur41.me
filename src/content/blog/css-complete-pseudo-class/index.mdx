@@ -33,9 +33,6 @@ reactions:
   - bluesky: https://bsky.app/profile/th3s4mur41.me/post/3lykpz2kuic22
 ---
 
-import { Image } from 'astro:assets';
-import avatarExample from 'avatar-example.png';
-
 # From Skeletons to Smooth Reveals: A Case for the `:complete` pseudo-class
 
 ![The CSS logo in front of a skeleton UI template](css-complete-pseudo-class.jpg)
@@ -83,10 +80,7 @@ This means every skeleton loader ships with extra script, DOM manipulation, and 
 User profile pictures often come in as transparent PNGs. The standard fallback is to show initials, a colored background, or an icon behind the avatar.
 
 <figure>
-	<Image
-		src={avatarExample}
-		alt="The left and center avatars appear as expected. On the left, there's a colored fallback displaying initials, while the center shows an image with a solid background. The issue arises with the right avatar: when the image has a transparent background, the fallback initials remain visible underneath, creating an unintended visual overlap."
-	/>
+  ![The left and center avatars appear as expected. On the left, there's a colored fallback displaying initials, while the center shows an image with a solid background. The issue arises with the right avatar: when the image has a transparent background, the fallback initials remain visible underneath, creating an unintended visual overlap.](avatar-example.png)
 	<figcaption>
 		The left and center avatars appear as expected. On the left, there's a colored fallback displaying initials, while
 		the center shows an image with a solid background. The issue arises with the right avatar: when the image has a
