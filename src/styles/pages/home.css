@@ -53,6 +53,7 @@ body.home {
 	.website {
 		ul {
 			list-style-image: url("/icons/kunai.svg");
+			list-style-type: ""; /* prevent screen reader from announcing list items as "text" */
 			::marker {
 				color: var(--color-accent);
 			}
