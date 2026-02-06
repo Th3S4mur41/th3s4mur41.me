@@ -30,10 +30,11 @@ body.blog {
 			grid-area: title;
 			margin: 0;
 		}
-		& > :is(picture, img) {
-			grid-area: image;
+		& > picture {
+			display: contents;
 		}
 		& img {
+			grid-area: image;
 			inline-size: 100%;
 			/* min-block-size: 80%; */
 			block-size: auto;
@@ -47,7 +48,6 @@ body.blog {
 			align-self: end;
 			padding-inline: 0.5em;
 			padding-block: 0.5em;
-			margin: 0.5em;
 			font-size: 0.875rem;
 			font-weight: 500;
 			line-height: 1;
@@ -85,6 +85,7 @@ body.blog {
 
 			.type {
 				justify-self: end;
+				margin-block: 0.5em;
 			}
 		}
 	}
@@ -149,7 +150,7 @@ body:is([class^="blog-"], [class^="talks-"]) {
 				}
 			}
 		}
-		& p:has(img:only-child) {
+		& p:has(:is(img, picture):only-child) {
 			text-align: center;
 		}
 		& > footer {
@@ -180,6 +181,9 @@ figure {
 
 	& > p:has(> :is(img, picture):only-child) {
 		margin-block: unset;
+	}
+	& picture {
+		/* display: contents; */
 	}
 	& img {
 		max-inline-size: 100%;
