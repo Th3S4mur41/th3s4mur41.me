@@ -1,57 +1,94 @@
 ---
 title: Things You Need To Test Your Web App
 date: 2020-12-16T09:38:21.133Z
-image: ''
-imageAlt: ''
-description: >-
-  Recently I came across some bugs in an app I developed that only affected
-  iPhone users
-tags: []
-keywords: []
-canonical: https://medium.com/@th3s4mur41/all-the-things-you-need-to-test-your-web-app-5efbc3028d13
+image: 'multi-screen-and-device-testing.jpg'
+imageAlt: 'Digital workspace with a developer surrounded by a desktop, laptop, tablet, and phone, representing comprehensive web app testing across platforms.'
+description: Recently I came across some bugs in an app I developed that only affected iPhone users
+tags:
+  - how-to
+  - WebDev
+  - DevTools
+  - responsive design
+  - UX
+keywords:
+  - web app testing
+  - cross browser testing
+  - responsive design testing
+  - network throttling
+  - devtools
+  - device labs
+  - lighthouse
+  - webhint
+  - browserslist
+  - mobile safari debugging
 ---
 
 # Things You Need To Test Your Web App
 
-![](C:\src\test\medium-export\posts\md_1712848580652\img\0__YGa5XtsuA4IXtR__W.jpg)
+![Digital workspace with a developer surrounded by a desktop, laptop, tablet, and phone, representing comprehensive web app testing across platforms.](multi-screen-and-device-testing.jpg)
 
-#### Recently I came across some bugs in an app I developed that only affected iPhoneHusers.
+Recently I came across some bugs in an app I developed that only affected iPhone users...
 
 When encountering a bug, the first step is usually to try to reproduce the issue and then to analyze it with developer tools. iOS however, is the most difficult environment to debug/analyze unless you’re fully committed to Apple and are the proud owner of both an iPhone and a Mac. If you are missing any of those, you get no developer tools to debug. But let’s get back to that a bit later.
 
-### The development environment
+## The development environment
 
 Developing on fast machines with (multiple) big screens and fast (wired) network is always pretty convenient and what most developer probably prefer when giving the choice.
 
 It allows for quick “compilation” and almost instant deployment of your code and multiple screen make it possible to compare the output in different browser with developer tools opened in each of them.
 
+<figure>
+![Clean dual‑monitor workstation with a split brain graphic, representing both technical and creative aspects of web app testing.](dual-monitor.jpg)
+<figcaption>A dual‑monitor setup that mirrors the mix of logic and creativity needed for thorough web app testing.</figcaption>
+</figure>
+
 So, it’s not just convenient, it can also heavily increase productivity!
 
 This kind of setup rarely matches what people will use to access your website (or web app) though. So as developer, we need to be able to simulate even extreme end user environment to verify that websites are behaving as we expect them too. Fortunately, there are a bunch of tools that can help us in that matter…
 
-### Network
+## Network
 
 Speed has a big impact on user experience and while the overall speed of a website can easily be verified with tools like [lighthouse](https://developers.google.com/web/tools/lighthouse/) or [webhint](https://webhint.io/), those don’t really give a concrete idea of the user experience on a slow network like GPRS or even worse, an unstable network.
 
 In order to check the behavior of your website in those environments or even to understand the pain points of certain users. We need to be able to use your own website with similar network limitations. That is when throttling in DevTools come in handy.
 
+<figure>
+![Screenshots of browser devtools showing network speed simulation options in Chrome/Edge and Firefox.](devtools-network-speed-simulation.jpg)
+<figcaption>Network throttling tools in Chrome/Edge (Top) and Firefox (Bottom) help you test how your web app behaves under real‑world connection speeds.</figcaption>
+</figure>
+
 [Chromium](https://www.chromium.org/Home) based browsers (Chrome, Edge, Opera, …) also have an option to simulate “Offline” in the same menu. A similar option is also available in Firefox, although in a quite different place (Menu > More > Work Offline).
+
+<figure>
+![Screenshot of Firefox’s menu showing the ‘Work Offline’ option used for offline testing.](firefox-work-offline.jpg)
+<figcaption>Firefox’s ‘Work Offline’ mode lets you test how your app behaves without an active connection.</figcaption>
+</figure>
 
 Currently, the Firefox implementation has one advantage over Chromium: As soon as “work offline” is activated, all connections including WebSocket are terminated.
 
 In Chromium based browsers, while regular requests are also rejected, WebSocket are kept open. That means that it is currently not possible to simulate losing network connectivity using this tool. On the upside, [@MsEdgeDev](https://twitter.com/MSEdgeDev) is currently investigating the possibility to change this.
 
-### Screens
+## Screens
 
 Responsive design is a very prominent topic nowadays, making testing with different screen/browser size the most common of the environment simulation.
 
 The usual test everybody probably does multiple times a day consists of simply resizing the browser to do a basic verification. Developer tools however go a bit further and make it possible to check the exact resolution of specific devices with a simple click.
 
+<figure>
+![Edge DevTools displaying a mobile device preview next to the Elements panel, demonstrating responsive design testing.](edge-device-screen-simulation.jpg)
+<figcaption>Edge’s device simulation helps you preview and debug your layout across different screen sizes.</figcaption>
+</figure>
+
+<figure>
+![Firefox DevTools displaying a simulated mobile device view next to the page’s HTML and CSS for responsive debugging.](firefox-device-screen-simulation.jpg)
+<figcaption>Testing responsive behavior in Firefox with a simulated mobile viewport and live HTML/CSS inspection.</figcaption>
+</figure>
+
 You might notice when looking at the 2 screenshots above, that in both browsers, the simulator view also has a direct access to the same virtual network settings we used from the developer tools before.
 
 While this tool is great to help check the website in the exact resolution of specific devices, explicitly naming devices in both simulator view might be a bit misleading though because those don’t take the devices browser engine into account.
 
-### Devices
+## Devices
 
 So how can we check different engines?
 
@@ -67,7 +104,7 @@ There are nowadays however solution to this problem, where we can access a huge 
 
 Services like [lambdatest](http://www.lambdatest.com) and [browserstack](http://www.browserstack.com) let us run our app on a multitude of devices and engines with access to developer tools. we can even use those services in CI for test automation if we want too.
 
-### Conclusion
+## Conclusion
 
 There are a whole bunch of tools out there to help us make sure most user will get a good or, in the worst case, at least decent experience using our website.
 
