@@ -1,3 +1,10 @@
+# [2.33.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.32.0...v2.33.0) (2026-02-09)
+
+
+### Features
+
+* add dotenv support for development environment ([52201ea](https://github.com/Th3S4mur41/th3s4mur41.me/commit/52201ea775bd7309ce0f14d2211417243f6e07a7))
+
 # [2.32.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.31.0...v2.32.0) (2026-02-06)
 
 
