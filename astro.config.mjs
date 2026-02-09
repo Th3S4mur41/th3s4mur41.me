@@ -2,10 +2,16 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 import compress from "astro-compress";
+import dotenv from "dotenv";
 import { rehypeGithubAlerts } from "rehype-github-alerts";
 import remarkReadingTime from "remark-reading-time";
 import { rehypeInjectToc } from "./src/plugins/rehype-inject-toc.js";
 import { rehypeViewTransitionNames } from "./src/plugins/rehype-view-transition-names.js";
+
+// Load .env.development in development mode
+if (process.env.NODE_ENV !== "production") {
+	dotenv.config({ path: ".env.development" });
+}
 
 // https://astro.build/config
 export default defineConfig({
