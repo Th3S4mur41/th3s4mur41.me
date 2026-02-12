@@ -37,7 +37,9 @@ When you work on the web long enough, you get used to browsers disagreeing on th
 This is exactly what happened with scrollable elements.
 
 Most browsers like Chrome and Firefox automatically make scrollable regions keyboard‑focusable. That means if the content overflows, a keyboard user can tab into it and scroll through the content using the arrow keys. It’s intuitive, consistent, and aligns with WCAG’s requirement that scrollable regions must be keyboard accessible.
-Safari, however, doesn’t follow this behavior. There is a long‑standing [bug report in WebKit Backlog](https://bugs.webkit.org/show_bug.cgi?id=277290) where scrollable elements (like long code blocks or tables) do not receive keyboard focus filed by [Adrian Roselli](https://adrianroselli.com/2022/06/keyboard-only-scrolling-areas.html), making them inaccessible to keyboard users.## The Problem
+Safari, however, doesn't follow this behavior. There's a long‑standing [bug report in WebKit Backlog](https://bugs.webkit.org/show_bug.cgi?id=277290) where scrollable elements (like long code blocks or tables) do not receive keyboard focus, as reported by [Adrian Roselli](https://adrianroselli.com/2022/06/keyboard-only-scrolling-areas.html), making them inaccessible to keyboard users.
+
+![WebKit Bug 277290](webkit-bug-277290.png)
 
 ### Safari doesn’t make scrollable elements focusable
 
@@ -98,12 +100,13 @@ You could, but that introduces its own problems:
 - Non‑scrollable `<pre>` elements don’t need to be in the tab order.
 - Adding unnecessary focus targets creates noise for keyboard users.
 - It also breaks expected semantics — not every `<pre>` is interactive.
-The polyfill only applies focusability when it’s actually needed.
+
+The polyfill only applies focusability where it's actually needed.
 
 ### What about other scrollable elements?
 
-While this polyfill focuses on `<pre>` elements by default for performance reasons, it can be configure to also apply the same logic to other elements like tables, divs with `white-space: nowrap`, or any other scrollable container.
-For example, if you have a class `scrollable` that prevents and element from wrapping, you can easily extend the polyfill to handle any element with that class.
+While this polyfill focuses on `<pre>` elements by default for performance reasons, it can be configured to also apply the same logic to other elements like tables, divs with `white-space: nowrap`, or any other scrollable container.
+For example, if you have a class `scrollable` that prevents an element from wrapping, you can easily extend the polyfill to handle any element with that class.
 
 ```html
 <script src="https://unpkg.com/scroll-focus-polyfill"
