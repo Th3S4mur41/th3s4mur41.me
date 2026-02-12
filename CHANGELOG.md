@@ -1,3 +1,10 @@
+## [2.33.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.33.0...v2.33.1) (2026-02-12)
+
+
+### Bug Fixes
+
+* correct publisher ID in JSON-LD schema and update person description ([#2117](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2117)) ([659e41e](https://github.com/Th3S4mur41/th3s4mur41.me/commit/659e41eae633b8dafabc17e220f0275b77fa03c7))
+
 # [2.33.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.32.0...v2.33.0) (2026-02-09)
 
 
