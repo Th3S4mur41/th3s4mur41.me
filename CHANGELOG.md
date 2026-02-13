@@ -1,3 +1,10 @@
+# [2.35.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.34.0...v2.35.0) (2026-02-13)
+
+
+### Features
+
+* **perf:** update images to render as pictures with avif ([#2081](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2081)) ([6cee461](https://github.com/Th3S4mur41/th3s4mur41.me/commit/6cee461cedc9a32ba14e1a3193749995cd27baf8))
+
 # [2.34.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.33.1...v2.34.0) (2026-02-13)
 
 
