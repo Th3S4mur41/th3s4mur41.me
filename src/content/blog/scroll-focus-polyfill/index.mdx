@@ -89,7 +89,7 @@ To fix this gap, I created a small polyfill: [scroll-focus-polyfill](https://git
 The idea is simple:
 - Detect when a `<pre>` element becomes scrollable.
 - Automatically add `tabindex="0"` so it becomes keyboard-focusable.
-- Only apply this, where the behavior is not already provided by the browser.
+- Only apply this where the behavior is not already provided by the browser.
 
 This keeps the behavior consistent across browsers without forcing developers to manually annotate every code block.
 It’s intentionally lightweight, unobtrusive, and standards‑aligned.
