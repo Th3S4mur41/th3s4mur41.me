@@ -1,0 +1,127 @@
+---
+title: 'Making Scrollable Code Blocks Accessible'
+eyebrow: 'Cross‑Browser Accessibility'
+date: 2026-02-13T10:00:00Z
+image: 'user-frustrated-scrolling-with-keyboard.jpg'
+imageAlt: 'User frustrated while trying to scroll with keyboard'
+description: 'Fix keyboard accessibility gaps in Safari: learn why scrollable code blocks need focus and how a small polyfill makes them accessible for keyboard users.'
+tags:
+  - Accessibility
+  - Keyboard-Navigation
+  - WCAG
+  - Browser-Compatibility
+  - how-to
+keywords:
+  - keyboard accessibility
+  - scrollable code blocks
+  - Safari accessibility
+  - keyboard navigation
+  - WCAG 2.2
+  - keyboard focus
+  - polyfill
+  - a11y
+  - accessibility gap
+  - tabindex
+  - web standards
+  - cross-browser bug
+  - code block focus
+  - keyboard-only users
+---
+
+# Making Scrollable Code Blocks Accessible
+
+![User frustrated while trying to scroll with keyboard](user-frustrated-scrolling-with-keyboard.jpg)
+
+When you work on the web long enough, you get used to browsers disagreeing on the small things. But sometimes those “small things” quietly break accessibility in ways that aren’t obvious until you test with a keyboard.
+
+This is exactly what happened with scrollable elements.
+
+Most browsers like Chrome and Firefox automatically make scrollable regions keyboard‑focusable. That means if the content overflows, a keyboard user can tab into it and scroll through the content using the arrow keys. It’s intuitive, consistent, and aligns with WCAG’s requirement that scrollable regions must be keyboard accessible.
+Safari, however, doesn't follow this behavior. There's a long‑standing [bug report in WebKit Backlog](https://bugs.webkit.org/show_bug.cgi?id=277290) where scrollable elements (like long code blocks or tables) do not receive keyboard focus, as reported by [Adrian Roselli](https://adrianroselli.com/2022/06/keyboard-only-scrolling-areas.html), making them inaccessible to keyboard users.
+
+![WebKit Bug 277290](webkit-bug-277290.png)
+
+## Safari doesn’t make scrollable elements focusable
+
+In Safari, an element that becomes scrollable (e.g., long code snippets) does not receive focus by default. That means:
+- You can see the scrollbar.
+- You can scroll with a mouse or trackpad.
+- But you cannot tab into it.
+- And therefore you cannot scroll it using the keyboard.
+
+This is a direct accessibility failure under [WCAG 2.2’s Keyboard criterion](https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html), which states that all functionality must be operable through a keyboard interface — including scrolling inside overflow regions.
+For keyboard‑only users, this effectively traps content. They can see the beginning of the content, but not the rest.
+And because Chrome and Firefox “do the right thing,” most developers never notice the issue.
+
+## Why this matters more than it seems
+
+Scrollable code blocks are everywhere: 
+- Documentation sites
+- Developer blogs
+- Design system pages
+- API references
+- Tutorials
+- ...
+
+Code blocks are usually implemented using `<pre>` elements. The `<pre>` element is one of the most common non-interactive elements that becomes scrollable by default because it's designed to preserve formatting and not wrap content.
+If a code block is long enough to require scrolling, it becomes inaccessible to keyboard users in Safari.
+
+If a user can’t scroll them, they can’t read them. And if they can’t read them, the content might as well not exist.
+This is one of those accessibility issues that isn’t flashy, but has a real impact on real people.
+
+## The Solution
+
+There is a simple solution to the problem: make scrollable elements keyboard‑focusable by adding `tabindex="0"`. This allows keyboard users to tab into the element and use arrow keys to scroll through the content.
+However, this requires developers to manually add `tabindex="0"` to every scrollable `<pre>` element, which is not ideal. It’s easy to forget, and it adds extra maintenance.
+Moreover, it’s not ideal to make every `<pre>` focusable, since not all of them will be scrollable.
+
+> [!NOTE]
+> The polyfill is only a temporary workaround until Safari implements the expected behavior. It’s not a permanent solution, but it helps bridge the gap in the meantime.
+
+### Automatically adding tabindex="0" when needed
+
+To fix this gap, I created a small polyfill: [scroll-focus-polyfill](https://github.com/Th3S4mur41/scroll-focus-polyfill) that is pretty easy to use by simply including it on your page.
+
+```html
+<script src="https://unpkg.com/scroll-focus-polyfill"></script>
+```
+
+The idea is simple:
+- Detect when a `<pre>` element becomes scrollable.
+- Automatically add `tabindex="0"` so it becomes keyboard-focusable.
+- Only apply this where the behavior is not already provided by the browser.
+
+This keeps the behavior consistent across browsers without forcing developers to manually annotate every code block.
+It’s intentionally lightweight, unobtrusive, and standards‑aligned.
+
+### Why not just add `tabindex="0"` everywhere?
+
+You could, but that introduces its own problems:
+- Non‑scrollable `<pre>` elements don’t need to be in the tab order.
+- Adding unnecessary focus targets creates noise for keyboard users.
+- It also breaks expected semantics — not every `<pre>` is interactive.
+
+The polyfill only applies focusability where it's actually needed.
+
+### What about other scrollable elements?
+
+While this polyfill focuses on `<pre>` elements by default for performance reasons, it can be configured to also apply the same logic to other elements like tables, divs with `white-space: nowrap`, or any other scrollable container.
+For example, if you have a class `scrollable` that prevents an element from wrapping, you can easily extend the polyfill to handle any element with that class.
+
+```html
+<script src="https://unpkg.com/scroll-focus-polyfill"
+        data-selectors="pre, .scrollable"></script>
+```
+
+## A subtle bug with real accessibility impact
+
+This is a great example of how accessibility issues often hide in the details. 
+Safari’s behavior isn’t “wrong” in a spec sense — but it’s inconsistent with user expectations and with other browsers’ accessibility affordances.
+And because developers don't always test keyboard navigation explicitly in Safari, the issue slips through unnoticed.
+The polyfill bridges that gap until Safari aligns with the behavior of other engines.
+
+## Conclusion
+
+Making scrollable code blocks accessible is a small but important step towards a more inclusive web.
+By understanding the issue, implementing a simple polyfill, and advocating for better cross‑browser consistency, we can ensure that all users have equal access to content — regardless of their browser or input method.
+If you maintain a documentation site, developer blog, or any content with scrollable code blocks, consider implementing this polyfill to improve accessibility for your keyboard users. It’s a small change that can make a big difference.
