@@ -34,58 +34,62 @@ const {
 	title,
 } = Astro.props;
 
-// Normalize widths to ensure all breakpoints have values
-const { small: smallWidth = 640, medium: mediumWidth = 1024, large: largeWidth = 1920 } = widths;
-
-// Get original image size
-const originalImage = await getImage({ src });
-const originalWidth = originalImage.attributes.width;
+// Get original image size directly from metadata to avoid extra pipeline run
+const originalWidth = src.width;
 const originalFormat = src.format || "png";
-const isJpeg = originalFormat.toLowerCase() === "jpg" || originalFormat.toLowerCase() === "jpeg";
-const fallbackFormat = isJpeg ? "jpg" : "png";
+const isSvg = originalFormat.toLowerCase() === "svg";
 
-// Generate AVIF images for all sizes based on original size
-const avifSmallWidth = Math.min(originalWidth, smallWidth);
-const avifMediumWidth = Math.min(originalWidth, mediumWidth);
-const avifLargeWidth = Math.min(originalWidth, largeWidth);
-
-const avifSmall = await getImage({ src, width: avifSmallWidth, format: "avif" });
-const avifMedium = await getImage({ src, width: avifMediumWidth, format: "avif" });
-const avifLarge = await getImage({ src, width: avifLargeWidth, format: "avif" });
-
-// Generate fallback image (use original format for JPEG, PNG otherwise)
-const fallbackImage = await getImage({
-	src,
-	width: originalWidth < mediumWidth ? originalWidth : mediumWidth,
-	format: fallbackFormat,
-});
-
-// Create AVIF srcset string based on original size
+// For SVG, skip transformations to preserve vector benefits
 let avifSrcset = "";
 let computedSizes = sizes;
+let fallbackImage: any = null;
 
-if (originalWidth <= smallWidth) {
-	avifSrcset = `${avifSmall.src} ${avifSmallWidth}w`;
-	computedSizes = `${originalWidth}px`;
-} else if (originalWidth <= mediumWidth) {
-	avifSrcset = `${avifSmall.src} ${avifSmallWidth}w, ${avifMedium.src} ${avifMediumWidth}w`;
-	computedSizes = `(max-width: ${smallWidth}px) ${smallWidth}px, ${originalWidth}px`;
-} else if (originalWidth <= largeWidth) {
-	avifSrcset = `${avifSmall.src} ${avifSmallWidth}w, ${avifMedium.src} ${avifMediumWidth}w, ${avifLarge.src} ${avifLargeWidth}w`;
-	computedSizes = `(max-width: ${smallWidth}px) ${smallWidth}px, (max-width: ${mediumWidth}px) ${mediumWidth}px, ${originalWidth}px`;
-} else {
-	avifSrcset = `${avifSmall.src} ${avifSmallWidth}w, ${avifMedium.src} ${avifMediumWidth}w, ${avifLarge.src} ${avifLargeWidth}w`;
-	computedSizes = sizes;
+if (!isSvg) {
+	// Normalize widths to ensure all breakpoints have values
+	const { small: smallWidth = 640, medium: mediumWidth = 1024, large: largeWidth = 1920 } = widths;
+
+	const isJpeg = originalFormat.toLowerCase() === "jpg" || originalFormat.toLowerCase() === "jpeg";
+	const fallbackFormat = isJpeg ? "jpg" : "png";
+
+	// Generate AVIF images for all sizes based on original size
+	const avifSmallWidth = Math.min(originalWidth, smallWidth);
+	const avifMediumWidth = Math.min(originalWidth, mediumWidth);
+	const avifLargeWidth = Math.min(originalWidth, largeWidth);
+
+	const avifSmall = await getImage({ src, width: avifSmallWidth, format: "avif" });
+	const avifMedium = await getImage({ src, width: avifMediumWidth, format: "avif" });
+	const avifLarge = await getImage({ src, width: avifLargeWidth, format: "avif" });
+
+	// Generate fallback image (use original format for JPEG, PNG otherwise)
+	fallbackImage = await getImage({
+		src,
+		width: originalWidth < mediumWidth ? originalWidth : mediumWidth,
+		format: fallbackFormat,
+	});
+
+	// Create AVIF srcset string based on original size
+	if (originalWidth <= smallWidth) {
+		avifSrcset = `${avifSmall.src} ${avifSmallWidth}w`;
+		computedSizes = `${originalWidth}px`;
+	} else if (originalWidth <= mediumWidth) {
+		avifSrcset = `${avifSmall.src} ${avifSmallWidth}w, ${avifMedium.src} ${avifMediumWidth}w`;
+		computedSizes = `(max-width: ${smallWidth}px) ${smallWidth}px, ${originalWidth}px`;
+	} else if (originalWidth <= largeWidth) {
+		avifSrcset = `${avifSmall.src} ${avifSmallWidth}w, ${avifMedium.src} ${avifMediumWidth}w, ${avifLarge.src} ${avifLargeWidth}w`;
+		computedSizes = `(max-width: ${smallWidth}px) ${smallWidth}px, (max-width: ${mediumWidth}px) ${mediumWidth}px, ${originalWidth}px`;
+	} else {
+		avifSrcset = `${avifSmall.src} ${avifSmallWidth}w, ${avifMedium.src} ${avifMediumWidth}w, ${avifLarge.src} ${avifLargeWidth}w`;
+		computedSizes = sizes;
+	}
 }
 ---
 
-<picture>
-	<source type="image/avif" srcset={avifSrcset} sizes={computedSizes} />
+{isSvg ? (
 	<img
-		src={fallbackImage.src}
+		src={src.src}
 		alt={alt}
-		width={fallbackImage.attributes.width}
-		height={fallbackImage.attributes.height}
+		width={src.width}
+		height={src.height}
 		loading={loading}
 		decoding={decoding}
 		class={className}
@@ -94,4 +98,21 @@ if (originalWidth <= smallWidth) {
 		id={id}
 		title={title}
 	/>
-</picture>
+) : (
+	<picture>
+		<source type="image/avif" srcset={avifSrcset} sizes={computedSizes} />
+		<img
+			src={fallbackImage.src}
+			alt={alt}
+			width={fallbackImage.attributes.width}
+			height={fallbackImage.attributes.height}
+			loading={loading}
+			decoding={decoding}
+			class={className}
+			fetchpriority={fetchpriority}
+			style={style}
+			id={id}
+			title={title}
+		/>
+	</picture>
+)}
