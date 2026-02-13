@@ -1,3 +1,24 @@
+# [2.34.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.33.1...v2.34.0) (2026-02-13)
+
+
+### Features
+
+* add article on making scrollable code blocks accessible in Safari ([#2116](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2116)) ([d0f4576](https://github.com/Th3S4mur41/th3s4mur41.me/commit/d0f4576edfd90d6a1c1507e6ca00d8c9edef49a3))
+
+## [2.33.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.33.0...v2.33.1) (2026-02-12)
+
+
+### Bug Fixes
+
+* correct publisher ID in JSON-LD schema and update person description ([#2117](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2117)) ([659e41e](https://github.com/Th3S4mur41/th3s4mur41.me/commit/659e41eae633b8dafabc17e220f0275b77fa03c7))
+
+# [2.33.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.32.0...v2.33.0) (2026-02-09)
+
+
+### Features
+
+* add dotenv support for development environment ([52201ea](https://github.com/Th3S4mur41/th3s4mur41.me/commit/52201ea775bd7309ce0f14d2211417243f6e07a7))
+
 # [2.32.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.31.0...v2.32.0) (2026-02-06)
 
 

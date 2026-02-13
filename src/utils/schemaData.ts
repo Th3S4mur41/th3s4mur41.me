@@ -10,8 +10,7 @@ export const getPersonData = (origin: string) => {
 		alternateName: "Th3S4mur41",
 		url: "https://th3s4mur41.me/",
 		image: imageUrl,
-		description:
-			"Lead UX Engineer specializing in accessibility, modern web standards, and resilient digital experiences.",
+		description: "Lead UX Engineer & Accessibility Specialist",
 		jobTitle: "Lead UX Engineer",
 		worksFor: {
 			"@type": "Organization",
@@ -38,7 +37,4 @@ export const getWebsiteData = (origin: string) => ({
 	description:
 		"Personal website and blog of Michaël Vanderheyden - Web developer passionate about accessibility, modern web standards, and user-friendly interfaces",
 	image: `${origin}/icons/favicon-512.png`,
-	publisher: {
-		"@id": `${origin}/#person`,
-	},
 });
