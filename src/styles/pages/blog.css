@@ -17,7 +17,7 @@ body.blog {
 			/ minmax(40%, 15em) auto 1fr;
 		gap: 0.5rem 1.5rem;
 
-		&:not(:has(> img)) {
+		&:not(:has(> :is(img, picture))) {
 			grid-template:
 				"title" auto
 				"teaser" auto
@@ -29,6 +29,9 @@ body.blog {
 		& > h2 {
 			grid-area: title;
 			margin: 0;
+		}
+		& > picture {
+			display: contents;
 		}
 		& img {
 			grid-area: image;
@@ -45,7 +48,6 @@ body.blog {
 			align-self: end;
 			padding-inline: 0.5em;
 			padding-block: 0.5em;
-			margin: 0.5em;
 			font-size: 0.875rem;
 			font-weight: 500;
 			line-height: 1;
@@ -83,6 +85,7 @@ body.blog {
 
 			.type {
 				justify-self: end;
+				margin-block: 0.5em;
 			}
 		}
 	}
@@ -147,7 +150,7 @@ body:is([class^="blog-"], [class^="talks-"]) {
 				}
 			}
 		}
-		& p:has(img:only-child) {
+		& p:has(:is(img, picture):only-child) {
 			text-align: center;
 		}
 		& > footer {
@@ -176,7 +179,7 @@ body:is([class^="blog-"], [class^="talks-"]) {
 figure {
 	margin-inline: unset;
 
-	& > p:has(> img:only-child) {
+	& > p:has(> :is(img, picture):only-child) {
 		margin-block: unset;
 	}
 	& img {
@@ -245,13 +248,14 @@ dl {
 	}
 }
 
-figure > p:has(img + img) {
+figure > p:has(img + img),
+figure > p:has(picture + picture) {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(min(20ch, 100%), 1fr));
 	gap: 5ch;
 	justify-content: space-evenly;
 
-	& > img {
+	& img {
 		width: 100%;
 		height: auto;
 	}
@@ -299,8 +303,10 @@ body:is([class^="blog-"], [class^="talks-"]) {
 				/* TODO: replace through ident() when available - https://drafts.csswg.org/css-values-5/#funcdef-ident
 					In the meantime, set view-transition-name inline in template */
 			}
-			& img {
+			& > :is(picture, img) {
 				grid-area: image;
+			}
+			& img {
 				inline-size: 100%;
 				block-size: 100%;
 				max-block-size: 100%;

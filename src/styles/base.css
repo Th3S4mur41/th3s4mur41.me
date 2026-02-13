@@ -67,7 +67,8 @@ body > header {
 	}
 
 	/* hero image */
-	& > img {
+	& > img,
+	& > picture > img {
 		margin-block-start: 10lvb;
 		margin-block-end: 1rem;
 		width: 100%;
@@ -174,7 +175,7 @@ body > nav {
 	grid-template: "logo nav ." / 0 1fr 0;
 	align-items: center;
 
-	& > .logo {
+	& .logo {
 		grid-area: logo;
 		display: none;
 	}
@@ -182,7 +183,7 @@ body > nav {
 	@media (width >= 600px) {
 		grid-template: "logo nav ." / 5rem 1fr 5rem;
 
-		& > .logo {
+		& .logo {
 			display: block;
 			inline-size: 100%;
 			block-size: auto;
@@ -371,7 +372,8 @@ body > footer {
 			gap: 1em;
 			align-items: center;
 
-			& > img {
+			& > img,
+			& > picture > img {
 				inline-size: 15em;
 				block-size: auto;
 			}

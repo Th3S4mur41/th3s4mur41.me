@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import { rehypeGithubAlerts } from "rehype-github-alerts";
 import remarkReadingTime from "remark-reading-time";
 import { rehypeInjectToc } from "./src/plugins/rehype-inject-toc.js";
+import { rehypeOptimizeFirstImage } from "./src/plugins/rehype-optimize-first-image.js";
 import { rehypeViewTransitionNames } from "./src/plugins/rehype-view-transition-names.js";
 
 // Load .env.development in development mode
@@ -19,7 +20,7 @@ export default defineConfig({
 	markdown: {
 		syntaxHighlight: "prism",
 		remarkPlugins: [remarkReadingTime],
-		rehypePlugins: [rehypeInjectToc, rehypeViewTransitionNames],
+		rehypePlugins: [rehypeInjectToc, rehypeViewTransitionNames, rehypeOptimizeFirstImage],
 	},
 	integrations: [
 		sitemap({
@@ -30,7 +31,7 @@ export default defineConfig({
 		}),
 		mdx({
 			remarkPlugins: [remarkReadingTime],
-			rehypePlugins: [rehypeInjectToc, rehypeViewTransitionNames, rehypeGithubAlerts],
+			rehypePlugins: [rehypeInjectToc, rehypeViewTransitionNames, rehypeGithubAlerts, rehypeOptimizeFirstImage],
 		}),
 		compress({
 			HTML: {

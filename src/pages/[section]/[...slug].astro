@@ -2,6 +2,7 @@
 import { getImage } from "astro:assets";
 import { getCollection, getEntry, render } from "astro:content";
 import path from "node:path";
+import Image from "/src/components/Image.astro";
 import BlogPostingSchema from "../../components/BlogPostingSchema.astro";
 import PodcastEpisodeSchema from "../../components/PodcastEpisodeSchema.astro";
 import Reactions from "../../components/Reactions.astro";
@@ -181,7 +182,7 @@ void [Layout, Content, img, truncatedTitle, BlogPostingSchema, PodcastEpisodeSch
   <article>
     {article.data.eyebrow && <p class="eyebrow">{article.data.eyebrow}</p>}
     {/** Render markdown/MDX content (TOC is injected after h1 via rehype plugin) */}
-    <Content />
+    <Content components={{ img: Image }}/>
     <footer>
       <p class="published">
         Published on <time datetime={article.data.date}>{article.data.date.toLocaleDateString('en-gb', { year: 'numeric', month: 'short', day: 'numeric' })}</time>
