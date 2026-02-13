@@ -50,6 +50,9 @@ const avifSmall = await getImage({ src, width: avifSmallWidth, format: "avif" })
 const avifMedium = await getImage({ src, width: avifMediumWidth, format: "avif" });
 const avifLarge = await getImage({ src, width: avifLargeWidth, format: "avif" });
 
+// Generate AVIF at original width for when original size is smaller than breakpoints
+const avifOriginal = await getImage({ src, width: originalWidth, format: "avif" });
+
 // Generate fallback image (use original format for JPEG, PNG otherwise)
 const fallbackImage = await getImage({
 	src,
@@ -62,13 +65,13 @@ let avifSrcset = "";
 let computedSizes = sizes;
 
 if (originalWidth < widths.small) {
-	avifSrcset = `${originalImage.src} ${originalWidth}w`;
+	avifSrcset = `${avifOriginal.src} ${originalWidth}w`;
 	computedSizes = `${originalWidth}px`;
 } else if (originalWidth < widths.medium) {
-	avifSrcset = `${avifSmall.src} ${widths.small}w, ${originalImage.src} ${originalWidth}w`;
+	avifSrcset = `${avifSmall.src} ${widths.small}w, ${avifOriginal.src} ${originalWidth}w`;
 	computedSizes = `(max-width: ${widths.small}px) ${widths.small}px, ${originalWidth}px`;
 } else if (originalWidth < widths.large) {
-	avifSrcset = `${avifSmall.src} ${widths.small}w, ${avifMedium.src} ${widths.medium}w, ${originalImage.src} ${originalWidth}w`;
+	avifSrcset = `${avifSmall.src} ${widths.small}w, ${avifMedium.src} ${widths.medium}w, ${avifOriginal.src} ${originalWidth}w`;
 	computedSizes = `(max-width: ${widths.small}px) ${widths.small}px, (max-width: ${widths.medium}px) ${widths.medium}px, ${originalWidth}px`;
 } else {
 	avifSrcset = `${avifSmall.src} ${widths.small}w, ${avifMedium.src} ${widths.medium}w, ${avifLarge.src} ${widths.large}w`;
