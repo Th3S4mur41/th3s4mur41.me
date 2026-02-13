@@ -65,16 +65,16 @@ let avifSrcset = "";
 let computedSizes = sizes;
 
 if (originalWidth <= smallWidth) {
-	avifSrcset = `${avifSmall.src} ${smallWidth}w`;
-	computedSizes = `${smallWidth}px`;
+	avifSrcset = `${avifSmall.src} ${avifSmallWidth}w`;
+	computedSizes = `${originalWidth}px`;
 } else if (originalWidth <= mediumWidth) {
-	avifSrcset = `${avifSmall.src} ${smallWidth}w, ${avifMedium.src} ${mediumWidth}w`;
-	computedSizes = `(max-width: ${smallWidth}px) ${smallWidth}px, ${mediumWidth}px`;
+	avifSrcset = `${avifSmall.src} ${avifSmallWidth}w, ${avifMedium.src} ${avifMediumWidth}w`;
+	computedSizes = `(max-width: ${smallWidth}px) ${smallWidth}px, ${originalWidth}px`;
 } else if (originalWidth <= largeWidth) {
-	avifSrcset = `${avifSmall.src} ${smallWidth}w, ${avifMedium.src} ${mediumWidth}w, ${avifLarge.src} ${largeWidth}w`;
-	computedSizes = `(max-width: ${smallWidth}px) ${smallWidth}px, (max-width: ${mediumWidth}px) ${mediumWidth}px, ${largeWidth}px`;
+	avifSrcset = `${avifSmall.src} ${avifSmallWidth}w, ${avifMedium.src} ${avifMediumWidth}w, ${avifLarge.src} ${avifLargeWidth}w`;
+	computedSizes = `(max-width: ${smallWidth}px) ${smallWidth}px, (max-width: ${mediumWidth}px) ${mediumWidth}px, ${originalWidth}px`;
 } else {
-	avifSrcset = `${avifSmall.src} ${smallWidth}w, ${avifMedium.src} ${mediumWidth}w, ${avifLarge.src} ${largeWidth}w`;
+	avifSrcset = `${avifSmall.src} ${avifSmallWidth}w, ${avifMedium.src} ${avifMediumWidth}w, ${avifLarge.src} ${avifLargeWidth}w`;
 	computedSizes = sizes;
 }
 ---
