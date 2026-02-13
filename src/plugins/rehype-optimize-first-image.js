@@ -29,5 +29,6 @@ export function rehypeOptimizeFirstImage() {
 				node.properties.loading = "eager";
 			}
 		});
+		return tree;
 	};
 }
