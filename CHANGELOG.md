@@ -1,3 +1,10 @@
+# [2.34.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.33.1...v2.34.0) (2026-02-13)
+
+
+### Features
+
+* add article on making scrollable code blocks accessible in Safari ([#2116](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2116)) ([d0f4576](https://github.com/Th3S4mur41/th3s4mur41.me/commit/d0f4576edfd90d6a1c1507e6ca00d8c9edef49a3))
+
 ## [2.33.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.33.0...v2.33.1) (2026-02-12)
 
 
