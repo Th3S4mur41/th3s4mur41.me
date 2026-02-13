@@ -53,9 +53,6 @@ const avifSmall = await getImage({ src, width: avifSmallWidth, format: "avif" })
 const avifMedium = await getImage({ src, width: avifMediumWidth, format: "avif" });
 const avifLarge = await getImage({ src, width: avifLargeWidth, format: "avif" });
 
-// Generate AVIF at original width for when original size is smaller than breakpoints
-const avifOriginal = await getImage({ src, width: originalWidth, format: "avif" });
-
 // Generate fallback image (use original format for JPEG, PNG otherwise)
 const fallbackImage = await getImage({
 	src,
@@ -67,15 +64,15 @@ const fallbackImage = await getImage({
 let avifSrcset = "";
 let computedSizes = sizes;
 
-if (originalWidth < smallWidth) {
-	avifSrcset = `${avifOriginal.src} ${originalWidth}w`;
-	computedSizes = `${originalWidth}px`;
-} else if (originalWidth < mediumWidth) {
-	avifSrcset = `${avifSmall.src} ${smallWidth}w, ${avifOriginal.src} ${originalWidth}w`;
-	computedSizes = `(max-width: ${smallWidth}px) ${smallWidth}px, ${originalWidth}px`;
-} else if (originalWidth < largeWidth) {
-	avifSrcset = `${avifSmall.src} ${smallWidth}w, ${avifMedium.src} ${mediumWidth}w, ${avifOriginal.src} ${originalWidth}w`;
-	computedSizes = `(max-width: ${smallWidth}px) ${smallWidth}px, (max-width: ${mediumWidth}px) ${mediumWidth}px, ${originalWidth}px`;
+if (originalWidth <= smallWidth) {
+	avifSrcset = `${avifSmall.src} ${smallWidth}w`;
+	computedSizes = `${smallWidth}px`;
+} else if (originalWidth <= mediumWidth) {
+	avifSrcset = `${avifSmall.src} ${smallWidth}w, ${avifMedium.src} ${mediumWidth}w`;
+	computedSizes = `(max-width: ${smallWidth}px) ${smallWidth}px, ${mediumWidth}px`;
+} else if (originalWidth <= largeWidth) {
+	avifSrcset = `${avifSmall.src} ${smallWidth}w, ${avifMedium.src} ${mediumWidth}w, ${avifLarge.src} ${largeWidth}w`;
+	computedSizes = `(max-width: ${smallWidth}px) ${smallWidth}px, (max-width: ${mediumWidth}px) ${mediumWidth}px, ${largeWidth}px`;
 } else {
 	avifSrcset = `${avifSmall.src} ${smallWidth}w, ${avifMedium.src} ${mediumWidth}w, ${avifLarge.src} ${largeWidth}w`;
 	computedSizes = sizes;
