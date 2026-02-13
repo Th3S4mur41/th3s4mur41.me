@@ -15,6 +15,9 @@ interface Props {
 	decoding?: "async" | "sync" | "auto";
 	class?: string;
 	fetchpriority?: "high" | "low" | "auto";
+	style?: string;
+	id?: string;
+	title?: string;
 }
 
 const {
@@ -26,6 +29,9 @@ const {
 	decoding = "async",
 	class: className,
 	fetchpriority,
+	style,
+	id,
+	title,
 } = Astro.props;
 
 // Get original image size
@@ -81,5 +87,8 @@ if (originalWidth < widths.small) {
 		decoding={decoding}
 		class={className}
 		fetchpriority={fetchpriority}
+		style={style}
+		id={id}
+		title={title}
 	/>
 </picture>
