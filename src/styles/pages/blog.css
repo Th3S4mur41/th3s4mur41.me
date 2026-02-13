@@ -182,9 +182,6 @@ figure {
 	& > p:has(> :is(img, picture):only-child) {
 		margin-block: unset;
 	}
-	& picture {
-		/* display: contents; */
-	}
 	& img {
 		max-inline-size: 100%;
 		block-size: auto;
