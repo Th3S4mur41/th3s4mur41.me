@@ -18,6 +18,17 @@ const blogSchema = z.object({
 	tags: z.array(z.string()).optional(),
 	keywords: z.array(z.string()).optional(),
 	canonical: z.string().optional(),
+	translations: z
+		.array(
+			z.object({
+				language: z.string(),
+				headline: z.string().optional(),
+				url: z.string().url(),
+				publisherName: z.string().optional(),
+				publisherUrl: z.string().url().optional(),
+			}),
+		)
+		.optional(),
 	reactions: z
 		.array(z.union([z.object({ bluesky: z.string().url() }), z.object({ mastodon: z.string().url() })]))
 		.optional(),
