@@ -21,8 +21,8 @@ jobs:
   publish:
     name: '▶️ actions'
 
-    # Publish only if not PR is was not opened by dependabot
-    if: github.actor != 'dependabot[bot]'
+    # Publish only if checks succeeded and PR was not opened by dependabot
+    if: github.actor != 'dependabot[bot]' && github.event.workflow_run.conclusion == 'success'
 
     uses: ./.github/workflows/publish.yml
     secrets:
