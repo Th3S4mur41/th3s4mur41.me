@@ -17,6 +17,10 @@ interface Props {
 	description?: string;
 	published?: Date;
 	keywords?: string[];
+	translations?: Array<{
+		language: string;
+		url: string;
+	}>;
 }
 
 const { title, image, description, imageAlt } = Astro.props;
@@ -75,6 +79,11 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 		)}
 		{Astro.props.canonical && (
 			<link rel="canonical" href={Astro.props.canonical} />
+		)}
+		{Astro.props.translations && (
+			Astro.props.translations.map((translation) => (
+				<link rel="alternate" hreflang={translation.language} href={translation.url} />
+			))
 		)}
 		<!-- Bluesky/Mastodon/... Profiles backlinks -->
 		<link rel="me" href="https://bsky.app/profile/th3s4mur41.me" />

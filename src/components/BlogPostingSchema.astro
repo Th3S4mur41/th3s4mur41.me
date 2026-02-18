@@ -2,6 +2,14 @@
 import { getPersonData, getWebsiteData } from "../utils/schemaData";
 import StructuredData from "./StructuredData.astro";
 
+interface Translation {
+	language: string;
+	headline?: string;
+	url: string;
+	publisherName?: string;
+	publisherUrl?: string;
+}
+
 interface Props {
 	headline: string;
 	description?: string;
@@ -16,9 +24,10 @@ interface Props {
 	};
 	url: string;
 	canonical?: string;
+	translations?: Translation[];
 }
 
-const { headline, description, datePublished, dateModified, image, url, canonical } = Astro.props;
+const { headline, description, datePublished, dateModified, image, url, canonical, translations } = Astro.props;
 
 const origin = Astro.url.origin;
 const absolute = (maybeUrl: string) => new URL(maybeUrl, origin).href;
@@ -59,6 +68,25 @@ const blogPostingData = {
 		"@id": `${origin}/#website`,
 	},
 	inLanguage: "en",
+	...(translations && translations.length > 0
+		? {
+				workTranslation: translations.map((translation) => ({
+					"@type": "BlogPosting",
+					inLanguage: translation.language,
+					headline: translation.headline || headline,
+					url: translation.url,
+					...(translation.publisherName || translation.publisherUrl
+						? {
+								publisher: {
+									"@type": "Organization",
+									...(translation.publisherName ? { name: translation.publisherName } : {}),
+									...(translation.publisherUrl ? { url: translation.publisherUrl } : {}),
+								},
+							}
+						: {}),
+				})),
+			}
+		: {}),
 };
 
 const jsonLd = {
