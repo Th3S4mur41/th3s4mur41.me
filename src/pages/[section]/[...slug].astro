@@ -178,6 +178,7 @@ void [Layout, Content, img, truncatedTitle, BlogPostingSchema, PodcastEpisodeSch
   keywords={article.data.keywords}
   noIndex={!article.data.published}
   canonical={article.data.canonical ?? undefined}
+  translations={article.data.translations?.map((t) => ({ language: t.language, url: t.url })) ?? undefined}
   noHeader>
   <article>
     {article.data.eyebrow && <p class="eyebrow">{article.data.eyebrow}</p>}
@@ -274,6 +275,7 @@ void [Layout, Content, img, truncatedTitle, BlogPostingSchema, PodcastEpisodeSch
 				image={img}
 				url={Astro.url.href}
 				canonical={article.data.canonical}
+				translations={article.data.translations}
 			/>
 		)}
 
