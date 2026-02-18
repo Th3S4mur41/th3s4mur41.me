@@ -15,7 +15,6 @@ export function rehypeExternalLinks() {
 				// Check if it's a downloadable file
 				if (/\.(zip|tar\.gz|rar|7z)$/i.test(href)) {
 					node.properties.download = "";
-
 				}
 				// Check if it's an external HTTP/HTTPS link
 				else if (/^https?:\/\//.test(href)) {
