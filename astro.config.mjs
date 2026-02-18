@@ -5,6 +5,7 @@ import compress from "astro-compress";
 import dotenv from "dotenv";
 import { rehypeGithubAlerts } from "rehype-github-alerts";
 import remarkReadingTime from "remark-reading-time";
+import { rehypeExternalLinks } from "./src/plugins/rehype-external-links.js";
 import { rehypeInjectToc } from "./src/plugins/rehype-inject-toc.js";
 import { rehypeOptimizeFirstImage } from "./src/plugins/rehype-optimize-first-image.js";
 import { rehypeViewTransitionNames } from "./src/plugins/rehype-view-transition-names.js";
@@ -31,7 +32,13 @@ export default defineConfig({
 		}),
 		mdx({
 			remarkPlugins: [remarkReadingTime],
-			rehypePlugins: [rehypeInjectToc, rehypeViewTransitionNames, rehypeGithubAlerts, rehypeOptimizeFirstImage],
+			rehypePlugins: [
+				rehypeInjectToc,
+				rehypeViewTransitionNames,
+				rehypeGithubAlerts,
+				rehypeOptimizeFirstImage,
+				rehypeExternalLinks,
+			],
 		}),
 		compress({
 			HTML: {
