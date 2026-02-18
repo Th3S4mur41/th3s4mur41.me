@@ -81,9 +81,13 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 			<link rel="canonical" href={Astro.props.canonical} />
 		)}
 		{Astro.props.translations && (
-			Astro.props.translations.map((translation) => (
-				<link rel="alternate" hreflang={translation.language} href={translation.url} />
-			))
+			[
+				<link rel="alternate" hreflang="en" href={Astro.url.href} />,
+				<link rel="alternate" hreflang="x-default" href={Astro.url.href} />,
+				...Astro.props.translations.map((translation) => (
+					<link rel="alternate" hreflang={translation.language} href={translation.url} />
+				)),
+			]
 		)}
 		<!-- Bluesky/Mastodon/... Profiles backlinks -->
 		<link rel="me" href="https://bsky.app/profile/th3s4mur41.me" />
