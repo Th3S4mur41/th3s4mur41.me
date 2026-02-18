@@ -8,11 +8,14 @@ export function rehypeExternalLinks() {
 		visit(tree, "element", (node) => {
 			if (node.tagName === "a" && node.properties && node.properties.href) {
 				const href = node.properties.href;
+				if (typeof href !== "string") {
+					return;
+				}
 
 				// Check if it's a downloadable file
 				if (/\.(zip|tar\.gz|rar|7z)$/i.test(href)) {
 					node.properties.download = "";
-					node.properties.rel = "noopener";
+
 				}
 				// Check if it's an external HTTP/HTTPS link
 				else if (/^https?:\/\//.test(href)) {
