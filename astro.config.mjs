@@ -21,7 +21,7 @@ export default defineConfig({
 	markdown: {
 		syntaxHighlight: "prism",
 		remarkPlugins: [remarkReadingTime],
-		rehypePlugins: [rehypeInjectToc, rehypeViewTransitionNames, rehypeOptimizeFirstImage],
+		rehypePlugins: [rehypeInjectToc, rehypeViewTransitionNames, rehypeOptimizeFirstImage, rehypeExternalLinks],
 	},
 	integrations: [
 		sitemap({

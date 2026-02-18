@@ -21,5 +21,6 @@ export function rehypeExternalLinks() {
 				}
 			}
 		});
+		return tree;
 	};
 }
