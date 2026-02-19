@@ -102,6 +102,10 @@ body > header {
 	text-transform: uppercase;
 	text-wrap: balance;
 	scroll-margin-block-start: 4rem; /* account for sticky nav */
+
+	& + * {
+		margin-block-start: 0;
+	}
 }
 
 /* Eyebrow text above main heading */
@@ -138,6 +142,11 @@ h3 {
 		animation-timeline: view();
 		animation-range: entry 10% entry 100%;
 	}
+}
+
+h4 {
+	margin-block: 1em 0.75em;
+	font-weight: 500;
 }
 
 main {

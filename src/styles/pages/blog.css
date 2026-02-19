@@ -483,3 +483,29 @@ body:is([class^="blog-"], [class^="talks-"]) {
 		}
 	}
 }
+
+/* Table */
+table {
+	border-collapse: separate; /* Required for padding to work */
+	padding-block-end: 0.5rem;
+	background-color: var(--color-subtle-bg);
+	margin-block: 1.5em;
+	border-radius: 0.25rem;
+	border-spacing: 0;
+}
+
+thead {
+	& th {
+		padding-block: 0.75em;
+		border-block-end: 2px solid var(--color-bg);
+	}
+}
+
+tbody {
+	padding-block-end: 1rem;
+}
+
+td {
+	padding-inline: 1em;
+	padding-block: 1em;
+}
