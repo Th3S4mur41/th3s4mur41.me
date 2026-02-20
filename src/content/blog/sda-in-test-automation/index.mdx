@@ -55,7 +55,7 @@ The same is true for automated accessibility tests, which usually wait for the p
 
 ## Enter the Scroll: Why SDA Changes the Game
 
-<baseline-status featureId="scroll-driven-animations" client:only="js"></baseline-status>
+<baseline-status featureId="scroll-driven-animations"></baseline-status>
 
 Scroll-driven animations break the "final form" rule. Unlike classic CSS transitions that trigger and finish, an SDA’s state is bound directly to the scroll progress.
 
@@ -117,7 +117,7 @@ There is no "magic button" in current automation frameworks to handle SDA global
 
 ### Forcing `prefers-reduced-motion`
 
-<baseline-status featureId="prefers-reduced-motion" client:only="js"></baseline-status>
+<baseline-status featureId="prefers-reduced-motion"></baseline-status>
 
 Setting [`prefers-reduced-motion`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion) is the standard "go-to" for automation. By setting the browser's emulation to `reduced`, many CSS animations are stripped away.
 
@@ -130,7 +130,7 @@ Setting [`prefers-reduced-motion`](https://developer.mozilla.org/en-US/docs/Web/
 
 Ideally for those fading use cases, we'd use [`prefers-reduced-transparency`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-transparency), but browser support isn't mature enough to make this a reliable universal fix yet, nor is it possible to set this setting in most testing tools yet.
 
-<baseline-status featureId="prefers-reduced-transparency" client:only="js"></baseline-status>
+<baseline-status featureId="prefers-reduced-transparency"></baseline-status>
 
 ### Manual Scroll Mocking (E2E Only)
 
