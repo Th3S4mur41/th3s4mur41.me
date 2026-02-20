@@ -48,6 +48,7 @@ export default defineConfig({
 			},
 			CSS: true,
 			JavaScript: true,
+			Image: false,
 		}),
 	],
 	devToolbar: {
