@@ -56,7 +56,6 @@ body.about {
 			transition: scale 0.15s ease-out;
 
 			@media (prefers-reduced-motion: no-preference) {
-				/* biome-ignore lint/correctness/noUnknownFunction: progressive enhancement */
 				animation: slideUp 0.15s calc(0.1s * sibling-index()) ease-out both;
 				/* biome-ignore lint/correctness/noUnknownProperty: progressive enhancement */
 				animation-trigger: --t play-forwards play-backwards;

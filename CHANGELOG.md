@@ -1,3 +1,10 @@
+# [2.36.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.35.0...v2.36.0) (2026-02-18)
+
+
+### Features
+
+* add rehype plugin to handle external links attributes ([#2138](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2138)) ([55fbf38](https://github.com/Th3S4mur41/th3s4mur41.me/commit/55fbf38aa09528066a3f525034961e5521fbdbec))
+
 # [2.35.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.34.0...v2.35.0) (2026-02-13)
 
 
