@@ -35,6 +35,14 @@ jobs:
           HUSKY: 0
         run: npm ci --no-audit --prefer-offline --progress=false
 
+      - name: '💾 Cache Astro image optimization'
+        uses: actions/cache@v5
+        with:
+          path: .astro
+          key: astro-cache-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            astro-cache-${{ runner.os }}-
+
       - name: '✅ Lint code'
         run: npm run lint -- --reporter=github
 
