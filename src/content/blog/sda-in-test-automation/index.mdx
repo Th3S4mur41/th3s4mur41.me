@@ -111,6 +111,8 @@ It's important to distinguish between the two, as they require different testing
 
 Considering the differences, scroll-triggered animations pose less of a problem for test automation, as they can be handled with traditional waiting strategies. Scroll-driven animations, however, require a more nuanced approach to ensure reliable testing outcomes.
 
+Want to go deeper on the UX rationale (not tooling) and why scroll-driven behavior can be a better fit for subtle fades like this example? Check out [Brecht De Ruyte](https://utilitybend.com/about)'s post on [CSS animation triggers](https://utilitybend.com/blog/css-animation-triggers-playing-animations-on-scroll-without-scrubbing-its-a-match).
+
 ## How do we adapt? (It’s complicated)
 
 There is no "magic button" in current automation frameworks to handle SDA globally. Because these animations are tied to the scroll timeline rather than a clock, our usual tricks for "waiting" fall short. Here is a breakdown of current strategies and why they aren't perfect:
