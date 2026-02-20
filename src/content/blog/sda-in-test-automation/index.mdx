@@ -107,7 +107,7 @@ It's important to distinguish between the two, as they require different testing
 | Feature | Behavior | Testing Impact |
 |---------|----------|----------------|
 | Scroll-Triggered | Scrolling past a point starts a standard animation. | **Lower Friction**. Treat it like a regular animation; just add a "wait" after the scroll event. |
-| Scroll-Driven | Animation state is directly tied to scroll progress | **High Friction**. There is no "end" state. You must programmatically force a specific scroll percentage to get a consistent state. |
+| Scroll-Driven | Animation state is directly tied to scroll progress. | **High Friction**. There is no "end" state. You must programmatically force a specific scroll percentage to get a consistent state. |
 
 Considering the differences, scroll-triggered animations pose less of a problem for test automation, as they can be handled with traditional waiting strategies. Scroll-driven animations, however, require a more nuanced approach to ensure reliable testing outcomes.
 
