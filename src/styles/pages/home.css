@@ -157,8 +157,10 @@ body.home {
 
 	article {
 		display: grid;
-		grid-template-columns: [image-start] 0.5em [type-start meta-start] 20ch [meta-end date-start] 10ch [type-end date-end] 0.5em [image-end] 1em [title-start teaser-start] 1fr [title-end teaser-end] 0.5em;
-		grid-template-rows: [image-start type-start] 0.5em [title-start] auto [title-end] 0.5em [teaser-start] 1fr [image-end type-end] 0.5em [meta-start date-start] auto [meta-end date-end teaser-end] 0.5em;
+		grid-template-columns: [image-start] 0.5em [type-start meta-start] 20ch [meta-end date-start] 10ch [type-end
+				date-end] 0.5em [image-end] 1em [title-start teaser-start] 1fr [title-end teaser-end] 0.5em;
+		grid-template-rows: [image-start type-start] 0.5em [title-start] auto [title-end] 0.5em [teaser-start] 1fr [image-end
+				type-end] 0.5em [meta-start date-start] auto [meta-end date-end teaser-end] 0.5em;
 
 		& > h3 {
 			grid-area: title;
@@ -217,14 +219,18 @@ body.home {
 		}
 
 		&.highlight {
-			grid-template-columns: [image-start] 0.5em [title-start teaser-start meta-start type-start] 1fr [meta-end date-start] auto [date-end title-end teaser-end type-end] 0.5em [image-end];
-			grid-template-rows: [image-start type-start] auto [image-end type-end meta-start date-start] auto [meta-end date-end title-start] auto [title-end teaser-start] auto [teaser-end] 0.5em;
+			grid-template-columns: [image-start] 0.5em [title-start teaser-start meta-start type-start] 1fr [meta-end
+					date-start] auto [date-end title-end teaser-end type-end] 0.5em [image-end];
+			grid-template-rows: [image-start type-start] auto [image-end type-end meta-start date-start] auto [meta-end
+					date-end title-start] auto [title-end teaser-start] auto [teaser-end] 0.5em;
 			row-gap: 0.5em;
 		}
 
 		@container (width <= 40rem) {
-			grid-template-columns: [image-start] 0.5em [title-start teaser-start meta-start type-start] 1fr [meta-end date-start] auto [date-end title-end teaser-end type-end] 0.5em [image-end];
-			grid-template-rows: [image-start type-start] auto [image-end type-end meta-start date-start] auto [meta-end date-end title-start] auto [title-end teaser-start] auto [teaser-end] 0.5em;
+			grid-template-columns: [image-start] 0.5em [title-start teaser-start meta-start type-start] 1fr [meta-end
+					date-start] auto [date-end title-end teaser-end type-end] 0.5em [image-end];
+			grid-template-rows: [image-start type-start] auto [image-end type-end meta-start date-start] auto [meta-end
+					date-end title-start] auto [title-end teaser-start] auto [teaser-end] 0.5em;
 			row-gap: 0.5em;
 		}
 	}

@@ -10,12 +10,15 @@
 				"useAsConstAssertion": "error",
 				"useDefaultParameterLast": "error",
 				"useEnumInitializers": "error",
-				"useSelfClosingElements": "error",
 				"useSingleVarDeclarator": "error",
 				"noUnusedTemplateLiteral": "error",
 				"useNumberNamespace": "error",
 				"noInferrableTypes": "error",
 				"noUselessElse": "error"
+			},
+			"a11y": {
+				"useAnchorContent": "off",
+				"useSemanticElements": "warn"
 			}
 		}
 	},
@@ -26,6 +29,12 @@
 		"formatter": {
 			"enabled": true
 		}
+	},
+	"javascript": {
+		"experimentalEmbeddedSnippetsEnabled": false
+	},
+	"html": {
+		"experimentalFullSupportEnabled": true
 	},
 	"formatter": {
 		"indentStyle": "tab",
@@ -44,14 +53,6 @@
 			"includes": ["**/*.astro"],
 			"linter": {
 				"rules": {
-					"correctness": {
-						"noUnusedVariables": "off",
-						"noUnusedImports": "off"
-					},
-					"style": {
-						"useConst": "off",
-						"useImportType": "off"
-					},
 					"suspicious": {
 						"noExplicitAny": "off"
 					}

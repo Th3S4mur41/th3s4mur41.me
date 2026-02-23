@@ -182,7 +182,7 @@ void [Layout, Content, img, truncatedTitle, BlogPostingSchema, PodcastEpisodeSch
   noHeader>
   <article>
     {article.data.eyebrow && <p class="eyebrow">{article.data.eyebrow}</p>}
-    {/** Render markdown/MDX content (TOC is injected after h1 via rehype plugin) */}
+    <!-- Render markdown/MDX content (TOC is injected after h1 via rehype plugin) -->
     <Content components={{ img: Image }}/>
     <footer>
       <p class="published">

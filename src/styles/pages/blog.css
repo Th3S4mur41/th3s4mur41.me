@@ -79,8 +79,10 @@ body.blog {
 
 		@container (width <= 50rem) {
 			grid-template: unset;
-			grid-template-columns: [image-start] 0.5em [title-start teaser-start meta-start type-start] 1fr [meta-end date-start] auto [date-end title-end teaser-end type-end] 0.5em [image-end];
-			grid-template-rows: [image-start type-start] auto [image-end type-end meta-start date-start] auto [meta-end date-end title-start] auto [title-end teaser-start] auto [teaser-end] 0.5em;
+			grid-template-columns: [image-start] 0.5em [title-start teaser-start meta-start type-start] 1fr [meta-end
+					date-start] auto [date-end title-end teaser-end type-end] 0.5em [image-end];
+			grid-template-rows: [image-start type-start] auto [image-end type-end meta-start date-start] auto [meta-end
+					date-end title-start] auto [title-end teaser-start] auto [teaser-end] 0.5em;
 			gap: 0.5rem 0;
 
 			.type {
