@@ -26,6 +26,7 @@ export const getPersonData = (origin: string) => {
 			"https://twitter.com/Th3S4mur41",
 			"https://fosstodon.org/@Th3S4mur41",
 			"https://www.fronta11y.org/author/mvanderheyden/",
+			"https://dev.to/th3s4mur41",
 		],
 	};
 };
