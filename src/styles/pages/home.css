@@ -86,6 +86,11 @@ body.home {
 		--color-border-2: var(--color-subtle-bg);
 		border-radius: 57% 43% 69% 37% / 50% 52% 57% 46%;
 		border: 2px solid transparent;
+		/* Fallback in case image-set is not supported */
+		background:
+			url("/images/color-splash-bg-256x256.jpg"),
+			radial-gradient(circle at 50% 250%, var(--color-subtle-bg), var(--color-bg)),
+			linear-gradient(var(--color-border), var(--color-border-2));
 		background:
 			image-set(
 				url("/images/color-splash-bg-256x256.avif") type("image/avif"),
