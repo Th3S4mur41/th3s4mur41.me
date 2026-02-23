@@ -1,3 +1,10 @@
+# [2.37.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.36.0...v2.37.0) (2026-02-23)
+
+
+### Features
+
+* **blog:** add sda in test automation post ([#2145](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2145)) ([a0e0d5c](https://github.com/Th3S4mur41/th3s4mur41.me/commit/a0e0d5cb159cda9b16ecb75177f85ddeedc477ff))
+
 # [2.36.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.35.0...v2.36.0) (2026-02-18)
 
 
