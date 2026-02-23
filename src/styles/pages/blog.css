@@ -178,6 +178,7 @@ body:is([class^="blog-"], [class^="talks-"]) {
 
 figure {
 	margin-inline: unset;
+	margin-block: 1rem 2rem;
 
 	& > p:has(> :is(img, picture):only-child) {
 		margin-block: unset;
@@ -367,8 +368,9 @@ body:is([class^="blog-"], [class^="talks-"]) {
 
 .markdown-alert {
 	--color-alert: var(--color-subtle-text);
-	padding-inline-start: 1rem;
+	padding-inline: 1rem;
 	border-inline-start: 4px solid var(--color-alert);
+	margin-block: 1rem 2rem;
 	position: relative;
 	border-radius: 0.25rem;
 	background: var(--color-subtle-bg);
@@ -482,4 +484,34 @@ body:is([class^="blog-"], [class^="talks-"]) {
 			}
 		}
 	}
+}
+
+/* Table */
+table {
+	border-collapse: separate; /* Required for padding to work */
+	padding-block-end: 0.5rem;
+	background-color: var(--color-subtle-bg);
+	margin-block: 1.5em;
+	border-radius: 0.25rem;
+	border-spacing: 0;
+}
+
+thead {
+	& th {
+		padding-block: 0.75em;
+		border-block-end: 2px solid var(--color-bg);
+	}
+}
+
+tbody {
+	padding-block-end: 1rem;
+}
+
+td {
+	padding-inline: 1em;
+	padding-block: 1em;
+}
+
+baseline-status {
+	margin-block-end: 1.5rem;
 }
