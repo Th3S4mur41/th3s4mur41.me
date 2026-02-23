@@ -11,6 +11,9 @@
 		min(80ch, calc(100vi - var(--main-margin) * 2)) [content-end title-end] var(--main-margin) [margin-end] 1fr
 		[full-width-end];
 
+	color-scheme: dark;
+	accent-color: var(--color-accent);
+
 	@media (width >= 1200px) {
 		--grid-columns: [full-width-start] 1fr [margin-start] var(--main-margin) [content-start title-start]
 			min(80ch, calc(100vi - var(--main-margin) * 2)) [content-end title-end sidebar-start] auto [sidebar-end]
