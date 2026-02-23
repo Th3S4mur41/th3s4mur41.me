@@ -100,8 +100,8 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
   }
 
   function validateCount(value) {
-    const num = typeof value === 'number' ? value : parseInt(value, 10);
-    return !isNaN(num) && num >= 0 ? num : 0;
+    const num = typeof value === 'number' ? value : Number.parseInt(value, 10);
+    return !Number.isNaN(num) && num >= 0 ? num : 0;
   }
 
   function areSameActors(nextActors, cachedActors) {
@@ -163,7 +163,7 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
       const likeCount = validateCount(post.likeCount);
       const likeCountEl = document.querySelector('#likes .count');
       if (likeCountEl) {
-        const currentCount = parseInt(likeCountEl.textContent) || 0;
+        const currentCount = Number.parseInt(likeCountEl.textContent, 10) || 0;
         likeCountEl.textContent = (currentCount + likeCount).toString();
       }
 
@@ -171,7 +171,7 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
       const repostCount = validateCount(post.repostCount);
       const repostCountEl = document.querySelector('#boosts .count');
       if (repostCountEl) {
-        const currentCount = parseInt(repostCountEl.textContent) || 0;
+        const currentCount = Number.parseInt(repostCountEl.textContent, 10) || 0;
         repostCountEl.textContent = (currentCount + repostCount).toString();
       }
 
@@ -304,7 +304,7 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
       if (likesCount > 0) {
         const likeCountEl = document.querySelector('#likes .count');
         if (likeCountEl) {
-          const currentCount = parseInt(likeCountEl.textContent) || 0;
+          const currentCount = Number.parseInt(likeCountEl.textContent, 10) || 0;
           likeCountEl.textContent = (currentCount + likesCount).toString();
         }
       }
@@ -312,7 +312,7 @@ const atUri = bskyUrl ? getAtUri(bskyUrl) : null;
       if (boostsCount > 0) {
         const boostCountEl = document.querySelector('#boosts .count');
         if (boostCountEl) {
-          const currentCount = parseInt(boostCountEl.textContent) || 0;
+          const currentCount = Number.parseInt(boostCountEl.textContent, 10) || 0;
           boostCountEl.textContent = (currentCount + boostsCount).toString();
         }
       }

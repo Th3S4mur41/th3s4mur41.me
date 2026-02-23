@@ -38,7 +38,7 @@ export function rehypeInjectToc() {
 		const headings = [];
 		const collectHeadings = (node) => {
 			if (node.type === "element" && /^h[1-6]$/.test(node.tagName)) {
-				const depth = Number.parseInt(node.tagName.charAt(1));
+				const depth = Number.parseInt(node.tagName.charAt(1), 10);
 				const text = getText(node);
 				const slug = node.properties?.id || createSlug(text);
 
