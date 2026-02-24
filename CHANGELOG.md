@@ -1,3 +1,10 @@
+# [2.40.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.39.0...v2.40.0) (2026-02-24)
+
+
+### Features
+
+* add text scaling support and improve layout responsiveness ([#2155](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2155)) ([59a1f46](https://github.com/Th3S4mur41/th3s4mur41.me/commit/59a1f467659b8fd9383379f7fb6df73f11abf169))
+
 # [2.39.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.38.0...v2.39.0) (2026-02-24)
 
 
