@@ -1,3 +1,10 @@
+# [2.38.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.37.0...v2.38.0) (2026-02-23)
+
+
+### Features
+
+* **layout:** add webmention and social links ([#2151](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2151)) ([3f54a1d](https://github.com/Th3S4mur41/th3s4mur41.me/commit/3f54a1d57abcd7cb9fab8530699d89361185efa7))
+
 # [2.37.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.36.0...v2.37.0) (2026-02-23)
 
 
