@@ -24,7 +24,7 @@ const {
 	src,
 	alt,
 	widths = { small: 640, medium: 1024, large: 1920 },
-	sizes = "(max-width: 640px) 640px, (max-width: 1024px) 1024px, 1920px",
+	sizes = "auto",
 	loading = "lazy",
 	decoding = "async",
 	class: className,
@@ -41,7 +41,6 @@ const isSvg = originalFormat.toLowerCase() === "svg";
 
 // For SVG, skip transformations to preserve vector benefits
 let avifSrcset = "";
-let computedSizes = sizes;
 let fallbackImage: any = null;
 
 if (!isSvg) {
@@ -70,16 +69,12 @@ if (!isSvg) {
 	// Create AVIF srcset string based on original size
 	if (originalWidth <= smallWidth) {
 		avifSrcset = `${avifSmall.src} ${avifSmallWidth}w`;
-		computedSizes = `${originalWidth}px`;
 	} else if (originalWidth <= mediumWidth) {
 		avifSrcset = `${avifSmall.src} ${avifSmallWidth}w, ${avifMedium.src} ${avifMediumWidth}w`;
-		computedSizes = `(max-width: ${smallWidth}px) ${smallWidth}px, ${originalWidth}px`;
 	} else if (originalWidth <= largeWidth) {
 		avifSrcset = `${avifSmall.src} ${avifSmallWidth}w, ${avifMedium.src} ${avifMediumWidth}w, ${avifLarge.src} ${avifLargeWidth}w`;
-		computedSizes = `(max-width: ${smallWidth}px) ${smallWidth}px, (max-width: ${mediumWidth}px) ${mediumWidth}px, ${originalWidth}px`;
 	} else {
 		avifSrcset = `${avifSmall.src} ${avifSmallWidth}w, ${avifMedium.src} ${avifMediumWidth}w, ${avifLarge.src} ${avifLargeWidth}w`;
-		computedSizes = sizes;
 	}
 }
 ---
@@ -100,7 +95,7 @@ if (!isSvg) {
 	/>
 ) : (
 	<picture>
-		<source type="image/avif" srcset={avifSrcset} sizes={computedSizes} />
+		<source type="image/avif" srcset={avifSrcset} sizes={sizes} />
 		<img
 			src={fallbackImage.src}
 			alt={alt}

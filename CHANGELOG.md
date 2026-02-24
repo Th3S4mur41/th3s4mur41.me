@@ -1,3 +1,10 @@
+# [2.39.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.38.0...v2.39.0) (2026-02-24)
+
+
+### Features
+
+* optimize images ([#2150](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2150)) ([edab387](https://github.com/Th3S4mur41/th3s4mur41.me/commit/edab38776180bdb3939ba1a1140d590f1ec241b4))
+
 # [2.38.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.37.0...v2.38.0) (2026-02-23)
 
 
