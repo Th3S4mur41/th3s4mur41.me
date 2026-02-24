@@ -240,6 +240,7 @@ body > nav {
 		--border-radius: 0.5rem;
 		grid-area: nav;
 		display: flex;
+		flex-wrap: wrap;
 		list-style: none;
 		justify-content: center;
 		margin: unset;
@@ -298,7 +299,8 @@ body > nav {
 
 		& a {
 			display: block;
-			padding-inline: 1.5rem;
+			white-space: nowrap;
+			padding-inline: clamp(0.75rem, 5vw, 1.5rem);
 			padding-block: 0.5rem;
 			color: var(--color-text);
 			text-decoration: none;
