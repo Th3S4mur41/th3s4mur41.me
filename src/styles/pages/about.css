@@ -7,6 +7,7 @@ body.about {
 		& > picture > img {
 			display: block;
 			inline-size: clamp(20rem, 50%, 40rem);
+			max-inline-size: 100%; /* Never create a scroll container */
 			height: auto;
 			margin-inline: auto;
 			margin-block: 1rem;
