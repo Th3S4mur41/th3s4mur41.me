@@ -496,8 +496,6 @@ table {
 	margin-block: 1.5em;
 	border-radius: 0.25rem;
 	border-spacing: 0;
-	max-inline-size: 100%;
-	overflow-x: auto;
 }
 
 thead {
