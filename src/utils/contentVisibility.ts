@@ -4,7 +4,7 @@ export type PublishableDated = {
 };
 
 function envFlag(name: string): boolean {
-	const raw = process.env[name];
+	const raw = (import.meta.env as Record<string, string | undefined>)[name];
 	if (!raw) return false;
 	return raw === "1" || raw.toLowerCase() === "true" || raw.toLowerCase() === "yes";
 }
