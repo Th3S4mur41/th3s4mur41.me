@@ -1,3 +1,10 @@
+## [2.40.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.40.0...v2.40.1) (2026-02-25)
+
+
+### Bug Fixes
+
+* **Image:** add quality parameter for fallback image generation ([54989a9](https://github.com/Th3S4mur41/th3s4mur41.me/commit/54989a99bf1598d748ca73c70f69a96655c93e8b))
+
 # [2.40.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.39.0...v2.40.0) (2026-02-24)
 
 
