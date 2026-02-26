@@ -25,6 +25,7 @@ export const getPersonData = (origin: string) => {
 			},
 		],
 		knowsLanguage: ["fr", "de", "en"],
+		knowsAbout: ["Web Accessibility", "UX Engineering", "Modern Web Standards", "HTML", "CSS"],
 		sameAs: [
 			"https://www.linkedin.com/in/michaelvanderheyden/",
 			"https://bsky.app/profile/th3s4mur41.me",

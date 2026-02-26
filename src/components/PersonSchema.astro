@@ -14,13 +14,15 @@ const websiteData = getWebsiteData(Astro.url.origin);
 const jsonLd = includeWebsite
 	? {
 			"@context": "https://schema.org",
-			"@type": "WebPage",
-			"@id": `${Astro.url.origin}/`,
 			"@graph": [websiteData, personData],
 		}
 	: {
 			"@context": "https://schema.org",
 			...personData,
+			mainEntityOfPage: {
+				"@type": "WebPage",
+				"@id": Astro.url.href,
+			},
 		};
 ---
 
