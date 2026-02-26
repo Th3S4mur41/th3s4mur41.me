@@ -180,6 +180,33 @@ void [Layout, Content, img, truncatedTitle, BlogPostingSchema, PodcastEpisodeSch
   canonical={article.data.canonical ?? undefined}
   translations={article.data.translations?.map((t) => ({ language: t.language, url: t.url })) ?? undefined}
   noHeader>
+  {section === "blog" && (
+		<BlogPostingSchema
+			slot="head"
+			headline={article.data.title}
+			description={article.data.description}
+			datePublished={article.data.date}
+			dateModified={article.data.updated}
+			image={img}
+			url={Astro.url.href}
+			canonical={article.data.canonical}
+			translations={article.data.translations}
+		/>
+	)}
+
+	{section === "talks" && article.data.type === "podcast" && (
+		<PodcastEpisodeSchema
+			slot="head"
+			name={article.data.title}
+			description={article.data.description}
+			datePublished={article.data.date}
+			url={Astro.url.href}
+			canonical={article.data.canonical}
+			image={img}
+			publisherName={article.data.publisherName}
+			publisherUrl={article.data.publisherUrl}
+		/>
+	)}
   <article>
     {article.data.eyebrow && <p class="eyebrow">{article.data.eyebrow}</p>}
     <!-- Render markdown/MDX content (TOC is injected after h1 via rehype plugin) -->
@@ -267,32 +294,6 @@ void [Layout, Content, img, truncatedTitle, BlogPostingSchema, PodcastEpisodeSch
         });
       }
     </script>
-
-		{section === "blog" && (
-			<BlogPostingSchema
-				headline={article.data.title}
-				description={article.data.description}
-				datePublished={article.data.date}
-				dateModified={article.data.updated}
-				image={img}
-				url={Astro.url.href}
-				canonical={article.data.canonical}
-				translations={article.data.translations}
-			/>
-		)}
-
-		{section === "talks" && article.data.type === "podcast" && (
-			<PodcastEpisodeSchema
-				name={article.data.title}
-				description={article.data.description}
-				datePublished={article.data.date}
-				url={Astro.url.href}
-				canonical={article.data.canonical}
-				image={img}
-				publisherName={article.data.publisherName}
-				publisherUrl={article.data.publisherUrl}
-			/>
-		)}
   </article>
 	<aside slot="aside">
 		<h2>You might also like</h2>
