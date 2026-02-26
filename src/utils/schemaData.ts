@@ -12,10 +12,19 @@ export const getPersonData = (origin: string) => {
 		image: imageUrl,
 		description: "Lead UX Engineer & Accessibility Specialist",
 		jobTitle: "Lead UX Engineer",
-		worksFor: {
-			"@type": "Organization",
-			name: "cycos AG",
-		},
+		worksFor: [
+			{
+				"@type": "Organization",
+				name: "cycos AG",
+				url: "https://www.cycos.com",
+			},
+			{
+				"@type": "Organization",
+				name: "Atos",
+				url: "https://atos.net",
+			},
+		],
+		knowsLanguage: ["fr", "de", "en"],
 		sameAs: [
 			"https://www.linkedin.com/in/michaelvanderheyden/",
 			"https://bsky.app/profile/th3s4mur41.me",
@@ -28,6 +37,7 @@ export const getPersonData = (origin: string) => {
 			"https://www.fronta11y.org/author/mvanderheyden/",
 			"https://dev.to/th3s4mur41",
 			"https://atos.net/de/expert/michael-vanderheyden",
+			"https://stackoverflow.com/users/7041074/th3s4mur41",
 		],
 	};
 };
