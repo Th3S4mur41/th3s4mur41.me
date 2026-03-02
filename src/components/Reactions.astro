@@ -73,7 +73,7 @@ function getPlatformLabel(hostname: string) {
          {likeActors.map((author) => {
            const hostname = getSafeHostname(author.url);
            const titleText = author.name ? `${author.name}${hostname ? ` (${hostname})` : ''}` : "User";
-           return (
+           const img = (
              <img
                src={author.photo}
                alt={author.name || "User"}
@@ -83,6 +83,24 @@ function getPlatformLabel(hostname: string) {
                loading="lazy"
                decoding="async"
              />
+           );
+           
+           let isValidUrl = false;
+           if (author.url) {
+             try {
+               new URL(author.url);
+               isValidUrl = true;
+             } catch {
+               isValidUrl = false;
+             }
+           }
+           
+           return isValidUrl ? (
+             <a href={author.url} target="_blank" rel="noopener noreferrer external">
+               {img}
+             </a>
+           ) : (
+             img
            );
          })}
        </div>
@@ -94,7 +112,7 @@ function getPlatformLabel(hostname: string) {
          {repostActors.map((author) => {
            const hostname = getSafeHostname(author.url);
            const titleText = author.name ? `${author.name}${hostname ? ` (${hostname})` : ''}` : "User";
-           return (
+           const img = (
              <img
                src={author.photo}
                alt={author.name || "User"}
@@ -104,6 +122,24 @@ function getPlatformLabel(hostname: string) {
                loading="lazy"
                decoding="async"
              />
+           );
+           
+           let isValidUrl = false;
+           if (author.url) {
+             try {
+               new URL(author.url);
+               isValidUrl = true;
+             } catch {
+               isValidUrl = false;
+             }
+           }
+           
+           return isValidUrl ? (
+             <a href={author.url} target="_blank" rel="noopener noreferrer external">
+               {img}
+             </a>
+           ) : (
+             img
            );
          })}
        </div>
