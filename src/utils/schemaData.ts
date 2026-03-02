@@ -34,7 +34,6 @@ export const getPersonData = (origin: string) => {
 			{
 				"@type": "Thing",
 				name: "UX Engineering",
-				sameAs: "https://en.wikipedia.org/wiki/Front-end_web_development",
 			},
 			{
 				"@type": "Thing",
@@ -58,7 +57,7 @@ export const getPersonData = (origin: string) => {
 			},
 			{
 				"@type": "Thing",
-				name: "Software engineering",
+				name: "Software Engineering",
 				sameAs: "https://en.wikipedia.org/wiki/Software_engineering",
 			},
 		],
