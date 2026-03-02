@@ -47,7 +47,7 @@ jobs:
           ref: ${{ github.event.workflow_run.head_branch || github.event.pull_request.base.ref }}
 
       - name: '📎 Download build output'
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: build
           path: dist

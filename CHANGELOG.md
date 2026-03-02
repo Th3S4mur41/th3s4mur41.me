@@ -1,3 +1,38 @@
+## [2.41.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.41.0...v2.41.1) (2026-03-02)
+
+
+### Bug Fixes
+
+* add 'syndication' rel attribute to external links for Bluesky and Mastodon ([0df6e58](https://github.com/Th3S4mur41/th3s4mur41.me/commit/0df6e58d1b05eaabbdd8981f593ae723f422cf2d))
+
+# [2.41.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.40.1...v2.41.0) (2026-02-27)
+
+
+### Features
+
+* enhance structured data, move JSON-LD to head, update titles/headings, add YouTube to sameAs ([#2164](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2164)) ([64dfa84](https://github.com/Th3S4mur41/th3s4mur41.me/commit/64dfa842abe5370df9d98bd549168dc48aafe8bd))
+
+## [2.40.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.40.0...v2.40.1) (2026-02-25)
+
+
+### Bug Fixes
+
+* **Image:** add quality parameter for fallback image generation ([54989a9](https://github.com/Th3S4mur41/th3s4mur41.me/commit/54989a99bf1598d748ca73c70f69a96655c93e8b))
+
+# [2.40.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.39.0...v2.40.0) (2026-02-24)
+
+
+### Features
+
+* add text scaling support and improve layout responsiveness ([#2155](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2155)) ([59a1f46](https://github.com/Th3S4mur41/th3s4mur41.me/commit/59a1f467659b8fd9383379f7fb6df73f11abf169))
+
+# [2.39.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.38.0...v2.39.0) (2026-02-24)
+
+
+### Features
+
+* optimize images ([#2150](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2150)) ([edab387](https://github.com/Th3S4mur41/th3s4mur41.me/commit/edab38776180bdb3939ba1a1140d590f1ec241b4))
+
 # [2.38.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.37.0...v2.38.0) (2026-02-23)
 
 

@@ -12,7 +12,8 @@ import PersonSchema from "../components/PersonSchema.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="About me"
+<Layout title="About Michaël Vanderheyden"
+	heading="Michaël Vanderheyden aka. Th3S4mur41"
 	description="Th3S4mur41 – Michaël Vanderheyden: Web developer and accessibility advocate focused on modern web standards, UI/UX, and inclusive design."
 	keywords={[
 		"Th3S4mur41",
@@ -30,6 +31,7 @@ import Layout from "../layouts/Layout.astro";
 		"modern web standards",
 		"CSS expert"
 	]}>
+	<PersonSchema slot="head" />
 	<section id="bio">
 		<h2>About Me</h2>
 		<Image class="profile" src={profileImage} alt="Michaël's profile picture" />
@@ -62,6 +64,5 @@ import Layout from "../layouts/Layout.astro";
 			<Image class="lida" src={lida} alt="Leading in the Digital Age badge from Atos" />
 		</a>
 	</section>
-	<PersonSchema />
 </Layout>
 

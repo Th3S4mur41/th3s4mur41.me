@@ -24,10 +24,11 @@ const allPosts = [...blog, ...talks]
 	.slice(0, 3);
 
 // Biome currently doesn't reliably detect Astro template usage.
-void [Image, profileImg, ArticleCard, Layout, allPosts];
+void [Image, profileImg, ArticleCard, Layout, PersonSchema, allPosts];
 ---
 
-<Layout title="Home">
+<Layout tagline="Lead UX Engineer & Accessibility Specialist">
+	<PersonSchema slot="head" includeWebsite={true} />
 	<div class="intro">
 	<a href='/about/' class="profile"><Image src={profileImg} alt="Michaël holding a katana on a colorful background" /></a>
 	<h2>Hey! My name is Michaël.</h2> 
@@ -59,6 +60,5 @@ void [Image, profileImg, ArticleCard, Layout, allPosts];
 				highlight={index === 0}
 			/>
 	))}
-	<PersonSchema includeWebsite={true} />
 </Layout>
 

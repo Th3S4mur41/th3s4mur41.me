@@ -145,6 +145,7 @@ jobs:
 
           # Skip Copilot assignment for now (you can enable this later)
           skip_copilot_assignment: true
+          include_screenshots: true
 
       - name: '✅ Accessibility scan completed'
         run: |
