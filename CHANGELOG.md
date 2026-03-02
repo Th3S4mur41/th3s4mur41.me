@@ -1,3 +1,10 @@
+# [2.42.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.41.1...v2.42.0) (2026-03-02)
+
+
+### Features
+
+* **webmention:** integrate webmention.io for social interactions ([#2175](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2175)) ([ff679ca](https://github.com/Th3S4mur41/th3s4mur41.me/commit/ff679ca6a493cf5770423d8dcd2da8dd4417c318))
+
 ## [2.41.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.41.0...v2.41.1) (2026-03-02)
 
 
