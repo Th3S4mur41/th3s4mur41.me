@@ -33,13 +33,15 @@ const repostActors = getTopActors(webmentions.reposts, 10);
 // Check if we have any reactions to display
 const hasReactions = webmentions.stats.likes > 0 || webmentions.stats.reposts > 0;
 
-// Safe URL parsing helper - returns hostname or empty string if URL is invalid
-function getSafeHostname(url: string | undefined): string {
-  if (!url) return "";
+// Safe URL parsing helper - only allow http/https URLs
+function getSafeHttpUrl(url: string | undefined): URL | null {
+  if (!url) return null;
   try {
-    return new URL(url).hostname.replace(/^www\./, "");
+    const parsed = new URL(url);
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return null;
+    return parsed;
   } catch {
-    return "";
+    return null;
   }
 }
 
@@ -71,7 +73,8 @@ function getPlatformLabel(hostname: string) {
        <span class="count">{webmentions.stats.likes}</span> 
         <div class="avatars" id="like-avatars">
          {likeActors.map((author) => {
-           const hostname = getSafeHostname(author.url);
+           const safeUrl = getSafeHttpUrl(author.url);
+           const hostname = safeUrl ? safeUrl.hostname.replace(/^www\./, "") : "";
            const titleText = author.name ? `${author.name}${hostname ? ` (${hostname})` : ''}` : "User";
            const img = (
              <img
@@ -84,19 +87,9 @@ function getPlatformLabel(hostname: string) {
                decoding="async"
              />
            );
-           
-           let isValidUrl = false;
-           if (author.url) {
-             try {
-               new URL(author.url);
-               isValidUrl = true;
-             } catch {
-               isValidUrl = false;
-             }
-           }
-           
-           return isValidUrl ? (
-             <a href={author.url} target="_blank" rel="noopener noreferrer external ugc nofollow">
+          
+           return safeUrl ? (
+             <a href={safeUrl.href} target="_blank" rel="noopener noreferrer external ugc nofollow">
                {img}
              </a>
            ) : (
@@ -110,7 +103,8 @@ function getPlatformLabel(hostname: string) {
        <span class="count">{webmentions.stats.reposts}</span> 
         <div class="avatars" id="repost-avatars">
          {repostActors.map((author) => {
-           const hostname = getSafeHostname(author.url);
+           const safeUrl = getSafeHttpUrl(author.url);
+           const hostname = safeUrl ? safeUrl.hostname.replace(/^www\./, "") : "";
            const titleText = author.name ? `${author.name}${hostname ? ` (${hostname})` : ''}` : "User";
            const img = (
              <img
@@ -123,19 +117,9 @@ function getPlatformLabel(hostname: string) {
                decoding="async"
              />
            );
-           
-           let isValidUrl = false;
-           if (author.url) {
-             try {
-               new URL(author.url);
-               isValidUrl = true;
-             } catch {
-               isValidUrl = false;
-             }
-           }
-           
-           return isValidUrl ? (
-             <a href={author.url} target="_blank" rel="noopener noreferrer external ugc nofollow">
+          
+           return safeUrl ? (
+             <a href={safeUrl.href} target="_blank" rel="noopener noreferrer external ugc nofollow">
                {img}
              </a>
            ) : (
