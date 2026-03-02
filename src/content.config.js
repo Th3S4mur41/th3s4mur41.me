@@ -29,6 +29,7 @@ const blogSchema = z.object({
 			}),
 		)
 		.optional(),
+	syndication: z.array(z.string().url()).optional(),
 	reactions: z.boolean().optional().default(true),
 });
 
@@ -47,6 +48,7 @@ const talksSchema = z.object({
 	// Optional override for content published/hosted elsewhere.
 	publisherName: z.string().optional(),
 	publisherUrl: z.string().url().optional(),
+	syndication: z.array(z.string().url()).optional(),
 	reactions: z.boolean().optional().default(true),
 });
 
