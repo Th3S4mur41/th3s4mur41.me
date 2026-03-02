@@ -60,14 +60,12 @@ if (currentTags.length > 0) {
 ---
 
 {relatedArticles.length > 0 && (
-	<>
-		{relatedArticles.map(({ entry: relatedArticle, section: articleSection }) => (
+		relatedArticles.map(({ entry: relatedArticle, section: articleSection }) => (
 			<ArticleCard
 				article={relatedArticle}
 				section={articleSection}
 				headingOffset={1}
 				imageLoading="lazy"
 			/>
-		))}
-	</>
+		))
 )}
