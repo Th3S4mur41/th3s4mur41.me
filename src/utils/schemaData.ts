@@ -65,10 +65,15 @@ export const getPersonData = (origin: string) => {
 		alumniOf: {
 			"@type": "EducationalOrganization",
 			name: "HEPL - Haute Ecole de la Province de Liège (Seraing)",
-			sameAs: "https://www.hepl.be/",
-			award: "Bachelor of Computer Science",
+			url: "https://www.hepl.be/",
 		},
 		hasCredential: [
+			{
+				"@type": "EducationalOccupationalCredential",
+				name: "Bachelor of Computer Science",
+				credentialCategory: "Degree",
+				recognizedBy: { "@type": "Organization", name: "HEPL - Haute Ecole de la Province de Liège (Seraing)" },
+			},
 			{
 				"@type": "EducationalOccupationalCredential",
 				name: "Certified Professional in Web Accessibility (CPWA)",
