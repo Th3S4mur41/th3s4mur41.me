@@ -40,3 +40,9 @@ build/
 dist/
 reports/
 .tscache/
+
+# Environment variables (except .env.development template)
+.env
+.env.local
+.env.production
+.env.*.local
