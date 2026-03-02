@@ -434,7 +434,7 @@ body:is([class^="blog-"], [class^="talks-"]) {
 		display: flex;
 		flex-wrap: wrap;
 		row-gap: 0.5rem;
-		align-items: center;
+		align-items: start;
 	}
 
 	> header,
