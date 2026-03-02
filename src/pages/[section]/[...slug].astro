@@ -9,6 +9,8 @@ import Reactions from "../../components/Reactions.astro";
 import RelatedArticles from "../../components/RelatedArticles.astro";
 import Layout from "../../layouts/Layout.astro";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../../utils/contentVisibility";
+import type { ProcessedWebmentions } from "../../utils/webmentions";
+import { fetchWebmentions, processWebmentions } from "../../utils/webmentions";
 
 /**
  * Unified dynamic route for both blog posts and talks.
@@ -165,6 +167,19 @@ function truncateTitle(original: string): string {
 }
 
 const truncatedTitle = truncateTitle(article.data.title);
+
+// Fetch webmentions if reactions are enabled for this article
+let webmentions: ProcessedWebmentions | null = null;
+if (article.data.reactions) {
+	const apiKey = import.meta.env.WEBMENTIONIO_API_KEY;
+	const pageUrl = Astro.url.href;
+	
+	const mentions = await fetchWebmentions(pageUrl, apiKey);
+	if (mentions) {
+		webmentions = processWebmentions(mentions);
+	}
+}
+
 // Hint to linter that these identifiers are intentionally used in the template markup below.
 // This keeps zero runtime impact while satisfying static analysis.
 void [Layout, Content, img, truncatedTitle, BlogPostingSchema, PodcastEpisodeSchema];
@@ -207,7 +222,7 @@ void [Layout, Content, img, truncatedTitle, BlogPostingSchema, PodcastEpisodeSch
 				<span>Share</span>
 			</button>
 
-			{article.data.reactions && <Reactions reactions={article.data.reactions} />}
+			{article.data.reactions && webmentions && <Reactions webmentions={webmentions} pageUrl={Astro.url.href} />}
     </footer>
 
     <script>
