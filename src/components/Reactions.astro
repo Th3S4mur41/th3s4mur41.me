@@ -1,6 +1,6 @@
 ---
 // src/components/Reactions.astro
-import type { ProcessedWebmentions, WebmentionAuthor } from "../utils/webmentions";
+import type { ProcessedWebmentions } from "../utils/webmentions";
 
 interface Props {
 	/** Processed webmention data to display (optional, defaults to empty) */
@@ -29,9 +29,6 @@ import { getTopActors } from "../utils/webmentions";
 
 const likeActors = getTopActors(webmentions.likes, 10);
 const repostActors = getTopActors(webmentions.reposts, 10);
-
-// Check if we have any reactions to display
-const hasReactions = webmentions.stats.likes > 0 || webmentions.stats.reposts > 0;
 
 // Safe URL parsing helper - only allow http/https URLs
 function getSafeHttpUrl(url: string | undefined): URL | null {
