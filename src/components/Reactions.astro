@@ -3,13 +3,26 @@
 import type { ProcessedWebmentions, WebmentionAuthor } from "../utils/webmentions";
 
 interface Props {
-	/** Processed webmention data to display */
-	webmentions: ProcessedWebmentions;
+	/** Processed webmention data to display (optional, defaults to empty) */
+	webmentions?: ProcessedWebmentions;
   /** Optional list of syndicated social post URLs */
   syndicationLinks?: string[];
 }
 
-const { webmentions, syndicationLinks = [] } = Astro.props;
+const defaultWebmentions: ProcessedWebmentions = {
+	likes: [],
+	reposts: [],
+	replies: [],
+	mentions: [],
+	stats: {
+		likes: 0,
+		reposts: 0,
+		replies: 0,
+		mentions: 0,
+	},
+};
+
+const { webmentions = defaultWebmentions, syndicationLinks = [] } = Astro.props;
 
 // Get the top 10 actors for likes and reposts
 import { getTopActors } from "../utils/webmentions";
@@ -40,7 +53,7 @@ function getPlatformLabel(hostname: string) {
 }
 ---
 
-{(hasReactions || hasSyndication) && (
+{
   <section class="reactions" aria-labelledby="reactions-header">
     <header id="reactions-header">Reactions</header>
     <div id="likes">
@@ -88,4 +101,4 @@ function getPlatformLabel(hostname: string) {
       </p>
     )}
   </section>
-)}
+}
