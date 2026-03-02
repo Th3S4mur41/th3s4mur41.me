@@ -1,3 +1,10 @@
+# [2.43.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.42.0...v2.43.0) (2026-03-02)
+
+
+### Features
+
+* enhance person schema with detailed knowledge and credentials ([#2176](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2176)) ([3eb6991](https://github.com/Th3S4mur41/th3s4mur41.me/commit/3eb69911f9b93ca010c454ac97b3343d06d80f1d))
+
 # [2.42.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.41.1...v2.42.0) (2026-03-02)
 
 
