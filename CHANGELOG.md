@@ -1,3 +1,10 @@
+## [2.41.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.41.0...v2.41.1) (2026-03-02)
+
+
+### Bug Fixes
+
+* add 'syndication' rel attribute to external links for Bluesky and Mastodon ([0df6e58](https://github.com/Th3S4mur41/th3s4mur41.me/commit/0df6e58d1b05eaabbdd8981f593ae723f422cf2d))
+
 # [2.41.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.40.1...v2.41.0) (2026-02-27)
 
 
