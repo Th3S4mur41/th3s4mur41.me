@@ -216,7 +216,6 @@ pre {
 }
 
 h2#update::before {
-	content: "⟳"; /* Unicode symbol for update */
 	content: "⟳" / "";
 	margin-inline-end: 0.2em;
 	font-size: 1.2em;
