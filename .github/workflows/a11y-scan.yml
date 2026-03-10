@@ -146,6 +146,10 @@ jobs:
           # Skip Copilot assignment for now (you can enable this later)
           skip_copilot_assignment: true
           include_screenshots: true
+        env:
+          # Scanner settings
+          reducedMotion: 'reduce'
+          # colorScheme: 'light'
 
       - name: '✅ Accessibility scan completed'
         run: |
