@@ -1,0 +1,63 @@
+---
+title: 'PHP in 2026: Modern Syntax, Legacy Friction'
+eyebrow: ''
+date: 2026-03-24T10:00:00Z
+published: false
+image: ''
+imageAlt: ''
+description: ''
+tags:
+  - WebDev
+  - DevExperience
+keywords:
+  - php
+---
+
+# PHP in 2026: Modern Syntax, Legacy Friction
+
+I recently wrapped up a few projects where the team chose PHP and Laravel as the foundation for our web applications. My role was primarily focused on the "plumbing"—setting up the tooling, the CI/CD pipelines, and the CSS architecture.
+
+Coming from a heavy JavaScript/Node background, the experience was eye-opening. PHP has evolved into a powerhouse, but as I quickly discovered, its Developer Experience (DX) still feels like it's playing catch-up with the modern, unified ecosystems we see in the JS world.
+
+## The Good: PHP isn't what it used to be
+
+If you’re still thinking of PHP 7, you’re looking at a different language. Moving into PHP 8.4 and 8.5, the improvements are staggering. We now have:
+
+- Property Hooks: Reducing boilerplate for getters and setters.
+- Asymmetric Visibility: A cleaner way to handle read-only properties.
+- The Pipe Operator ($|>$): Finally bringing functional-style readability to PHP 8.5.
+
+In terms of raw server-side performance, modern PHP with JIT (Just-In-Time) compilation holds its own. While it doesn't always match the raw concurrency of Node.js or the extreme "static-first" efficiency of Astro or Eleventy, for a dynamic web app, PHP is no longer the bottleneck.
+
+## The "DX" Reality Check: The Package Manager Paradox
+
+While the language is faster, the workflow feels fragmented. The biggest irony of modern PHP development is how much it relies on the environment it's often compared against.
+
+To get a modern frontend experience (like Hot Module Replacement), Laravel now leans heavily on Vite. This means you aren't just using Composer; you're forced to maintain a Node/NPM environment side-by-side. You now have two distinct dependency trees to manage, update, and secure.
+
+## The OS Coupling Headache
+
+One of my biggest frustrations during this setup was the tight coupling between PHP and the underlying OS.
+
+In the Node world, NVM allows you to swap versions seamlessly, mostly decoupled from your OS. With PHP, I ran into a "version ghost" problem:
+
+- Local Dev: I used a GitHub Codespace (Ubuntu-based) that had already moved to PHP 8.5.
+
+- CI/CD: My Debian-based CI image was capped at PHP 8.4.
+
+Because PHP often relies on system-level package managers like apt, ensuring parity between your devcontainer and your production/CI environment is significantly more brittle than just dropping a .node-version file into a repo.
+
+## The Tooling Conflict: Pint vs. Biome vs. Prettier
+
+Finally, let’s talk about linting and formatting.
+Laravel comes with Pint, which is a great wrapper around PHP-CS-Fixer. However, its IDE integration feels "second-class" compared to the seamlessness of Prettier or the lightning-fast Biome.
+
+I tried to bridge the gap by using Biome’s PHP plugin for formatting while keeping Pint for linting. The result? A constant tug-of-war. The two tools frequently conflicted on rules, and I eventually had to scrap the idea and settle for the "standard" PHP way, even though it felt slower and less integrated into my VS Code workflow.
+
+## Conclusion: Is the Modernization Worth the Friction?
+
+PHP has done the hard work of fixing the language. It is fast, type-safe, and expressive. But the infrastructure—the way we install it, the way we sync environments, and the way we tool it—still feels like it belongs to a different era of web development.
+
+## What about you?
+
+Have you found a way to make the PHP DX feel as smooth as a pure JS stack? Are there tools I’m missing that solve the OS-dependency nightmare or the formatter conflicts? I'd love to hear your suggestions.
