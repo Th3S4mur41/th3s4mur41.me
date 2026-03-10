@@ -21,7 +21,7 @@
 	},
 	"homepage": "https://th3s4mur41.me",
 	"dependencies": {
-		"@astrojs/rss": "^4.0.15",
+		"@astrojs/rss": "^4.0.17",
 		"@astrojs/sitemap": "^3.7.0",
 		"@fontsource/cascadia-code": "^5.2.3",
 		"astro": "^5.18.0",
