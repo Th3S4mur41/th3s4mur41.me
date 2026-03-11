@@ -12,6 +12,10 @@ updates:
       time: '00:00'
       timezone: 'Europe/Berlin'
     groups:
+      astro:
+        patterns:
+          - 'astro'
+          - '@astrojs/*'
       babel:
         patterns:
           - '@babel/*'
@@ -28,3 +32,7 @@ updates:
       interval: 'daily'
       time: '00:00'
       timezone: 'Europe/Berlin'
+    groups:
+      artifacts:
+        patterns:
+          - 'actions/*-artifact'
