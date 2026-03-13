@@ -1,3 +1,10 @@
+# [2.44.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.43.0...v2.44.0) (2026-03-13)
+
+
+### Features
+
+* add new blog post on AI enhancing accessibility testing detection ([#2210](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2210)) ([c577ece](https://github.com/Th3S4mur41/th3s4mur41.me/commit/c577ece361d9d71572d3d2179cee49bef820b3d0))
+
 # [2.43.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.42.0...v2.43.0) (2026-03-02)
 
 
