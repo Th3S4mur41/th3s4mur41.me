@@ -1,3 +1,10 @@
+# [2.45.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.44.0...v2.45.0) (2026-03-13)
+
+
+### Features
+
+* add syndication links for improved content sharing ([1e0670a](https://github.com/Th3S4mur41/th3s4mur41.me/commit/1e0670ab1f8c75cf55f7b64c03e61b82c63493b1))
+
 # [2.44.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.43.0...v2.44.0) (2026-03-13)
 
 
