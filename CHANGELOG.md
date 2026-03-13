@@ -1,3 +1,10 @@
+# [2.46.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.45.0...v2.46.0) (2026-03-13)
+
+
+### Features
+
+* add W3C user profile link to person data ([ca5ffa8](https://github.com/Th3S4mur41/th3s4mur41.me/commit/ca5ffa8ca7a084f11b98b5dbf8a84bb18f25a33d))
+
 # [2.45.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.44.0...v2.45.0) (2026-03-13)
 
 
