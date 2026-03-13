@@ -128,7 +128,7 @@ jobs:
           echo "$all_urls"
 
       - name: '♿ Run Accessibility Scanner'
-        uses: github/accessibility-scanner@v2
+        uses: github/accessibility-scanner@v2.10.0
         with:
           # Newline-delimited list of URLs to scan
           urls: ${{ steps.extract-urls.outputs.urls_list }}
@@ -146,10 +146,9 @@ jobs:
           # Skip Copilot assignment for now (you can enable this later)
           skip_copilot_assignment: true
           include_screenshots: true
-        env:
           # Scanner settings
-          reducedMotion: 'reduce'
-          # colorScheme: 'light'
+          reduced_motion: 'reduce'
+          # color_scheme: 'light'
 
       - name: '✅ Accessibility scan completed'
         run: |
