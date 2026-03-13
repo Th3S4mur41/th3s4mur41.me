@@ -123,6 +123,7 @@ export const getPersonData = (origin: string) => {
 			"https://dev.to/th3s4mur41",
 			"https://atos.net/de/expert/michael-vanderheyden",
 			"https://stackoverflow.com/users/7041074/th3s4mur41",
+			"https://www.w3.org/users/127883/",
 		],
 	};
 };
