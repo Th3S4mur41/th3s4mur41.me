@@ -1,7 +1,11 @@
 ---
 import type { ImageMetadata } from "astro";
 import readingTime from "reading-time";
+import remarkMdx from "remark-mdx";
+import remarkParse from "remark-parse";
+import { unified } from "unified";
 import Image from "/src/components/Image.astro";
+import { extractReadingTimeChunks, SITE_CONFIG } from "../utils/config";
 import { normalizePath } from "../utils/normalizePath";
 
 interface Props {
@@ -74,10 +78,21 @@ const resolvedImage = (() => {
 
 const resolvedImageAlt = article.data.imageAlt ?? "";
 
-const readingStats =
-	section === "blog" && typeof article.body === "string" && article.body.trim().length > 0
-		? readingTime(article.body)
-		: null;
+// Calculate reading time with the same filtering as the remark plugin
+const calculateReadingStats = (markdown: string | null | undefined) => {
+	if (!markdown || typeof markdown !== "string" || markdown.trim().length === 0) {
+		return null;
+	}
+	// Parse markdown to AST and collect text from specific node types,
+	// matching the remark plugin's filtering logic
+	const processor = unified().use(remarkParse).use(remarkMdx);
+	const tree = processor.parse(markdown);
+	const chunks = extractReadingTimeChunks(tree);
+	const text = chunks.join("\n\n");
+	return readingTime(text, { wordsPerMinute: SITE_CONFIG.readingTime.wordsPerMinute });
+};
+
+const readingStats = section === "blog" ? calculateReadingStats(article.body) : null;
 
 // TODO: consider extracting this formatting logic into a shared utility function (duplicated in ArticlePageHeader) and reusing it across the codebase for consistency)
 const formattedWords = readingStats ? new Intl.NumberFormat("en-GB").format(readingStats.words) : null;
@@ -105,7 +120,7 @@ void [
 	readingMeta,
 	Image,
 	normalizePath,
-	readingTime,
+
 ];
 ---
 

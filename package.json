@@ -28,7 +28,6 @@
 		"baseline-status": "^1.1.1",
 		"reading-time": "^1.5.0",
 		"rehype-github-alerts": "^4.2.0",
-		"remark-reading-time": "^2.1.0",
 		"unist-util-visit": "^5.1.0"
 	},
 	"devDependencies": {
