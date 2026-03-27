@@ -7,14 +7,16 @@ import { rehypeExternalLinks } from "./src/plugins/rehype-external-links.js";
 import { rehypeInjectToc } from "./src/plugins/rehype-inject-toc.js";
 import { rehypeOptimizeFirstImage } from "./src/plugins/rehype-optimize-first-image.js";
 import { rehypeViewTransitionNames } from "./src/plugins/rehype-view-transition-names.js";
-import remarkReadingTime from "./src/plugins/remark-reading-time.js";
+import { remarkReadingTime } from "./src/plugins/remark-reading-time.js";
+
+const WORDS_PER_MINUTE = 130;
 
 // https://astro.build/config
 export default defineConfig({
 	site: "https://th3s4mur41.me",
 	markdown: {
 		syntaxHighlight: "prism",
-		remarkPlugins: [[remarkReadingTime, { wordsPerMinute: 130 }]],
+		remarkPlugins: [[remarkReadingTime, { wordsPerMinute: WORDS_PER_MINUTE }]],
 		rehypePlugins: [rehypeInjectToc, rehypeViewTransitionNames, rehypeOptimizeFirstImage, rehypeExternalLinks],
 	},
 	integrations: [
@@ -25,7 +27,7 @@ export default defineConfig({
 			filter: (pageUrl) => !pageUrl.includes("/_draft-"),
 		}),
 		mdx({
-			remarkPlugins: [[remarkReadingTime, { wordsPerMinute: 130 }]],
+			remarkPlugins: [[remarkReadingTime, { wordsPerMinute: WORDS_PER_MINUTE }]],
 			rehypePlugins: [
 				rehypeInjectToc,
 				rehypeViewTransitionNames,
