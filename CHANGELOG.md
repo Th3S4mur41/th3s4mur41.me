@@ -1,3 +1,10 @@
+# [2.47.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.46.0...v2.47.0) (2026-03-27)
+
+
+### Features
+
+* **blog:** add article on PHP in 2026 ([#2239](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2239)) ([d39a40e](https://github.com/Th3S4mur41/th3s4mur41.me/commit/d39a40e2bdf04a68864c65682bf762a57ee1b17b))
+
 # [2.46.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.45.0...v2.46.0) (2026-03-13)
 
 
