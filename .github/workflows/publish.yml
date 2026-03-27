@@ -50,7 +50,6 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: build
-          path: dist
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
