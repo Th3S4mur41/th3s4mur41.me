@@ -6,9 +6,6 @@ on:
   # Allows you to call this workflow from other workflows
   workflow_call:
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
 permissions:
   contents: read
 
@@ -18,6 +15,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Login to Docker Hub to avoid anonymous download rate limits (100 pulls per 6 hours).
+      # Authenticated users get 200 pulls per 6 hours. This step is optional and won't fail
+      # the workflow if login fails, allowing the linting to continue regardless.
+      - name: '🔐 Login to Docker Hub'
+        uses: docker/login-action@v4.0.0
+        continue-on-error: true
+        with:
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
       # check for the most recent release: https://github.com/Namchee/conventional-pr/releases
       - name: '✅ Lint PR'
         uses: Namchee/conventional-pr@v0.15.6
