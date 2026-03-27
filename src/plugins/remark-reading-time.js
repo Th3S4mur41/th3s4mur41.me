@@ -9,7 +9,7 @@ export function remarkReadingTime({ attribute = "readingTime", wordsPerMinute = 
 		// Collect text from relevant nodes to compute reading time.
 		const chunks = [];
 
-		visit(tree, ["text", "code"], (node) => {
+		visit(tree, ["text", "code", "inlineCode"], (node) => {
 			// Push each node's value separately to avoid merging words across node boundaries.
 			chunks.push(node.value);
 		});
