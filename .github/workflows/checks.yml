@@ -31,10 +31,10 @@ jobs:
     name: '▶️ actions'
     uses: ./.github/workflows/pr-lint.yml
     secrets: inherit
+    if: github.event_name == 'pull_request'
 
   dependencies:
     name: '▶️ actions'
-    needs: [pr-lint]
     uses: ./.github/workflows/dependencies.yml
     permissions:
       pull-requests: write
@@ -42,10 +42,8 @@ jobs:
 
   npm-build:
     name: '▶️ actions'
-    needs: [pr-lint]
     uses: ./.github/workflows/npm-build.yml
 
   npm-test:
     name: '▶️ actions'
-    needs: [pr-lint]
     uses: ./.github/workflows/npm-test.yml
