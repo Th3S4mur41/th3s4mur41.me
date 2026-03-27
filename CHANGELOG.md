@@ -1,3 +1,10 @@
+## [2.48.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.48.0...v2.48.1) (2026-03-27)
+
+
+### Bug Fixes
+
+* **layout:** remove JSON feed link from footer navigation ([c7b79cd](https://github.com/Th3S4mur41/th3s4mur41.me/commit/c7b79cd010e13cfdebb663d41d633f7ff6dbe621))
+
 # [2.48.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.47.0...v2.48.0) (2026-03-27)
 
 
