@@ -30,6 +30,7 @@ jobs:
   pr-lint:
     name: '▶️ actions'
     uses: ./.github/workflows/pr-lint.yml
+    secrets: inherit
 
   dependencies:
     name: '▶️ actions'
