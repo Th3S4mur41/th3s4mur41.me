@@ -1,3 +1,10 @@
+# [2.48.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.47.0...v2.48.0) (2026-03-27)
+
+
+### Features
+
+* **blog:** add syndication links for PHP in 2026 article ([c707dac](https://github.com/Th3S4mur41/th3s4mur41.me/commit/c707dac5d2e0d5b893716d4c42b3add7b325253f))
+
 # [2.47.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.46.0...v2.47.0) (2026-03-27)
 
 
