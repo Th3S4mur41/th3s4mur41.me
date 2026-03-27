@@ -128,7 +128,7 @@ jobs:
           echo "$all_urls"
 
       - name: '♿ Run Accessibility Scanner'
-        uses: github/accessibility-scanner@v2.10.0
+        uses: github/accessibility-scanner@v2.12.0
         with:
           # Newline-delimited list of URLs to scan
           urls: ${{ steps.extract-urls.outputs.urls_list }}
