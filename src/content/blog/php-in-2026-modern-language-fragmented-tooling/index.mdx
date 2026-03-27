@@ -77,7 +77,9 @@ We mostly avoided this by having everyone work on GitHub Codespaces, which gave 
 ### Tooling Conflict: Pint vs. Biome vs. Prettier
 
 Next, let’s talk about linting and formatting.
-Laravel comes with Pint, which is a great wrapper around PHP-CS-Fixer. But coming from a Node.js tooling background, I’m used to formatters like [Prettier](https://prettier.io/) or [Biome](https://biomejs.dev/) that can handle many file formats and languages in one place. Pint is focused on PHP only. Biome even goes one step further by also offering linting across multiple languages. 
+Laravel comes with Pint, which is a great wrapper around PHP-CS-Fixer. But coming from a Node.js tooling background, I’m used to tools like [Prettier](https://prettier.io/) and [Biome](https://biomejs.dev/) that can cover many formats and languages from one setup. In our case, we used a mix of both depending on the need: Biome for fast formatting/linting where supported, and Prettier where language support was broader.
+
+One practical limitation is that Biome still does not support as many languages as Prettier. For example, PHP formatting works via a Prettier plugin, while Pint remains focused on PHP rules.
 
 I tried to bridge the gap by using Prettier's PHP plugin for formatting while keeping Pint for linting. The result was a constant tug-of-war. The two tools often conflicted on rules, and I eventually had to drop the idea and settle for the standard PHP setup, even though it felt slower and less integrated in my VS Code workflow.
 
@@ -87,7 +89,7 @@ Given the mixed architecture above (Laravel plus Astro/Vue frontends), this beca
 
 One challenge that caught us off guard was distributing a small internal package we built to handle corporate SSO across multiple applications. In the npm world, you'd publish to GitHub Packages (or a private registry) and install it with a scoped name. Maven, Docker, and NuGet all have their own first-class registry story on GitHub too.
 
-Composer doesn't. There is no GitHub Packages registry for PHP. So if you want to share a private Composer package via GitHub, your options boil down to using the repository's Git URL directly in `composer.json`. Composer will then clone the repo over SSH to resolve and install the package.
+For our constraints, Composer did not offer a first-class private registry flow equivalent to what we were used to in npm. In practice, sharing a private Composer package through GitHub pushed us toward using the repository Git URL directly in `composer.json`. Composer then cloned the repo over SSH to resolve and install the package.
 
 That creates a cascade of problems:
 
@@ -97,6 +99,14 @@ That creates a cascade of problems:
 Contrast this with npm, where `npm install` over HTTPS with a scoped token just works out of the box in most corporate networks. The Composer approach feels like a workaround bolted onto infrastructure that was never designed for this use case.
 
 [Packagist](https://packagist.org/) is the canonical solution, but it's public-only. [Private Packagist](https://packagist.com/) is the paid answer and works well, but it's yet another service to procure and manage. It's a gap that the ecosystem has quietly accepted, even as every other major package ecosystem has solved it natively.
+
+## What Worked for Us
+
+- **Standardized dev environments:** GitHub Codespaces gave us a consistent Linux setup across the team.
+- **Clear tool boundaries:** we documented which formatter/linter owned which file types to reduce conflicts.
+- **CI as guardrail:** formatting and linting checks in CI caught drift before code review.
+- **OS caveats documented early:** we listed Windows limitations (like missing `pcntl`) in onboarding docs.
+- **Private package bootstrap tested in CI:** we validated keys/tokens and network access in pipeline setup, not during feature work.
 
 ## Is the Modernization Worth the Friction?
 
