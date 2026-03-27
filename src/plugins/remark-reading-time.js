@@ -4,14 +4,17 @@ import { visit } from "unist-util-visit";
 /**
  * Remark plugin to compute reading time from markdown content.
  */
-export default function remarkReadingTime({ attribute = "readingTime", wordsPerMinute = 130 } = {}) {
+export function remarkReadingTime({ attribute = "readingTime", wordsPerMinute = 130 } = {}) {
 	return function transformer(tree, file) {
-		let text = "";
+		// Collect text from relevant nodes to compute reading time.
+		const chunks = [];
 
 		visit(tree, ["text", "code"], (node) => {
-			text += node.value;
+			// Push each node's value separately to avoid merging words across node boundaries.
+			chunks.push(node.value);
 		});
 
+		const text = chunks.join("\n\n");
 		file.data ||= {};
 		file.data[attribute] = getReadingTime(text, { wordsPerMinute });
 	};
