@@ -1,11 +1,11 @@
 ---
 import type { ImageMetadata } from "astro";
 import readingTime from "reading-time";
+import remarkMdx from "remark-mdx";
 import remarkParse from "remark-parse";
 import { unified } from "unified";
-import { visit } from "unist-util-visit";
 import Image from "/src/components/Image.astro";
-import { SITE_CONFIG } from "../utils/config";
+import { extractReadingTimeChunks, SITE_CONFIG } from "../utils/config";
 import { normalizePath } from "../utils/normalizePath";
 
 interface Props {
@@ -85,14 +85,9 @@ const calculateReadingStats = (markdown: string | null | undefined) => {
 	}
 	// Parse markdown to AST and collect text from specific node types,
 	// matching the remark plugin's filtering logic
-	const processor = unified().use(remarkParse);
+	const processor = unified().use(remarkParse).use(remarkMdx);
 	const tree = processor.parse(markdown);
-	const chunks: string[] = [];
-	visit(tree, ["text", "code", "inlineCode"], (node) => {
-		if ("value" in node && typeof node.value === "string") {
-			chunks.push(node.value);
-		}
-	});
+	const chunks = extractReadingTimeChunks(tree);
 	const text = chunks.join("\n\n");
 	return readingTime(text, { wordsPerMinute: SITE_CONFIG.readingTime.wordsPerMinute });
 };
