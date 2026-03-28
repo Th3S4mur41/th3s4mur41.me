@@ -2,6 +2,8 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 import compress from "astro-compress";
+import browserslist from "browserslist";
+import { browserslistToTargets } from "lightningcss";
 import { rehypeGithubAlerts } from "rehype-github-alerts";
 import remarkReadingTime from "remark-reading-time";
 import { rehypeExternalLinks } from "./src/plugins/rehype-external-links.js";
@@ -9,9 +11,22 @@ import { rehypeInjectToc } from "./src/plugins/rehype-inject-toc.js";
 import { rehypeOptimizeFirstImage } from "./src/plugins/rehype-optimize-first-image.js";
 import { rehypeViewTransitionNames } from "./src/plugins/rehype-view-transition-names.js";
 
+const cssTargets = browserslistToTargets(browserslist());
+
 // https://astro.build/config
 export default defineConfig({
 	site: "https://th3s4mur41.me",
+	vite: {
+		css: {
+			transformer: "lightningcss",
+			lightningcss: {
+				targets: cssTargets,
+			},
+		},
+		build: {
+			cssMinify: "lightningcss",
+		},
+	},
 	markdown: {
 		syntaxHighlight: "prism",
 		remarkPlugins: [remarkReadingTime],
