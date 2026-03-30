@@ -11,6 +11,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   build:
@@ -35,6 +36,11 @@ jobs:
         env:
           HUSKY: 0
         run: npm ci --no-audit --prefer-offline --progress=false
+
+      - name: '📎 Download build output'
+        uses: actions/download-artifact@v8
+        with:
+          name: build
 
       - name: '🧫 Run tests'
         run: npm run test --if-present
