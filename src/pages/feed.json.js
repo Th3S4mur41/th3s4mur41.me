@@ -19,7 +19,7 @@ export async function GET(context) {
 		const url = new URL(`/${section}/${entry.id}/`, siteUrl).href;
 		const [heroImageUrl, contentHtml] = await Promise.all([
 			getHeroImageUrl(section, entry.id, entry.data.image, siteUrl),
-			renderBodyToHtml(entry.body, url),
+			renderBodyToHtml(entry, siteUrl),
 		]);
 
 		return {

@@ -61,7 +61,7 @@
 		"build:favicon": "real-favicon check-for-update --fail-on-update faviconData.json",
 		"lint": "prettier --check --ignore-unknown --no-error-on-unmatched-pattern . && biome ci .",
 		"lint:fix": "prettier --write --ignore-unknown --no-error-on-unmatched-pattern . && biome check --write .",
-		"test": "echo No test specified",
+		"test": "vitest run",
 		"release": "semantic-release",
 		"version": "npm run lint:fix",
 		"prepare": "husky"

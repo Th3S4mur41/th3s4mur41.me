@@ -35,10 +35,9 @@ export async function GET(context) {
 
 	const items = await Promise.all(
 		sortedEntries.map(async ({ section, entry }) => {
-			const articleUrl = new URL(`/${section}/${entry.id}/`, site).href;
 			const [heroImageUrl, contentHtml] = await Promise.all([
 				getHeroImageUrl(section, entry.id, entry.data.image, site),
-				renderBodyToHtml(entry.body, articleUrl),
+				renderBodyToHtml(entry, site),
 			]);
 
 			return {
@@ -50,7 +49,7 @@ export async function GET(context) {
 				author: "Michaël Vanderheyden",
 				// length: 0 — file size of processed images is not available at build time.
 				// Most RSS readers treat 0 as "unknown" and still load the image correctly.
-				...(heroImageUrl && { enclosure: { url: heroImageUrl, type: "image/jpeg", length: 0 } }),
+				...(heroImageUrl && { enclosure: { url: heroImageUrl, type: "image/avif", length: 0 } }),
 				...(contentHtml && { content: contentHtml }),
 			};
 		}),
