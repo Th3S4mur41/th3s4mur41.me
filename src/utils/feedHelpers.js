@@ -18,6 +18,21 @@ export const talksImages = import.meta.glob("/src/content/talks/**/*.{jpg,jpeg,p
 const IMAGE_POOLS = { blog: blogImages, talks: talksImages };
 
 /**
+ * Image format to request when processing feed images via `getImage`.
+ *
+ * - `null`   — keep the source file's original format (jpeg/png/etc.). This
+ *              maximises feed reader compatibility since many aggregators do
+ *              not support AVIF.
+ * - `"avif"` — force AVIF conversion for better compression. Use this if you
+ *              are confident your audience's feed readers support AVIF.
+ *
+ * Change this value to switch between modes without touching any other code.
+ *
+ * @type {string|null}
+ */
+export const FEED_IMAGE_FORMAT = null;
+
+/**
  * Standard HTML element names from MDX JSX blocks that should be preserved in
  * feed content.  PascalCase names and custom elements not in this list are
  * treated as Astro/React components and stripped.
@@ -158,9 +173,10 @@ function resolveContentImages(section, entryId, site) {
 
 				if (mod?.default) {
 					try {
-						// Use `getImage` without format conversion so feed readers receive
-						// a widely-supported format (jpeg/png/etc.) rather than avif.
-						const img = await getImage({ src: mod.default, width: 1024 });
+						// Use the configured format (null = original, "avif" = forced AVIF).
+						const imgOptions = { src: mod.default, width: 1024 };
+						if (FEED_IMAGE_FORMAT) imgOptions.format = FEED_IMAGE_FORMAT;
+						const img = await getImage(imgOptions);
 						node.properties.src = new URL(img.src, site).href;
 						return;
 					} catch {
@@ -305,7 +321,9 @@ export async function renderBodyToHtml(entry, site) {
 export async function getHeroImageUrl(section, entryId, filename, site) {
 	const imgModule = getImageModule(section, entryId, filename);
 	if (!imgModule) return null;
-	// Do not force avif — keep original format (jpeg/png) for feed compatibility.
-	const img = await getImage({ src: imgModule, width: 1024 });
+	// Use the configured format (null = original, "avif" = forced AVIF).
+	const imgOptions = { src: imgModule, width: 1024 };
+	if (FEED_IMAGE_FORMAT) imgOptions.format = FEED_IMAGE_FORMAT;
+	const img = await getImage(imgOptions);
 	return new URL(img.src, site).href;
 }
