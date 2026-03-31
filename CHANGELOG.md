@@ -1,3 +1,10 @@
+## [2.50.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.50.0...v2.50.1) (2026-03-31)
+
+
+### Bug Fixes
+
+* **feed:** serve images in source format and add build-time freshness signals ([#2248](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2248)) ([d36b069](https://github.com/Th3S4mur41/th3s4mur41.me/commit/d36b069a029c4f1b30f124682fed10dff0a521c7))
+
 # [2.50.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.49.0...v2.50.0) (2026-03-31)
 
 
