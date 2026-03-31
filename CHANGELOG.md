@@ -1,3 +1,10 @@
+# [2.50.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.49.0...v2.50.0) (2026-03-31)
+
+
+### Features
+
+* **feed:** improve feed metadata, image format, and content quality ([#2247](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2247)) ([e73f47c](https://github.com/Th3S4mur41/th3s4mur41.me/commit/e73f47c686d9ffb7aa182c55a8448f80238537a2))
+
 # [2.49.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.48.1...v2.49.0) (2026-03-31)
 
 
