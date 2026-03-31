@@ -128,7 +128,8 @@ function mdxJsxHandler(state, node) {
 
 /**
  * Rehype plugin: resolve relative `<img src>` values to absolute processed
- * avif URLs using the same content image pool that the site uses.
+ * URLs (original format, max 1024 px wide) using the same content image pool
+ * that the site uses.
  * Images not found in the pool fall back to a root-relative absolute URL.
  *
  * @param {string|null} section - Collection name ("blog" | "talks").
@@ -157,12 +158,9 @@ function resolveContentImages(section, entryId, site) {
 
 				if (mod?.default) {
 					try {
-						const isSvg = cleaned.toLowerCase().endsWith(".svg");
-						// For SVGs, Astro does not convert the format. We use `getImage` to
-						// get the hashed asset URL, but request the original SVG format.
-						const img = isSvg
-							? await getImage({ src: mod.default })
-							: await getImage({ src: mod.default, width: 1024, format: "avif" });
+						// Use `getImage` without format conversion so feed readers receive
+						// a widely-supported format (jpeg/png/etc.) rather than avif.
+						const img = await getImage({ src: mod.default, width: 1024 });
 						node.properties.src = new URL(img.src, site).href;
 						return;
 					} catch {
@@ -171,7 +169,7 @@ function resolveContentImages(section, entryId, site) {
 				}
 
 				// Fallback: make the path absolute from the site root so it at
-				// least points to a real URL even if the format won't be avif.
+				// least points to a real URL even if it is not resized.
 				try {
 					node.properties.src = new URL(`/${section}/${entryId}/${cleaned}`, site).href;
 				} catch {
@@ -227,6 +225,25 @@ function stripScripts() {
 	};
 }
 
+/**
+ * Rehype plugin: strip `<h1>` elements from feed content.
+ * The article title is already set as the feed item title, so the H1 in the
+ * body would be a duplicate for feed readers.
+ */
+function stripH1() {
+	return (tree) => {
+		const toRemove = [];
+		visit(tree, "element", (node, index, parent) => {
+			if (node.tagName === "h1" && parent && typeof index === "number") {
+				toRemove.push({ parent, index });
+			}
+		});
+		for (const { parent, index } of toRemove.reverse()) {
+			parent.children.splice(index, 1);
+		}
+	};
+}
+
 // ---------------------------------------------------------------------------
 // Public API
 // ---------------------------------------------------------------------------
@@ -237,7 +254,7 @@ function stripScripts() {
  * The pipeline:
  *   remark-parse → remark-mdx → remark-gfm → stripMdxMeta →
  *   remark-rehype (with JSX handlers) → rehype-raw → stripScripts →
- *   resolveContentImages → makeLinksAbsolute → rehype-stringify
+ *   stripH1 → resolveContentImages → makeLinksAbsolute → rehype-stringify
  *
  * @param {object} entry  - Astro content collection entry (needs .body, .id, .filePath).
  * @param {URL|string} site - Site origin.
@@ -264,6 +281,7 @@ export async function renderBodyToHtml(entry, site) {
 		})
 		.use(rehypeRaw)
 		.use(stripScripts)
+		.use(stripH1)
 		.use(resolveContentImages(section, entryId, site))
 		.use(makeLinksAbsolute(site))
 		.use(rehypeStringify)
@@ -273,8 +291,10 @@ export async function renderBodyToHtml(entry, site) {
 }
 
 /**
- * Resolve the hero image for a content entry to an absolute avif URL.
- * Uses the medium breakpoint (1024 px) consistent with the site's Image component.
+ * Resolve the hero image for a content entry to an absolute URL in the
+ * image's original format (jpeg/png/etc.), resized to at most 1024 px wide.
+ * Avif is intentionally avoided here because some backend services/feed
+ * aggregators do not support it.
  *
  * @param {string} section   - Collection name ("blog" | "talks").
  * @param {string} entryId   - Entry ID (e.g. "my-article").
@@ -285,6 +305,7 @@ export async function renderBodyToHtml(entry, site) {
 export async function getHeroImageUrl(section, entryId, filename, site) {
 	const imgModule = getImageModule(section, entryId, filename);
 	if (!imgModule) return null;
-	const img = await getImage({ src: imgModule, width: 1024, format: "avif" });
+	// Do not force avif — keep original format (jpeg/png) for feed compatibility.
+	const img = await getImage({ src: imgModule, width: 1024 });
 	return new URL(img.src, site).href;
 }
