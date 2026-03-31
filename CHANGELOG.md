@@ -1,3 +1,10 @@
+# [2.49.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.48.1...v2.49.0) (2026-03-31)
+
+
+### Features
+
+* **feeds:** Add author, hero image, and full article content to RSS and JSON feeds ([#2243](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2243)) ([ba1d274](https://github.com/Th3S4mur41/th3s4mur41.me/commit/ba1d2746c78e7e7026370ef4af60fa397b709427))
+
 ## [2.48.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.48.0...v2.48.1) (2026-03-27)
 
 
