@@ -73,6 +73,9 @@ export async function GET(context) {
 			},
 		],
 		language: "en",
+		// Non-standard extension field (JSON Feed "_" prefix convention).
+		// Updated on every build so feed readers can detect new deployments.
+		_site_build_date: now.toISOString(),
 		items,
 	};
 
