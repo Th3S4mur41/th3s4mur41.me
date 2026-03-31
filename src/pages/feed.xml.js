@@ -1,6 +1,7 @@
 import { getCollection } from "astro:content";
 import rss from "@astrojs/rss";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/contentVisibility";
+import { getHeroImageUrl, renderBodyToHtml } from "../utils/feedHelpers";
 
 const escapeXmlText = (value) =>
 	value
@@ -27,24 +28,32 @@ export async function GET(context) {
 		getCollection("talks", ({ data }) => isVisibleContent(data, { now, previewFuture })),
 	]);
 
-	const items = [
-		...blogEntries.map((entry) => ({
-			section: "blog",
-			entry,
-		})),
-		...talkEntries.map((entry) => ({
-			section: "talks",
-			entry,
-		})),
-	]
-		.sort((a, b) => b.entry.data.date.valueOf() - a.entry.data.date.valueOf())
-		.map(({ section, entry }) => ({
-			title: entry.data.title,
-			description: sanitizeDescription(entry.data.description ?? ""),
-			pubDate: entry.data.date,
-			link: `/${section}/${entry.id}/`,
-			categories: entry.data.tags ?? [],
-		}));
+	const sortedEntries = [
+		...blogEntries.map((entry) => ({ section: "blog", entry })),
+		...talkEntries.map((entry) => ({ section: "talks", entry })),
+	].sort((a, b) => b.entry.data.date.valueOf() - a.entry.data.date.valueOf());
+
+	const items = await Promise.all(
+		sortedEntries.map(async ({ section, entry }) => {
+			const [heroImageUrl, contentHtml] = await Promise.all([
+				getHeroImageUrl(section, entry.id, entry.data.image, site),
+				renderBodyToHtml(entry, site),
+			]);
+
+			return {
+				title: entry.data.title,
+				description: sanitizeDescription(entry.data.description ?? ""),
+				pubDate: entry.data.date,
+				link: `/${section}/${entry.id}/`,
+				categories: entry.data.tags ?? [],
+				author: "Michaël Vanderheyden",
+				// length: 0 — file size of processed images is not available at build time.
+				// Most RSS readers treat 0 as "unknown" and still load the image correctly.
+				...(heroImageUrl && { enclosure: { url: heroImageUrl, type: "image/avif", length: 0 } }),
+				...(contentHtml && { content: contentHtml }),
+			};
+		}),
+	);
 
 	const channelPubDate = items[0]?.pubDate ?? now;
 	const channelLastBuildDate =

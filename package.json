@@ -47,6 +47,7 @@
 		"postcss-preset-env": "^11.2.0",
 		"prettier": "^3.8.1",
 		"typescript": "^6.0.2",
+		"vitest": "^4.1.2",
 		"wrangler": "^4.78.0"
 	},
 	"optionalDependencies": {
@@ -60,7 +61,7 @@
 		"build:favicon": "real-favicon check-for-update --fail-on-update faviconData.json",
 		"lint": "prettier --check --ignore-unknown --no-error-on-unmatched-pattern . && biome ci .",
 		"lint:fix": "prettier --write --ignore-unknown --no-error-on-unmatched-pattern . && biome check --write .",
-		"test": "echo No test specified",
+		"test": "vitest run",
 		"release": "semantic-release",
 		"version": "npm run lint:fix",
 		"prepare": "husky"
