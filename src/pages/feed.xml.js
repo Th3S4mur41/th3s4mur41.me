@@ -17,11 +17,22 @@ const sanitizeDescription = (value) =>
 		.replace(/\s{2,}/g, " ")
 		.trim();
 
+/** Derive the MIME type from an image URL string (defaults to image/jpeg). */
+function imageMimeType(url) {
+	if (!url) return "image/jpeg";
+	const ext = url.split("?")[0].split(".").pop()?.toLowerCase();
+	const map = { png: "image/png", gif: "image/gif", webp: "image/webp", svg: "image/svg+xml", avif: "image/avif" };
+	return map[ext] ?? "image/jpeg";
+}
+
+const FEED_LIMIT = 50;
+
 export async function GET(context) {
 	const now = new Date();
 	const previewFuture = isPreviewFutureContentEnabled();
 	const site = context.site ?? new URL(new URL(context.request.url).origin);
 	const feedUrl = new URL("/feed.xml", site).href;
+	const iconUrl = new URL("/icons/favicon-512.png", site).href;
 
 	const [blogEntries, talkEntries] = await Promise.all([
 		getCollection("blog", ({ data }) => isVisibleContent(data, { now, previewFuture })),
@@ -31,7 +42,9 @@ export async function GET(context) {
 	const sortedEntries = [
 		...blogEntries.map((entry) => ({ section: "blog", entry })),
 		...talkEntries.map((entry) => ({ section: "talks", entry })),
-	].sort((a, b) => b.entry.data.date.valueOf() - a.entry.data.date.valueOf());
+	]
+		.sort((a, b) => b.entry.data.date.valueOf() - a.entry.data.date.valueOf())
+		.slice(0, FEED_LIMIT);
 
 	const items = await Promise.all(
 		sortedEntries.map(async ({ section, entry }) => {
@@ -49,7 +62,7 @@ export async function GET(context) {
 				author: "Michaël Vanderheyden",
 				// length: 0 — file size of processed images is not available at build time.
 				// Most RSS readers treat 0 as "unknown" and still load the image correctly.
-				...(heroImageUrl && { enclosure: { url: heroImageUrl, type: "image/avif", length: 0 } }),
+				...(heroImageUrl && { enclosure: { url: heroImageUrl, type: imageMimeType(heroImageUrl), length: 0 } }),
 				...(contentHtml && { content: contentHtml }),
 			};
 		}),
@@ -77,6 +90,8 @@ export async function GET(context) {
 			`<lastBuildDate>${channelLastBuildDate.toUTCString()}</lastBuildDate>`,
 			"<ttl>60</ttl>",
 			`<copyright>${escapeXmlText(copyright)}</copyright>`,
+			`<image><url>${iconUrl}</url><title>Th3S4mur41.me</title><link>${new URL("/", site).href}</link></image>`,
+			"<managingEditor>hello@th3s4mur41.me (Michaël Vanderheyden)</managingEditor>",
 		].join(""),
 		items,
 	});

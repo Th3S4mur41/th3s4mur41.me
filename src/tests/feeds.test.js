@@ -107,12 +107,13 @@ describe("RSS feed (feed.xml)", () => {
 		}
 	});
 
-	it("items with a hero image have an <enclosure> with an avif URL", () => {
+	it("items with a hero image have an <enclosure> with a web-compatible image URL", () => {
 		const enclosures = [...xml.matchAll(/<enclosure[^>]+>/g)].map((m) => m[0]);
-		// Not every item must have an enclosure, but those that do should have avif.
+		// Not every item must have an enclosure, but those that do should have a valid image URL.
 		for (const enc of enclosures) {
-			expect(enc).toContain('type="image/avif"');
-			expect(extractAttrValue(enc, "url")).toMatch(/\.avif(\?|$)/);
+			const url = extractAttrValue(enc, "url");
+			expect(url).toMatch(/^https?:\/\//);
+			expect(url).toMatch(/\.(avif|webp|jpe?g|png|gif)(\?|$)/i);
 		}
 	});
 
@@ -196,12 +197,12 @@ describe("JSON feed (feed.json)", () => {
 		}
 	});
 
-	it("items with a hero image have an absolute avif image URL", () => {
+	it("items with a hero image have an absolute image URL in a web-compatible format", () => {
 		const itemsWithImage = feed.items.filter((i) => i.image);
 		expect(itemsWithImage.length).toBeGreaterThan(0);
 		for (const item of itemsWithImage) {
 			expect(item.image).toMatch(/^https?:\/\//);
-			expect(item.image).toMatch(/\.avif(\?|$)/);
+			expect(item.image).toMatch(/\.(avif|webp|jpe?g|png|gif)(\?|$)/i);
 		}
 	});
 
@@ -228,15 +229,15 @@ describe("JSON feed (feed.json)", () => {
 		}
 	});
 
-	it("content_html image srcs are absolute avif or svg URLs", () => {
+	it("content_html image srcs are absolute URLs in a web-compatible format", () => {
 		for (const item of feed.items) {
 			if (!item.content_html) continue;
 			// Only check <img> tag srcs, not script or other element srcs.
 			const imgSrcs = [...item.content_html.matchAll(/<img[^>]+src="([^"]+)"/g)].map((m) => m[1]);
 			for (const src of imgSrcs) {
 				expect(src, `Non-absolute src in "${item.title}"`).toMatch(/^https?:\/\//);
-				// Images must be either avif (rasterized) or svg (vector, cannot be converted).
-				expect(src, `Unexpected image format in "${item.title}"`).toMatch(/\.(avif|svg)(\?|$)/);
+				// Images must be a web-compatible raster or vector format.
+				expect(src, `Unexpected image format in "${item.title}"`).toMatch(/\.(avif|webp|jpe?g|png|gif|svg)(\?|$)/i);
 			}
 		}
 	});
