@@ -69,11 +69,9 @@ export async function GET(context) {
 	);
 
 	const channelPubDate = items[0]?.pubDate ?? now;
-	const channelLastBuildDate =
-		[
-			...blogEntries.map((entry) => entry.data.updated ?? entry.data.date),
-			...talkEntries.map((entry) => entry.data.updated ?? entry.data.date),
-		].sort((a, b) => b.valueOf() - a.valueOf())[0] ?? channelPubDate;
+	// Use the build time instead of latest content date so every new deploy
+	// signals readers to refresh the feed, even if no articles changed.
+	const channelLastBuildDate = now;
 	const copyright = `Copyright ${now.getUTCFullYear()} Michaël Vanderheyden`;
 
 	return rss({
