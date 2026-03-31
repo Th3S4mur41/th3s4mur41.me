@@ -91,7 +91,7 @@ export async function GET(context) {
 			"<ttl>60</ttl>",
 			`<copyright>${escapeXmlText(copyright)}</copyright>`,
 			`<image><url>${iconUrl}</url><title>Th3S4mur41.me</title><link>${new URL("/", site).href}</link></image>`,
-			`<managingEditor>hello@th3s4mur41.me (Michaël Vanderheyden)</managingEditor>`,
+			"<managingEditor>hello@th3s4mur41.me (Michaël Vanderheyden)</managingEditor>",
 		].join(""),
 		items,
 	});
