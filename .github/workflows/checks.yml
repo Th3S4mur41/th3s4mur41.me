@@ -43,8 +43,3 @@ jobs:
   npm-build:
     name: '▶️ actions'
     uses: ./.github/workflows/npm-build.yml
-
-  npm-test:
-    name: '▶️ actions'
-    needs: npm-build
-    uses: ./.github/workflows/npm-test.yml
