@@ -22,7 +22,7 @@ const IMAGE_POOLS = { blog: blogImages, talks: talksImages };
  *
  * - `null`   — keep the source file's original format (jpeg/png/etc.). This
  *              maximises feed reader compatibility since many aggregators do
- *              not support AVIF.
+ *              not support modern formats like AVIF or WebP.
  * - `"avif"` — force AVIF conversion for better compression. Use this if you
  *              are confident your audience's feed readers support AVIF.
  *
@@ -173,9 +173,10 @@ function resolveContentImages(section, entryId, site) {
 
 				if (mod?.default) {
 					try {
-						// Use the configured format (null = original, "avif" = forced AVIF).
+						// Use the configured format, or fall back to the source image's own
+						// format so Astro doesn't silently convert to webp by default.
 						const imgOptions = { src: mod.default, width: 1024 };
-						if (FEED_IMAGE_FORMAT) imgOptions.format = FEED_IMAGE_FORMAT;
+						imgOptions.format = FEED_IMAGE_FORMAT ?? mod.default.format;
 						const img = await getImage(imgOptions);
 						node.properties.src = new URL(img.src, site).href;
 						return;
@@ -321,9 +322,10 @@ export async function renderBodyToHtml(entry, site) {
 export async function getHeroImageUrl(section, entryId, filename, site) {
 	const imgModule = getImageModule(section, entryId, filename);
 	if (!imgModule) return null;
-	// Use the configured format (null = original, "avif" = forced AVIF).
+	// Use the configured format, or fall back to the source image's own
+	// format so Astro doesn't silently convert to webp by default.
 	const imgOptions = { src: imgModule, width: 1024 };
-	if (FEED_IMAGE_FORMAT) imgOptions.format = FEED_IMAGE_FORMAT;
+	imgOptions.format = FEED_IMAGE_FORMAT ?? imgModule.format;
 	const img = await getImage(imgOptions);
 	return new URL(img.src, site).href;
 }
