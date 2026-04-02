@@ -1,3 +1,10 @@
+## [2.50.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.50.1...v2.50.2) (2026-04-02)
+
+
+### Bug Fixes
+
+* improve reading time accuracy by implementing custom remark plugin ([#2240](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2240)) ([ae42a84](https://github.com/Th3S4mur41/th3s4mur41.me/commit/ae42a8436d9e782ff25ec3a6be2f9d0040d3eba5))
+
 ## [2.50.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.50.0...v2.50.1) (2026-03-31)
 
 

@@ -9,7 +9,8 @@ export function rehypeInjectToc() {
 		const isBlog = filePath.includes("/content/blog/");
 		const readingTime = isBlog ? file?.data?.readingTime : undefined;
 		const readText = readingTime && typeof readingTime.text === "string" ? readingTime.text : undefined;
-		const wordCount = readingTime && Number.isFinite(readingTime.words) ? readingTime.words : undefined;
+		const wordCount =
+			readingTime && Number.isFinite(readingTime.words) && readingTime.words > 0 ? readingTime.words : undefined;
 		const formattedWords = typeof wordCount === "number" ? new Intl.NumberFormat("en-GB").format(wordCount) : undefined;
 		const readingMetaText = readText && formattedWords ? `${readText} • ${formattedWords} words` : undefined;
 
