@@ -73,8 +73,8 @@ if (!isVisible) {
 const { Content } = await render(article);
 
 // Import images from both collections eagerly (Astro will tree-shake unused).
-const blogImages = import.meta.glob("/src/content/blog/**/*.{jpg,png,webp}", { eager: true });
-const talksImages = import.meta.glob("/src/content/talks/**/*.{jpg,png,webp}", { eager: true });
+const blogImages = import.meta.glob("/content/blog/**/*.{jpg,png,webp}", { eager: true });
+const talksImages = import.meta.glob("/content/talks/**/*.{jpg,png,webp}", { eager: true });
 const imagePools: Record<string, Record<string, unknown>> = {
 	blog: blogImages,
 	talks: talksImages,
@@ -95,8 +95,8 @@ if (article.data.image) {
 	if (raw) {
 		const pool = imagePools[section];
 		const cleaned = raw.replace(/^\.\//, "");
-		const postDir = `/src/content/${section}/${normalizedSlug}/`;
-		const collectionDir = `/src/content/${section}/`;
+		const postDir = `/content/${section}/${normalizedSlug}/`;
+		const collectionDir = `/content/${section}/`;
 		const candidates = cleaned.startsWith("/")
 			? [normalizePosix(cleaned)]
 			: [normalizePosix(path.posix.join(postDir, cleaned)), normalizePosix(path.posix.join(collectionDir, cleaned))];

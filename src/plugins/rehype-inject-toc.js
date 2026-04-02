@@ -6,7 +6,7 @@ export function rehypeInjectToc() {
 	return function transformer(tree, file) {
 		const normalizePath = (value) => (typeof value === "string" ? value.replaceAll("\\\\", "/") : "");
 		const filePath = normalizePath(file?.path);
-		const isBlog = filePath.includes("/src/content/blog/");
+		const isBlog = filePath.includes("/content/blog/");
 		const readingTime = isBlog ? file?.data?.readingTime : undefined;
 		const readText = readingTime && typeof readingTime.text === "string" ? readingTime.text : undefined;
 		const wordCount = readingTime && Number.isFinite(readingTime.words) ? readingTime.words : undefined;

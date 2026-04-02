@@ -7,7 +7,7 @@
 export function rehypeViewTransitionNames() {
 	return function transformer(tree, file) {
 		// Extract articleId from file path
-		// file.path will be something like "/src/content/blog/my-article/index.mdx" or "/src/content/blog/parent/child/index.mdx"
+		// file.path will be something like "/content/blog/my-article/index.mdx" or "/content/blog/parent/child/index.mdx"
 		const pathParts = file.path?.split("/") || [];
 		const contentIndex = pathParts.indexOf("content");
 

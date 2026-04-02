@@ -9,9 +9,13 @@ import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 import { visit } from "unist-util-visit";
 
+const CONTENT_ROOT = "/content";
+const BLOG_CONTENT_SEGMENT = `${CONTENT_ROOT}/blog/`;
+const TALKS_CONTENT_SEGMENT = `${CONTENT_ROOT}/talks/`;
+
 // Eagerly import all content images so they can be resolved to processed asset URLs.
-export const blogImages = import.meta.glob("/src/content/blog/**/*.{jpg,jpeg,png,webp,gif,avif,svg}", { eager: true });
-export const talksImages = import.meta.glob("/src/content/talks/**/*.{jpg,jpeg,png,webp,gif,avif,svg}", {
+export const blogImages = import.meta.glob("/content/blog/**/*.{jpg,jpeg,png,webp,gif,avif,svg}", { eager: true });
+export const talksImages = import.meta.glob("/content/talks/**/*.{jpg,jpeg,png,webp,gif,avif,svg}", {
 	eager: true,
 });
 
@@ -72,8 +76,8 @@ function getImageModule(section, entryId, filename) {
 	const candidates = cleaned.startsWith("/")
 		? [path.posix.normalize(cleaned)]
 		: [
-				path.posix.normalize(`/src/content/${section}/${entryId}/${cleaned}`),
-				path.posix.normalize(`/src/content/${section}/${cleaned}`),
+				path.posix.normalize(`${CONTENT_ROOT}/${section}/${entryId}/${cleaned}`),
+				path.posix.normalize(`${CONTENT_ROOT}/${section}/${cleaned}`),
 			];
 	for (const candidate of candidates) {
 		const mod = pool[candidate];
@@ -85,8 +89,8 @@ function getImageModule(section, entryId, filename) {
 /** Derive the collection section from a content file path. */
 function getSectionFromFilePath(filePath) {
 	if (!filePath) return null;
-	if (filePath.includes("/content/blog/") || filePath.startsWith("src/content/blog/")) return "blog";
-	if (filePath.includes("/content/talks/") || filePath.startsWith("src/content/talks/")) return "talks";
+	if (filePath.includes(BLOG_CONTENT_SEGMENT) || filePath.startsWith("content/blog/")) return "blog";
+	if (filePath.includes(TALKS_CONTENT_SEGMENT) || filePath.startsWith("content/talks/")) return "talks";
 	return null;
 }
 
@@ -168,7 +172,7 @@ function resolveContentImages(section, entryId, site) {
 
 				const cleaned = src.replace(/^\.\//, "");
 				// Normalize to resolve any ".." segments (e.g. "../shared-hero.jpg").
-				const candidate = path.posix.normalize(`/src/content/${section}/${entryId}/${cleaned}`);
+				const candidate = path.posix.normalize(`${CONTENT_ROOT}/${section}/${entryId}/${cleaned}`);
 				const mod = pool?.[candidate];
 
 				if (mod?.default) {

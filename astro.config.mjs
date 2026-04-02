@@ -4,10 +4,21 @@ import { defineConfig } from "astro/config";
 import compress from "astro-compress";
 import { rehypeGithubAlerts } from "rehype-github-alerts";
 import remarkReadingTime from "remark-reading-time";
-import { rehypeExternalLinks } from "./src/plugins/rehype-external-links.js";
-import { rehypeInjectToc } from "./src/plugins/rehype-inject-toc.js";
-import { rehypeOptimizeFirstImage } from "./src/plugins/rehype-optimize-first-image.js";
-import { rehypeViewTransitionNames } from "./src/plugins/rehype-view-transition-names.js";
+import {
+	rehypeExternalLinks,
+	rehypeInjectToc,
+	rehypeOptimizeFirstImage,
+	rehypeViewTransitionNames,
+} from "./src/plugins/index.js";
+
+const sharedRehypePlugins = [rehypeInjectToc, rehypeViewTransitionNames, rehypeOptimizeFirstImage, rehypeExternalLinks];
+const mdxRehypePlugins = [
+	rehypeInjectToc,
+	rehypeViewTransitionNames,
+	rehypeGithubAlerts,
+	rehypeOptimizeFirstImage,
+	rehypeExternalLinks,
+];
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,7 +26,7 @@ export default defineConfig({
 	markdown: {
 		syntaxHighlight: "prism",
 		remarkPlugins: [remarkReadingTime],
-		rehypePlugins: [rehypeInjectToc, rehypeViewTransitionNames, rehypeOptimizeFirstImage, rehypeExternalLinks],
+		rehypePlugins: sharedRehypePlugins,
 	},
 	integrations: [
 		sitemap({
@@ -26,13 +37,7 @@ export default defineConfig({
 		}),
 		mdx({
 			remarkPlugins: [remarkReadingTime],
-			rehypePlugins: [
-				rehypeInjectToc,
-				rehypeViewTransitionNames,
-				rehypeGithubAlerts,
-				rehypeOptimizeFirstImage,
-				rehypeExternalLinks,
-			],
+			rehypePlugins: mdxRehypePlugins,
 		}),
 		compress({
 			HTML: {

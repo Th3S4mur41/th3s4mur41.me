@@ -4,6 +4,8 @@ import { defineCollection, z } from "astro:content";
 // 2. Import loader(s)
 import { glob } from "astro/loaders";
 
+const CONTENT_BASE = "./content";
+
 // 3. Define shared schema for contact cards and employee profiles
 const blogSchema = z.object({
 	title: z.string(),
@@ -54,12 +56,12 @@ const talksSchema = z.object({
 
 // 4. Define your collection(s)
 const blog = defineCollection({
-	loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
+	loader: glob({ pattern: "**/*.{md,mdx}", base: `${CONTENT_BASE}/blog` }),
 	schema: blogSchema,
 });
 
 const talks = defineCollection({
-	loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/talks" }),
+	loader: glob({ pattern: "**/*.{md,mdx}", base: `${CONTENT_BASE}/talks` }),
 	schema: talksSchema,
 });
 
