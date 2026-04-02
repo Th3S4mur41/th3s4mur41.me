@@ -17,6 +17,14 @@ const blogSchema = z.object({
 	description: z.string().optional(),
 	tags: z.array(z.string()).optional(),
 	keywords: z.array(z.string()).optional(),
+	readingTime: z
+		.object({
+			text: z.string(),
+			minutes: z.number(),
+			time: z.number(),
+			words: z.number(),
+		})
+		.optional(),
 	canonical: z.string().optional(),
 	translations: z
 		.array(

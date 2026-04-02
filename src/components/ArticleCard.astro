@@ -1,12 +1,15 @@
 ---
 import type { ImageMetadata } from "astro";
-import readingTime from "reading-time";
-import remarkMdx from "remark-mdx";
-import remarkParse from "remark-parse";
-import { unified } from "unified";
 import Image from "/src/components/Image.astro";
-import { extractReadingTimeChunks, SITE_CONFIG } from "../utils/config";
 import { normalizePath } from "../utils/normalizePath";
+import { getReadingTimeCacheSize, getReadingTimeFromMarkdown } from "../utils/readingTime";
+
+interface ReadingStats {
+	text?: string;
+	words?: number;
+	minutes?: number;
+	time?: number;
+}
 
 interface Props {
 	article: {
@@ -18,6 +21,10 @@ interface Props {
 			type?: string;
 			image?: string;
 			imageAlt?: string;
+			readingTime?: ReadingStats;
+		};
+		remarkPluginFrontmatter?: {
+			readingTime?: ReadingStats;
 		};
 		body?: string;
 	};
@@ -78,25 +85,45 @@ const resolvedImage = (() => {
 
 const resolvedImageAlt = article.data.imageAlt ?? "";
 
-// Calculate reading time with the same filtering as the remark plugin
-const calculateReadingStats = (markdown: string | null | undefined) => {
-	if (!markdown || typeof markdown !== "string" || markdown.trim().length === 0) {
-		return null;
-	}
-	// Parse markdown to AST and collect text from specific node types,
-	// matching the remark plugin's filtering logic
-	const processor = unified().use(remarkParse).use(remarkMdx);
-	const tree = processor.parse(markdown);
-	const chunks = extractReadingTimeChunks(tree);
-	const text = chunks.join("\n\n");
-	return readingTime(text, { wordsPerMinute: SITE_CONFIG.readingTime.wordsPerMinute });
-};
+let readingStats: ReadingStats | undefined;
+let readingTimeSource:
+	| "frontmatter"
+	| "remark-plugin-frontmatter"
+	| "fallback-cached"
+	| "fallback-parsed"
+	| "fallback-unavailable"
+	| "not-blog" = "not-blog";
 
-const readingStats = section === "blog" ? calculateReadingStats(article.body) : null;
+if (section === "blog") {
+	if (article.data.readingTime) {
+		readingStats = article.data.readingTime;
+		readingTimeSource = "frontmatter";
+	} else if (article.remarkPluginFrontmatter?.readingTime) {
+		readingStats = article.remarkPluginFrontmatter.readingTime;
+		readingTimeSource = "remark-plugin-frontmatter";
+	} else {
+		const fallbackResult = getReadingTimeFromMarkdown(article.body);
+		readingStats = fallbackResult.stats;
+		readingTimeSource = fallbackResult.source as
+			| "fallback-cached"
+			| "fallback-parsed"
+			| "fallback-unavailable";
+	}
+}
+
+const shouldDebugReadingTime = import.meta.env.DEV || import.meta.env.DEBUG_READING_TIME === "true";
+
+if (shouldDebugReadingTime && section === "blog") {
+	console.info(
+		`[ArticleCard] ${article.id} reading-time source: ${readingTimeSource}, cacheSize=${getReadingTimeCacheSize()}`,
+	);
+}
 
 // TODO: consider extracting this formatting logic into a shared utility function (duplicated in ArticlePageHeader) and reusing it across the codebase for consistency)
-const formattedWords = readingStats ? new Intl.NumberFormat("en-GB").format(readingStats.words) : null;
-const readingMeta = readingStats ? `${readingStats.text} • ${formattedWords} words` : null;
+const readingText = readingStats && typeof readingStats.text === "string" ? readingStats.text : null;
+const wordCount = readingStats && Number.isFinite(readingStats.words) ? readingStats.words : null;
+const formattedWords = typeof wordCount === "number" ? new Intl.NumberFormat("en-GB").format(wordCount) : null;
+const readingMeta = readingText && formattedWords ? `${readingText} • ${formattedWords} words` : null;
 
 // Biome currently doesn't reliably detect Astro template usage.
 void [
@@ -117,6 +144,12 @@ void [
 	resolvedImageAlt,
 	imageLoading,
 	readingStats,
+	readingTimeSource,
+	shouldDebugReadingTime,
+	readingText,
+	wordCount,
+	getReadingTimeFromMarkdown,
+	getReadingTimeCacheSize,
 	readingMeta,
 	Image,
 	normalizePath,
@@ -138,7 +171,11 @@ void [
 			/>
 		)}
 		<p id={descriptionId}>{article.data.description}</p>
-		{readingMeta && <p class="reading-meta">{readingMeta}</p>}
+		{readingMeta && (
+			<p class="reading-meta" data-reading-time-source={shouldDebugReadingTime ? readingTimeSource : undefined}>
+				{readingMeta}
+			</p>
+		)}
 		<time datetime={dateValue}>
 			{dateObj.toLocaleDateString("en-gb", { year: "numeric", month: "short", day: "numeric" })}
 		</time>
