@@ -4,7 +4,10 @@ import { defineCollection, z } from "astro:content";
 // 2. Import loader(s)
 import { glob } from "astro/loaders";
 
-// 3. Define shared schema for contact cards and employee profiles
+// 3. Import reading-time computation
+import { computeReadingTime } from "./utils/readingTime.js";
+
+// 4. Define shared schema for contact cards and employee profiles
 const blogSchema = z.object({
 	title: z.string(),
 	eyebrow: z.string().optional(),
@@ -60,9 +63,37 @@ const talksSchema = z.object({
 	reactions: z.boolean().optional().default(true),
 });
 
-// 4. Define your collection(s)
+// 5. Create a custom loader wrapper that computes reading-time for collection entries
+function createLoaderWithReadingTime(baseLoader) {
+	return {
+		name: `${baseLoader.name}-with-reading-time`,
+		load: async (context) => {
+			await baseLoader.load(context);
+
+			for (const [id, entry] of context.store.entries()) {
+				if (entry?.data?.readingTime) continue;
+				const computed = computeReadingTime(entry?.body);
+				if (!computed) continue;
+				// Drop digest so DataStore.set does not short-circuit unchanged entries;
+				// we are intentionally mutating entry.data by adding readingTime.
+				const { digest: _digest, ...entryWithoutDigest } = entry;
+
+				context.store.set({
+					...entryWithoutDigest,
+					id,
+					data: {
+						...entry.data,
+						readingTime: computed,
+					},
+				});
+			}
+		},
+	};
+}
+
+// 6. Define your collection(s)
 const blog = defineCollection({
-	loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
+	loader: createLoaderWithReadingTime(glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" })),
 	schema: blogSchema,
 });
 
@@ -71,5 +102,5 @@ const talks = defineCollection({
 	schema: talksSchema,
 });
 
-// 5. Export a single `collections` object to register your collection(s)
+// 7. Export a single `collections` object to register your collection(s)
 export const collections = { blog, talks };
