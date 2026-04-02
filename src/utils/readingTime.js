@@ -9,7 +9,7 @@ const markdownProcessor = unified().use(remarkParse).use(remarkMdx);
 /**
  * Compute reading-time stats from markdown content.
  * Used primarily during collection loading to populate entry.data.readingTime.
- * Does not use caching here; caching is handled at the remark plugin level during individual renders.
+ * This function performs a pure reading-time computation without any internal caching.
  */
 export function computeReadingTime(markdown) {
 	if (typeof markdown !== "string" || markdown.trim().length === 0) {

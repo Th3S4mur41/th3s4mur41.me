@@ -7,7 +7,7 @@ import { glob } from "astro/loaders";
 // 3. Import reading-time computation
 import { computeReadingTime } from "./utils/readingTime.js";
 
-// 4. Define shared schema for contact cards and employee profiles
+// 4. Define schema for blog content collection entries
 const blogSchema = z.object({
 	title: z.string(),
 	eyebrow: z.string().optional(),
