@@ -1,5 +1,5 @@
-# This is the workflow to lint the source code
-name: Build
+# This is the workflow to build and test the code
+name: Build & Test
 
 # Controls when the action will run.
 on:
@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   build:
-    name: '🛠️ Build'
+    name: '🛠️ Build & Test'
     runs-on: ubuntu-latest
 
     steps:
@@ -52,6 +52,9 @@ jobs:
         env:
           PREVIEW_FUTURE_CONTENT: ${{ github.event_name == 'pull_request' && 'true' || '' }}
         run: npm run build --if-present
+
+      - name: '🧫 Run tests'
+        run: npm run test --if-present
 
       - name: '📎 Upload build output'
         uses: actions/upload-artifact@v7

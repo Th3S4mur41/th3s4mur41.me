@@ -1,3 +1,24 @@
+## [2.50.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.50.0...v2.50.1) (2026-03-31)
+
+
+### Bug Fixes
+
+* **feed:** serve images in source format and add build-time freshness signals ([#2248](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2248)) ([d36b069](https://github.com/Th3S4mur41/th3s4mur41.me/commit/d36b069a029c4f1b30f124682fed10dff0a521c7))
+
+# [2.50.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.49.0...v2.50.0) (2026-03-31)
+
+
+### Features
+
+* **feed:** improve feed metadata, image format, and content quality ([#2247](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2247)) ([e73f47c](https://github.com/Th3S4mur41/th3s4mur41.me/commit/e73f47c686d9ffb7aa182c55a8448f80238537a2))
+
+# [2.49.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.48.1...v2.49.0) (2026-03-31)
+
+
+### Features
+
+* **feeds:** Add author, hero image, and full article content to RSS and JSON feeds ([#2243](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2243)) ([ba1d274](https://github.com/Th3S4mur41/th3s4mur41.me/commit/ba1d2746c78e7e7026370ef4af60fa397b709427))
+
 ## [2.48.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.48.0...v2.48.1) (2026-03-27)
 
 

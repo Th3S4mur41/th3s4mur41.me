@@ -1,6 +1,7 @@
 import { getCollection } from "astro:content";
 import rss from "@astrojs/rss";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/contentVisibility";
+import { getHeroImageUrl, renderBodyToHtml } from "../utils/feedHelpers";
 
 const escapeXmlText = (value) =>
 	value
@@ -16,42 +17,61 @@ const sanitizeDescription = (value) =>
 		.replace(/\s{2,}/g, " ")
 		.trim();
 
+/** Derive the MIME type from an image URL string (defaults to image/jpeg). */
+function imageMimeType(url) {
+	if (!url) return "image/jpeg";
+	const ext = url.split("?")[0].split(".").pop()?.toLowerCase();
+	const map = { png: "image/png", gif: "image/gif", webp: "image/webp", svg: "image/svg+xml", avif: "image/avif" };
+	return map[ext] ?? "image/jpeg";
+}
+
+const FEED_LIMIT = 50;
+
 export async function GET(context) {
 	const now = new Date();
 	const previewFuture = isPreviewFutureContentEnabled();
 	const site = context.site ?? new URL(new URL(context.request.url).origin);
 	const feedUrl = new URL("/feed.xml", site).href;
+	const iconUrl = new URL("/icons/favicon-512.png", site).href;
 
 	const [blogEntries, talkEntries] = await Promise.all([
 		getCollection("blog", ({ data }) => isVisibleContent(data, { now, previewFuture })),
 		getCollection("talks", ({ data }) => isVisibleContent(data, { now, previewFuture })),
 	]);
 
-	const items = [
-		...blogEntries.map((entry) => ({
-			section: "blog",
-			entry,
-		})),
-		...talkEntries.map((entry) => ({
-			section: "talks",
-			entry,
-		})),
+	const sortedEntries = [
+		...blogEntries.map((entry) => ({ section: "blog", entry })),
+		...talkEntries.map((entry) => ({ section: "talks", entry })),
 	]
 		.sort((a, b) => b.entry.data.date.valueOf() - a.entry.data.date.valueOf())
-		.map(({ section, entry }) => ({
-			title: entry.data.title,
-			description: sanitizeDescription(entry.data.description ?? ""),
-			pubDate: entry.data.date,
-			link: `/${section}/${entry.id}/`,
-			categories: entry.data.tags ?? [],
-		}));
+		.slice(0, FEED_LIMIT);
+
+	const items = await Promise.all(
+		sortedEntries.map(async ({ section, entry }) => {
+			const [heroImageUrl, contentHtml] = await Promise.all([
+				getHeroImageUrl(section, entry.id, entry.data.image, site),
+				renderBodyToHtml(entry, site),
+			]);
+
+			return {
+				title: entry.data.title,
+				description: sanitizeDescription(entry.data.description ?? ""),
+				pubDate: entry.data.date,
+				link: `/${section}/${entry.id}/`,
+				categories: entry.data.tags ?? [],
+				author: "Michaël Vanderheyden",
+				// length: 0 — file size of processed images is not available at build time.
+				// Most RSS readers treat 0 as "unknown" and still load the image correctly.
+				...(heroImageUrl && { enclosure: { url: heroImageUrl, type: imageMimeType(heroImageUrl), length: 0 } }),
+				...(contentHtml && { content: contentHtml }),
+			};
+		}),
+	);
 
 	const channelPubDate = items[0]?.pubDate ?? now;
-	const channelLastBuildDate =
-		[
-			...blogEntries.map((entry) => entry.data.updated ?? entry.data.date),
-			...talkEntries.map((entry) => entry.data.updated ?? entry.data.date),
-		].sort((a, b) => b.valueOf() - a.valueOf())[0] ?? channelPubDate;
+	// Use the build time instead of latest content date so every new deploy
+	// signals readers to refresh the feed, even if no articles changed.
+	const channelLastBuildDate = now;
 	const copyright = `Copyright ${now.getUTCFullYear()} Michaël Vanderheyden`;
 
 	return rss({
@@ -68,6 +88,8 @@ export async function GET(context) {
 			`<lastBuildDate>${channelLastBuildDate.toUTCString()}</lastBuildDate>`,
 			"<ttl>60</ttl>",
 			`<copyright>${escapeXmlText(copyright)}</copyright>`,
+			`<image><url>${iconUrl}</url><title>Th3S4mur41.me</title><link>${new URL("/", site).href}</link></image>`,
+			"<managingEditor>hello@th3s4mur41.me (Michaël Vanderheyden)</managingEditor>",
 		].join(""),
 		items,
 	});
