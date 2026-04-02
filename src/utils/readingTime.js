@@ -19,5 +19,10 @@ export function computeReadingTime(markdown) {
 	const tree = markdownProcessor.parse(markdown);
 	const chunks = extractReadingTimeChunks(tree);
 	const text = chunks.join("\n\n");
-	return getReadingTime(text, { wordsPerMinute: SITE_CONFIG.readingTime.wordsPerMinute });
+	if (text.trim().length === 0) {
+		return undefined;
+	}
+
+	const stats = getReadingTime(text, { wordsPerMinute: SITE_CONFIG.readingTime.wordsPerMinute });
+	return stats.words > 0 ? stats : undefined;
 }

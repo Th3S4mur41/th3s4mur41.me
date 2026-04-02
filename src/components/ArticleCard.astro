@@ -85,7 +85,10 @@ const readingStats = section === "blog" ? article.data.readingTime : undefined;
 
 // TODO: consider extracting this formatting logic into a shared utility function (duplicated in ArticlePageHeader) and reusing it across the codebase for consistency)
 const readingText = readingStats && typeof readingStats.text === "string" ? readingStats.text : null;
-const wordCount = readingStats && Number.isFinite(readingStats.words) ? readingStats.words : null;
+const candidateWordCount = readingStats?.words;
+const wordCount = typeof candidateWordCount === "number" && Number.isFinite(candidateWordCount) && candidateWordCount > 0
+	? candidateWordCount
+	: null;
 const formattedWords = typeof wordCount === "number" ? new Intl.NumberFormat("en-GB").format(wordCount) : null;
 const readingMeta = readingText && formattedWords ? `${readingText} • ${formattedWords} words` : null;
 
@@ -109,6 +112,7 @@ void [
 	imageLoading,
 	readingStats,
 	readingText,
+	candidateWordCount,
 	wordCount,
 	readingMeta,
 	Image,

@@ -12,7 +12,14 @@ export function remarkReadingTime({
 		// Collect text from relevant nodes to compute reading time.
 		const chunks = extractReadingTimeChunks(tree);
 		const text = chunks.join("\n\n");
+		if (text.trim().length === 0) {
+			return;
+		}
+
 		const stats = getReadingTime(text, { wordsPerMinute });
+		if (stats.words <= 0) {
+			return;
+		}
 
 		file.data ||= {};
 		file.data[attribute] = stats;
