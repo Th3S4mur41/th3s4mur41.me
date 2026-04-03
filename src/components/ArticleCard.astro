@@ -45,11 +45,11 @@ interface Props {
 
 const props = Astro.props as Props;
 
-const blogImages = import.meta.glob("/src/content/blog/**/*.{jpg,png,webp}", { eager: true }) as Record<
+const blogImages = import.meta.glob("/content/blog/**/*.{jpg,png,webp}", { eager: true }) as Record<
 	string,
 	{ default: ImageMetadata }
 >;
-const talksImages = import.meta.glob("/src/content/talks/**/*.{jpg,png,webp}", { eager: true }) as Record<
+const talksImages = import.meta.glob("/content/talks/**/*.{jpg,png,webp}", { eager: true }) as Record<
 	string,
 	{ default: ImageMetadata }
 >;
@@ -73,7 +73,7 @@ const HeadingTag = `h${headingLevel}` as HeadingTagName;
 const imagePools = { blog: blogImages, talks: talksImages } as const;
 const resolvedImage = (() => {
 	if (!article.data.image) return undefined;
-	const imagePath = normalizePath(`/src/content/${section}/${article.id}/${article.data.image}`);
+	const imagePath = normalizePath(`/content/${section}/${article.id}/${article.data.image}`);
 	const pool = (imagePools as Record<string, Record<string, { default: ImageMetadata }>>)[section];
 	return pool?.[imagePath]?.default;
 })();
