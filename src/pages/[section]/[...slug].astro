@@ -1,6 +1,6 @@
 ---
 import { getImage } from "astro:assets";
-import { getCollection, getEntry, render } from "astro:content";
+import { getCollection, render } from "astro:content";
 import path from "node:path";
 import ArticleCard from "../../components/ArticleCard.astro";
 import BlogPostingSchema from "../../components/BlogPostingSchema.astro";
@@ -78,10 +78,8 @@ if (!normalizedSlug) {
 const previewFuture = isPreviewFutureContentEnabled();
 const now = new Date();
 
-let article = await getEntry(section as Section, normalizedSlug);
-if (!article) {
-	article = await getEntry(section as Section, `${normalizedSlug}/index`);
-}
+const sectionEntries = await getCollection(section as Section);
+const article = sectionEntries.find((entry: any) => normalizeEntryId(entry.id) === normalizedSlug) ?? null;
 
 let seriesArticles: any[] = [];
 let seriesIntroEntry: any | null = null;
