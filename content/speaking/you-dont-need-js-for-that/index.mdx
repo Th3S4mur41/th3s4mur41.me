@@ -1,13 +1,107 @@
 ---
 title: 'You don’t need JS for that'
 type: 'workshop'
-date: 2025-09-29T17:00:00Z
-image: ''
-imageAlt: ''
-published: false
-description: ''
+date: 2025-11-14T10:00:00Z
+image: slashing-the-JS-logo-with-katana.jpg
+imageAlt: 'Comic-style illustration of my character slashing the JavaScript logo with a katana'
+description: 'An internal 90-minute Atos workshop where live coding demos showed how modern HTML and CSS can replace heavy JavaScript with better a11y and performance.'
 tags: 
   - HTML
   - CSS
-keywords: []
+  - WebDev
+keywords:
+  - Atos workshop
+  - You don't need JS
+  - Modern CSS
+  - Modern HTML
+  - JavaScript alternatives
+  - Native web platform
+  - Progressive enhancement
+  - Native browser features
+  - Web performance
+  - Accessibility
+  - Code reduction
+  - Refactoring
+  - View Transitions
 ---
+
+# You don’t need JS for that
+
+![Comic-style illustration of my character slashing the JavaScript logo with a katana](slashing-the-JS-logo-with-katana.jpg)
+
+This was an internal **90-minute workshop** for web developers within Atos focused on a simple idea: JavaScript is powerful, but sometimes unnecessary.
+
+Instead of slides, the full session was live and interactive with coding examples.
+
+The session centered on practical demos showing how modern HTML and CSS can replace many heavy JavaScript patterns. The goal was to reduce code, improve accessibility, and boost performance without adding extra libraries. Whether working on product UIs, design systems, or platform foundations, participants were encouraged to challenge assumptions, bring real questions, and test what browsers can already do natively.
+
+## Workshop Format
+
+- No PowerPoint, only interactive coding examples
+- Live demos driven by practical browser features
+- Discussions around trade-offs, support, and progressive enhancement
+
+All demos were built from my [You don't need JS for that CodePen collection](https://codepen.io/collection/GpNRkk), which participants could open during the session, inspect live, and adapt to their own use cases.
+
+## Audience and Prerequisites
+
+This workshop was aimed at frontend developers, UI engineers, and design-system contributors who want to reduce unnecessary JavaScript in production interfaces.
+
+No advanced setup was required, but familiarity with semantic HTML and modern CSS made it easier to follow the live coding pace.
+
+## Techniques Covered
+
+To keep the workshop practical, I grouped the techniques by the problem they solve and linked each one to MDN for further reading.
+
+### Theming and Color (CSS)
+
+- [`color-scheme`](https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme)
+- [`light-dark()`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/light-dark)
+- [Relative colors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_colors/Relative_colors)
+
+### Selectors and Logic (CSS)
+
+- [`:has()`](https://developer.mozilla.org/en-US/docs/Web/CSS/:has)
+- [`sibling-index()`](https://developer.mozilla.org/en-US/docs/Web/CSS/sibling-index)
+- [`sibling-count()`](https://developer.mozilla.org/en-US/docs/Web/CSS/sibling-count)
+- [Advanced `attr()`](https://developer.mozilla.org/en-US/docs/Web/CSS/attr)
+- [`if()` function](https://developer.mozilla.org/en-US/docs/Web/CSS/if)
+- [`@function`](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_custom_functions_and_mixins)
+
+### Motion and Transitions (CSS)
+
+- [View Transitions API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API)
+- [`@starting-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/@starting-style)
+- [`allow-discrete` via `transition-behavior`](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-behavior)
+- [`@property`](https://developer.mozilla.org/en-US/docs/Web/CSS/@property)
+
+### Native Interactive Primitives (HTML + CSS)
+
+- [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog)
+- [`popover`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/popover)
+- [`command` / `commandfor`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button)
+- [CSS Anchor Positioning](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_anchor_positioning)
+- [Customizable `<select>`](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Customizable_select)
+- [`<details>` / `<summary>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details)
+- [`::details-content`](https://developer.mozilla.org/en-US/docs/Web/CSS/::details-content)
+
+## Browser Support and Progressive Enhancement
+
+Not every feature shown has identical support across all browsers yet. The workshop emphasized progressive enhancement: start with robust semantic HTML, add modern CSS capabilities where supported, and ensure the core user journey remains functional without cutting-edge APIs.
+
+## Related Content
+
+- [Live demos for View Transitions](https://live-transitions.pages.dev/) - A hands-on playground to explore cross-document and same-document transition patterns.
+- [Re-Imagine the Web with View Transitions](https://www.bram.us/2024/12/16/re-imagine-the-web-with-view-transitions/) - A practical deep dive into why View Transitions can reshape navigation and UI motion on the web.
+- [OddBird CSS Anchor Positioning polyfill](https://github.com/oddbird/css-anchor-positioning) - A production-friendly path to experiment with anchor positioning while browser support evolves.
+- [A customizable select in Chrome Developers](https://developer.chrome.com/blog/a-customizable-select) - Overview of modern form control styling with `appearance: base` and the customizable select model.
+
+### Looking Ahead
+
+Even though the workshop demos already used modern and sometimes only partially supported features, the web platform keeps moving fast. One of the most exciting upcoming shifts is a much easier and more consistent way to customize form controls.
+Tom Nguyen’s [CSS Day 2025 talk in Amsterdam](https://www.youtube.com/watch?v=WgSiqSqxTxw) offers a great forward-looking perspective on this direction, especially around form control styling through [appearance: base](https://drafts.csswg.org/css-forms-1/#appearance).
+
+## Key Takeaway
+
+Modern browser capabilities can replace a surprising amount of JavaScript for common UI patterns. When we lean on native HTML and CSS first, we often get simpler code, better accessibility, and stronger performance by default.
+
