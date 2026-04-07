@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { isSeriesContainerEntry } from "../utils/contentSeries";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/contentVisibility";
 import ArticleCard from "./ArticleCard.astro";
 
@@ -17,7 +18,6 @@ interface Props {
 }
 
 const { currentArticle, count = 3 } = Astro.props;
-
 const currentTags = (currentArticle.data.tags ?? []).map((tag) => tag.toLowerCase());
 const previewFuture = isPreviewFutureContentEnabled();
 
@@ -25,10 +25,11 @@ let relatedArticles: { entry: any; section: "blog" | "speaking" }[] = [];
 if (currentTags.length > 0) {
 	// Fetch both collections to enable cross-referencing between blog and speaking content
 	const [blogEntries, speakingEntries] = await Promise.all([getCollection("blog"), getCollection("speaking")]);
+	const blogPosts = blogEntries.filter((entry: any) => !isSeriesContainerEntry(entry, blogEntries));
 	// Combine all entries with their section information
 	const allEntries = [
-		...blogEntries.map((entry) => ({ entry, section: "blog" as const })),
-		...speakingEntries.map((entry) => ({ entry, section: "speaking" as const })),
+		...blogPosts.map((entry: any) => ({ entry, section: "blog" as const })),
+		...speakingEntries.map((entry: any) => ({ entry, section: "speaking" as const })),
 	];
 	relatedArticles = allEntries
 		.filter(({ entry }) => {
@@ -38,11 +39,11 @@ if (currentTags.length > 0) {
 			if (!isVisibleContent(entry.data, { previewFuture })) return false;
 			// Must have at least one matching tag
 			const entryTags = entry.data.tags ?? [];
-			return entryTags.some((tag) => currentTags.includes(tag.toLowerCase()));
+			return entryTags.some((tag: any) => currentTags.includes(tag.toLowerCase()));
 		})
 		.map(({ entry, section: entrySection }) => {
 			const entryTags = entry.data.tags ?? [];
-			const matchingTagsCount = entryTags.filter((tag) => currentTags.includes(tag.toLowerCase())).length;
+			const matchingTagsCount = entryTags.filter((tag: any) => currentTags.includes(tag.toLowerCase())).length;
 			return { entry, section: entrySection, matchingTagsCount };
 		})
 		.sort((a, b) => {

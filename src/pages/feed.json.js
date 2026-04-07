@@ -1,4 +1,5 @@
 import { getCollection } from "astro:content";
+import { isSeriesContainerEntry } from "../utils/contentSeries";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/contentVisibility";
 import { getHeroImageUrl, renderBodyToHtml } from "../utils/feedHelpers";
 
@@ -19,6 +20,7 @@ export async function GET(context) {
 		getCollection("blog", ({ data }) => isVisibleContent(data, { now, previewFuture })),
 		getCollection("speaking", ({ data }) => isVisibleContent(data, { now, previewFuture })),
 	]);
+	const blogPosts = blogEntries.filter((entry) => !isSeriesContainerEntry(entry, blogEntries));
 
 	const toItem = async (section, entry) => {
 		const url = new URL(`/${section}/${entry.id}/`, siteUrl).href;
@@ -50,7 +52,7 @@ export async function GET(context) {
 
 	const items = (
 		await Promise.all([
-			...blogEntries.map((entry) => toItem("blog", entry)),
+			...blogPosts.map((entry) => toItem("blog", entry)),
 			...talkEntries.map((entry) => toItem("speaking", entry)),
 		])
 	)

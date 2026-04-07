@@ -1,5 +1,6 @@
 import { getCollection } from "astro:content";
 import rss from "@astrojs/rss";
+import { isSeriesContainerEntry } from "../utils/contentSeries";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/contentVisibility";
 import { getHeroImageUrl, renderBodyToHtml } from "../utils/feedHelpers";
 
@@ -38,9 +39,10 @@ export async function GET(context) {
 		getCollection("blog", ({ data }) => isVisibleContent(data, { now, previewFuture })),
 		getCollection("speaking", ({ data }) => isVisibleContent(data, { now, previewFuture })),
 	]);
+	const blogPosts = blogEntries.filter((entry) => !isSeriesContainerEntry(entry, blogEntries));
 
 	const sortedEntries = [
-		...blogEntries.map((entry) => ({ section: "blog", entry })),
+		...blogPosts.map((entry) => ({ section: "blog", entry })),
 		...talkEntries.map((entry) => ({ section: "speaking", entry })),
 	]
 		.sort((a, b) => b.entry.data.date.valueOf() - a.entry.data.date.valueOf())
