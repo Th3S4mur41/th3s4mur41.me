@@ -36,12 +36,12 @@ export async function GET(context) {
 
 	const [blogEntries, talkEntries] = await Promise.all([
 		getCollection("blog", ({ data }) => isVisibleContent(data, { now, previewFuture })),
-		getCollection("talks", ({ data }) => isVisibleContent(data, { now, previewFuture })),
+		getCollection("speaking", ({ data }) => isVisibleContent(data, { now, previewFuture })),
 	]);
 
 	const sortedEntries = [
 		...blogEntries.map((entry) => ({ section: "blog", entry })),
-		...talkEntries.map((entry) => ({ section: "talks", entry })),
+		...talkEntries.map((entry) => ({ section: "speaking", entry })),
 	]
 		.sort((a, b) => b.entry.data.date.valueOf() - a.entry.data.date.valueOf())
 		.slice(0, FEED_LIMIT);

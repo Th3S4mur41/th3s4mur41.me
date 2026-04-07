@@ -13,7 +13,7 @@ import type { ProcessedWebmentions } from "../../utils/webmentions";
 import { fetchWebmentions, processWebmentions } from "../../utils/webmentions";
 
 /**
- * Unified dynamic route for both blog posts and talks.
+ * Unified dynamic route for both blog posts and speaking entries.
  * Supports draft preview slugs prefixed with `_draft-` the same way the original
  * individual route files did. Eliminates duplicated logic (images, title truncation, meta setup).
  */
@@ -23,7 +23,7 @@ export async function getStaticPaths() {
 
 	const collections = [
 		{ name: "blog", entries: await getCollection("blog") },
-		{ name: "talks", entries: await getCollection("talks") },
+		{ name: "speaking", entries: await getCollection("speaking") },
 	];
 
 	const paths = collections.flatMap(({ name, entries }) =>
@@ -44,7 +44,7 @@ const { section, slug } = Astro.params as {
 	slug?: string;
 };
 
-const SUPPORTED_SECTIONS = ["blog", "talks"] as const;
+const SUPPORTED_SECTIONS = ["blog", "speaking"] as const;
 type Section = (typeof SUPPORTED_SECTIONS)[number];
 
 if (!section || !SUPPORTED_SECTIONS.includes(section as Section)) {
@@ -74,10 +74,10 @@ const { Content } = await render(article);
 
 // Import images from both collections eagerly (Astro will tree-shake unused).
 const blogImages = import.meta.glob("/content/blog/**/*.{jpg,png,webp}", { eager: true });
-const talksImages = import.meta.glob("/content/talks/**/*.{jpg,png,webp}", { eager: true });
+const speakingImages = import.meta.glob("/content/speaking/**/*.{jpg,png,webp}", { eager: true });
 const imagePools: Record<string, Record<string, unknown>> = {
 	blog: blogImages,
-	talks: talksImages,
+	speaking: speakingImages,
 };
 
 function normalizePosix(p: string): string {
@@ -209,7 +209,7 @@ void [Layout, Content, img, truncatedTitle, BlogPostingSchema, PodcastEpisodeSch
 		/>
 	)}
 
-	{section === "talks" && article.data.type === "podcast" && (
+	{section === "speaking" && article.data.type === "podcast" && (
 		<PodcastEpisodeSchema
 			slot="head"
 			name={article.data.title}

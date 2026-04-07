@@ -1,2 +1,4 @@
 
 /.well-known/webfinger  /well-known/webfinger.json  200
+
+/talks/* /speaking/:splat 301

@@ -49,7 +49,7 @@ const blogImages = import.meta.glob("/content/blog/**/*.{jpg,png,webp}", { eager
 	string,
 	{ default: ImageMetadata }
 >;
-const talksImages = import.meta.glob("/content/talks/**/*.{jpg,png,webp}", { eager: true }) as Record<
+const speakingImages = import.meta.glob("/content/speaking/**/*.{jpg,png,webp}", { eager: true }) as Record<
 	string,
 	{ default: ImageMetadata }
 >;
@@ -70,7 +70,7 @@ type HeadingTagName = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 const headingLevel = Math.min(6, Math.max(1, 2 + headingOffset));
 const HeadingTag = `h${headingLevel}` as HeadingTagName;
 
-const imagePools = { blog: blogImages, talks: talksImages } as const;
+const imagePools = { blog: blogImages, speaking: speakingImages } as const;
 const resolvedImage = (() => {
 	if (!article.data.image) return undefined;
 	const imagePath = normalizePath(`/content/${section}/${article.id}/${article.data.image}`);

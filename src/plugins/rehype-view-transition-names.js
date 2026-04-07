@@ -17,8 +17,8 @@ export function rehypeViewTransitionNames() {
 		}
 
 		// The articleId includes the full path from content type onwards (e.g., "my-article" or "parent/child")
-		// We need to join from after the section (blog/talks) until before the filename
-		const sectionIndex = contentIndex + 1; // index of "blog" or "talks"
+		// We need to join from after the section (blog/speaking) until before the filename
+		const sectionIndex = contentIndex + 1; // index of "blog" or "speaking"
 		const fileIndex = pathParts.length - 1; // index of "index.mdx"
 		const articleIdParts = pathParts.slice(sectionIndex + 1, fileIndex);
 		const articleId = articleIdParts.join("/").replace(/\//g, "-");

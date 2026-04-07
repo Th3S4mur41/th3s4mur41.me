@@ -11,15 +11,15 @@ import { visit } from "unist-util-visit";
 
 const CONTENT_ROOT = "/content";
 const BLOG_CONTENT_SEGMENT = `${CONTENT_ROOT}/blog/`;
-const TALKS_CONTENT_SEGMENT = `${CONTENT_ROOT}/talks/`;
+const SPEAKING_CONTENT_SEGMENT = `${CONTENT_ROOT}/speaking/`;
 
 // Eagerly import all content images so they can be resolved to processed asset URLs.
 export const blogImages = import.meta.glob("/content/blog/**/*.{jpg,jpeg,png,webp,gif,avif,svg}", { eager: true });
-export const talksImages = import.meta.glob("/content/talks/**/*.{jpg,jpeg,png,webp,gif,avif,svg}", {
+export const speakingImages = import.meta.glob("/content/speaking/**/*.{jpg,jpeg,png,webp,gif,avif,svg}", {
 	eager: true,
 });
 
-const IMAGE_POOLS = { blog: blogImages, talks: talksImages };
+const IMAGE_POOLS = { blog: blogImages, speaking: speakingImages };
 
 /**
  * Image format to request when processing feed images via `getImage`.
@@ -90,7 +90,7 @@ function getImageModule(section, entryId, filename) {
 function getSectionFromFilePath(filePath) {
 	if (!filePath) return null;
 	if (filePath.includes(BLOG_CONTENT_SEGMENT) || filePath.startsWith("content/blog/")) return "blog";
-	if (filePath.includes(TALKS_CONTENT_SEGMENT) || filePath.startsWith("content/talks/")) return "talks";
+	if (filePath.includes(SPEAKING_CONTENT_SEGMENT) || filePath.startsWith("content/speaking/")) return "speaking";
 	return null;
 }
 
@@ -151,7 +151,7 @@ function mdxJsxHandler(state, node) {
  * that the site uses.
  * Images not found in the pool fall back to a root-relative absolute URL.
  *
- * @param {string|null} section - Collection name ("blog" | "talks").
+ * @param {string|null} section - Collection name ("blog" | "speaking").
  * @param {string} entryId      - Content entry ID (e.g. "my-article").
  * @param {URL|string} site     - Site origin.
  */
@@ -317,7 +317,7 @@ export async function renderBodyToHtml(entry, site) {
  * Avif is intentionally avoided here because some backend services/feed
  * aggregators do not support it.
  *
- * @param {string} section   - Collection name ("blog" | "talks").
+ * @param {string} section   - Collection name ("blog" | "speaking").
  * @param {string} entryId   - Entry ID (e.g. "my-article").
  * @param {string|undefined} filename - Image filename from frontmatter.
  * @param {URL|string} site  - Site origin for building absolute URLs.

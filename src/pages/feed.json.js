@@ -17,7 +17,7 @@ export async function GET(context) {
 
 	const [blogEntries, talkEntries] = await Promise.all([
 		getCollection("blog", ({ data }) => isVisibleContent(data, { now, previewFuture })),
-		getCollection("talks", ({ data }) => isVisibleContent(data, { now, previewFuture })),
+		getCollection("speaking", ({ data }) => isVisibleContent(data, { now, previewFuture })),
 	]);
 
 	const toItem = async (section, entry) => {
@@ -51,7 +51,7 @@ export async function GET(context) {
 	const items = (
 		await Promise.all([
 			...blogEntries.map((entry) => toItem("blog", entry)),
-			...talkEntries.map((entry) => toItem("talks", entry)),
+			...talkEntries.map((entry) => toItem("speaking", entry)),
 		])
 	)
 		.sort((a, b) => (b.date_published ?? "").localeCompare(a.date_published ?? ""))

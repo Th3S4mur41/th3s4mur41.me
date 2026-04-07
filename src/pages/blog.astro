@@ -9,12 +9,12 @@ const previewFuture = isPreviewFutureContentEnabled();
 
 // Fetch collections
 const blog = await getCollection("blog", ({ data }) => isVisibleContent(data, { now, previewFuture }));
-const talks = await getCollection("talks", ({ data }) => isVisibleContent(data, { now, previewFuture }));
+const speaking = await getCollection("speaking", ({ data }) => isVisibleContent(data, { now, previewFuture }));
 
 // Combine with a discriminant for section type
 const combined = [
 	...blog.map((entry) => ({ section: "blog" as const, entry })),
-	...talks.map((entry) => ({ section: "talks" as const, entry })),
+	...speaking.map((entry) => ({ section: "speaking" as const, entry })),
 ].sort((a, b) => new Date(b.entry.data.date).getTime() - new Date(a.entry.data.date).getTime());
 
 // Ensure linter recognizes these as used in the template section below (Astro template usage not detected by linter).

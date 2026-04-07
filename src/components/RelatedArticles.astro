@@ -21,14 +21,14 @@ const { currentArticle, count = 3 } = Astro.props;
 const currentTags = (currentArticle.data.tags ?? []).map((tag) => tag.toLowerCase());
 const previewFuture = isPreviewFutureContentEnabled();
 
-let relatedArticles: { entry: any; section: "blog" | "talks" }[] = [];
+let relatedArticles: { entry: any; section: "blog" | "speaking" }[] = [];
 if (currentTags.length > 0) {
-	// Fetch both collections to enable cross-referencing between blog and talks
-	const [blogEntries, talksEntries] = await Promise.all([getCollection("blog"), getCollection("talks")]);
+	// Fetch both collections to enable cross-referencing between blog and speaking content
+	const [blogEntries, speakingEntries] = await Promise.all([getCollection("blog"), getCollection("speaking")]);
 	// Combine all entries with their section information
 	const allEntries = [
 		...blogEntries.map((entry) => ({ entry, section: "blog" as const })),
-		...talksEntries.map((entry) => ({ entry, section: "talks" as const })),
+		...speakingEntries.map((entry) => ({ entry, section: "speaking" as const })),
 	];
 	relatedArticles = allEntries
 		.filter(({ entry }) => {
