@@ -1,3 +1,6 @@
+import { readdirSync } from "node:fs";
+import path from "node:path";
+
 /**
  * Rehype plugin to inject Table of Contents after the first h1 element
  * Collects headings from the AST and builds a nested TOC structure
@@ -7,6 +10,17 @@ export function rehypeInjectToc() {
 		const normalizePath = (value) => (typeof value === "string" ? value.replaceAll("\\\\", "/") : "");
 		const filePath = normalizePath(file?.path);
 		const isBlog = filePath.includes("/content/blog/");
+		const isSeriesIntro = (() => {
+			if (!isBlog || !/\/index\.mdx?$/.test(filePath)) {
+				return false;
+			}
+
+			try {
+				return readdirSync(path.dirname(filePath), { withFileTypes: true }).some((entry) => entry.isDirectory());
+			} catch {
+				return false;
+			}
+		})();
 		const readingTime = isBlog ? file?.data?.readingTime : undefined;
 		const readText = readingTime && typeof readingTime.text === "string" ? readingTime.text : undefined;
 		const wordCount =
@@ -150,7 +164,7 @@ export function rehypeInjectToc() {
 				: null;
 
 		const readingMetaNode =
-			readingMetaText && isBlog
+			readingMetaText && isBlog && !isSeriesIntro
 				? {
 						type: "element",
 						tagName: "p",
