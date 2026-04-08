@@ -38,7 +38,7 @@ We're finally moving past "presence" and into "context." That's a big shift. Ins
 
 Standard automation struggles with WCAG success criteria that require human-level judgment. But AI shouldn't replace static rules—static rules are fast and cheap, while AI in comparison is expensive. The point is that AI should handle what static rules can't, and enhance them through context awareness.
 
-First, let's look at what's already working. **SC 1.1.1 (Non-text Content):** AI experiments have already proven that we can validate whether alt text actually describes the image accurately, not just its presence. As I discussed in a previous post about [AI-enhanced scanners](https://th3s4mur41.me/blog/ai-in-a11y-test-automation/), this capability moves us from checking "is there alt text?" to "does this alt text make sense?" Static rules nail presence; AI handles semantic match.
+First, let's look at what's already working. **[SC 1.1.1 (Non-text Content)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content.html):** AI experiments have already proven that we can validate whether alt text actually describes the image accurately, not just its presence. As I discussed in a previous post about [AI-enhanced scanners](https://th3s4mur41.me/blog/ai-in-a11y-test-automation/), this capability moves us from checking "is there alt text?" to "does this alt text make sense?" Static rules nail presence; AI handles semantic match.
 
 Based on my experience, the following is a first batch of easy wins I could imagine. Some capabilities already exist in adjacent workflows and "just" need to be integrated into accessibility scanners, while others are more personal expectations based on AI strengths and potential for improvement. The list is, of course, not exhaustive, and I'm sure there are other creative ideas where AI could be a valuable enrichment.
 
@@ -97,7 +97,7 @@ But having the tickets is only the start. In a recent project, we had three sepa
 
 We’ve all seen it: a developer sees an a11y error, copies the "Suggested Fix" from a static documentation site, and inadvertently makes the experience worse because the suggestion didn't account for the surrounding code.
 
-**AI doesn't just provide a fix; it provides a *harmonious* fix**. By feeding the AI the specific code snippet and the WCAG violation, it can generate a solution that respects your existing framework, state management, and ARIA patterns. It moves us from "potential fixes" to "ready-to-merge code."
+**AI doesn't just provide a fix; it provides a *harmonious* fix**. By feeding the AI the specific code snippet and the WCAG violation, it can generate a solution that respects your existing framework, state management, and [ARIA patterns](https://www.w3.org/WAI/ARIA/apg/). It moves us from "potential fixes" to "ready-to-merge code."
 
 ### Bridging the Gap Between Audit and Code
 
@@ -117,4 +117,4 @@ While AI will **never replace the lived experience of a human tester**, it can h
 
 ---
 
-What do you think? Are you ready to embrace AI-enhanced accessibility testing across the full workflow? And perhaps the more provocative question: would you accept some level of false positives in exchange for catching more issues early, or do you prefer the strict zero-false-positive approach that tools like axe-core are built on? Let's discuss.
+What do you think? Are you ready to embrace AI-enhanced accessibility testing across the full workflow? And perhaps the more provocative question: would you accept some level of false positives in exchange for catching more issues early, or do you prefer the strict zero-false-positive approach that common current tools are built on? Let's discuss.
