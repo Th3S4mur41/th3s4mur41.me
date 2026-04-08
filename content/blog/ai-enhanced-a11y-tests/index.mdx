@@ -1,9 +1,12 @@
 ---
 title: 'The Evolution of Accessibility Testing: From Static Rules to Intelligent Automation'
+eyebrow: 'AI & Accessibility Testing'
 date: 2026-05-21T10:00:00Z
 image: ''
 imageAlt: ''
-description: ''
+description: >-
+  Static rules are fast, but they lack context. Explore how AI can enhance the full
+  a11y testing workflow—from smarter scanning to intelligent triage and fixes.
 tags:
   - AI
   - A11y
@@ -11,10 +14,18 @@ tags:
   - WebDev
   - Insights
 keywords:
+  - AI accessibility testing
   - test automation
-  - Accessibility testing
-  - AI
-  - WCAG
+  - WCAG scanning
+  - accessibility triage
+  - false positives
+  - heading structure
+  - reading order
+  - CSS reading-flow
+  - contrast testing
+  - accessibility audit
+  - context-aware fixes
+  - WCAG 2.2
 ---
 
 # The Evolution of Accessibility Testing: From Static Rules to Intelligent Automation
@@ -31,7 +42,7 @@ First, let's look at what's already working. **SC 1.1.1 (Non-text Content):** AI
 
 Based on my experience, the following is a first batch of easy wins I could imagine. Some capabilities already exist in adjacent workflows and "just" need to be integrated into accessibility scanners, while others are more personal expectations based on AI strengths and potential for improvement. The list is, of course, not exhaustive, and I'm sure there are other creative ideas where AI could be a valuable enrichment.
 
-### SC 1.3.1 (Info and Relationships)
+### SC 1.3.1 - Info and Relationships
 
 The first easy win here is hierarchy integrity: does heading structure progress logically, and are levels skipped or missing in ways that break document structure? This is already something AI code reviewers can detect in HTML and Markdown markup today.
 
@@ -39,13 +50,13 @@ So again, this is less about inventing a brand-new capability and more about int
 
 A natural extension would be detecting "fake" headings, either from rendered styles (text that visually looks like a heading) or even from heuristic signals like heading-like class names without semantic heading markup.
 
-### SC 3.1.5 (Reading Level)
+### SC 3.1.5 - Reading Level
 
 Cognitive accessibility matters, and this is another area where AI code review can already help today. It can detect abbreviations and acronyms in HTML or Markdown content, then suggest plain language alternatives or at least proper markup that links an abbreviation to its definition.
 
 Like the previous example, this feels less like a greenfield problem and more like integrating an already useful capability into the broader accessibility test flow.
 
-### SC 1.3.2 (Meaningful Sequence)
+### SC 1.3.2 - Meaningful Sequence
 
 Modern CSS layout capabilities like Flexbox, Grid, and now [grid-lanes aka. Masonry](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Grid_layout/Masonry_layout) give us tremendous visual flexibility, but they also mean that markup order and visual reading order are no longer necessarily in sync. A grid item placed last in the DOM might render first visually, and nothing in the current tooling will flag that as an accessibility concern.
 
@@ -58,7 +69,7 @@ That makes AI detection of these mismatches much more useful in practice. It's n
 To be clear: it's not AI's job to apply `reading-flow`. The role of AI here is detection and raising awareness, while the fix remains a deliberate developer decision.
 
 
-### SC 1.4.3 & 1.4.11 (Contrast)
+### SC 1.4.3 & 1.4.11 - Contrast
 
 I do see potential for AI to improve contrast testing, but let's be honest: this is the most fragile of all the checks in this list. That said, the same is true for manual contrast testing—it's genuinely hard to evaluate in complex rendering scenarios.
 
