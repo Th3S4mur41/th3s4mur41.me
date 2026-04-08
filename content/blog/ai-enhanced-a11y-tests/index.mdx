@@ -9,6 +9,7 @@ tags:
   - A11y
   - TestAutomation
   - WebDev
+  - Insights
 keywords:
   - test automation
   - Accessibility testing
@@ -69,24 +70,31 @@ The challenge is that this kind of pixel-level analysis across breakpoints and l
 
 Based on what I've seen, AI-powered scanning enhancements are more likely to carry false positives than rule-based checks, especially in early versions. The ratio of false positives to real findings could be critical to adoption. Too many false alarms breed alert fatigue and rejection. This is why AI enhancements should always build on top of static rules, not replace them.
 
-## Phase 2: The Art of Intelligent Triage
-Finding the bug is only 20% of the battle. The real "developer friction" happens during triage.
+## From Findings to Action: Triage and Fixes
 
-In a recent project, we were bombarded with three separate tickets: one for a video player's focus indicator, one for control verbosity, and one for a specific button. Treating these as three separate tasks is a waste of resources.
+Finding the bug is only 20% of the battle. The real "developer friction" happens when turning a list of violations into a clear, actionable plan. This applies whether findings come from automated scanners, manual testing, or formal accessibility audits. This is where AI has just as much to offer as it does in scanning.
 
-**AI excels at pattern recognition**. It can look at those three violations, see they all originate from the same VideoPlayer component, and group them into a single "Component Refactor" task. This turns a messy backlog into a clear, actionable roadmap.
+### Grouping and Prioritization
 
-## Context-Aware Fixes vs. Copy-Paste Disasters
-We’ve all seen it: a junior dev sees an a11y error, copies the "Suggested Fix" from a static documentation site, and inadvertently makes the experience worse because the suggestion didn't account for the surrounding code.
+In a recent project, we had three separate tickets: one for a video player's focus indicator, one for control verbosity, and one for a specific button. The issue was not the number of tickets, but the missing link between them. Without that connection, developers may work on each issue independently, which can lead to redundant work or even conflicting solutions.
+
+AI can also help one step earlier by extracting violations from reports and documentation, then turning them into actionable, prioritizable items in the team's existing tracking workflow.
+
+**AI excels at pattern recognition**. It can look at those three violations, see they all originate from the same `VideoPlayer` component, and group them into a single "Component Refactor" task. This turns a messy backlog into a clear, actionable roadmap.
+
+### Context-Aware Fixes vs. Copy-Paste Disasters
+
+We’ve all seen it: a developer sees an a11y error, copies the "Suggested Fix" from a static documentation site, and inadvertently makes the experience worse because the suggestion didn't account for the surrounding code.
 
 **AI doesn't just provide a fix; it provides a *harmonious* fix**. By feeding the AI the specific code snippet and the WCAG violation, it can generate a solution that respects your existing framework, state management, and ARIA patterns. It moves us from "potential fixes" to "ready-to-merge code."
 
-## Bridging the Gap Between Audit and Code
-Audits are often the "source of truth," but they come with a major hurdle: Testers are rarely developers.
+### Bridging the Gap Between Audit and Code
 
-A tester might report a failure on a native `<video>` tag, but a developer knows that the browser's native implementation is often the culprit, not their code.
+Audits are often the "source of truth," but they come with a major hurdle: testers are rarely developers.
 
-- **The AI Bridge:** Imagine an AI that sits between the Audit Report and Jira. It can analyze the audit, compare it against your codebase, and recognize when an issue is a known browser glitch or if a third-party Web Component would be a better architectural choice than fixing a broken native element.
+Testers can describe what they expect—a keyboard-navigable media player, a properly announced button, a logical focus order—but it's not their role to specify how that gets implemented. That's the job of developers and accessibility experts, who need to weigh technical constraints, framework conventions, and sometimes the limits of native browser behavior. 
+
+A finding might lead to a small fix, a component refactor, or even a deliberate move away from a native element toward a custom solution. AI can help bridge that gap by comparing audit findings against the actual codebase and suggesting technically grounded directions, rather than leaving developers to guess from a tester's description alone.
 
 ## The "Gatekeeping" Challenge: Looking Toward WCAG 3.0
 
@@ -94,8 +102,8 @@ As Karl Groves pointed out in his [What I Like About WCAG 3.0 article](https://a
 
 If we don’t evolve our tools, we risk pushing "gatekeeping" to the very end of the development cycle (the audit phase). To keep feedback loops short and "shift left" effectively, we must use AI to automate the "un-automatable."
 
-While AI will **never replace the lived experience of a human tester**, it can handle the heavy lifting of context, triage, and structural analysis—leaving the humans to focus on the complex, subjective nuances that truly define an inclusive experience.
+While AI will **never replace the lived experience of a human tester**, it can handle the heavy lifting across the entire flow: richer context-aware scanning, smarter triage, technically grounded fix suggestions, and a tighter bridge between audit findings and the developer's workflow. The goal is to leave humans to focus on the complex, subjective nuances that truly define an inclusive experience.
 
 ---
 
-What do you think? Are you ready to let an AI triage your accessibility backlog, or do you prefer the manual touch? Let’s discuss.
+What do you think? Are you ready to embrace AI-enhanced accessibility testing across the full workflow? And perhaps the more provocative question: would you accept some level of false positives in exchange for catching more issues early, or do you prefer the strict zero-false-positive approach that tools like axe-core are built on? Let's discuss.
