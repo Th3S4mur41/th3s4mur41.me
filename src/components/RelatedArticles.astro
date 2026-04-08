@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import { isSeriesContainerEntry } from "../utils/contentSeries";
+import { getEntryIds, isSeriesContainerId } from "../utils/contentSeries";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/contentVisibility";
 import ArticleCard from "./ArticleCard.astro";
 
@@ -25,7 +25,8 @@ let relatedArticles: { entry: any; section: "blog" | "speaking" }[] = [];
 if (currentTags.length > 0) {
 	// Fetch both collections to enable cross-referencing between blog and speaking content
 	const [blogEntries, speakingEntries] = await Promise.all([getCollection("blog"), getCollection("speaking")]);
-	const blogPosts = blogEntries.filter((entry: any) => !isSeriesContainerEntry(entry, blogEntries));
+	const blogEntryIds = getEntryIds(blogEntries);
+	const blogPosts = blogEntries.filter((entry: any) => !isSeriesContainerId(entry.id, blogEntryIds));
 	// Combine all entries with their section information
 	const allEntries = [
 		...blogPosts.map((entry: any) => ({ entry, section: "blog" as const })),

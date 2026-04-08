@@ -5,15 +5,16 @@ import ArticleCard from "../components/ArticleCard.astro";
 import Image from "../components/Image.astro";
 import PersonSchema from "../components/PersonSchema.astro";
 import Layout from "../layouts/Layout.astro";
-import { isSeriesContainerEntry } from "../utils/contentSeries";
+import { getEntryIds, isSeriesContainerId } from "../utils/contentSeries";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/contentVisibility";
 
 const now = new Date();
 const previewFuture = isPreviewFutureContentEnabled();
 
 const rawBlog = await getCollection("blog", ({ data }: any) => isVisibleContent(data, { now, previewFuture }));
+const rawBlogIds = getEntryIds(rawBlog);
 const blog = rawBlog
-	.filter((entry: any) => !isSeriesContainerEntry(entry, rawBlog))
+	.filter((entry: any) => !isSeriesContainerId(entry.id, rawBlogIds))
 	.map((post: any) => ({ ...post, section: "blog" }));
 
 const speaking = (await getCollection("speaking", ({ data }: any) => isVisibleContent(data, { now, previewFuture }))).map(

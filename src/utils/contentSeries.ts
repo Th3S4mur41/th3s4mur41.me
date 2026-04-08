@@ -18,11 +18,15 @@ export function isSeriesContainerId(entryId: string, allEntryIds: string[]): boo
 	});
 }
 
+/**
+ * Precompute entry IDs once so container checks can be reused in loops.
+ */
+export function getEntryIds<T extends { id: string }>(allEntries: T[]): string[] {
+	return allEntries.map((item) => item.id);
+}
+
 export function isSeriesContainerEntry<T extends { id: string }>(entry: T, allEntries: T[]): boolean {
-	return isSeriesContainerId(
-		entry.id,
-		allEntries.map((item) => item.id),
-	);
+	return isSeriesContainerId(entry.id, getEntryIds(allEntries));
 }
 
 export function getSeriesSlug(entryId: string): string | null {

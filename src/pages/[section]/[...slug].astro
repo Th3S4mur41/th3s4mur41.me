@@ -9,7 +9,7 @@ import PodcastEpisodeSchema from "../../components/PodcastEpisodeSchema.astro";
 import Reactions from "../../components/Reactions.astro";
 import RelatedArticles from "../../components/RelatedArticles.astro";
 import Layout from "../../layouts/Layout.astro";
-import { getSeriesSlug, isSeriesContainerEntry, isSeriesContainerId, normalizeEntryId } from "../../utils/contentSeries";
+import { getEntryIds, getSeriesSlug, isSeriesContainerId, normalizeEntryId } from "../../utils/contentSeries";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../../utils/contentVisibility";
 import type { ProcessedWebmentions } from "../../utils/webmentions";
 import { fetchWebmentions, processWebmentions } from "../../utils/webmentions";
@@ -27,9 +27,10 @@ export async function getStaticPaths() {
 
 	const visibleBlogEntries = blogEntries.filter((entry: any) => isVisibleContent(entry.data, { now, previewFuture }));
 	const visibleSpeakingEntries = speakingEntries.filter((entry: any) => isVisibleContent(entry.data, { now, previewFuture }));
+	const visibleBlogIds = getEntryIds(visibleBlogEntries);
 
 	const blogPaths = visibleBlogEntries
-		.filter((entry: any) => !isSeriesContainerEntry(entry, visibleBlogEntries))
+		.filter((entry: any) => !isSeriesContainerId(entry.id, visibleBlogIds))
 		.map((entry: any) => ({
 			params: { section: "blog", slug: normalizeEntryId(entry.id) },
 			props: { article: entry, section: "blog" },
