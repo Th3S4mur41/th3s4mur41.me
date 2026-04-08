@@ -1,5 +1,6 @@
 import { getCollection } from "astro:content";
 import rss from "@astrojs/rss";
+import { getEntryIds, isSeriesContainerId } from "../utils/contentSeries";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/contentVisibility";
 import { getHeroImageUrl, renderBodyToHtml } from "../utils/feedHelpers";
 
@@ -34,14 +35,16 @@ export async function GET(context) {
 	const feedUrl = new URL("/feed.xml", site).href;
 	const iconUrl = new URL("/icons/favicon-512.png", site).href;
 
-	const [blogEntries, talkEntries] = await Promise.all([
+	const [blogEntries, speakingEntries] = await Promise.all([
 		getCollection("blog", ({ data }) => isVisibleContent(data, { now, previewFuture })),
-		getCollection("talks", ({ data }) => isVisibleContent(data, { now, previewFuture })),
+		getCollection("speaking", ({ data }) => isVisibleContent(data, { now, previewFuture })),
 	]);
+	const blogEntryIds = getEntryIds(blogEntries);
+	const blogPosts = blogEntries.filter((entry) => !isSeriesContainerId(entry.id, blogEntryIds));
 
 	const sortedEntries = [
-		...blogEntries.map((entry) => ({ section: "blog", entry })),
-		...talkEntries.map((entry) => ({ section: "talks", entry })),
+		...blogPosts.map((entry) => ({ section: "blog", entry })),
+		...speakingEntries.map((entry) => ({ section: "speaking", entry })),
 	]
 		.sort((a, b) => b.entry.data.date.valueOf() - a.entry.data.date.valueOf())
 		.slice(0, FEED_LIMIT);

@@ -4,6 +4,8 @@ import { defineCollection, z } from "astro:content";
 // 2. Import loader(s)
 import { glob } from "astro/loaders";
 
+const CONTENT_BASE = "./content";
+
 // 3. Import reading-time computation
 import { computeReadingTime } from "./utils/readingTime.js";
 
@@ -44,9 +46,9 @@ const blogSchema = z.object({
 	reactions: z.boolean().optional().default(true),
 });
 
-const talksSchema = z.object({
+const speakingSchema = z.object({
 	title: z.string(),
-	type: z.enum(["podcast", "conference"]),
+	type: z.enum(["podcast", "conference", "workshop"]),
 	date: z.date(),
 	updated: z.date().optional(),
 	image: z.string().optional(),
@@ -93,14 +95,14 @@ function createLoaderWithReadingTime(baseLoader) {
 
 // 6. Define your collection(s)
 const blog = defineCollection({
-	loader: createLoaderWithReadingTime(glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" })),
+	loader: createLoaderWithReadingTime(glob({ pattern: "**/*.{md,mdx}", base: `${CONTENT_BASE}/blog` })),
 	schema: blogSchema,
 });
 
-const talks = defineCollection({
-	loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/talks" }),
-	schema: talksSchema,
+const speaking = defineCollection({
+	loader: glob({ pattern: "**/*.{md,mdx}", base: `${CONTENT_BASE}/speaking` }),
+	schema: speakingSchema,
 });
 
 // 7. Export a single `collections` object to register your collection(s)
-export const collections = { blog, talks };
+export const collections = { blog, speaking };

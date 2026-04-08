@@ -94,7 +94,7 @@ body.blog {
 }
 
 /* individual blog pages */
-body:is([class^="blog-"], [class^="talks-"]) {
+body:is([class^="blog-"], [class^="speaking-"]) {
 	main {
 		margin-block-start: 0;
 	}
@@ -267,7 +267,7 @@ iframe {
 	border-radius: 0.25rem;
 }
 
-body:is([class^="blog-"], [class^="talks-"]) {
+body:is([class^="blog-"], [class^="speaking-"]) {
 	aside {
 		> h2 {
 			border-block-start: 1px solid oklch(0.5 0 0);
@@ -528,4 +528,102 @@ td {
 
 baseline-status {
 	margin-block-end: 1.5rem;
+}
+
+.series {
+	display: grid;
+	grid-template-columns: subgrid;
+
+	article {
+		display: grid;
+		grid-template-columns: unset !important; /* TODO: Refactor with https://github.com/Th3S4mur41/th3s4mur41.me/issues/2139 */
+		/* biome-ignore lint/suspicious/noShorthandPropertyOverrides: necessary to overwrite blog style */
+		grid-template:
+			"image . ." auto
+			"image type type" auto
+			"image title title" auto
+			"image teaser teaser" 1fr
+			"image date meta" auto
+			"image . ." auto
+			/ minmax(40%, 15em) auto 1fr;
+		gap: 0.5rem 1.5rem;
+
+		&:not(:has(> :is(img, picture))) {
+			grid-template:
+				"title" auto
+				"teaser" auto
+				"meta" auto
+				"date" auto
+				/ 1fr;
+		}
+
+		& > h3 {
+			grid-area: title;
+			margin: 0;
+		}
+		& > picture {
+			display: contents;
+		}
+		& img {
+			grid-area: image;
+			inline-size: 100%;
+			/* min-block-size: 80%; */
+			block-size: auto;
+			max-block-size: 100%;
+			object-fit: cover;
+			border-radius: 0.5rem;
+		}
+		& .type {
+			grid-area: type;
+			justify-self: start;
+			align-self: end;
+			padding-inline: 0.5em;
+			padding-block: 0.5em;
+			font-size: 0.875rem;
+			font-weight: 500;
+			line-height: 1;
+			background: var(--color-highlight);
+			border-radius: 0.25em;
+			z-index: 1;
+			/* biome-ignore lint/correctness/noUnknownProperty: progressive enhancement */
+			@supports (corner-shape: squircle) {
+				border-radius: 100vmax;
+				/* biome-ignore lint/correctness/noUnknownProperty: progressive enhancement */
+				corner-shape: squircle;
+			}
+		}
+		& p:not(.reading-meta) {
+			grid-area: teaser;
+			margin: 0;
+		}
+		& .reading-meta {
+			grid-column: unset !important; /* TODO: Refactor with https://github.com/Th3S4mur41/th3s4mur41.me/issues/2139 */
+			grid-area: meta;
+			margin: 0;
+			font-size: 0.875rem;
+			color: var(--color-subtle-text);
+		}
+		& time {
+			grid-area: date;
+			font-size: 0.875rem;
+			color: var(--color-subtle-text);
+		}
+
+		@container (width <= 50rem) {
+			grid-template: unset;
+			grid-template-columns: [image-start] 0.5em [title-start teaser-start meta-start type-start] 1fr [meta-end
+					date-start] auto [date-end title-end teaser-end type-end] 0.5em [image-end] !important;
+			grid-template-rows: [image-start type-start] auto [image-end type-end meta-start date-start] auto [meta-end
+					date-end title-start] auto [title-end teaser-start] auto [teaser-end] 0.5em;
+			gap: 0.5rem 0;
+
+			.type {
+				justify-self: end;
+				margin-block: 0.5em;
+			}
+			.reading-meta {
+				grid-column: title !important;
+			}
+		}
+	}
 }

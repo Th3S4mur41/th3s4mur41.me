@@ -1,4 +1,5 @@
 import { getCollection } from "astro:content";
+import { getEntryIds, isSeriesContainerId } from "../utils/contentSeries";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/contentVisibility";
 import { getHeroImageUrl, renderBodyToHtml } from "../utils/feedHelpers";
 
@@ -15,10 +16,12 @@ export async function GET(context) {
 	const now = new Date();
 	const previewFuture = isPreviewFutureContentEnabled();
 
-	const [blogEntries, talkEntries] = await Promise.all([
+	const [blogEntries, speakingEntries] = await Promise.all([
 		getCollection("blog", ({ data }) => isVisibleContent(data, { now, previewFuture })),
-		getCollection("talks", ({ data }) => isVisibleContent(data, { now, previewFuture })),
+		getCollection("speaking", ({ data }) => isVisibleContent(data, { now, previewFuture })),
 	]);
+	const blogEntryIds = getEntryIds(blogEntries);
+	const blogPosts = blogEntries.filter((entry) => !isSeriesContainerId(entry.id, blogEntryIds));
 
 	const toItem = async (section, entry) => {
 		const url = new URL(`/${section}/${entry.id}/`, siteUrl).href;
@@ -50,8 +53,8 @@ export async function GET(context) {
 
 	const items = (
 		await Promise.all([
-			...blogEntries.map((entry) => toItem("blog", entry)),
-			...talkEntries.map((entry) => toItem("talks", entry)),
+			...blogPosts.map((entry) => toItem("blog", entry)),
+			...speakingEntries.map((entry) => toItem("speaking", entry)),
 		])
 	)
 		.sort((a, b) => (b.date_published ?? "").localeCompare(a.date_published ?? ""))

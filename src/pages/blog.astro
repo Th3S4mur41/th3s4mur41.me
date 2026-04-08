@@ -2,19 +2,23 @@
 import { getCollection } from "astro:content";
 import ArticleCard from "../components/ArticleCard.astro";
 import Layout from "../layouts/Layout.astro";
+import { getEntryIds, isSeriesContainerId } from "../utils/contentSeries";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/contentVisibility";
 
 const now = new Date();
 const previewFuture = isPreviewFutureContentEnabled();
 
 // Fetch collections
-const blog = await getCollection("blog", ({ data }) => isVisibleContent(data, { now, previewFuture }));
-const talks = await getCollection("talks", ({ data }) => isVisibleContent(data, { now, previewFuture }));
+const blog = await getCollection("blog", ({ data }: any) => isVisibleContent(data, { now, previewFuture }));
+const speaking = await getCollection("speaking", ({ data }: any) => isVisibleContent(data, { now, previewFuture }));
+const blogIds = getEntryIds(blog);
+
+const blogPosts = blog.filter((entry: any) => !isSeriesContainerId(entry.id, blogIds));
 
 // Combine with a discriminant for section type
 const combined = [
-	...blog.map((entry) => ({ section: "blog" as const, entry })),
-	...talks.map((entry) => ({ section: "talks" as const, entry })),
+	...blogPosts.map((entry: any) => ({ section: "blog" as const, entry })),
+	...speaking.map((entry: any) => ({ section: "speaking" as const, entry })),
 ].sort((a, b) => new Date(b.entry.data.date).getTime() - new Date(a.entry.data.date).getTime());
 
 // Ensure linter recognizes these as used in the template section below (Astro template usage not detected by linter).

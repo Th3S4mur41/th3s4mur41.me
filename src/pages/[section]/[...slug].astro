@@ -1,19 +1,21 @@
 ---
 import { getImage } from "astro:assets";
-import { getCollection, getEntry, render } from "astro:content";
+import { getCollection, render } from "astro:content";
 import path from "node:path";
-import Image from "/src/components/Image.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
 import BlogPostingSchema from "../../components/BlogPostingSchema.astro";
+import Image from "../../components/Image.astro";
 import PodcastEpisodeSchema from "../../components/PodcastEpisodeSchema.astro";
 import Reactions from "../../components/Reactions.astro";
 import RelatedArticles from "../../components/RelatedArticles.astro";
 import Layout from "../../layouts/Layout.astro";
+import { getEntryIds, getSeriesSlug, isSeriesContainerId, normalizeEntryId } from "../../utils/contentSeries";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../../utils/contentVisibility";
 import type { ProcessedWebmentions } from "../../utils/webmentions";
 import { fetchWebmentions, processWebmentions } from "../../utils/webmentions";
 
 /**
- * Unified dynamic route for both blog posts and talks.
+ * Unified dynamic route for both blog posts and speaking entries.
  * Supports draft preview slugs prefixed with `_draft-` the same way the original
  * individual route files did. Eliminates duplicated logic (images, title truncation, meta setup).
  */
@@ -21,19 +23,36 @@ export async function getStaticPaths() {
 	const now = new Date();
 	const previewFuture = isPreviewFutureContentEnabled();
 
-	const collections = [
-		{ name: "blog", entries: await getCollection("blog") },
-		{ name: "talks", entries: await getCollection("talks") },
-	];
+	const [blogEntries, speakingEntries] = await Promise.all([getCollection("blog"), getCollection("speaking")]);
 
-	const paths = collections.flatMap(({ name, entries }) =>
-		entries
-			.filter((entry) => isVisibleContent(entry.data, { now, previewFuture }))
-			.map((entry) => ({
-				params: { section: name, slug: entry.id },
-				props: { article: entry, section: name },
-			})),
-	);
+	const visibleBlogEntries = blogEntries.filter((entry: any) => isVisibleContent(entry.data, { now, previewFuture }));
+	const visibleSpeakingEntries = speakingEntries.filter((entry: any) => isVisibleContent(entry.data, { now, previewFuture }));
+	const visibleBlogIds = getEntryIds(visibleBlogEntries);
+
+	const blogPaths = visibleBlogEntries
+		.filter((entry: any) => !isSeriesContainerId(entry.id, visibleBlogIds))
+		.map((entry: any) => ({
+			params: { section: "blog", slug: normalizeEntryId(entry.id) },
+			props: { article: entry, section: "blog" },
+		}));
+
+	const speakingPaths = visibleSpeakingEntries.map((entry: any) => ({
+		params: { section: "speaking", slug: normalizeEntryId(entry.id) },
+		props: { article: entry, section: "speaking" },
+	}));
+
+	const seriesSlugs = new Set<string>();
+	for (const entry of visibleBlogEntries) {
+		const seriesSlug = getSeriesSlug(entry.id);
+		if (seriesSlug) seriesSlugs.add(seriesSlug);
+	}
+
+	const seriesPaths = [...seriesSlugs].map((seriesSlug) => ({
+		params: { section: "blog", slug: seriesSlug },
+		props: { section: "blog" },
+	}));
+
+	const paths = [...blogPaths, ...speakingPaths, ...seriesPaths];
 
 	return paths;
 }
@@ -44,7 +63,7 @@ const { section, slug } = Astro.params as {
 	slug?: string;
 };
 
-const SUPPORTED_SECTIONS = ["blog", "talks"] as const;
+const SUPPORTED_SECTIONS = ["blog", "speaking"] as const;
 type Section = (typeof SUPPORTED_SECTIONS)[number];
 
 if (!section || !SUPPORTED_SECTIONS.includes(section as Section)) {
@@ -56,28 +75,63 @@ const normalizedSlug = slug?.startsWith("_draft-") ? slug.slice("_draft-".length
 if (!normalizedSlug) {
 	throw new Error("Missing slug param");
 }
-const article = await getEntry(section as Section, normalizedSlug);
-if (!article) {
+
+const previewFuture = isPreviewFutureContentEnabled();
+const now = new Date();
+
+const { article: staticPathArticle } = Astro.props as { article?: any };
+const article = staticPathArticle ?? null;
+
+let seriesArticles: any[] = [];
+let seriesIntroEntry: any | null = null;
+
+if (!article && section === "blog") {
+	const visibleBlogEntries = (await getCollection("blog")).filter((entry: any) =>
+		isVisibleContent(entry.data, { now, previewFuture }),
+	);
+	const visibleBlogIds = visibleBlogEntries.map((entry: any) => entry.id);
+	const hasSeriesChildren = visibleBlogEntries.some((entry: any) => {
+		const id = normalizeEntryId(entry.id);
+		return id !== normalizedSlug && id.startsWith(`${normalizedSlug}/`);
+	});
+
+	if (hasSeriesChildren) {
+		seriesIntroEntry = visibleBlogEntries.find((entry: any) => normalizeEntryId(entry.id) === normalizedSlug) ?? null;
+		seriesArticles = visibleBlogEntries
+			.filter((entry: any) => {
+				const id = normalizeEntryId(entry.id);
+				if (id === normalizedSlug) return false;
+				if (!id.startsWith(`${normalizedSlug}/`)) return false;
+				return !isSeriesContainerId(entry.id, visibleBlogIds);
+			})
+			.sort((a: any, b: any) => b.data.date.valueOf() - a.data.date.valueOf());
+	}
+}
+
+const isSeriesPage = section === "blog" && seriesArticles.length > 0;
+if (!article && !isSeriesPage) {
 	throw new Error(`Article not found: ${section}/${normalizedSlug}`);
 }
 
 // Safety: even if someone hits a legacy `_draft-` URL directly, never render unpublished items.
 // Future-dated items are only visible when PREVIEW_FUTURE_CONTENT is enabled at build/runtime.
-const previewFuture = isPreviewFutureContentEnabled();
-const isVisible = isVisibleContent(article.data, { previewFuture });
-if (!isVisible) {
-	throw new Error(`Content not visible: ${section}/${normalizedSlug}`);
+if (!isSeriesPage && article) {
+	const isVisible = isVisibleContent(article.data, { previewFuture });
+	if (!isVisible) {
+		throw new Error(`Content not visible: ${section}/${normalizedSlug}`);
+	}
 }
 
-// Render MD/MDX content.
-const { Content } = await render(article);
+// Render MD/MDX content for the current page kind.
+const ArticleContent = !isSeriesPage && article ? (await render(article)).Content : null;
+const SeriesIntroContent = isSeriesPage && seriesIntroEntry ? (await render(seriesIntroEntry)).Content : null;
 
 // Import images from both collections eagerly (Astro will tree-shake unused).
-const blogImages = import.meta.glob("/src/content/blog/**/*.{jpg,png,webp}", { eager: true });
-const talksImages = import.meta.glob("/src/content/talks/**/*.{jpg,png,webp}", { eager: true });
+const blogImages = import.meta.glob("/content/blog/**/*.{jpg,png,webp}", { eager: true });
+const speakingImages = import.meta.glob("/content/speaking/**/*.{jpg,png,webp}", { eager: true });
 const imagePools: Record<string, Record<string, unknown>> = {
 	blog: blogImages,
-	talks: talksImages,
+	speaking: speakingImages,
 };
 
 function normalizePosix(p: string): string {
@@ -89,14 +143,16 @@ function normalizePosix(p: string): string {
 // We resolve by trying a couple of normalized candidates against the eager glob pool.
 let imagePath: string | undefined;
 let resolvedImage: unknown;
+const pageEntry = isSeriesPage ? seriesIntroEntry : article;
+const imageEntryId = pageEntry ? normalizeEntryId(pageEntry.id) : normalizedSlug;
 
-if (article.data.image) {
-	const raw = typeof article.data.image === "string" ? article.data.image.trim() : "";
+if (pageEntry?.data.image) {
+	const raw = typeof pageEntry.data.image === "string" ? pageEntry.data.image.trim() : "";
 	if (raw) {
 		const pool = imagePools[section];
 		const cleaned = raw.replace(/^\.\//, "");
-		const postDir = `/src/content/${section}/${normalizedSlug}/`;
-		const collectionDir = `/src/content/${section}/`;
+		const postDir = `/content/${section}/${imageEntryId}/`;
+		const collectionDir = `/content/${section}/`;
 		const candidates = cleaned.startsWith("/")
 			? [normalizePosix(cleaned)]
 			: [normalizePosix(path.posix.join(postDir, cleaned)), normalizePosix(path.posix.join(collectionDir, cleaned))];
@@ -166,14 +222,26 @@ function truncateTitle(original: string): string {
 	return `${window.slice(0, MAX_TITLE_LEN - 3).trimEnd()}...`;
 }
 
-const truncatedTitle = truncateTitle(article.data.title);
+function humanizeSlug(value: string): string {
+	return value
+		.split("/")
+		.filter(Boolean)
+		.pop()
+		?.split("-")
+		.map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+		.join(" ") ?? value;
+}
+
+const pageTitle = pageEntry?.data.title ?? humanizeSlug(normalizedSlug);
+const truncatedTitle = truncateTitle(pageTitle);
+const translations = pageEntry?.data.translations?.map((t: any) => ({ language: t.language, url: t.url })) ?? undefined;
 
 // Fetch webmentions if reactions are enabled for this article
 let webmentions: ProcessedWebmentions | null = null;
-if (article.data.reactions) {
+if (!isSeriesPage && article?.data.reactions) {
 	const apiKey = import.meta.env.WEBMENTIONIO_API_KEY;
 	const pageUrl = Astro.url.href;
-	
+
 	const mentions = await fetchWebmentions(pageUrl, apiKey);
 	if (mentions) {
 		webmentions = processWebmentions(mentions);
@@ -182,20 +250,29 @@ if (article.data.reactions) {
 
 // Hint to linter that these identifiers are intentionally used in the template markup below.
 // This keeps zero runtime impact while satisfying static analysis.
-void [Layout, Content, img, truncatedTitle, BlogPostingSchema, PodcastEpisodeSchema];
+void [
+	Layout,
+	img,
+	truncatedTitle,
+	BlogPostingSchema,
+	PodcastEpisodeSchema,
+	ArticleContent,
+	SeriesIntroContent,
+	ArticleCard,
+];
 ---
 
 <Layout
   title={truncatedTitle}
   image={img}
-	imageAlt={article.data.imageAlt}
-  description={article.data.description}
-  keywords={article.data.keywords}
-  noIndex={!article.data.published}
-  canonical={article.data.canonical ?? undefined}
-  translations={article.data.translations?.map((t) => ({ language: t.language, url: t.url })) ?? undefined}
+	imageAlt={pageEntry?.data.imageAlt}
+  description={pageEntry?.data.description}
+  keywords={pageEntry?.data.keywords}
+	noIndex={!isSeriesPage && pageEntry?.data.published === false}
+  canonical={pageEntry?.data.canonical ?? undefined}
+	translations={translations}
   noHeader>
-  {section === "blog" && (
+	{!isSeriesPage && section === "blog" && article && (
 		<BlogPostingSchema
 			slot="head"
 			headline={article.data.title}
@@ -209,7 +286,7 @@ void [Layout, Content, img, truncatedTitle, BlogPostingSchema, PodcastEpisodeSch
 		/>
 	)}
 
-	{section === "talks" && article.data.type === "podcast" && (
+	{!isSeriesPage && section === "speaking" && article?.data.type === "podcast" && (
 		<PodcastEpisodeSchema
 			slot="head"
 			name={article.data.title}
@@ -222,96 +299,121 @@ void [Layout, Content, img, truncatedTitle, BlogPostingSchema, PodcastEpisodeSch
 			publisherUrl={article.data.publisherUrl}
 		/>
 	)}
-  <article>
-    {article.data.eyebrow && <p class="eyebrow">{article.data.eyebrow}</p>}
-    <!-- Render markdown/MDX content (TOC is injected after h1 via rehype plugin) -->
-    <Content components={{ img: Image }}/>
-    <footer>
-      <p class="published">
-        Published on <time datetime={article.data.date}>{article.data.date.toLocaleDateString('en-gb', { year: 'numeric', month: 'short', day: 'numeric' })}</time>
-        {article.data.canonical && (
-          <>
-            {' '}via <a href={article.data.canonical} target="_blank" rel="noopener noreferrer">
-              {new URL(article.data.canonical).hostname.replace(/^www\./, '').split('.')[0]}
-            </a>
-          </>
-        )} by <a href="/about/" class="author">Michaël Vanderheyden</a>
-      </p>
-      {article.data.updated && (
-        <p class="updated">
-          Last updated on <time datetime={article.data.updated}>{article.data.updated.toLocaleDateString('en-gb', { year: 'numeric', month: 'short', day: 'numeric' })}</time>
-        </p>
-      )}
-      <button type="button" class="share-button hidden">
-				<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
-					<path d="M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z"></path>
-				</svg>
-				<span>Share</span>
-			</button>
 
-			<Reactions webmentions={webmentions ?? undefined} syndicationLinks={article.data.syndication} />
-    </footer>
+	{isSeriesPage ? (
+		<>
+			{seriesIntroEntry?.data.eyebrow && <p class="eyebrow">{seriesIntroEntry.data.eyebrow}</p>}
+			{SeriesIntroContent && <SeriesIntroContent components={{ img: Image }} />}
 
-    <script>
-			import "baseline-status";
+			<section class="series" aria-labelledby="series-articles-heading">
+				<h2 id="series-articles-heading">Articles in this series</h2>
+				{seriesArticles.map((seriesArticle: any) => (
+					<ArticleCard
+						article={seriesArticle}
+						section="blog"
+						imageLoading="lazy"
+						headingOffset={1}
+					/>
+				))}
+			</section>
+		</>
+	) : (
+		article && (
+			<article>
+					{article.data.eyebrow && <p class="eyebrow">{article.data.eyebrow}</p>}
+					{ArticleContent && <ArticleContent components={{ img: Image }} />}
+					<footer>
+						<p class="published">
+							Published on <time datetime={article.data.date}>{article.data.date.toLocaleDateString("en-gb", { year: "numeric", month: "short", day: "numeric" })}</time>
+							{article.data.canonical && (
+								<>
+									{" "}via <a href={article.data.canonical} target="_blank" rel="noopener noreferrer">
+										{new URL(article.data.canonical).hostname.replace(/^www\./, "").split(".")[0]}
+									</a>
+								</>
+							)} by <a href="/about/" class="author">Michaël Vanderheyden</a>
+						</p>
+						{article.data.updated && (
+							<p class="updated">
+								Last updated on <time datetime={article.data.updated}>{article.data.updated.toLocaleDateString("en-gb", { year: "numeric", month: "short", day: "numeric" })}</time>
+							</p>
+						)}
+						<button type="button" class="share-button hidden">
+							<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+								<path d="M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z"></path>
+							</svg>
+							<span>Share</span>
+						</button>
 
-      // Only show the share button if the Web Share API is supported
-      if (navigator.share) {
-        const shareButtons = document.querySelectorAll('.share-button');
-        for (const shareButton of shareButtons) {
-          shareButton.addEventListener('click', async () => {
-            try {
-              await navigator.share({
-                title: document.title,
-                url: window.location.href
-              });
-            } catch {
-              // User cancelled or error occurred
-            }
-          });
-          shareButton.classList.remove('hidden');
-        }
-      }
+						<Reactions webmentions={webmentions ?? undefined} syndicationLinks={article.data.syndication} />
+					</footer>
+				</article>
+		)
+	)}
 
-      /**
-			 * A11y: Add tabindex="0" to horizontally scrollable <pre> blocks
-			 * https://www.w3.org/WAI/standards-guidelines/act/rules/0ssw9k/
-			 */
-      function updatePreTabIndex(pre) {
-        if (pre.scrollWidth > pre.clientWidth) {
-          if (!pre.hasAttribute('tabindex')) {
-            pre.setAttribute('tabindex', '0');
-          }
-        } else {
-          // Remove tabindex if no longer scrollable
-          if (pre.getAttribute('tabindex') === '0') {
-            pre.removeAttribute('tabindex');
-          }
-        }
-      }
+	{!isSeriesPage && article && (
+		<aside slot="aside">
+			<h2>You might also like</h2>
+			<RelatedArticles currentArticle={article} />
+		</aside>
+	)}
 
-      // Observe each pre element for resize events
-      if ('ResizeObserver' in window) {
-        const resizeObserver = new ResizeObserver((entries) => {
-          for (const entry of entries) {
-            updatePreTabIndex(entry.target);
-          }
-        });
+	<script>
+		import "baseline-status";
 
-        document.querySelectorAll('pre').forEach((pre) => {
-          updatePreTabIndex(pre);
-          resizeObserver.observe(pre);
-        });
-      } else {
-        // Fallback: just set initial tabindex without observation
-        document.querySelectorAll('pre').forEach((pre) => {
-          updatePreTabIndex(pre);
-        });
-      }
-    </script>
-  </article>
-	<aside slot="aside">
-		<h2>You might also like</h2>
-		<RelatedArticles currentArticle={article} />
-	</aside>
+		// Only show the share button if the Web Share API is supported
+		if (navigator.share) {
+			const shareButtons = document.querySelectorAll(".share-button");
+			for (const shareButton of shareButtons) {
+				shareButton.addEventListener("click", async () => {
+					try {
+						await navigator.share({
+							title: document.title,
+							url: window.location.href,
+						});
+					} catch {
+						// User cancelled or error occurred
+					}
+				});
+				shareButton.classList.remove("hidden");
+			}
+		}
+
+		/**
+		 * A11y: Add tabindex="0" to horizontally scrollable <pre> blocks
+		 * https://www.w3.org/WAI/standards-guidelines/act/rules/0ssw9k/
+		 */
+		function updatePreTabIndex(pre: Element) {
+			const element = pre as HTMLElement;
+			if (element.scrollWidth > element.clientWidth) {
+				if (!element.hasAttribute("tabindex")) {
+					element.setAttribute("tabindex", "0");
+				}
+			} else {
+				// Remove tabindex if no longer scrollable
+				if (element.getAttribute("tabindex") === "0") {
+					element.removeAttribute("tabindex");
+				}
+			}
+		}
+
+		// Observe each pre element for resize events
+		if ("ResizeObserver" in window) {
+			const resizeObserver = new ResizeObserver((entries) => {
+				for (const entry of entries) {
+					updatePreTabIndex(entry.target);
+				}
+			});
+
+			document.querySelectorAll("pre").forEach((pre) => {
+				updatePreTabIndex(pre);
+				resizeObserver.observe(pre);
+			});
+		} else {
+			// Fallback: just set initial tabindex without observation
+			document.querySelectorAll("pre").forEach((pre) => {
+				updatePreTabIndex(pre);
+			});
+		}
+	</script>
 </Layout>

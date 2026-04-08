@@ -1,25 +1,28 @@
 ---
 import { getCollection } from "astro:content";
 import profileImg from "/src/assets/michael-vanderheyden-profile-2025-katana.png";
-import Image from "/src/components/Image.astro";
 import ArticleCard from "../components/ArticleCard.astro";
+import Image from "../components/Image.astro";
 import PersonSchema from "../components/PersonSchema.astro";
 import Layout from "../layouts/Layout.astro";
+import { getEntryIds, isSeriesContainerId } from "../utils/contentSeries";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/contentVisibility";
 
 const now = new Date();
 const previewFuture = isPreviewFutureContentEnabled();
 
-const blog = (await getCollection("blog", ({ data }) => isVisibleContent(data, { now, previewFuture }))).map(
-	(post) => ({ ...post, section: "blog" }),
-);
+const rawBlog = await getCollection("blog", ({ data }: any) => isVisibleContent(data, { now, previewFuture }));
+const rawBlogIds = getEntryIds(rawBlog);
+const blog = rawBlog
+	.filter((entry: any) => !isSeriesContainerId(entry.id, rawBlogIds))
+	.map((post: any) => ({ ...post, section: "blog" }));
 
-const talks = (await getCollection("talks", ({ data }) => isVisibleContent(data, { now, previewFuture }))).map(
-	(talk) => ({ ...talk, section: "talks" }),
+const speaking = (await getCollection("speaking", ({ data }: any) => isVisibleContent(data, { now, previewFuture }))).map(
+	(entry: any) => ({ ...entry, section: "speaking" }),
 );
 
 // Combine and sort all posts by date, then take the 3 most recent
-const allPosts = [...blog, ...talks]
+const allPosts = [...blog, ...speaking]
 	.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
 	.slice(0, 3);
 
