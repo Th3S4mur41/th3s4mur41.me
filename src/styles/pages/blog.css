@@ -537,7 +537,7 @@ baseline-status {
 	article {
 		display: grid;
 		grid-template-columns: unset !important; /* TODO: Refactor with https://github.com/Th3S4mur41/th3s4mur41.me/issues/2139 */
-		/* biome-ignore lint/suspicious/noShorthandPropertyOverrides: necessary to overwrtie blog style */
+		/* biome-ignore lint/suspicious/noShorthandPropertyOverrides: necessary to overwrite blog style */
 		grid-template:
 			"image . ." auto
 			"image type type" auto
