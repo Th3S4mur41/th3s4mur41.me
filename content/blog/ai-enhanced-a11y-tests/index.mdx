@@ -21,7 +21,7 @@ keywords:
 
 AI is everywhere, and test automation is no exception. Accessibility (a11y) testing is right in the middle of that shift. For years, we’ve relied on rule-based scanners that act like rigid gatekeepers: great at checking if markup and attributes are present, but still weak at understanding how a page actually renders, how layout affects meaning, and whether the content makes sense for real users.
 
-We're finally moving past "presence" and into "context." That's a big shift. Instead of running disconnected checks, we can connect semantic structure, visual rendering, and language quality in one pass and get feedback that is much closer to what a human reviewer would catch. In this area, AI improvements go beyond scanning: they improve the whole flow, from detection to triage to context-aware fixes. But this is just the tip of the iceberg.
+We're finally moving past "presence" and into "context." That's a big shift. Instead of running disconnected checks, we can connect semantic structure, visual rendering, and language quality in one pass and get feedback that is much closer to what a human reviewer would catch. In this area, AI improvements go beyond scanning: they improve the whole flow, from detection to triage to context-aware fixes.
 
 ## Where AI Breaks the "Rule-Based" Ceiling
 
@@ -43,7 +43,7 @@ A natural extension would be detecting "fake" headings, either from rendered sty
 
 Cognitive accessibility matters, and this is another area where AI code review can already help today. It can detect abbreviations and acronyms in HTML or Markdown content, then suggest plain language alternatives or at least proper markup that links an abbreviation to its definition.
 
-So here too, this feels less like a greenfield problem and more like integrating an already useful capability into the broader accessibility test flow.
+Like the previous example, this feels less like a greenfield problem and more like integrating an already useful capability into the broader accessibility test flow.
 
 ### SC 1.3.2 (Meaningful Sequence)
 
@@ -53,7 +53,7 @@ That disconnect is exactly what motivated browser engineers like [Rachel Andrew]
 
 I believe AI could detect mismatches between visual reading order and DOM order, especially in these complex layout scenarios. Historically, when layout and markup order diverged, the fix often meant restructuring the layout itself, a trade-off designers and developers often were reluctant to make. AI flagging the issue didn't necessarily make it easier to resolve. But `reading-flow` is changing that: it gives developers a way to declare the intended reading sequence without touching the visual layout. 
 
-That makes AI detection of these mismatches much more actionable. It's no longer just a warning with no good fix, but a prompt to apply a targeted, non-breaking correction.
+That makes AI detection of these mismatches much more useful in practice. It's no longer just a warning with no good fix, but a prompt to apply a targeted, non-breaking correction.
 
 To be clear: it's not AI's job to apply `reading-flow`. The role of AI here is detection and raising awareness, while the fix remains a deliberate developer decision.
 
@@ -76,11 +76,11 @@ Finding the bug is only 20% of the battle. The real "developer friction" happens
 
 ### Grouping and Prioritization
 
-In a recent project, we had three separate tickets: one for a video player's focus indicator, one for control verbosity, and one for a specific button. The issue was not the number of tickets, but the missing link between them. Without that connection, developers may work on each issue independently, which can lead to redundant work or even conflicting solutions.
+AI can even help before triage begins, by extracting violations from audit reports and documentation and turning them into prioritizable items in the team's existing tracking workflow. Getting findings into the right place is half the battle.
 
-AI can also help one step earlier by extracting violations from reports and documentation, then turning them into actionable, prioritizable items in the team's existing tracking workflow.
+But having the tickets is only the start. In a recent project, we had three separate tickets: one for a video player's focus indicator, one for control verbosity, and one for a specific button. The issue was not the number of tickets, but the missing link between them. Without that connection, developers may work on each issue independently, which can lead to redundant work or even conflicting solutions.
 
-**AI excels at pattern recognition**. It can look at those three violations, see they all originate from the same `VideoPlayer` component, and group them into a single "Component Refactor" task. This turns a messy backlog into a clear, actionable roadmap.
+**AI excels at pattern recognition**. It can look at those three violations, see they all originate from the same `VideoPlayer` component, and group them into a single "Component Refactor" task. This turns a cluttered backlog into a clear, prioritized roadmap.
 
 ### Context-Aware Fixes vs. Copy-Paste Disasters
 
@@ -102,7 +102,7 @@ As Karl Groves pointed out in his [What I Like About WCAG 3.0 article](https://a
 
 If we don’t evolve our tools, we risk pushing "gatekeeping" to the very end of the development cycle (the audit phase). To keep feedback loops short and "shift left" effectively, we must use AI to automate the "un-automatable."
 
-While AI will **never replace the lived experience of a human tester**, it can handle the heavy lifting across the entire flow: richer context-aware scanning, smarter triage, technically grounded fix suggestions, and a tighter bridge between audit findings and the developer's workflow. The goal is to leave humans to focus on the complex, subjective nuances that truly define an inclusive experience.
+While AI will **never replace the lived experience of a human tester**, it can handle the heavy lifting across the entire flow: richer context-aware scanning, smarter triage, technically grounded fix suggestions, and a tighter bridge between audit findings and the developer's workflow. The humans can then focus on what matters most: the complex, subjective nuances that truly define an inclusive experience.
 
 ---
 
