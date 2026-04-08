@@ -41,6 +41,15 @@ function extractTagContent(xmlStr, tagName) {
 	return extractAllTagContents(xmlStr, tagName)[0] ?? null;
 }
 
+function toPathname(urlOrPath) {
+	if (typeof urlOrPath !== "string") return "";
+	try {
+		return new URL(urlOrPath).pathname;
+	} catch {
+		return urlOrPath;
+	}
+}
+
 // ---------------------------------------------------------------------------
 // RSS feed (feed.xml)
 // ---------------------------------------------------------------------------
@@ -80,6 +89,17 @@ describe("RSS feed (feed.xml)", () => {
 	it("contains at least one <item>", () => {
 		const items = extractAllTagContents(xml, "item");
 		expect(items.length).toBeGreaterThan(0);
+	});
+
+	it("excludes series landing pages while including series child entries", () => {
+		const itemBlocks = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].map((m) => m[1]);
+		const linkPaths = itemBlocks
+			.map((item) => extractTagContent(item, "link"))
+			.filter(Boolean)
+			.map((link) => toPathname(link));
+
+		expect(linkPaths).not.toContain("/blog/a11y-tips/");
+		expect(linkPaths).toContain("/blog/a11y-tips/contrast/");
 	});
 
 	it("every item has a <title>", () => {
@@ -178,6 +198,13 @@ describe("JSON feed (feed.json)", () => {
 	it("has at least one item", () => {
 		expect(Array.isArray(feed.items)).toBe(true);
 		expect(feed.items.length).toBeGreaterThan(0);
+	});
+
+	it("excludes series landing pages while including series child entries", () => {
+		const itemPaths = feed.items.map((item) => toPathname(item.url));
+
+		expect(itemPaths).not.toContain("/blog/a11y-tips/");
+		expect(itemPaths).toContain("/blog/a11y-tips/contrast/");
 	});
 
 	it("every item has the required fields", () => {
