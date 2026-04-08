@@ -78,17 +78,16 @@ if (!normalizedSlug) {
 const previewFuture = isPreviewFutureContentEnabled();
 const now = new Date();
 
-const sectionEntries = await getCollection(section as Section);
-const visibleSectionEntries = sectionEntries.filter((entry: any) =>
-	isVisibleContent(entry.data, { now, previewFuture }),
-);
-const article = sectionEntries.find((entry: any) => normalizeEntryId(entry.id) === normalizedSlug) ?? null;
+const { article: staticPathArticle } = Astro.props as { article?: any };
+const article = staticPathArticle ?? null;
 
 let seriesArticles: any[] = [];
 let seriesIntroEntry: any | null = null;
 
-if (section === "blog") {
-	const visibleBlogEntries = visibleSectionEntries;
+if (!article && section === "blog") {
+	const visibleBlogEntries = (await getCollection("blog")).filter((entry: any) =>
+		isVisibleContent(entry.data, { now, previewFuture }),
+	);
 	const visibleBlogIds = visibleBlogEntries.map((entry: any) => entry.id);
 	const hasSeriesChildren = visibleBlogEntries.some((entry: any) => {
 		const id = normalizeEntryId(entry.id);
