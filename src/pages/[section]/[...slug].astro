@@ -79,15 +79,16 @@ const previewFuture = isPreviewFutureContentEnabled();
 const now = new Date();
 
 const sectionEntries = await getCollection(section as Section);
+const visibleSectionEntries = sectionEntries.filter((entry: any) =>
+	isVisibleContent(entry.data, { now, previewFuture }),
+);
 const article = sectionEntries.find((entry: any) => normalizeEntryId(entry.id) === normalizedSlug) ?? null;
 
 let seriesArticles: any[] = [];
 let seriesIntroEntry: any | null = null;
 
 if (section === "blog") {
-	const visibleBlogEntries = (await getCollection("blog")).filter((entry: any) =>
-		isVisibleContent(entry.data, { now, previewFuture }),
-	);
+	const visibleBlogEntries = visibleSectionEntries;
 	const visibleBlogIds = visibleBlogEntries.map((entry: any) => entry.id);
 	const hasSeriesChildren = visibleBlogEntries.some((entry: any) => {
 		const id = normalizeEntryId(entry.id);
@@ -114,7 +115,7 @@ if (!article && !isSeriesPage) {
 
 // Safety: even if someone hits a legacy `_draft-` URL directly, never render unpublished items.
 // Future-dated items are only visible when PREVIEW_FUTURE_CONTENT is enabled at build/runtime.
-if (article) {
+if (!isSeriesPage && article) {
 	const isVisible = isVisibleContent(article.data, { previewFuture });
 	if (!isVisible) {
 		throw new Error(`Content not visible: ${section}/${normalizedSlug}`);
@@ -142,7 +143,7 @@ function normalizePosix(p: string): string {
 // We resolve by trying a couple of normalized candidates against the eager glob pool.
 let imagePath: string | undefined;
 let resolvedImage: unknown;
-const pageEntry = isSeriesPage ? (seriesIntroEntry ?? article) : article;
+const pageEntry = isSeriesPage ? seriesIntroEntry : article;
 const imageEntryId = pageEntry ? normalizeEntryId(pageEntry.id) : normalizedSlug;
 
 if (pageEntry?.data.image) {
@@ -267,7 +268,7 @@ void [
 	imageAlt={pageEntry?.data.imageAlt}
   description={pageEntry?.data.description}
   keywords={pageEntry?.data.keywords}
-  noIndex={pageEntry?.data.published === false}
+	noIndex={!isSeriesPage && pageEntry?.data.published === false}
   canonical={pageEntry?.data.canonical ?? undefined}
 	translations={translations}
   noHeader>
