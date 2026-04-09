@@ -1,0 +1,60 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="The Specs"
+	heading="Site Standards & Transparency"
+	description="Site standards and transparency: engineering practices, WCAG 2.2 AA accessibility testing, AI tool use, identity verification, and feedback on my digital laboratory."
+	keywords={[
+		"Th3S4mur41",
+		"site standards",
+		"transparency",
+		"accessibility statement",
+		"WCAG 2.2",
+		"progressive enhancement",
+		"web standards",
+		"AI tools",
+		"decentralized identity",
+		"WebFinger",
+		"rel=me",
+		"engineering standards",
+		"semantic HTML",
+		"keyboard accessible",
+		"screen reader testing",
+		"colophon",
+		"specifications"
+	]}>
+	<p>This page outlines my standards for how this site is built, maintained, and what I strive for when sharing here. Think of it as the documentation for my digital laboratory.</p>
+	<p><small>Last updated: <time datetime="2026-04">April 2026</time></small></p>
+
+	<h2>Human Intelligence & AI Tools</h2>
+	<p>I believe in a human-centric web, but I also believe in using the best tools available to bridge gaps in my skillset.</p>
+	<ul>
+		<li><strong>Ideas & Editorial:</strong> Every idea, opinion, and article here reflects my thinking. I decide what to publish and how to frame it.</li>
+		<li><strong>Writing & Language:</strong> As a non-native English speaker, I use AI as a writing coach—helping me refine phrasing, catch grammar issues, and act as a first-pass reviewer before content goes live. The ideas and final edits are mine.</li>
+		<li><strong>Visual Assets:</strong> Hero images and my avatar are AI-generated. This lets me maintain visual consistency without the resources of a design team.</li>
+	</ul>
+
+	<h2>Identity & Verification</h2>
+	<p>I support a decentralized internet. You can verify my identity through multiple methods:</p>
+	<ul>
+		<li><strong>WebFinger & rel=me:</strong> My profile includes WebFinger endpoints and <code>rel="me"</code> links to verify my digital identity across platforms.</li>
+		<li><strong>Experimental:</strong> I maintain a <a href="/human.json">human.json file</a> (still experimental; follow the spec for details).</li>
+	</ul>
+
+	<h2>Engineering Standards</h2>
+	<p>This site is a training ground for modern web techniques.</p>
+	<ul>
+		<li><strong>Progressive Enhancement:</strong> Core content works without JavaScript. While I experiment with modern CSS and HTML, the site degrades gracefully on older browsers.</li>
+		<li><strong>Performance:</strong> I minimize bloat and optimize for fast loads. No unnecessary tracking or heavy frameworks.</li>
+		<li><strong>Semantic HTML:</strong> Content is properly structured with semantic elements to support both humans and machines.</li>
+	</ul>
+	<h2>Accessibility & Feedback</h2>
+	<p>Inclusivity is a core spec of this dojo. I aim for <strong>WCAG 2.2 Level AA</strong> compliance.</p>
+	<ul>
+		<li><strong>Testing:</strong> I run automated accessibility checks on every build and manually test across keyboard navigation, screen readers, and various devices. I don't have resources for formal audits, so your feedback is critical.</li>
+		<li><strong>Known Gaps:</strong> As a sandbox for experiments, some cutting-edge features may not degrade perfectly on older browsers or assistive tech. I discover and fix these as they arise.</li>
+		<li><strong>Report Issues:</strong> If you encounter a barrier or bug, <a href="https://github.com/Th3S4mur41/th3s4mur41.me/issues/new/choose" target="_blank" rel="noopener noreferrer">open an issue on GitHub</a>. Your feedback is the peer review that helps me sharpen my craft.</li>
+	</ul>
+</Layout>
+
