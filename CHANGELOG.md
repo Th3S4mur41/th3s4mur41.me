@@ -1,3 +1,10 @@
+# [2.51.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.50.2...v2.51.0) (2026-04-09)
+
+
+### Features
+
+* add human.json support and engineering standards documentation ([#2266](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2266)) ([9f3715d](https://github.com/Th3S4mur41/th3s4mur41.me/commit/9f3715d4b7326f54b59e35c4d380cc2576c661f5))
+
 ## [2.50.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.50.1...v2.50.2) (2026-04-02)
 
 
