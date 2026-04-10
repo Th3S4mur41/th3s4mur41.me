@@ -215,7 +215,7 @@ pre {
 	padding-block: 1.5rem;
 }
 
-h2#update::before {
+h2[id^="update-"]::before {
 	content: "⟳" / "";
 	margin-inline-end: 0.2em;
 	font-size: 1.2em;
