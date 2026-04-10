@@ -33,7 +33,19 @@ const pageTitle = Astro.props.tagline
 const header = Astro.props.heading ?? title ?? siteName;
 const currentYear = new Date().getFullYear();
 const slug = Astro.url.pathname.replace(/^\/|\/$/g, "").replace(/\//g, "-") || "home";
-const canonicalUrl = Astro.props.canonical ?? new URL(Astro.url.pathname, Astro.site ?? Astro.url).toString();
+const canonicalBaseUrl = Astro.site ?? Astro.url;
+const normalizedCanonical = Astro.props.canonical?.trim() || undefined;
+const canonicalUrl = (() => {
+	if (!normalizedCanonical) {
+		return new URL(Astro.url.pathname, canonicalBaseUrl).toString();
+	}
+
+	try {
+		return new URL(normalizedCanonical, canonicalBaseUrl).toString();
+	} catch {
+		return new URL(Astro.url.pathname, canonicalBaseUrl).toString();
+	}
+})();
 
 // Default meta description (~150 chars) optimized for primary topics without truncation in SERPs
 const desc =
