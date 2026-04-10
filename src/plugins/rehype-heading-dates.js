@@ -1,4 +1,5 @@
 import { visit } from "unist-util-visit";
+import { formatIsoDateAsSiteDate } from "../utils/config.js";
 
 /**
  * Rehype plugin that transforms ISO date strings (YYYY-MM-DD) found in heading
@@ -46,17 +47,7 @@ export function rehypeHeadingDates() {
 				if (!part) continue;
 
 				if (ISO_DATE_RE.test(part)) {
-					// Parse as UTC to avoid timezone-related off-by-one-day issues.
-					const [year, month, day] = part.split("-").map(Number);
-					const date = new Date(Date.UTC(year, month - 1, day));
-					const formatted = Number.isNaN(date.valueOf())
-						? part
-						: date.toLocaleDateString("en-GB", {
-								year: "numeric",
-								month: "short",
-								day: "numeric",
-								timeZone: "UTC",
-							});
+					const formatted = formatIsoDateAsSiteDate(part) || part;
 
 					result.push({
 						type: "element",
