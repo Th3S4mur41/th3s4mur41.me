@@ -112,6 +112,7 @@ export const getPersonData = (origin: string) => {
 		sameAs: [
 			"https://www.linkedin.com/in/michaelvanderheyden/",
 			"https://bsky.app/profile/th3s4mur41.me",
+			"https://keytrace.dev/@th3s4mur41.me",
 			"https://github.com/Th3S4mur41",
 			"https://codepen.io/th3s4mur41/",
 			"https://th3s4mur41.medium.com/",
@@ -124,6 +125,11 @@ export const getPersonData = (origin: string) => {
 			"https://atos.net/de/expert/michael-vanderheyden",
 			"https://stackoverflow.com/users/7041074/th3s4mur41",
 			"https://www.w3.org/users/127883/",
+			"https://www.reddit.com/user/Th3S4mur41/",
+			"https://community.ui.com/user/9228b10a-4e46-476e-917f-a538490ceae8",
+			"https://www.npmjs.com/~th3s4mur41",
+			"https://npmx.dev/org/th3s4mur41",
+			"https://techcommunity.microsoft.com/users/th3s4mur41/111608",
 		],
 	};
 };
