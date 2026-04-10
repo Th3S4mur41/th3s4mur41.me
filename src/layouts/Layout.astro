@@ -136,7 +136,7 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 			</ul>
 		</nav>
 		<main id="main">
-			{header && <h1 class="visually-hidden">{header}</h1>}
+			{header && <h1>{header}</h1>}
 			<slot />
 		</main>
 		<slot name="aside" />
