@@ -32,9 +32,10 @@ body.home {
 
 			.name {
 				font-weight: 600;
-				font-style: italic;
 			}
-			.brand-color {
+			.alias {
+				font-weight: 600;
+				font-style: italic;
 				color: var(--color-accent);
 			}
 		}
