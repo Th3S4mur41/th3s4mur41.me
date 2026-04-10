@@ -3,6 +3,14 @@ body.blog {
 		--grid-columns: [full-width-start] 1fr [margin-start] 1rem [content-start] min(140ch, calc(100vi - 2rem))
 			[content-end] 1rem [margin-end] 1fr [full-width-end];
 		row-gap: 2rem;
+
+		& > h1 {
+			margin-block: unset;
+		}
+		& > .intro {
+			font-size: clamp(1rem, 0.8645rem + 0.6024vw, 1.25rem);
+			font-weight: 300;
+		}
 	}
 
 	article {

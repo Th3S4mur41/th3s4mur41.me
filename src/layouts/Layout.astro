@@ -123,7 +123,6 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 		<!-- <a href="#main" class="skip-link">Skip to main content</a> -->
 		{!Astro.props.noHeader && (
 			<header>
-				<h1>{header}</h1>
 				<Image src={heroImage} alt="Modern-day samurai kneeling in traditional armor, sword in hand, against a vibrant wall of multicolored paint splashes — symbolizing the fusion of ancient warrior spirit with contemporary creativity." loading="eager" fetchpriority="high" />
 			</header>
 		)}
@@ -137,6 +136,7 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 			</ul>
 		</nav>
 		<main id="main">
+			{header && <h1 class="visually-hidden">{header}</h1>}
 			<slot />
 		</main>
 		<slot name="aside" />
