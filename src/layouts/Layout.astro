@@ -33,6 +33,7 @@ const pageTitle = Astro.props.tagline
 const header = Astro.props.heading ?? title ?? siteName;
 const currentYear = new Date().getFullYear();
 const slug = Astro.url.pathname.replace(/^\/|\/$/g, "").replace(/\//g, "-") || "home";
+const canonicalUrl = Astro.props.canonical ?? new URL(Astro.url.pathname, Astro.site ?? Astro.url).toString();
 
 // Default meta description (~150 chars) optimized for primary topics without truncation in SERPs
 const desc =
@@ -82,9 +83,7 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 		{Astro.props.noIndex && (
 			<meta name="robots" content="noindex, nofollow" />
 		)}
-		{Astro.props.canonical && (
-			<link rel="canonical" href={Astro.props.canonical} />
-		)}
+		<link rel="canonical" href={canonicalUrl} />
 		{Astro.props.translations && (
 			[
 				<link rel="alternate" hreflang="en" href={Astro.url.href} />,
