@@ -3,28 +3,15 @@
 	Referrer-Policy: no-referrer-when-downgrade
 	X-Content-Type-Options: nosniff
 	X-Frame-Options: DENY
-  X-XSS-Protection: 1; mode=block
+	X-XSS-Protection: 1; mode=block
+	Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 
+# Cache-Control
+# Fingerprinted assets are safe to cache immutably because Astro includes a content hash in the filename.
 /*.js
 	Cache-Control: public, immutable, max-age=31536000
 
 /*.css
-	Cache-Control: public, immutable, max-age=31536000
-
-/feed.xml
-	Content-Type: application/rss+xml; charset=utf-8
-
-/*.webmanifest
-	Content-Type: application/json; charset=utf-8
-
-/human.json
-	Content-Type: application/json; charset=utf-8
-	Access-Control-Allow-Origin: *
-
-/*.svg
-	Content-Type: image/svg+xml; charset=utf-8
-
-/favicon.ico
 	Cache-Control: public, immutable, max-age=31536000
 
 /icons/*
@@ -32,6 +19,31 @@
 
 /assets/*
 	Cache-Control: public, immutable, max-age=31536000
+
+/_astro/*
+	Cache-Control: public, immutable, max-age=31536000
+
+# Non-fingerprinted files should keep a long cache, but remain revalidatable.
+/favicon.ico
+	Cache-Control: public, max-age=31536000
+
+/images/*
+	Cache-Control: public, max-age=31536000
+
+# Content-Type
+/feed.xml
+	Content-Type: application/rss+xml; charset=utf-8
+
+/*.webmanifest
+	Content-Type: application/json; charset=utf-8
+
+/*.svg
+	Content-Type: image/svg+xml; charset=utf-8
+
+# Public machine-readable files
+/human.json
+	Content-Type: application/json; charset=utf-8
+	Access-Control-Allow-Origin: *
 
 /.well-known/webfinger
 	Content-Type: application/jrd+json
