@@ -9,6 +9,7 @@ import PodcastEpisodeSchema from "../../components/PodcastEpisodeSchema.astro";
 import Reactions from "../../components/Reactions.astro";
 import RelatedArticles from "../../components/RelatedArticles.astro";
 import Layout from "../../layouts/Layout.astro";
+import { formatSiteDate } from "../../utils/config.js";
 import { getEntryIds, getSeriesSlug, isSeriesContainerId, normalizeEntryId } from "../../utils/contentSeries";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../../utils/contentVisibility";
 import type { ProcessedWebmentions } from "../../utils/webmentions";
@@ -28,13 +29,31 @@ export async function getStaticPaths() {
 	const visibleBlogEntries = blogEntries.filter((entry: any) => isVisibleContent(entry.data, { now, previewFuture }));
 	const visibleSpeakingEntries = speakingEntries.filter((entry: any) => isVisibleContent(entry.data, { now, previewFuture }));
 	const visibleBlogIds = getEntryIds(visibleBlogEntries);
+	const visibleBlogByNormalizedId = new Map(
+		visibleBlogEntries.map((entry: any) => [normalizeEntryId(entry.id), entry] as const),
+	);
 
 	const blogPaths = visibleBlogEntries
 		.filter((entry: any) => !isSeriesContainerId(entry.id, visibleBlogIds))
-		.map((entry: any) => ({
-			params: { section: "blog", slug: normalizeEntryId(entry.id) },
-			props: { article: entry, section: "blog" },
-		}));
+		.map((entry: any) => {
+			const seriesSlug = getSeriesSlug(entry.id);
+			const seriesEntry = (seriesSlug ? visibleBlogByNormalizedId.get(seriesSlug) : null) as any;
+
+			return {
+				params: { section: "blog", slug: normalizeEntryId(entry.id) },
+				props: {
+					article: entry,
+					section: "blog",
+					series:
+						seriesSlug && seriesEntry
+							? {
+									slug: seriesSlug,
+									title: seriesEntry.data.title,
+								}
+							: null,
+				},
+			};
+		});
 
 	const speakingPaths = visibleSpeakingEntries.map((entry: any) => ({
 		params: { section: "speaking", slug: normalizeEntryId(entry.id) },
@@ -79,8 +98,12 @@ if (!normalizedSlug) {
 const previewFuture = isPreviewFutureContentEnabled();
 const now = new Date();
 
-const { article: staticPathArticle } = Astro.props as { article?: any };
+const { article: staticPathArticle, series: staticPathSeries } = Astro.props as {
+	article?: any;
+	series?: { slug: string; title: string } | null;
+};
 const article = staticPathArticle ?? null;
+const series = staticPathSeries ?? null;
 
 let seriesArticles: any[] = [];
 let seriesIntroEntry: any | null = null;
@@ -235,6 +258,8 @@ function humanizeSlug(value: string): string {
 const pageTitle = pageEntry?.data.title ?? humanizeSlug(normalizedSlug);
 const truncatedTitle = truncateTitle(pageTitle);
 const translations = pageEntry?.data.translations?.map((t: any) => ({ language: t.language, url: t.url })) ?? undefined;
+const articleEyebrowText = !isSeriesPage && section === "blog" && series ? series.title : article?.data.eyebrow;
+const articleEyebrowHref = !isSeriesPage && section === "blog" && series ? `/blog/${series.slug}/` : null;
 
 // Fetch webmentions if reactions are enabled for this article
 let webmentions: ProcessedWebmentions | null = null;
@@ -254,11 +279,14 @@ void [
 	Layout,
 	img,
 	truncatedTitle,
+	formatSiteDate,
 	BlogPostingSchema,
 	PodcastEpisodeSchema,
 	ArticleContent,
 	SeriesIntroContent,
 	ArticleCard,
+	articleEyebrowText,
+	articleEyebrowHref,
 ];
 ---
 
@@ -320,11 +348,15 @@ void [
 	) : (
 		article && (
 			<article>
-					{article.data.eyebrow && <p class="eyebrow">{article.data.eyebrow}</p>}
+					{articleEyebrowText && (
+						<p class="eyebrow">
+							{articleEyebrowHref ? <a href={articleEyebrowHref}>{articleEyebrowText}</a> : articleEyebrowText}
+						</p>
+					)}
 					{ArticleContent && <ArticleContent components={{ img: Image }} />}
 					<footer>
 						<p class="published">
-							Published on <time datetime={article.data.date}>{article.data.date.toLocaleDateString("en-gb", { year: "numeric", month: "short", day: "numeric" })}</time>
+							Published on <time datetime={article.data.date}>{formatSiteDate(article.data.date)}</time>
 							{article.data.canonical && (
 								<>
 									{" "}via <a href={article.data.canonical} target="_blank" rel="noopener noreferrer">
@@ -335,7 +367,7 @@ void [
 						</p>
 						{article.data.updated && (
 							<p class="updated">
-								Last updated on <time datetime={article.data.updated}>{article.data.updated.toLocaleDateString("en-gb", { year: "numeric", month: "short", day: "numeric" })}</time>
+								Last updated on <time datetime={article.data.updated}>{formatSiteDate(article.data.updated)}</time>
 							</p>
 						)}
 						<button type="button" class="share-button hidden">

@@ -23,12 +23,21 @@ body.home {
 	.intro {
 		isolation: isolate; /* avoid profile image bleeding on top of nav */
 
-		& h2 {
+		& h1 {
 			font-size: 1.25em;
-			font-weight: 600;
+			font-weight: 400;
 			margin-block-end: 0.25em;
 			text-wrap: balance;
 			text-transform: none;
+
+			.name {
+				font-weight: 600;
+			}
+			.alias {
+				font-weight: 600;
+				font-style: italic;
+				color: var(--color-accent);
+			}
 		}
 		& a {
 			float: left;

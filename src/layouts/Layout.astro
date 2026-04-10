@@ -33,6 +33,19 @@ const pageTitle = Astro.props.tagline
 const header = Astro.props.heading ?? title ?? siteName;
 const currentYear = new Date().getFullYear();
 const slug = Astro.url.pathname.replace(/^\/|\/$/g, "").replace(/\//g, "-") || "home";
+const canonicalBaseUrl = Astro.site ?? Astro.url;
+const normalizedCanonical = Astro.props.canonical?.trim() || undefined;
+const canonicalUrl = (() => {
+	if (!normalizedCanonical) {
+		return new URL(Astro.url.pathname, canonicalBaseUrl).toString();
+	}
+
+	try {
+		return new URL(normalizedCanonical, canonicalBaseUrl).toString();
+	} catch {
+		return new URL(Astro.url.pathname, canonicalBaseUrl).toString();
+	}
+})();
 
 // Default meta description (~150 chars) optimized for primary topics without truncation in SERPs
 const desc =
@@ -82,9 +95,7 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 		{Astro.props.noIndex && (
 			<meta name="robots" content="noindex, nofollow" />
 		)}
-		{Astro.props.canonical && (
-			<link rel="canonical" href={Astro.props.canonical} />
-		)}
+		<link rel="canonical" href={canonicalUrl} />
 		{Astro.props.translations && (
 			[
 				<link rel="alternate" hreflang="en" href={Astro.url.href} />,
@@ -124,7 +135,6 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 		<!-- <a href="#main" class="skip-link">Skip to main content</a> -->
 		{!Astro.props.noHeader && (
 			<header>
-				<h1>{header}</h1>
 				<Image src={heroImage} alt="Modern-day samurai kneeling in traditional armor, sword in hand, against a vibrant wall of multicolored paint splashes — symbolizing the fusion of ancient warrior spirit with contemporary creativity." loading="eager" fetchpriority="high" />
 			</header>
 		)}
@@ -138,6 +148,7 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 			</ul>
 		</nav>
 		<main id="main">
+			{header && <h1>{header}</h1>}
 			<slot />
 		</main>
 		<slot name="aside" />
