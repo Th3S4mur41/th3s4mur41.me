@@ -124,6 +124,14 @@ body > header {
 	color: var(--color-accent);
 	text-wrap: balance;
 
+	& > a {
+		text-decoration: none;
+
+		&:is(:hover, :focus) {
+			text-decoration: underline;
+		}
+	}
+
 	& + h1 {
 		margin-block-start: 0;
 	}
