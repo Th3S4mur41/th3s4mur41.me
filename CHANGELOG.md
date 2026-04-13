@@ -1,3 +1,10 @@
+# [2.52.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.51.0...v2.52.0) (2026-04-13)
+
+
+### Features
+
+* add showHeading prop to to avoid duplicate h1 on blog posts ([4c6d54c](https://github.com/Th3S4mur41/th3s4mur41.me/commit/4c6d54c2be9e88617c7144fbd7da0335a3c0c2da))
+
 # [2.51.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.50.2...v2.51.0) (2026-04-09)
 
 
