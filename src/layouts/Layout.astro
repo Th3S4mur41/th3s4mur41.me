@@ -10,6 +10,7 @@ import Socials from "../components/Socials.astro";
 interface Props {
 	title?: string;
 	heading?: string;
+	showHeading?: boolean;
 	tagline?: string;
 	image?: any;
 	imageAlt?: string;
@@ -27,6 +28,7 @@ interface Props {
 
 const { title, image, description, imageAlt } = Astro.props;
 const siteName = "Th3S4mur41";
+const showHeading = Astro.props.showHeading ?? true;
 const pageTitle = Astro.props.tagline
 	? `${siteName} | ${Astro.props.tagline}`
 	: title ? `${title} | ${siteName}` : `${siteName}`;
@@ -148,7 +150,7 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 			</ul>
 		</nav>
 		<main id="main">
-			{header && <h1>{header}</h1>}
+			{showHeading && header && <h1>{header}</h1>}
 			<slot />
 		</main>
 		<slot name="aside" />
