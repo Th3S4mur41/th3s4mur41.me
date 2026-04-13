@@ -3,7 +3,7 @@ title: 'Labels: Automatic Checks and Manual Validation'
 date: 2026-04-14T10:00:00Z
 image: ../Practical_Accessibility_Tips_for_Developers-v2.jpg
 imageAlt: 'Comic-style illustration of a Michaël Vanderheyden wearing a baseball cap and samurai-themed shirt, working on a laptop with a samurai sticker. To the side, accessibility icons and the hashtag #A11yTips promote practical accessibility tips for developers.'
-description: ''
+description: 'Learn to validate accessible labels using browser DevTools accessibility trees and voice navigation — practical alternatives to screen reader testing.'
 tags:
   - Accessibility
   - WCAG
@@ -13,17 +13,27 @@ keywords:
   - WCAG
   - web accessibility
   - a11y
+  - form labels
+  - aria-label
+  - accessible name
+  - label testing
+  - DevTools accessibility tree
+  - voice control
+  - Voice Access
+  - screen reader
+  - assistive technology
+  - manual testing
 ---
 
 # Labels: Automatic Checks and Manual Validation
 
 ![Comic-style illustration of a Michaël Vanderheyden wearing a baseball cap and samurai-themed shirt, working on a laptop with a samurai sticker. To the side, accessibility icons and the hashtag #A11yTips promote practical accessibility tips for developers.](../Practical_Accessibility_Tips_for_Developers-v2.jpg)
 
-Labels are essential for screen reader users and overall accessibility. While automated tools can verify the presence of labels on interactive elements, assessing whether a label is meaningful and contextually appropriate usually requires manual testing.
+Labels are essential for screen reader users and overall accessibility. While automated tools can verify that labels are present on interactive elements, determining whether a label is meaningful and contextually appropriate still requires manual testing.
 
-[Testing with screen readers](https://medium.com/r/?url=https%3A%2F%2Fwebaim.org%2Farticles%2Fscreenreader_testing%2F) can be challenging to use for developers and testers who are not regular users. Alternative methods include:
-- Using DevTools accessibility tree to inspect labels and roles.
-- Employing voice navigation features to test if elements are reachable and operable by voice commands.
+[Screen reader testing](https://webaim.org/articles/screenreader_testing/) can be challenging for developers and testers who aren't regular users. Practical alternatives include:
+- Inspecting labels and roles through the browser DevTools accessibility tree.
+- Using voice navigation to verify that elements are reachable and operable by spoken commands.
 
 ## DevTools Accessibility Tree
 
@@ -32,7 +42,7 @@ For developers who aren't regular screen reader users, browser DevTools offer a 
 This tree shows the semantic structure of your page - including roles, names, states, and relationships - allowing you to verify whether interactive elements are properly labeled and accessible.
 
 <figure>
-[Screenshot comparing the accessibility tree views in Edge (Chromium) and Firefox DevTools. The left panel shows the Elements tab with the accessibility tree in Edge, while the right panel displays detailed accessibility properties in Firefox. An arrow highlights the menu location to access these tools.](devtools-accessibility-tree.jpg)
+![Screenshot comparing the accessibility tree views in Edge (Chromium) and Firefox DevTools. The left panel shows the Elements tab with the accessibility tree in Edge, while the right panel displays detailed accessibility properties in Firefox. An arrow highlights the menu location to access these tools.](devtools-accessibility-tree.jpg)
 <figcaption>
 Inspecting accessibility like a pro: Both Edge (Chromium) and Firefox offer built-in tools to explore the accessibility tree. Just open DevTools and follow the arrow to find the menu - it's easier than you think.
 </figcaption>
@@ -42,7 +52,7 @@ Inspecting accessibility like a pro: Both Edge (Chromium) and Firefox offer buil
 
 #### Edge / Chrome:
 1. Open DevTools (`F12` or `Ctrl+Shift+I`)
-2. Open DevTools settings though the 3-dot menu
+2. Open DevTools settings through the 3-dot menu
 3. Go to the experiments tab and activate the **Enable full accessibility tree view in Element panel** option
 4. Go to the **Elements** tab
 5. Click the floating Accessibility button in the top right of the pane
@@ -50,7 +60,7 @@ Inspecting accessibility like a pro: Both Edge (Chromium) and Firefox offer buil
 #### Firefox:
 1. Open DevTools (`F12` or `Ctrl+Shift+I`)
 2. Go to the **Accessibility** tab directly
-Navigate the tree or select elements to inspect roles, names, and states
+3. Navigate the tree or select elements to inspect roles, names, and states
 
 The screenshot above compares both views using a demo from [this CodePen](https://codepen.io/th3s4mur41/pen/MYKGORX), showing how a checkbox labeled "Read" is exposed in the accessibility tree. You can see its role, name, and state - all critical for screen reader compatibility.
 
@@ -58,25 +68,51 @@ The screenshot above compares both views using a demo from [this CodePen](https:
 
 Screen readers aren't the only way to validate whether labels are meaningful and usable. Voice navigation tools let you interact with a page the way users relying on speech commands would - asking the system to "click," "open," or "select" elements by name. This is a powerful way to check if your labels are both present and practical in real-world use.
 
-### Why it matters:
+### Why it matters
 - If a button or link can't be activated by its label, it's a sign the label isn't descriptive enough.
 - Voice navigation highlights issues that automated checks often miss, such as ambiguous or duplicated labels.
 - It helps ensure that your interface works for users who rely on voice control for accessibility or convenience.
 
-### How to test with voice navigation:
+### How to test with voice navigation
 
-#### Windows (Voice Access):
+**Desktop**
+
+#### Windows (Voice Access)
 
 1. Enable Voice Access in Accessibility settings.
-Use commands like "Click Read" or "Open Settings" to test if elements respond correctly.
+2. Use commands like "Click Read" or "Open Settings" to test if elements respond correctly.
 
-#### macOS (Voice Control):
+#### macOS (Voice Control)
 
-1. Turn on Voice Control in System Preferences → Accessibility.
-2.Try commands such as "Click Log In" or "Select checkbox".
+1. Turn on Voice Control in System Settings (or System Preferences in older versions) → Accessibility.
+2. Try commands such as "Click Log In" or "Select checkbox".
 
-#### Mobile (iOS / Android):
-iOS: Use Voice Control or VoiceOver with speech
+**Mobile**
 
-> [!NOTE]
-> Voice navigation isn't just for end users with accessibility needs. Developers themselves may benefit from it at some point in their careers. For example, those experiencing hand mobility issues such as carpal tunnel syndrome can use voice commands as an alternative way to interact with the UI. Building with accessibility in mind ensures that these options are available when you need them most.
+#### Android (Voice Access)
+
+1. Go to **Settings → Accessibility** and enable **Voice Access** (you may need to install it from the Play Store first).
+2. Tap **Open** in the Voice Access notification to start a session — numbered overlays will appear on interactive elements.
+3. Try commands like **"Tap Read"** or **"Scroll down"** to verify that elements are reachable by their label.
+
+> [!TIP]
+> Android also shows interactive element numbers on screen during a Voice Access session. If an element only gets a number but no spoken label, it is a strong signal the accessible name is missing or unclear.
+
+#### iOS (Voice Control)
+
+1. Go to **Settings → Accessibility → Voice Control** and toggle it on.
+2. Try commands like **"Tap Log In"** or **"Tap checkbox"** to verify that elements respond to their visible or programmatic label.
+
+### Voice Navigation as a Developer Tool
+
+Voice navigation isn't just for end users with accessibility needs. Developers themselves may benefit from it at some point in their careers. For example, those experiencing hand mobility issues such as carpal tunnel syndrome can use voice commands as an alternative input method.
+
+Building with accessibility in mind ensures that these options are available when you or your users need them most.
+
+## Wrapping Up
+
+Properly associating labels with interactive elements isn't just a screen reader concern. As this article shows, labels are the backbone of voice navigation, the anchor for DevTools inspection, and a key signal for any assistive technology or automated agent, whether it's a switch device, a browser extension, an AI assistant filling out a form on your behalf, or a future input method we haven't seen yet.
+
+When a label is clear and correctly linked, everyone benefits: screen reader users hear the right name, voice control users can activate elements by speaking them, and sighted keyboard users get a larger click target for free.
+
+You have more testing tools at your disposal than you might think. Use whichever fits your workflow — open the accessibility tree, try a voice command, or both. The important thing is to make label validation a deliberate step, not an afterthought.
