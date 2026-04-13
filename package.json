@@ -48,7 +48,7 @@
 		"prettier": "^3.8.2",
 		"typescript": "^6.0.2",
 		"vitest": "^4.1.4",
-		"wrangler": "^4.81.1"
+		"wrangler": "^4.82.2"
 	},
 	"optionalDependencies": {
 		"lint-staged": "^16.4.0",
