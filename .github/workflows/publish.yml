@@ -54,7 +54,13 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create IndexNow key file
-        run: echo $INDEXNOW_KEY > dist/$INDEXNOW_KEY.txt
+        run: |
+          if [ -z "$INDEXNOW_KEY" ]; then
+            echo 'INDEXNOW_KEY is empty; skipping key file creation.'
+            exit 0
+          fi
+
+          printf '%s' "$INDEXNOW_KEY" > "dist/$INDEXNOW_KEY.txt"
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
 
@@ -72,14 +78,3 @@ jobs:
           echo "Deployed to: ${{ steps.cloudflare-deploy.outputs.deployment-url }}"
           echo "Alias URL: ${{ steps.cloudflare-deploy.outputs.pages-deployment-alias-url }}"
 
-      - name: Notify IndexNow
-        run: |
-          if [ -z "${INDEXNOW_KEY}" ]; then
-            echo "INDEXNOW_KEY is empty; skipping IndexNow notification.";
-            exit 0;
-          fi
-          curl -H "Content-Type: application/json" \
-            -d "{\"host\":\"th3s4mur41.me\",\"key\":\"$INDEXNOW_KEY\",\"urlList\":[\"https://th3s4mur41.me/sitemap-index.xml\"]}" \
-            https://api.indexnow.org/indexnow
-        env:
-          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
