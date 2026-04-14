@@ -1,3 +1,10 @@
+# [2.54.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.53.1...v2.54.0) (2026-04-14)
+
+
+### Features
+
+* **blog:** add syndication links for a11y tips article ([8f4254b](https://github.com/Th3S4mur41/th3s4mur41.me/commit/8f4254bfdaac113a14a9de1308587cfd0a65b1d6))
+
 ## [2.53.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.53.0...v2.53.1) (2026-04-14)
 
 
