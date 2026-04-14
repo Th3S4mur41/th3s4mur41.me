@@ -1,3 +1,10 @@
+## [2.53.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.53.0...v2.53.1) (2026-04-14)
+
+
+### Bug Fixes
+
+* **blog:** correct publication date ([b1deb49](https://github.com/Th3S4mur41/th3s4mur41.me/commit/b1deb494b94a8c7efa667d6271c2192cfeec7e64))
+
 # [2.53.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.52.1...v2.53.0) (2026-04-14)
 
 
