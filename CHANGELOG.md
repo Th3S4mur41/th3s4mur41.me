@@ -1,3 +1,10 @@
+# [2.53.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.52.1...v2.53.0) (2026-04-14)
+
+
+### Features
+
+* **blog:** add new a11y-tips article about labels ([#2275](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2275)) ([5431ee5](https://github.com/Th3S4mur41/th3s4mur41.me/commit/5431ee531d797d005ce023f82358b0bff7191039))
+
 ## [2.52.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.52.0...v2.52.1) (2026-04-14)
 
 
