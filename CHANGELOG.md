@@ -1,3 +1,10 @@
+## [2.52.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.52.0...v2.52.1) (2026-04-14)
+
+
+### Bug Fixes
+
+* **perf:** update CSS import to preload styles ([#2276](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2276)) ([82635cd](https://github.com/Th3S4mur41/th3s4mur41.me/commit/82635cd7047f950c0646f5f9aaa8b8b53f8bdbbf))
+
 # [2.52.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.51.0...v2.52.0) (2026-04-13)
 
 
