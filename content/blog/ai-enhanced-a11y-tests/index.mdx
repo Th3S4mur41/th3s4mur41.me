@@ -28,6 +28,8 @@ keywords:
   - WCAG 2.2
 ---
 
+import CodePen from '/src/components/CodePen.astro';
+
 # The Evolution of Accessibility Testing: From Static Rules to Intelligent Automation
 
 AI is everywhere, and test automation is no exception. Accessibility (a11y) testing is right in the middle of that shift. For years, we’ve relied on rule-based scanners that act like rigid gatekeepers: great at checking if markup and attributes are present, but still weak at understanding how a page actually renders, how layout affects meaning, and whether the content makes sense for real users.
@@ -39,6 +41,8 @@ We're finally moving past "presence" and into "context." That's a big shift. Ins
 Standard automation struggles with WCAG success criteria that require human-level judgment. But AI shouldn't replace static rules—static rules are fast and cheap, while AI in comparison is expensive. The point is that AI should handle what static rules can't, and enhance them through context awareness.
 
 First, let's look at what's already working. **[SC 1.1.1 (Non-text Content)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content.html):** AI experiments have already proven that we can validate whether alt text actually describes the image accurately, not just its presence. As I discussed in a previous post about [AI-enhanced scanners](https://th3s4mur41.me/blog/ai-in-a11y-test-automation/), this capability moves us from checking "is there alt text?" to "does this alt text make sense?" Static rules nail presence; AI handles semantic match.
+
+![Screenshot of an accessibility tool reporting a mismatch error. It compares an image of a warehouse worker with the existing alt text "Parts being packed," flagging it as inaccurate.](accessibilitycloud-reporting-alt-text-mismatch.jpg)
 
 Based on my experience, the following is a first batch of easy wins I could imagine. Some capabilities already exist in adjacent workflows and "just" need to be integrated into accessibility scanners, while others are more personal expectations based on AI strengths and potential for improvement. The list is, of course, not exhaustive, and I'm sure there are other creative ideas where AI could be a valuable enrichment.
 
@@ -61,6 +65,12 @@ Like the previous example, this feels less like a greenfield problem and more li
 Modern CSS layout capabilities like Flexbox, Grid, and now [grid-lanes aka. Masonry](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Grid_layout/Masonry_layout) give us tremendous visual flexibility, but they also mean that markup order and visual reading order are no longer necessarily in sync. A grid item placed last in the DOM might render first visually, and nothing in the current tooling will flag that as an accessibility concern.
 
 That disconnect is exactly what motivated browser engineers like [Rachel Andrew](https://bsky.app/profile/rachelandrew.bsky.social) to push for a proper reading-order solution before Masonry layout shipped. She wrote about the problem and the initial ideas to solve it in [Reading order and CSS layout](https://developer.chrome.com/blog/reading-order), which is worth a read if you haven't seen it. The result is the new [`reading-flow`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/reading-flow) property.
+
+<CodePen
+	title="Visual Order as Reading Order"
+	href="https://codepen.io/editor/th3s4mur41/pen/019d86f9-39a9-7a78-b7aa-7be5a8a556c8"
+	description="A minimal demo showing how reading-flow can align keyboard and screen‑reader navigation with the visual layout. The author info is visually placed under the heading, but semantically lives in the footer — reading-flow resolves the mismatch without changing the DOM."
+/>
 
 I believe AI could detect mismatches between visual reading order and DOM order, especially in these complex layout scenarios. Historically, when layout and markup order diverged, the fix often meant restructuring the layout itself, a trade-off designers and developers often were reluctant to make. AI flagging the issue didn't necessarily make it easier to resolve. But `reading-flow` is changing that: it gives developers a way to declare the intended reading sequence without touching the visual layout. 
 
