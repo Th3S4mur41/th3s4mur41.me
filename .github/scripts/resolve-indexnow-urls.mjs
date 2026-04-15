@@ -159,6 +159,7 @@ function mapFileToUrls(filePath, urlSet) {
 	if (filePath.startsWith("content/speaking/")) {
 		const slug = routeSlugFromContentPath(filePath, "speaking");
 		addUrl(urlSet, "/");
+		addUrl(urlSet, "/blog/");
 
 		if (slug) {
 			addUrl(urlSet, `/speaking/${slug}/`);

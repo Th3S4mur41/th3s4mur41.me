@@ -56,8 +56,8 @@ jobs:
     with:
       mode: changed
       branch: ${{ github.event.workflow_run.head_branch }}
-      head-sha: ${{ github.event.workflow_run.head_sha }}
-      site-url: https://th3s4mur41.me
+      head_sha: ${{ github.event.workflow_run.head_sha }}
+      site_url: https://th3s4mur41.me
     secrets:
       INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
     permissions:

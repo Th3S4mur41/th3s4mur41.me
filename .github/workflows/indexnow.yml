@@ -13,11 +13,11 @@ on:
         required: false
         default: 'main'
         type: string
-      head-sha:
+      head_sha:
         description: 'Commit SHA to submit from'
         required: false
         type: string
-      site-url:
+      site_url:
         description: 'Canonical site URL used for sitemap discovery'
         required: false
         default: 'https://th3s4mur41.me'
@@ -61,7 +61,7 @@ jobs:
         if: env.INDEXNOW_KEY != ''
         uses: actions/checkout@v6
         with:
-          ref: ${{ inputs.head-sha || inputs.branch || github.ref_name }}
+          ref: ${{ inputs.head_sha || inputs.branch || github.ref_name }}
           fetch-depth: 0
 
       - name: '⚙️ Use Node.js'
@@ -75,10 +75,10 @@ jobs:
         if: env.INDEXNOW_KEY != ''
         id: target
         env:
-          INPUT_HEAD_SHA: ${{ inputs.head-sha }}
+          INPUT_HEAD_SHA: ${{ inputs.head_sha }}
           INPUT_BRANCH: ${{ inputs.branch || github.ref_name }}
           INPUT_MODE: ${{ inputs.mode || 'changed' }}
-          INPUT_SITE_URL: ${{ inputs.site-url || 'https://th3s4mur41.me' }}
+          INPUT_SITE_URL: ${{ inputs.site_url || 'https://th3s4mur41.me' }}
         run: |
           head_sha="$INPUT_HEAD_SHA"
           if [ -z "$head_sha" ]; then
@@ -95,8 +95,9 @@ jobs:
         id: previous
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TARGET_BRANCH: ${{ steps.target.outputs.branch }}
         run: |
-          previous_sha="$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/indexnow.yml/runs?branch=${{ steps.target.outputs.branch }}&status=success&per_page=1" --jq '.workflow_runs[0].head_sha // ""')"
+          previous_sha="$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/indexnow.yml/runs?branch=$TARGET_BRANCH&status=success&per_page=1" --jq '.workflow_runs[0].head_sha // ""')"
           echo "previous_sha=$previous_sha" >> "$GITHUB_OUTPUT"
 
       - name: '🗺️ Resolve URLs to notify'
