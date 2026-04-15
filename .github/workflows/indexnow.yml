@@ -74,16 +74,21 @@ jobs:
       - name: '🧮 Determine target commit'
         if: env.INDEXNOW_KEY != ''
         id: target
+        env:
+          INPUT_HEAD_SHA: ${{ inputs.head-sha }}
+          INPUT_BRANCH: ${{ inputs.branch || github.ref_name }}
+          INPUT_MODE: ${{ inputs.mode || 'changed' }}
+          INPUT_SITE_URL: ${{ inputs.site-url || 'https://th3s4mur41.me' }}
         run: |
-          head_sha='${{ inputs.head-sha }}'
+          head_sha="$INPUT_HEAD_SHA"
           if [ -z "$head_sha" ]; then
             head_sha="$(git rev-parse HEAD)"
           fi
 
           echo "head_sha=$head_sha" >> "$GITHUB_OUTPUT"
-          echo "branch=${{ inputs.branch || github.ref_name }}" >> "$GITHUB_OUTPUT"
-          echo "mode=${{ inputs.mode || 'changed' }}" >> "$GITHUB_OUTPUT"
-          echo "site_url=${{ inputs.site-url || 'https://th3s4mur41.me' }}" >> "$GITHUB_OUTPUT"
+          echo "branch=$INPUT_BRANCH" >> "$GITHUB_OUTPUT"
+          echo "mode=$INPUT_MODE" >> "$GITHUB_OUTPUT"
+          echo "site_url=$INPUT_SITE_URL" >> "$GITHUB_OUTPUT"
 
       - name: '🔍 Find previous successful IndexNow run'
         if: env.INDEXNOW_KEY != '' && steps.target.outputs.mode == 'changed'

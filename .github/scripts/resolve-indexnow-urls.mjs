@@ -2,11 +2,38 @@ import { execFileSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import path from "node:path";
 
-const siteUrl = (process.env.SITE_URL || "https://th3s4mur41.me").replace(/\/$/, "");
+function getValidatedBaseSiteUrl(rawSiteUrl) {
+	let parsed;
+	try {
+		parsed = new URL(rawSiteUrl);
+	} catch {
+		throw new Error(`Invalid SITE_URL: ${rawSiteUrl}`);
+	}
+
+	if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+		throw new Error(`Unsupported SITE_URL protocol: ${parsed.protocol}`);
+	}
+
+	return new URL(`${parsed.origin}${parsed.pathname.replace(/\/$/, "")}`);
+}
+
+const siteUrl = getValidatedBaseSiteUrl(process.env.SITE_URL || "https://th3s4mur41.me");
 const mode = process.env.MODE || "changed";
 const previousSha = process.env.PREVIOUS_SHA || "";
 const currentSha = process.env.CURRENT_SHA || "";
 const outputPath = process.env.OUTPUT_PATH || "indexnow-urls.txt";
+
+function resolveOutputPath(candidatePath) {
+	const rootDir = path.resolve(process.cwd());
+	const resolvedPath = path.resolve(rootDir, candidatePath);
+	const relativePath = path.relative(rootDir, resolvedPath);
+
+	if (relativePath.startsWith("..") || path.isAbsolute(relativePath)) {
+		throw new Error(`Invalid OUTPUT_PATH: path must stay within workspace root (${rootDir})`);
+	}
+
+	return resolvedPath;
+}
 
 const FULL_SITE_TRIGGER_PREFIXES = ["src/components/", "src/layouts/", "src/styles/", "src/utils/"];
 
@@ -139,8 +166,28 @@ function mapFileToUrls(filePath, urlSet) {
 	}
 }
 
+function toAllowedFetchUrl(candidateUrl) {
+	let parsed;
+	try {
+		parsed = new URL(candidateUrl);
+	} catch {
+		throw new Error(`Invalid sitemap URL: ${candidateUrl}`);
+	}
+
+	if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+		throw new Error(`Unsupported URL protocol in sitemap URL: ${parsed.protocol}`);
+	}
+
+	if (parsed.origin !== siteUrl.origin) {
+		throw new Error(`Blocked cross-origin sitemap URL: ${parsed.href}`);
+	}
+
+	return parsed.href;
+}
+
 async function fetchXml(url) {
-	const response = await fetch(url, {
+	const safeUrl = toAllowedFetchUrl(url);
+	const response = await fetch(safeUrl, {
 		headers: {
 			"user-agent": "th3s4mur41-indexnow-workflow",
 			accept: "application/xml, text/xml;q=0.9, */*;q=0.8",
@@ -148,7 +195,7 @@ async function fetchXml(url) {
 	});
 
 	if (!response.ok) {
-		throw new Error(`Failed to fetch ${url}: ${response.status} ${response.statusText}`);
+		throw new Error(`Failed to fetch ${safeUrl}: ${response.status} ${response.statusText}`);
 	}
 
 	return response.text();
@@ -159,7 +206,7 @@ function extractLocs(xml) {
 }
 
 async function fetchAllSitemapUrls() {
-	const sitemapIndexUrl = `${siteUrl}/sitemap-index.xml`;
+	const sitemapIndexUrl = toAllowedFetchUrl(new URL("/sitemap-index.xml", siteUrl).href);
 	const queue = [sitemapIndexUrl];
 	const visited = new Set();
 	const urls = new Set();
@@ -171,12 +218,13 @@ async function fetchAllSitemapUrls() {
 
 		const xml = await fetchXml(currentUrl);
 		for (const loc of extractLocs(xml)) {
-			if (loc.endsWith(".xml")) {
-				queue.push(loc);
+			const safeLoc = toAllowedFetchUrl(loc);
+			if (safeLoc.endsWith(".xml")) {
+				queue.push(safeLoc);
 				continue;
 			}
 
-			urls.add(loc);
+			urls.add(safeLoc);
 		}
 	}
 
@@ -219,7 +267,8 @@ async function main() {
 	}
 
 	const resolvedUrls = [...urls].sort();
-	writeFileSync(outputPath, `${resolvedUrls.join("\n")}${resolvedUrls.length ? "\n" : ""}`);
+	const safeOutputPath = resolveOutputPath(outputPath);
+	writeFileSync(safeOutputPath, `${resolvedUrls.join("\n")}${resolvedUrls.length ? "\n" : ""}`);
 
 	console.log(`Resolved ${resolvedUrls.length} IndexNow URLs (${reason}).`);
 	for (const url of resolvedUrls) {
