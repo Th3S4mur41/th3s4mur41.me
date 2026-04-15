@@ -1,3 +1,10 @@
+# [2.56.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.55.0...v2.56.0) (2026-04-15)
+
+
+### Features
+
+* **CodePen:** enhance embed functionality with v2 support ([#2283](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2283)) ([7d6c98c](https://github.com/Th3S4mur41/th3s4mur41.me/commit/7d6c98c2a99e811040af3cd05bcdf2e853b3a520))
+
 # [2.55.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.54.0...v2.55.0) (2026-04-15)
 
 
