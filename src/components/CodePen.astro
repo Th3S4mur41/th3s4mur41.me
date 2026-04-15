@@ -1,4 +1,5 @@
 ---
+
 export interface Props {
 	title: string;
 	href: string;
@@ -227,10 +228,29 @@ if (!slugHash && !canResolveV2SlugClientSide) {
 					return Promise.resolve();
 				}
 
+				// If the script has already fired its load event (tracked via data attribute)
+				// but __CPEmbed is still unavailable, reject immediately instead of hanging.
+				if (existingScript.hasAttribute('data-codepen-loaded')) {
+					return Promise.reject(new Error('CodePen: embed script loaded but __CPEmbed is unavailable'));
+				}
+
 				window[scriptPromiseKey] = new Promise((resolve, reject) => {
+					let timeoutId = null;
+
+					const cleanup = () => {
+						if (timeoutId !== null) {
+							window.clearTimeout(timeoutId);
+						}
+					};
+
+					timeoutId = window.setTimeout(() => {
+						reject(new Error('CodePen: timed out waiting for embed script to initialize'));
+					}, oEmbedTimeoutMs);
+
 					existingScript.addEventListener(
 						'load',
 						() => {
+							cleanup();
 							upgradeEmbeds();
 							resolve();
 						},
@@ -239,6 +259,7 @@ if (!slugHash && !canResolveV2SlugClientSide) {
 					existingScript.addEventListener(
 						'error',
 						() => {
+							cleanup();
 							reject(new Error('CodePen: failed to load embed script'));
 						},
 						{ once: true },
@@ -258,6 +279,8 @@ if (!slugHash && !canResolveV2SlugClientSide) {
 				script.addEventListener(
 					'load',
 					() => {
+						// Mark as loaded so subsequent calls can detect this state.
+						script.setAttribute('data-codepen-loaded', 'true');
 						upgradeEmbeds();
 						resolve();
 					},
