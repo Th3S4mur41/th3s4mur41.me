@@ -122,7 +122,8 @@ if (!slugHash && !canResolveV2SlugClientSide) {
 		};
 
 		const loadOEmbedJsonp = (sourceUrl) => {
-			const requestMap = window[oEmbedRequestsKey] || new Map();
+			window[oEmbedRequestsKey] ??= new Map();
+			const requestMap = window[oEmbedRequestsKey];
 
 			if (requestMap.has(sourceUrl)) {
 				return requestMap.get(sourceUrl);
@@ -286,7 +287,9 @@ if (!slugHash && !canResolveV2SlugClientSide) {
 			document.addEventListener(
 				'DOMContentLoaded',
 				async () => {
-					await boot();
+					await boot().catch((error) => {
+						console.error(error);
+					});
 				},
 				{ once: true },
 			);
