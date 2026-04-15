@@ -39,6 +39,7 @@ const FULL_SITE_TRIGGER_PREFIXES = ["src/components/", "src/layouts/", "src/styl
 
 const FULL_SITE_TRIGGER_FILES = new Set([
 	"astro.config.mjs",
+	"public/_redirects",
 	"src/content.config.js",
 	"src/index.css",
 	"src/pages/[section]/[...slug].astro",
@@ -122,19 +123,24 @@ function routeSlugFromContentPath(filePath, collection) {
 	const extension = path.posix.extname(basename);
 	const extlessName = extension ? basename.slice(0, -extension.length) : basename;
 
+	let slug;
+
 	if (directory === "." && !basename.startsWith("index.")) {
-		return extlessName;
+		slug = extlessName;
+	} else if (basename.startsWith("index.")) {
+		slug = directory === "." ? "" : directory;
+	} else if (/(md|mdx)$/i.test(extension.slice(1))) {
+		slug = directory === "." ? extlessName : `${directory}/${extlessName}`;
+	} else {
+		slug = directory === "." ? "" : directory;
 	}
 
-	if (basename.startsWith("index.")) {
-		return directory === "." ? "" : directory;
+	// Skip draft entries — the site's sitemap excludes them too.
+	if (slug.split("/").some((segment) => segment.startsWith("_draft-"))) {
+		return null;
 	}
 
-	if (/(md|mdx)$/i.test(extension.slice(1))) {
-		return directory === "." ? extlessName : `${directory}/${extlessName}`;
-	}
-
-	return directory === "." ? "" : directory;
+	return slug;
 }
 
 function mapFileToUrls(filePath, urlSet) {
@@ -145,6 +151,8 @@ function mapFileToUrls(filePath, urlSet) {
 
 	if (filePath.startsWith("content/blog/")) {
 		const slug = routeSlugFromContentPath(filePath, "blog");
+		if (slug === null) return;
+
 		addUrl(urlSet, "/");
 		addUrl(urlSet, "/blog/");
 
@@ -158,6 +166,8 @@ function mapFileToUrls(filePath, urlSet) {
 
 	if (filePath.startsWith("content/speaking/")) {
 		const slug = routeSlugFromContentPath(filePath, "speaking");
+		if (slug === null) return;
+
 		addUrl(urlSet, "/");
 		addUrl(urlSet, "/blog/");
 
