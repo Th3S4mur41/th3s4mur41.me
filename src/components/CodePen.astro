@@ -86,7 +86,7 @@ if (!slugHash && !canResolveV2SlugClientSide) {
 		data-theme-id="dark"
 		data-default-tab={defaultTab}
 		data-version={version === 2 ? '2' : undefined}
-		data-slug-hash={slugHash}
+		data-slug-hash={slugHash || undefined}
 		data-source-url={canResolveV2SlugClientSide ? href : undefined}
 		data-pen-title={title}
 		data-preview={preview ? 'true' : 'false'}
@@ -110,6 +110,10 @@ if (!slugHash && !canResolveV2SlugClientSide) {
 	(() => {
 		const selector = 'script[data-codepen-embed]';
 		const embedSelector = '.codepen';
+		const oEmbedTimeoutMs = 8000;
+		const resolvePromiseKey = '__codepenResolvePendingEmbedsPromise';
+		const scriptPromiseKey = '__codepenEnsureScriptPromise';
+		const oEmbedRequestsKey = '__codepenOEmbedRequests';
 
 		const upgradeEmbeds = () => {
 			if (typeof window !== 'undefined' && typeof window.__CPEmbed === 'function') {
@@ -117,13 +121,25 @@ if (!slugHash && !canResolveV2SlugClientSide) {
 			}
 		};
 
-		const loadOEmbedJsonp = (sourceUrl) =>
-			new Promise((resolve, reject) => {
+		const loadOEmbedJsonp = (sourceUrl) => {
+			const requestMap = window[oEmbedRequestsKey] || new Map();
+
+			if (requestMap.has(sourceUrl)) {
+				return requestMap.get(sourceUrl);
+			}
+
+			const requestPromise = new Promise((resolve, reject) => {
 				const callbackName = `__codepenOEmbed_${Math.random().toString(36).slice(2)}`;
 				const script = document.createElement('script');
+				let timeoutId = 0;
+
 				const cleanup = () => {
+					if (timeoutId) {
+						window.clearTimeout(timeoutId);
+					}
 					delete window[callbackName];
 					script.remove();
+					requestMap.delete(sourceUrl);
 				};
 
 				window[callbackName] = (payload) => {
@@ -136,10 +152,21 @@ if (!slugHash && !canResolveV2SlugClientSide) {
 					reject(new Error(`CodePen: failed to resolve embed metadata for ${sourceUrl}`));
 				});
 
+				timeoutId = window.setTimeout(() => {
+					cleanup();
+					reject(new Error(`CodePen: timed out resolving embed metadata for ${sourceUrl}`));
+				}, oEmbedTimeoutMs);
+
 				script.src = `https://codepen.io/api/oembed?format=js&url=${encodeURIComponent(sourceUrl)}&callback=${callbackName}`;
 				script.async = true;
 				document.body.appendChild(script);
 			});
+
+			requestMap.set(sourceUrl, requestPromise);
+			window[oEmbedRequestsKey] = requestMap;
+
+			return requestPromise;
+		};
 
 		const extractSlugHash = (payload) => {
 			if (!payload || typeof payload.html !== 'string') return null;
@@ -174,31 +201,99 @@ if (!slugHash && !canResolveV2SlugClientSide) {
 			);
 		};
 
-		const ensureScript = () => {
-			if (document.querySelector(selector)) {
-				upgradeEmbeds();
-				return;
+		const resolvePendingEmbedsOnce = () => {
+			if (window[resolvePromiseKey]) {
+				return window[resolvePromiseKey];
 			}
 
-			const script = document.createElement('script');
-			script.src = 'https://public.codepenassets.com/embed/index.js';
-			script.async = true;
-			script.addEventListener('load', upgradeEmbeds, { once: true });
-			script.setAttribute('data-codepen-embed', 'true');
-			document.body.appendChild(script);
+			window[resolvePromiseKey] = resolvePendingEmbeds().finally(() => {
+				delete window[resolvePromiseKey];
+			});
+
+			return window[resolvePromiseKey];
+		};
+
+		const ensureScriptOnce = () => {
+			if (window[scriptPromiseKey]) {
+				return window[scriptPromiseKey];
+			}
+
+			const existingScript = document.querySelector(selector);
+
+			if (existingScript) {
+				if (typeof window.__CPEmbed === 'function') {
+					upgradeEmbeds();
+					return Promise.resolve();
+				}
+
+				window[scriptPromiseKey] = new Promise((resolve, reject) => {
+					existingScript.addEventListener(
+						'load',
+						() => {
+							upgradeEmbeds();
+							resolve();
+						},
+						{ once: true },
+					);
+					existingScript.addEventListener(
+						'error',
+						() => {
+							reject(new Error('CodePen: failed to load embed script'));
+						},
+						{ once: true },
+					);
+				}).finally(() => {
+					delete window[scriptPromiseKey];
+				});
+
+				return window[scriptPromiseKey];
+			}
+
+			window[scriptPromiseKey] = new Promise((resolve, reject) => {
+				const script = document.createElement('script');
+				script.src = 'https://public.codepenassets.com/embed/index.js';
+				script.async = true;
+				script.setAttribute('data-codepen-embed', 'true');
+				script.addEventListener(
+					'load',
+					() => {
+						upgradeEmbeds();
+						resolve();
+					},
+					{ once: true },
+				);
+				script.addEventListener(
+					'error',
+					() => {
+						reject(new Error('CodePen: failed to load embed script'));
+					},
+					{ once: true },
+				);
+				document.body.appendChild(script);
+			}).finally(() => {
+				delete window[scriptPromiseKey];
+			});
+
+			return window[scriptPromiseKey];
+		};
+
+		const boot = async () => {
+			await resolvePendingEmbedsOnce();
+			await ensureScriptOnce();
 		};
 
 		if (document.readyState === 'loading') {
 			document.addEventListener(
 				'DOMContentLoaded',
 				async () => {
-					await resolvePendingEmbeds();
-					ensureScript();
+					await boot();
 				},
 				{ once: true },
 			);
 		} else {
-			resolvePendingEmbeds().finally(ensureScript);
+			boot().catch((error) => {
+				console.error(error);
+			});
 		}
 	})();
 </script>
