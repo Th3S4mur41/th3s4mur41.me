@@ -1,11 +1,10 @@
 ---
-import "../index.css";
-
 import logo from "/src/assets/logo.png";
 import heroImage from "/src/assets/Th3S4mur41_no-bg.png";
 import Image from "/src/components/Image.astro";
 import OpenGraph from "../components/OpenGraph.astro";
 import Socials from "../components/Socials.astro";
+import styles from "../index.css?url";
 
 interface Props {
 	title?: string;
@@ -76,11 +75,13 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
+		<link rel="preload" href={styles} as="style" />
 		<!-- mobile -->
 		<meta name="HandheldFriendly" content="true" />
 		<!-- Viewport -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 		<meta name="text-scale" content="scale" />
+		<link rel="stylesheet" href={styles} />
 		<!-- Local -->
 		<meta name="geo.region" content="BE" />
 		<meta name="geo.placename" content="La Calamine" />

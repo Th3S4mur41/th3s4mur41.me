@@ -1,4 +1,5 @@
 ---
+
 export interface Props {
 	title: string;
 	href: string;
@@ -6,6 +7,7 @@ export interface Props {
 	height?: number;
 	defaultTab?: string;
 	preview?: boolean;
+	version?: 1 | 2;
 	user?: string;
 	slugHash?: string;
 }
@@ -17,20 +19,40 @@ const {
 	height = 400,
 	defaultTab = "result",
 	preview = true,
+	version: versionProp,
 	user: userProp,
 	slugHash: slugHashProp,
 } = Astro.props;
 
 let user = userProp;
 let slugHash = slugHashProp;
+let version = versionProp;
+
+const v2EditorIdPattern =
+	/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 try {
 	const url = new URL(href);
 	const parts = url.pathname.split("/").filter(Boolean);
-	if (!user && parts.length > 0) user = parts[0];
+	const isEditorUrl = parts[0] === "editor";
+
+	if (!version) version = isEditorUrl ? 2 : 1;
+
+	if (!user) {
+		if (isEditorUrl && parts.length > 1) {
+			user = parts[1];
+		} else if (parts.length > 0) {
+			user = parts[0];
+		}
+	}
+
 	if (!slugHash) {
 		const penIndex = parts.indexOf("pen");
-		if (penIndex !== -1 && parts[penIndex + 1]) slugHash = parts[penIndex + 1];
+		const penIdentifier = penIndex !== -1 ? parts[penIndex + 1] : undefined;
+
+		if (penIdentifier && (!isEditorUrl || !v2EditorIdPattern.test(penIdentifier))) {
+			slugHash = penIdentifier;
+		}
 	}
 } catch (error) {
 	console.error("CodePen: failed to parse href for embed", { href, error });
@@ -39,15 +61,21 @@ try {
 	);
 }
 
+const canResolveV2SlugClientSide = version === 2 && !slugHash;
+
 if (!user) {
 	throw new Error(
-		"CodePen: missing user (pass `user` or use a CodePen href like https://codepen.io/<user>/pen/<hash>)",
+		"CodePen: missing user (pass `user` or use a CodePen href like https://codepen.io/<user>/pen/<hash> or https://codepen.io/editor/<user>/pen/<id>)",
 	);
 }
 
-if (!slugHash) {
+if (!slugHash && !canResolveV2SlugClientSide) {
+	const usesEditorUrl = href.includes("/editor/");
+
 	throw new Error(
-		"CodePen: missing slug hash (pass `slugHash` or use a CodePen href, e.g. https://codepen.io/<user>/pen/<hash>)",
+		usesEditorUrl
+			? "CodePen: missing slug hash for a v2 editor URL. Pass `slugHash`, or let the client resolve it automatically from the CodePen oEmbed API."
+			: "CodePen: missing slug hash (pass `slugHash` or use a CodePen href, e.g. https://codepen.io/<user>/pen/<hash>)",
 	);
 }
 ---
@@ -58,7 +86,9 @@ if (!slugHash) {
 		data-height={height}
 		data-theme-id="dark"
 		data-default-tab={defaultTab}
-		data-slug-hash={slugHash}
+		data-version={version === 2 ? '2' : undefined}
+		data-slug-hash={slugHash || undefined}
+		data-source-url={canResolveV2SlugClientSide ? href : undefined}
 		data-pen-title={title}
 		data-preview={preview ? 'true' : 'false'}
 		data-user={user}
@@ -80,21 +110,216 @@ if (!slugHash) {
 <script is:inline>
 	(() => {
 		const selector = 'script[data-codepen-embed]';
+		const embedSelector = '.codepen';
+		const oEmbedTimeoutMs = 8000;
+		const resolvePromiseKey = '__codepenResolvePendingEmbedsPromise';
+		const scriptPromiseKey = '__codepenEnsureScriptPromise';
+		const oEmbedRequestsKey = '__codepenOEmbedRequests';
 
-		const ensureScript = () => {
-			if (document.querySelector(selector)) return;
+		const upgradeEmbeds = () => {
+			if (typeof window !== 'undefined' && typeof window.__CPEmbed === 'function') {
+				window.__CPEmbed(embedSelector);
+			}
+		};
 
-			const script = document.createElement('script');
-			script.src = 'https://public.codepenassets.com/embed/index.js';
-			script.async = true;
-			script.setAttribute('data-codepen-embed', 'true');
-			document.body.appendChild(script);
+		const loadOEmbedJsonp = (sourceUrl) => {
+			window[oEmbedRequestsKey] ??= new Map();
+			const requestMap = window[oEmbedRequestsKey];
+
+			if (requestMap.has(sourceUrl)) {
+				return requestMap.get(sourceUrl);
+			}
+
+			const requestPromise = new Promise((resolve, reject) => {
+				const callbackName = `__codepenOEmbed_${Math.random().toString(36).slice(2)}`;
+				const script = document.createElement('script');
+				let timeoutId = 0;
+
+				const cleanup = () => {
+					if (timeoutId) {
+						window.clearTimeout(timeoutId);
+					}
+					delete window[callbackName];
+					script.remove();
+					requestMap.delete(sourceUrl);
+				};
+
+				window[callbackName] = (payload) => {
+					cleanup();
+					resolve(payload);
+				};
+
+				script.addEventListener('error', () => {
+					cleanup();
+					reject(new Error(`CodePen: failed to resolve embed metadata for ${sourceUrl}`));
+				});
+
+				timeoutId = window.setTimeout(() => {
+					cleanup();
+					reject(new Error(`CodePen: timed out resolving embed metadata for ${sourceUrl}`));
+				}, oEmbedTimeoutMs);
+
+				script.src = `https://codepen.io/api/oembed?format=js&url=${encodeURIComponent(sourceUrl)}&callback=${callbackName}`;
+				script.async = true;
+				document.body.appendChild(script);
+			});
+
+			requestMap.set(sourceUrl, requestPromise);
+			window[oEmbedRequestsKey] = requestMap;
+
+			return requestPromise;
+		};
+
+		const extractSlugHash = (payload) => {
+			if (!payload || typeof payload.html !== 'string') return null;
+
+			const idMatch = payload.html.match(/cp_embed_([A-Za-z0-9]+)/);
+			if (idMatch?.[1]) return idMatch[1];
+
+			const srcMatch = payload.html.match(/\/embed(?:\/preview)?\/([A-Za-z0-9]+)/);
+			return srcMatch?.[1] ?? null;
+		};
+
+		const resolvePendingEmbeds = async () => {
+			const pendingEmbeds = Array.from(document.querySelectorAll(`${embedSelector}[data-source-url]:not([data-slug-hash])`));
+
+			await Promise.all(
+				pendingEmbeds.map(async (embed) => {
+					const sourceUrl = embed.getAttribute('data-source-url');
+					if (!sourceUrl) return;
+
+					try {
+						const payload = await loadOEmbedJsonp(sourceUrl);
+						const resolvedSlugHash = extractSlugHash(payload);
+
+						if (resolvedSlugHash) {
+							embed.setAttribute('data-slug-hash', resolvedSlugHash);
+							embed.removeAttribute('data-source-url');
+						}
+					} catch (error) {
+						console.error(error);
+					}
+				}),
+			);
+		};
+
+		const resolvePendingEmbedsOnce = () => {
+			if (window[resolvePromiseKey]) {
+				return window[resolvePromiseKey];
+			}
+
+			window[resolvePromiseKey] = resolvePendingEmbeds().finally(() => {
+				delete window[resolvePromiseKey];
+			});
+
+			return window[resolvePromiseKey];
+		};
+
+		const ensureScriptOnce = () => {
+			if (window[scriptPromiseKey]) {
+				return window[scriptPromiseKey];
+			}
+
+			const existingScript = document.querySelector(selector);
+
+			if (existingScript) {
+				if (typeof window.__CPEmbed === 'function') {
+					upgradeEmbeds();
+					return Promise.resolve();
+				}
+
+				// If the script has already fired its load event (tracked via data attribute)
+				// but __CPEmbed is still unavailable, reject immediately instead of hanging.
+				if (existingScript.hasAttribute('data-codepen-loaded')) {
+					return Promise.reject(new Error('CodePen: embed script loaded but __CPEmbed is unavailable'));
+				}
+
+				window[scriptPromiseKey] = new Promise((resolve, reject) => {
+					let timeoutId = null;
+
+					const cleanup = () => {
+						if (timeoutId !== null) {
+							window.clearTimeout(timeoutId);
+						}
+					};
+
+					timeoutId = window.setTimeout(() => {
+						reject(new Error('CodePen: timed out waiting for embed script to initialize'));
+					}, oEmbedTimeoutMs);
+
+					existingScript.addEventListener(
+						'load',
+						() => {
+							cleanup();
+							upgradeEmbeds();
+							resolve();
+						},
+						{ once: true },
+					);
+					existingScript.addEventListener(
+						'error',
+						() => {
+							cleanup();
+							reject(new Error('CodePen: failed to load embed script'));
+						},
+						{ once: true },
+					);
+				}).finally(() => {
+					delete window[scriptPromiseKey];
+				});
+
+				return window[scriptPromiseKey];
+			}
+
+			window[scriptPromiseKey] = new Promise((resolve, reject) => {
+				const script = document.createElement('script');
+				script.src = 'https://public.codepenassets.com/embed/index.js';
+				script.async = true;
+				script.setAttribute('data-codepen-embed', 'true');
+				script.addEventListener(
+					'load',
+					() => {
+						// Mark as loaded so subsequent calls can detect this state.
+						script.setAttribute('data-codepen-loaded', 'true');
+						upgradeEmbeds();
+						resolve();
+					},
+					{ once: true },
+				);
+				script.addEventListener(
+					'error',
+					() => {
+						reject(new Error('CodePen: failed to load embed script'));
+					},
+					{ once: true },
+				);
+				document.body.appendChild(script);
+			}).finally(() => {
+				delete window[scriptPromiseKey];
+			});
+
+			return window[scriptPromiseKey];
+		};
+
+		const boot = async () => {
+			await resolvePendingEmbedsOnce();
+			await ensureScriptOnce();
 		};
 
 		if (document.readyState === 'loading') {
-			document.addEventListener('DOMContentLoaded', ensureScript, { once: true });
+			document.addEventListener(
+				'DOMContentLoaded',
+				async () => {
+					await boot().catch((error) => {
+						console.error(error);
+					});
+				},
+				{ once: true },
+			);
 		} else {
-			ensureScript();
+			boot().catch((error) => {
+				console.error(error);
+			});
 		}
 	})();
 </script>

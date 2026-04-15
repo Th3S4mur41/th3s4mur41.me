@@ -1,3 +1,38 @@
+# [2.55.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.54.0...v2.55.0) (2026-04-15)
+
+
+### Features
+
+* **CodePen:** enhance embed functionality with v2 support ([#2281](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2281)) ([65ff524](https://github.com/Th3S4mur41/th3s4mur41.me/commit/65ff5248313c1eea9c596de03ce6331ea0c7ee47))
+
+# [2.54.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.53.1...v2.54.0) (2026-04-14)
+
+
+### Features
+
+* **blog:** add syndication links for a11y tips article ([8f4254b](https://github.com/Th3S4mur41/th3s4mur41.me/commit/8f4254bfdaac113a14a9de1308587cfd0a65b1d6))
+
+## [2.53.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.53.0...v2.53.1) (2026-04-14)
+
+
+### Bug Fixes
+
+* **blog:** correct publication date ([b1deb49](https://github.com/Th3S4mur41/th3s4mur41.me/commit/b1deb494b94a8c7efa667d6271c2192cfeec7e64))
+
+# [2.53.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.52.1...v2.53.0) (2026-04-14)
+
+
+### Features
+
+* **blog:** add new a11y-tips article about labels ([#2275](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2275)) ([5431ee5](https://github.com/Th3S4mur41/th3s4mur41.me/commit/5431ee531d797d005ce023f82358b0bff7191039))
+
+## [2.52.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.52.0...v2.52.1) (2026-04-14)
+
+
+### Bug Fixes
+
+* **perf:** update CSS import to preload styles ([#2276](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2276)) ([82635cd](https://github.com/Th3S4mur41/th3s4mur41.me/commit/82635cd7047f950c0646f5f9aaa8b8b53f8bdbbf))
+
 # [2.52.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.51.0...v2.52.0) (2026-04-13)
 
 
