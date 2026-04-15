@@ -216,6 +216,10 @@ function extractLocs(xml) {
 	return [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1].trim()).filter(Boolean);
 }
 
+function isSitemapIndex(xml) {
+	return /<sitemapindex[\s>]/i.test(xml);
+}
+
 async function fetchAllSitemapUrls() {
 	const sitemapIndexUrl = toAllowedFetchUrl(new URL("/sitemap-index.xml", siteUrl).href);
 	const queue = [sitemapIndexUrl];
@@ -228,14 +232,20 @@ async function fetchAllSitemapUrls() {
 		visited.add(currentUrl);
 
 		const xml = await fetchXml(currentUrl);
-		for (const loc of extractLocs(xml)) {
-			const safeLoc = toAllowedFetchUrl(loc);
-			if (safeLoc.endsWith(".xml")) {
-				queue.push(safeLoc);
-				continue;
-			}
 
-			urls.add(safeLoc);
+		// Recurse into child sitemaps only when the document is a sitemap index.
+		// A urlset document may contain <loc> entries whose URLs end in ".xml"
+		// (e.g. /feed.xml), which must not be crawled as if they were sitemaps.
+		if (isSitemapIndex(xml)) {
+			for (const loc of extractLocs(xml)) {
+				const safeLoc = toAllowedFetchUrl(loc);
+				queue.push(safeLoc);
+			}
+		} else {
+			for (const loc of extractLocs(xml)) {
+				const safeLoc = toAllowedFetchUrl(loc);
+				urls.add(safeLoc);
+			}
 		}
 	}
 
@@ -264,15 +274,17 @@ async function main() {
 		const changedPaths = parseDiffNames(diffOutput);
 		const meaningfulPaths = changedPaths.filter((filePath) => !isNoopPath(filePath));
 
-		if (meaningfulPaths.some((filePath) => isFullSiteTrigger(filePath))) {
-			reason = "shared-site-change";
-			for (const url of await fetchAllSitemapUrls()) {
-				urls.add(url);
-			}
-		} else {
-			reason = "changed-urls";
-			for (const filePath of meaningfulPaths) {
-				mapFileToUrls(filePath, urls);
+		if (meaningfulPaths.length > 0) {
+			if (meaningfulPaths.some((filePath) => isFullSiteTrigger(filePath))) {
+				reason = "shared-site-change";
+				for (const url of await fetchAllSitemapUrls()) {
+					urls.add(url);
+				}
+			} else {
+				reason = "changed-urls";
+				for (const filePath of meaningfulPaths) {
+					mapFileToUrls(filePath, urls);
+				}
 			}
 		}
 	}

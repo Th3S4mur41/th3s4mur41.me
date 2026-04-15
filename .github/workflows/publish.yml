@@ -60,7 +60,14 @@ jobs:
             exit 0
           fi
 
-          printf '%s' "$INDEXNOW_KEY" > "dist/$INDEXNOW_KEY.txt"
+          # Validate the key before using it as part of a filename to prevent
+          # path traversal or unexpected failures from slashes, dots, or whitespace.
+          if [[ ! "$INDEXNOW_KEY" =~ ^[A-Za-z0-9_-]+$ ]]; then
+            echo 'INDEXNOW_KEY contains characters that are unsafe for filenames; expected only letters, numbers, underscores, or hyphens.'
+            exit 1
+          fi
+
+          printf '%s' "$INDEXNOW_KEY" > "dist/${INDEXNOW_KEY}.txt"
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
 
