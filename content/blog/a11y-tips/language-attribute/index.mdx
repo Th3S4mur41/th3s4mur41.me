@@ -1,0 +1,33 @@
+---
+title: 'Language Attribute: Setting the Right Context'
+date: 2026-04-14T09:00:00Z
+published: false
+image: ../Practical_Accessibility_Tips_for_Developers-v2.jpg
+imageAlt: 'Comic-style illustration of Michaël Vanderheyden wearing a baseball cap and samurai-themed shirt, working on a laptop with a samurai sticker. To the side, accessibility icons and the hashtag #A11yTips promote practical accessibility tips for developers.'
+description: ''
+tags:
+  - Accessibility
+  - WCAG
+keywords:
+  - accessibility
+  - WCAG
+  - web accessibility
+  - a11y
+---
+
+# Language Attribute: Setting the Right Context
+
+![Comic-style illustration of Michaël Vanderheyden wearing a baseball cap and samurai-themed shirt, working on a laptop with a samurai sticker. To the side, accessibility icons and the hashtag #A11yTips promote practical accessibility tips for developers.](../Practical_Accessibility_Tips_for_Developers-v2.jpg)
+
+Setting the correct lang attribute is one of the simplest yet most impactful accessibility practices. It ensures that assistive technologies - like screen readers - interpret and pronounce content correctly, giving users the right context for what they're reading or hearing.
+For multilingual pages, apply the appropriate lang attribute to elements containing different languages. This is especially important for language selectors, where each option should be displayed in its own native script and tagged with the correct language. Doing so helps users recognize and switch languages, even if they don't understand the currently selected one.
+
+https://codepen.io/th3s4mur41/pen/OPNZWVj
+This CodePen demo shows two approaches to language selectors:
+
+
+- **Accessible version:** Each language name is displayed in its own native script with the correct lang attribute. This makes it easier for users to identify their language at a glance.
+- **Problematic version:** All options are displayed in Farsi without lang attributes. While this demonstrates full localization, it makes it nearly impossible for non-Farsi speakers to identify and switch to their language.
+
+> [!WARNING]
+> Even with correct lang attributes, some screen readers (like Narrator) may not read content in a language different from the system default, even if that language is installed. This limitation can affect the user experience despite following best practices - another reminder that accessibility is about both standards and real-world testing.

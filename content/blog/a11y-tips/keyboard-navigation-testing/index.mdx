@@ -1,0 +1,53 @@
+---
+title: 'Keyboard Navigation in End‑to‑End Tests'
+date: 2026-04-14T09:00:00Z
+published: false
+image: ../Practical_Accessibility_Tips_for_Developers-v2.jpg
+imageAlt: 'Comic-style illustration of Michaël Vanderheyden wearing a baseball cap and samurai-themed shirt, working on a laptop with a samurai sticker. To the side, accessibility icons and the hashtag #A11yTips promote practical accessibility tips for developers.'
+description: ''
+tags:
+  - Accessibility
+  - WCAG
+keywords:
+  - accessibility
+  - WCAG
+  - web accessibility
+  - a11y
+---
+
+# Keyboard Navigation in End‑to‑End Tests
+
+![Comic-style illustration of Michaël Vanderheyden wearing a baseball cap and samurai-themed shirt, working on a laptop with a samurai sticker. To the side, accessibility icons and the hashtag #A11yTips promote practical accessibility tips for developers.](../Practical_Accessibility_Tips_for_Developers-v2.jpg)
+
+Keyboard navigation is critical for accessibility, ensuring that all interactive elements can be reached without a mouse. While manual testing remains essential, you can strengthen your end‑to‑end (E2E) test suite by simulating keyboard navigation.
+Instead of targeting elements directly by selectors, start from the first focusable element and use the Tab key to move through the page until the target element is reached. This approach validates that the tab order is logical and that no element is skipped.
+
+## Example: Simulating Tab Navigation in Playwright
+
+```js
+import { test, expect } from '@playwright/test';
+
+test('tabbing reaches the submit button', async ({ page }) => {
+  await page.goto('http://localhost:3000');
+
+  // Start from the first focusable element
+  await page.keyboard.press('Tab');
+
+  // Keep pressing Tab until the submit button is focused
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Tab');
+  // (repeat as needed depending on your form structure)
+
+  // Assert that the submit button is now focused
+  const submitButton = page.getByRole('button', { name: 'Submit' });
+  await expect(submitButton).toBeFocused();
+});
+```
+
+This test:
+- Starts from the first focusable element on page load.
+- Iterates through focusable elements using Tab.
+- Verifies that the Submit button is reachable via keyboard navigation.
+
+> [!IMPORTANT] 
+> Automated checks like this catch obvious issues early, but they don't replace manual testing with real assistive technologies. Combining automation, manual review, and user feedback ensures inclusive digital experiences.
