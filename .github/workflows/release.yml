@@ -48,6 +48,22 @@ jobs:
       actions: read
       deployments: write
 
+  indexnow:
+    name: '▶️ actions'
+    needs: publish
+    if: needs.publish.result == 'success' && github.event.workflow_run.head_branch == 'main'
+    uses: ./.github/workflows/indexnow.yml
+    with:
+      mode: changed
+      branch: ${{ github.event.workflow_run.head_branch }}
+      head_sha: ${{ github.event.workflow_run.head_sha }}
+      site_url: https://th3s4mur41.me
+    secrets:
+      INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+    permissions:
+      contents: read
+      actions: read
+
   a11y-scan:
     name: '♿ a11y scan'
     needs: publish

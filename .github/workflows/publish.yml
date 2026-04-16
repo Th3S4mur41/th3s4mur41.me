@@ -54,13 +54,26 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create IndexNow key file
-        run: echo $INDEXNOW_KEY > dist/$INDEXNOW_KEY.txt
+        run: |
+          if [ -z "$INDEXNOW_KEY" ]; then
+            echo 'INDEXNOW_KEY is empty; skipping key file creation.'
+            exit 0
+          fi
+
+          # Validate the key before using it as part of a filename to prevent
+          # path traversal or unexpected failures from slashes, dots, or whitespace.
+          if [[ ! "$INDEXNOW_KEY" =~ ^[A-Za-z0-9_-]+$ ]]; then
+            echo 'INDEXNOW_KEY contains characters that are unsafe for filenames; expected only letters, numbers, underscores, or hyphens.'
+            exit 1
+          fi
+
+          printf '%s' "$INDEXNOW_KEY" > "dist/${INDEXNOW_KEY}.txt"
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
 
       - name: '🚀 Publish to Cloudflare Pages'
         id: cloudflare-deploy
-        uses: cloudflare/wrangler-action@v3.14.1
+        uses: cloudflare/wrangler-action@v3.15.0
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ID }}
@@ -72,14 +85,3 @@ jobs:
           echo "Deployed to: ${{ steps.cloudflare-deploy.outputs.deployment-url }}"
           echo "Alias URL: ${{ steps.cloudflare-deploy.outputs.pages-deployment-alias-url }}"
 
-      - name: Notify IndexNow
-        run: |
-          if [ -z "${INDEXNOW_KEY}" ]; then
-            echo "INDEXNOW_KEY is empty; skipping IndexNow notification.";
-            exit 0;
-          fi
-          curl -H "Content-Type: application/json" \
-            -d "{\"host\":\"th3s4mur41.me\",\"key\":\"$INDEXNOW_KEY\",\"urlList\":[\"https://th3s4mur41.me/sitemap-index.xml\"]}" \
-            https://api.indexnow.org/indexnow
-        env:
-          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
