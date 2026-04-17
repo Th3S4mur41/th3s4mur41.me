@@ -75,6 +75,33 @@ function addUrl(urlSet, routePath) {
 	urlSet.add(normalizeUrl(routePath));
 }
 
+function hasFileLikeExtension(pathname) {
+	const lastSegment = pathname.split("/").filter(Boolean).pop() || "";
+	return /\.[a-z0-9]{1,8}$/i.test(lastSegment);
+}
+
+function sanitizeSubmissionUrl(candidateUrl) {
+	let parsed;
+	try {
+		parsed = new URL(candidateUrl);
+	} catch {
+		return null;
+	}
+
+	if (parsed.protocol !== "https:" && parsed.protocol !== "http:") return null;
+	if (parsed.origin !== siteUrl.origin) return null;
+	if (parsed.search || parsed.hash) return null;
+	if (parsed.href.length > 2048) return null;
+
+	// Reject suspiciously over-encoded paths that are unlikely to be real routes.
+	if ((parsed.pathname.match(/%25/gi) || []).length > 4) return null;
+
+	// IndexNow should receive canonical page URLs, not static assets or archive-like files.
+	if (!parsed.pathname.endsWith("/") && hasFileLikeExtension(parsed.pathname)) return null;
+
+	return parsed.href;
+}
+
 function parseDiffNames(diffOutput) {
 	const changedPaths = new Set();
 
@@ -289,7 +316,10 @@ async function main() {
 		}
 	}
 
-	const resolvedUrls = [...urls].sort();
+	const resolvedUrls = [...urls]
+		.map((candidateUrl) => sanitizeSubmissionUrl(candidateUrl))
+		.filter(Boolean)
+		.sort();
 	const safeOutputPath = resolveOutputPath(outputPath);
 	writeFileSync(safeOutputPath, `${resolvedUrls.join("\n")}${resolvedUrls.length ? "\n" : ""}`);
 
