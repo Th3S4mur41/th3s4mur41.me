@@ -1,3 +1,10 @@
+## [2.56.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.56.1...v2.56.2) (2026-04-17)
+
+
+### Bug Fixes
+
+* update catch-all redirect to point to custom 404 page ([de4652c](https://github.com/Th3S4mur41/th3s4mur41.me/commit/de4652cc73dda64617b70d1fec9d04be7e315ab9))
+
 ## [2.56.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.56.0...v2.56.1) (2026-04-17)
 
 
