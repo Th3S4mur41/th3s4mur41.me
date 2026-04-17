@@ -96,14 +96,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TARGET_BRANCH: ${{ steps.target.outputs.branch }}
-
         run: |
           previous_sha="$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/indexnow.yml/runs?branch=$TARGET_BRANCH&status=success&per_page=1" --jq '.workflow_runs[0].head_sha // ""')"
-
-
-
-
-
           echo "previous_sha=$previous_sha" >> "$GITHUB_OUTPUT"
 
       - name: '🗺️ Resolve URLs to notify'
@@ -154,4 +148,5 @@ jobs:
 
       - name: 'ℹ️ No URLs to submit'
         if: env.INDEXNOW_KEY != '' && steps.urls.outputs.count == '0'
+        run: echo 'No relevant URLs changed; skipping IndexNow submission.'
         
