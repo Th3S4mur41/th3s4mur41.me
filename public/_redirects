@@ -2,3 +2,6 @@
 /.well-known/webfinger  /well-known/webfinger.json  200
 
 /talks/* /speaking/:splat 301
+
+# Catch-all: return 404 for unmapped paths instead of serving index.html
+/*  /  404
