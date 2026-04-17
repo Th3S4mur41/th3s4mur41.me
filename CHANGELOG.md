@@ -1,3 +1,10 @@
+## [2.56.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.56.0...v2.56.1) (2026-04-17)
+
+
+### Bug Fixes
+
+* add catch-all redirect to return 404 for unmapped paths ([af7b005](https://github.com/Th3S4mur41/th3s4mur41.me/commit/af7b005186e0d4baebfd2cecae20c63155cd9535))
+
 # [2.56.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.55.0...v2.56.0) (2026-04-15)
 
 
