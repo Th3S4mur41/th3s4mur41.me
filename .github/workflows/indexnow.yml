@@ -98,12 +98,8 @@ jobs:
           TARGET_BRANCH: ${{ steps.target.outputs.branch }}
           CURRENT_RUN_ID: ${{ github.run_id }}
         run: |
-          previous_sha="$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/indexnow.yml/runs?branch=$TARGET_BRANCH&status=success&event=workflow_call&per_page=20" \
-            --jq --arg currentRunId "$CURRENT_RUN_ID" '
-              .workflow_runs
-              | map(select((.id | tostring) != $currentRunId))
-              | .[0].head_sha // ""
-            ')"
+          jq_filter='.workflow_runs | map(select((.id | tostring) != $currentRunId)) | .[0].head_sha // ""'
+          previous_sha="$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/indexnow.yml/runs?branch=$TARGET_BRANCH&status=success&event=workflow_call&per_page=20" --jq --arg currentRunId "$CURRENT_RUN_ID" "$jq_filter")"
           echo "previous_sha=$previous_sha" >> "$GITHUB_OUTPUT"
 
       - name: '🗺️ Resolve URLs to notify'
