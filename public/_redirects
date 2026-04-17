@@ -4,4 +4,4 @@
 /talks/* /speaking/:splat 301
 
 # Catch-all: return 404 for unmapped paths instead of serving index.html
-/*  /  404
+/*  /404/  404
