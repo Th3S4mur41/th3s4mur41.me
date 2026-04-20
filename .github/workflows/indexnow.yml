@@ -96,8 +96,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TARGET_BRANCH: ${{ steps.target.outputs.branch }}
+          CURRENT_RUN_ID: ${{ github.run_id }}
         run: |
-          previous_sha="$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/indexnow.yml/runs?branch=$TARGET_BRANCH&status=success&per_page=1" --jq '.workflow_runs[0].head_sha // ""')"
+          previous_sha="$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/indexnow.yml/runs?branch=$TARGET_BRANCH&status=success&event=workflow_call&per_page=20" --jq ".workflow_runs[] | select((.id | tostring) != \"$CURRENT_RUN_ID\") | .head_sha" | head -n 1)"
           echo "previous_sha=$previous_sha" >> "$GITHUB_OUTPUT"
 
       - name: '🗺️ Resolve URLs to notify'

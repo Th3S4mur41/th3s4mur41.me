@@ -35,8 +35,6 @@ function resolveOutputPath(candidatePath) {
 	return resolvedPath;
 }
 
-const FULL_SITE_TRIGGER_PREFIXES = ["src/components/", "src/layouts/", "src/styles/", "src/utils/"];
-
 const FULL_SITE_TRIGGER_FILES = new Set([
 	"astro.config.mjs",
 	"public/_redirects",
@@ -103,8 +101,7 @@ function isNoopPath(filePath) {
 }
 
 function isFullSiteTrigger(filePath) {
-	if (FULL_SITE_TRIGGER_FILES.has(filePath)) return true;
-	return FULL_SITE_TRIGGER_PREFIXES.some((prefix) => filePath.startsWith(prefix));
+	return FULL_SITE_TRIGGER_FILES.has(filePath);
 }
 
 function collectAncestorBlogUrls(urlSet, slug) {
