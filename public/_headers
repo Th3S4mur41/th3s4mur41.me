@@ -1,10 +1,10 @@
 /*
 	Content-Security-Policy: default-src 'self'; script-src 'self' https://static.cloudflareinsights.com https://public.codepenassets.com https://codepen.io 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://codepen.io https://cdpn.io https://*.codepenassets.com https://avatars.webmention.io/ https://cdn.bsky.app; font-src 'self'; frame-src https://codepen.io https://cdpn.io; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests; connect-src 'self' https://static.cloudflareinsights.com https://cloudflareinsights.com https://*.cloudflareinsights.com https://public.codepenassets.com https://api.webstatus.dev;
-	Referrer-Policy: no-referrer-when-downgrade
+	Referrer-Policy: strict-origin-when-cross-origin
 	X-Content-Type-Options: nosniff
 	X-Frame-Options: DENY
 	X-XSS-Protection: 1; mode=block
-	Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+	Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
 
 # Cache-Control
 # Fingerprinted assets are safe to cache immutably because Astro includes a content hash in the filename.
