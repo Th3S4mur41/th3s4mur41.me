@@ -111,9 +111,43 @@ jobs:
           PREVIOUS_SHA: ${{ steps.previous.outputs.previous_sha }}
           OUTPUT_PATH: indexnow-urls.txt
         run: |
-          node .github/scripts/resolve-indexnow-urls.mjs
+          resolution_output="$(node .github/scripts/resolve-indexnow-urls.mjs)"
+          echo "$resolution_output"
+
+          reason="$(printf '%s\n' "$resolution_output" | sed -n 's/^reason=//p' | tail -n 1)"
+          if [ -z "$reason" ]; then
+            reason='unknown'
+          fi
+
           count=$(grep -c '.' indexnow-urls.txt 2>/dev/null || true)
+          echo "reason=$reason" >> "$GITHUB_OUTPUT"
           echo "count=$count" >> "$GITHUB_OUTPUT"
+
+      - name: '📝 Publish IndexNow summary'
+        if: env.INDEXNOW_KEY != ''
+        env:
+          MODE: ${{ steps.target.outputs.mode }}
+          REASON: ${{ steps.urls.outputs.reason }}
+          COUNT: ${{ steps.urls.outputs.count }}
+        run: |
+          {
+            echo '## IndexNow'
+            echo
+            echo "- Mode: $MODE"
+            echo "- Reason: $REASON"
+            echo "- URL count: $COUNT"
+            echo
+
+            if [ "$COUNT" = '0' ]; then
+              echo 'No URLs resolved for submission.'
+            else
+              echo '### URLs'
+              echo
+              while IFS= read -r url; do
+                [ -n "$url" ] && echo "- $url"
+              done < indexnow-urls.txt
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: '📤 Submit URLs to IndexNow'
         if: env.INDEXNOW_KEY != '' && steps.urls.outputs.count != '0'

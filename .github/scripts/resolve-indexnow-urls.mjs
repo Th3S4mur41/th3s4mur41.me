@@ -23,6 +23,17 @@ const previousSha = process.env.PREVIOUS_SHA || "";
 const currentSha = process.env.CURRENT_SHA || "";
 const outputPath = process.env.OUTPUT_PATH || "indexnow-urls.txt";
 
+function canResolveParentCommit(commitSha) {
+	if (!commitSha) return false;
+
+	try {
+		execFileSync("git", ["rev-parse", `${commitSha}^`], { encoding: "utf8" });
+		return true;
+	} catch {
+		return false;
+	}
+}
+
 function resolveOutputPath(candidatePath) {
 	const rootDir = path.resolve(process.cwd());
 	const resolvedPath = path.resolve(rootDir, candidatePath);
@@ -252,35 +263,43 @@ async function fetchAllSitemapUrls() {
 async function main() {
 	const urls = new Set();
 	let reason = "no-relevant-changes";
+	let diffBaseSha = previousSha;
 
 	if (mode === "all") {
 		reason = "all-mode";
 		for (const url of await fetchAllSitemapUrls()) {
 			urls.add(url);
 		}
-	} else if (!previousSha) {
-		reason = "bootstrap-full-submit";
-		for (const url of await fetchAllSitemapUrls()) {
-			urls.add(url);
+	} else {
+		if (!diffBaseSha && canResolveParentCommit(currentSha)) {
+			diffBaseSha = execFileSync("git", ["rev-parse", `${currentSha}^`], { encoding: "utf8" }).trim();
+			reason = "bootstrap-parent-diff";
 		}
-	} else if (previousSha !== currentSha) {
-		const diffOutput = execFileSync("git", ["diff", "--name-status", "--find-renames", previousSha, currentSha], {
-			encoding: "utf8",
-		}).trim();
 
-		const changedPaths = parseDiffNames(diffOutput);
-		const meaningfulPaths = changedPaths.filter((filePath) => !isNoopPath(filePath));
+		if (!diffBaseSha) {
+			reason = "bootstrap-full-submit";
+			for (const url of await fetchAllSitemapUrls()) {
+				urls.add(url);
+			}
+		} else if (diffBaseSha !== currentSha) {
+			const diffOutput = execFileSync("git", ["diff", "--name-status", "--find-renames", diffBaseSha, currentSha], {
+				encoding: "utf8",
+			}).trim();
 
-		if (meaningfulPaths.length > 0) {
-			if (meaningfulPaths.some((filePath) => isFullSiteTrigger(filePath))) {
-				reason = "shared-site-change";
-				for (const url of await fetchAllSitemapUrls()) {
-					urls.add(url);
-				}
-			} else {
-				reason = "changed-urls";
-				for (const filePath of meaningfulPaths) {
-					mapFileToUrls(filePath, urls);
+			const changedPaths = parseDiffNames(diffOutput);
+			const meaningfulPaths = changedPaths.filter((filePath) => !isNoopPath(filePath));
+
+			if (meaningfulPaths.length > 0) {
+				if (meaningfulPaths.some((filePath) => isFullSiteTrigger(filePath))) {
+					reason = "shared-site-change";
+					for (const url of await fetchAllSitemapUrls()) {
+						urls.add(url);
+					}
+				} else {
+					reason = reason === "bootstrap-parent-diff" ? "bootstrap-changed-urls" : "changed-urls";
+					for (const filePath of meaningfulPaths) {
+						mapFileToUrls(filePath, urls);
+					}
 				}
 			}
 		}
