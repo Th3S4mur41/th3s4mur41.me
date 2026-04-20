@@ -2,3 +2,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://th3S4mur41.me/sitemap-index.xml
+
+Content-Signal: ai-train=no, search=yes, ai-input=no
