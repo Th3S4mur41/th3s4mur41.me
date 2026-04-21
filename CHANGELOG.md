@@ -1,3 +1,10 @@
+## [2.56.3](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.56.2...v2.56.3) (2026-04-21)
+
+
+### Bug Fixes
+
+* **blog:** remove empty series from feeds ([72d478c](https://github.com/Th3S4mur41/th3s4mur41.me/commit/72d478c47e5c707f94a11feab8f7f4795c6e209b))
+
 ## [2.56.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.56.1...v2.56.2) (2026-04-17)
 
 
