@@ -5,6 +5,7 @@ import compress from "astro-compress";
 import { rehypeGithubAlerts } from "rehype-github-alerts";
 import {
 	rehypeExternalLinks,
+	rehypeHeadingDates,
 	rehypeInjectToc,
 	rehypeOptimizeFirstImage,
 	rehypeViewTransitionNames,
@@ -12,8 +13,15 @@ import {
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.js";
 import { SITE_CONFIG } from "./src/utils/config.js";
 
-const sharedRehypePlugins = [rehypeInjectToc, rehypeViewTransitionNames, rehypeOptimizeFirstImage, rehypeExternalLinks];
+const sharedRehypePlugins = [
+	rehypeHeadingDates,
+	rehypeInjectToc,
+	rehypeViewTransitionNames,
+	rehypeOptimizeFirstImage,
+	rehypeExternalLinks,
+];
 const mdxRehypePlugins = [
+	rehypeHeadingDates,
 	rehypeInjectToc,
 	rehypeViewTransitionNames,
 	rehypeGithubAlerts,

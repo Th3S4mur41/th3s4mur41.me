@@ -1,0 +1,42 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://human-json.org/schema/0.1.1.json",
+	"title": "human.json",
+	"description": "A protocol for humans to assert authorship of their site content and vouch for the humanity of others.",
+	"type": "object",
+	"required": ["version", "url"],
+	"properties": {
+		"version": {
+			"type": "string",
+			"const": "0.1.1",
+			"description": "Protocol version."
+		},
+		"url": {
+			"type": "string",
+			"format": "uri",
+			"description": "Canonical URL of this site. Defines the scope of the authorship claim."
+		},
+		"vouches": {
+			"type": "array",
+			"description": "List of sites this author vouches for.",
+			"items": {
+				"type": "object",
+				"required": ["url", "vouched_at"],
+				"properties": {
+					"url": {
+						"type": "string",
+						"format": "uri",
+						"description": "The vouched site's canonical URL."
+					},
+					"vouched_at": {
+						"type": "string",
+						"format": "date",
+						"description": "ISO 8601 date (YYYY-MM-DD) when the vouch was made."
+					}
+				},
+				"additionalProperties": false
+			}
+		}
+	},
+	"additionalProperties": false
+}

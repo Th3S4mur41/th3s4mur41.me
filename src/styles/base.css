@@ -60,17 +60,6 @@ body > header {
 	mask-image: linear-gradient(to bottom, black 95%, transparent 99%);
 	mask-size: 100% 100%;
 	mask-repeat: no-repeat;
-	/* TODO: replace with good layout */
-	& > h1 {
-		position: fixed;
-		width: 1px;
-		height: 1px;
-		padding: 0;
-		margin: -1px;
-		overflow: hidden;
-		clip: rect(0, 0, 0, 0);
-		border: 0;
-	}
 
 	/* hero image */
 	& > img,
@@ -123,6 +112,14 @@ body > header {
 	letter-spacing: 0.1ch;
 	color: var(--color-accent);
 	text-wrap: balance;
+
+	& > a {
+		text-decoration: none;
+
+		&:is(:hover, :focus) {
+			text-decoration: underline;
+		}
+	}
 
 	& + h1 {
 		margin-block-start: 0;

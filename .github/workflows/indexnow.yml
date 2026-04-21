@@ -1,0 +1,187 @@
+name: IndexNow
+
+on:
+  workflow_call:
+    inputs:
+      mode:
+        description: 'Submission mode: changed or all'
+        required: false
+        default: 'changed'
+        type: string
+      branch:
+        description: 'Branch to inspect for diffs'
+        required: false
+        default: 'main'
+        type: string
+      head_sha:
+        description: 'Commit SHA to submit from'
+        required: false
+        type: string
+      site_url:
+        description: 'Canonical site URL used for sitemap discovery'
+        required: false
+        default: 'https://th3s4mur41.me'
+        type: string
+    secrets:
+      INDEXNOW_KEY:
+        required: false
+
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Submission mode'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - changed
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: ${{ github.workflow }}_${{ inputs.branch || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  submit:
+    name: '🔎 Submit to IndexNow'
+    runs-on: ubuntu-latest
+    env:
+      INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+
+    steps:
+      - name: '⏭️ Skip when IndexNow key is unavailable'
+        if: env.INDEXNOW_KEY == ''
+        run: echo 'INDEXNOW_KEY is not configured; skipping IndexNow submission.'
+
+      - name: '☁️ Checkout repository'
+        if: env.INDEXNOW_KEY != ''
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.head_sha || inputs.branch || github.ref_name }}
+          fetch-depth: 0
+
+      - name: '⚙️ Use Node.js'
+        if: env.INDEXNOW_KEY != ''
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+          check-latest: true
+
+      - name: '🧮 Determine target commit'
+        if: env.INDEXNOW_KEY != ''
+        id: target
+        env:
+          INPUT_HEAD_SHA: ${{ inputs.head_sha }}
+          INPUT_BRANCH: ${{ inputs.branch || github.ref_name }}
+          INPUT_MODE: ${{ inputs.mode || 'changed' }}
+          INPUT_SITE_URL: ${{ inputs.site_url || 'https://th3s4mur41.me' }}
+        run: |
+          head_sha="$INPUT_HEAD_SHA"
+          if [ -z "$head_sha" ]; then
+            head_sha="$(git rev-parse HEAD)"
+          fi
+
+          echo "head_sha=$head_sha" >> "$GITHUB_OUTPUT"
+          echo "branch=$INPUT_BRANCH" >> "$GITHUB_OUTPUT"
+          echo "mode=$INPUT_MODE" >> "$GITHUB_OUTPUT"
+          echo "site_url=$INPUT_SITE_URL" >> "$GITHUB_OUTPUT"
+
+      - name: '🔍 Find previous successful IndexNow run'
+        if: env.INDEXNOW_KEY != '' && steps.target.outputs.mode == 'changed'
+        id: previous
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TARGET_BRANCH: ${{ steps.target.outputs.branch }}
+          CURRENT_RUN_ID: ${{ github.run_id }}
+        run: |
+          previous_sha="$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/indexnow.yml/runs?branch=$TARGET_BRANCH&status=success&event=workflow_call&per_page=20" --jq ".workflow_runs[] | select((.id | tostring) != \"$CURRENT_RUN_ID\") | .head_sha" | head -n 1)"
+          echo "previous_sha=$previous_sha" >> "$GITHUB_OUTPUT"
+
+      - name: '🗺️ Resolve URLs to notify'
+        if: env.INDEXNOW_KEY != ''
+        id: urls
+        env:
+          MODE: ${{ steps.target.outputs.mode }}
+          SITE_URL: ${{ steps.target.outputs.site_url }}
+          CURRENT_SHA: ${{ steps.target.outputs.head_sha }}
+          PREVIOUS_SHA: ${{ steps.previous.outputs.previous_sha }}
+          OUTPUT_PATH: indexnow-urls.txt
+        run: |
+          resolution_output="$(node .github/scripts/resolve-indexnow-urls.mjs)"
+          echo "$resolution_output"
+
+          reason="$(printf '%s\n' "$resolution_output" | sed -n 's/^reason=//p' | tail -n 1)"
+          if [ -z "$reason" ]; then
+            reason='unknown'
+          fi
+
+          count=$(grep -c '.' indexnow-urls.txt 2>/dev/null || true)
+          echo "reason=$reason" >> "$GITHUB_OUTPUT"
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+
+      - name: '📝 Publish IndexNow summary'
+        if: env.INDEXNOW_KEY != ''
+        env:
+          MODE: ${{ steps.target.outputs.mode }}
+          REASON: ${{ steps.urls.outputs.reason }}
+          COUNT: ${{ steps.urls.outputs.count }}
+        run: |
+          {
+            echo '## IndexNow'
+            echo
+            echo "- Mode: $MODE"
+            echo "- Reason: $REASON"
+            echo "- URL count: $COUNT"
+            echo
+
+            if [ "$COUNT" = '0' ]; then
+              echo 'No URLs resolved for submission.'
+            else
+              echo '### URLs'
+              echo
+              while IFS= read -r url; do
+                [ -n "$url" ] && echo "- $url"
+              done < indexnow-urls.txt
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: '📤 Submit URLs to IndexNow'
+        if: env.INDEXNOW_KEY != '' && steps.urls.outputs.count != '0'
+        env:
+          SITE_URL: ${{ steps.target.outputs.site_url }}
+        run: |
+          node --input-type=module <<'EOF'
+          import { readFileSync } from 'node:fs';
+
+          const siteUrl = (process.env.SITE_URL || 'https://th3s4mur41.me').replace(/\/$/, '');
+          const host = new URL(siteUrl).host;
+          const key = process.env.INDEXNOW_KEY;
+          const urls = readFileSync('indexnow-urls.txt', 'utf8').split(/\r?\n/).filter(Boolean);
+
+          for (let index = 0; index < urls.length; index += 10000) {
+            const batch = urls.slice(index, index + 10000);
+            const response = await fetch('https://api.indexnow.org/indexnow', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ host, key, urlList: batch }),
+            });
+
+            const responseText = await response.text();
+            if (!response.ok) {
+              console.error(responseText);
+              throw new Error(`IndexNow submission failed with ${response.status}`);
+            }
+
+            console.log(`Submitted ${batch.length} URL(s) to IndexNow.`);
+            if (responseText) console.log(responseText);
+          }
+          EOF
+
+      - name: 'ℹ️ No URLs to submit'
+        if: env.INDEXNOW_KEY != '' && steps.urls.outputs.count == '0'
+        run: echo 'No relevant URLs changed; skipping IndexNow submission.'
+        

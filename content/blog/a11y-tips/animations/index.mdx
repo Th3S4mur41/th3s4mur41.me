@@ -1,0 +1,52 @@
+---
+title: 'View Transitions: Use with Caution'
+date: 2026-04-14T09:00:00Z
+published: false
+image: ../Practical_Accessibility_Tips_for_Developers-v2.jpg
+imageAlt: 'Comic-style illustration of Michaël Vanderheyden wearing a baseball cap and samurai-themed shirt, working on a laptop with a samurai sticker. To the side, accessibility icons and the hashtag #A11yTips promote practical accessibility tips for developers.'
+description: ''
+tags:
+  - Accessibility
+  - WCAG
+keywords:
+  - accessibility
+  - WCAG
+  - web accessibility
+  - a11y
+---
+
+# View Transitions: Use with Caution
+
+![Comic-style illustration of Michaël Vanderheyden wearing a baseball cap and samurai-themed shirt, working on a laptop with a samurai sticker. To the side, accessibility icons and the hashtag #A11yTips promote practical accessibility tips for developers.](../Practical_Accessibility_Tips_for_Developers-v2.jpg)
+
+Modern CSS and browser APIs make it easy to add polish to interfaces with animations. Two common techniques are view transitions (smooth fade‑ins, fade‑outs, or state changes) and scroll‑driven animations (elements that animate as the user scrolls). Both can enhance user experience when used thoughtfully - but they also come with accessibility caveats.
+
+## Accessibility caveats
+- **View transitions:** During animations, elements may temporarily render with partial opacity or blurred edges. Automated accessibility tests often interpret these transient states as permanent, leading to false positives (e.g., contrast failures when text is briefly semi‑transparent).
+- **Scroll‑driven animations:** These can cause content to move, fade, or transform as the user scrolls. While visually engaging, they may disorient users with vestibular disorders, interfere with keyboard navigation, or make it harder for assistive technologies to maintain context. Automated tools may also misinterpret intermediate states, flagging issues that don't exist in the final rendered view.
+
+TODO: Check duplication with https://th3s4mur41.me/blog/sda-in-test-automation/
+
+## Practical Example: Scroll‑Driven Animation
+
+To see scroll‑driven effects in action, check out the demo below. As you scroll, paragraphs fade in when entering the viewport and fade out when leaving.
+
+https://codepen.io/th3s4mur41/pen/WbxdRZO or https://codepen.io/th3s4mur41/pen/ByKxpYx
+
+Scroll‑driven animation demo: Text fades in as it enters the viewport and fades out as it exits. While visually engaging, automated accessibility checks may incorrectly flag contrast issues during these transitions, since paragraphs are briefly semi‑transparent
+
+## Best practices to mitigate issues
+### Respect user preferences
+Disable or simplify animations when users enable prefers‑reduced‑motion, prefers‑reduced‑transparency, or high contrast modes.
+### Test beyond automation
+Run manual checks to confirm that animations don't interfere with readability, focus, or navigation.
+### Keep animations subtle and purposeful
+Avoid long, complex, or purely decorative animations that delay access to content.
+### Document exceptions
+If automated tools flag false positives due to transitions or scroll effects, note the reason so reviewers understand the context.
+### Ensure fallback usability
+Content should remain fully usable and understandable even if animations are disabled.
+
+## Key takeaway
+
+Animations can enhance usability and delight, but they should never compromise accessibility. Treat automated test results as a starting point, and rely on expert review to ensure both view transitions and scroll‑driven animations remain inclusive.

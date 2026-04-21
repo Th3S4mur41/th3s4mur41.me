@@ -11,10 +11,12 @@ on:
   push:
     branches: [main, next, beta, alpha]
 
-  # Nightly run to ensure content ordering/build stays correct.
+  # Run to keep published content and webmentions fresh.
   # Note: GitHub cron schedules run in UTC.
   schedule:
-    - cron: '0 2 * * *'
+    - cron: '30 10 * * *' # 12:30 CET
+    - cron: '30 14 * * *' # 16:30 CET
+    - cron: '30 18 * * *' # 20:30 CET
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:

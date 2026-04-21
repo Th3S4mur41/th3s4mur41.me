@@ -25,7 +25,8 @@ const combined = [
 void [combined, Layout, ArticleCard];
 ---
 
-<Layout title="blog">
+<Layout title="blog" heading="Inside the dojo">
+	<p class="intro">Step into the laboratory! This dojo is where I push the boundaries of HTML and CSS to create inclusive digital experiences. I believe the web should be accessible to everyone—no exceptions. Explore my latest articles on UX engineering, test automation, and the art of clean, accessible code.</p>
 {combined.map(({ section, entry }) => {
 	return (
 		<ArticleCard

@@ -1,26 +1,17 @@
 /*
-	Content-Security-Policy: default-src 'self'; script-src 'self' https://static.cloudflareinsights.com https://public.codepenassets.com 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://codepen.io https://cdpn.io https://*.codepenassets.com https://avatars.webmention.io/; font-src 'self'; frame-src https://codepen.io https://cdpn.io; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests; connect-src 'self' https://static.cloudflareinsights.com https://cloudflareinsights.com https://*.cloudflareinsights.com https://public.codepenassets.com https://api.webstatus.dev;
-	Referrer-Policy: no-referrer-when-downgrade
+	Content-Security-Policy: default-src 'self'; script-src 'self' https://static.cloudflareinsights.com https://public.codepenassets.com https://codepen.io 'sha256-tf144n4Z6I7tBam8CoexaYkxvMesJwnesj2TlJzYanY=' 'sha256-bRfoV3+LSpKTJa/+rU6tN2QNXHORDRVCxQiJ0AXnfdU='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://codepen.io https://cdpn.io https://*.codepenassets.com https://avatars.webmention.io/ https://cdn.bsky.app; font-src 'self'; frame-src https://codepen.io https://cdpn.io; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests; connect-src 'self' https://static.cloudflareinsights.com https://cloudflareinsights.com https://*.cloudflareinsights.com https://public.codepenassets.com https://api.webstatus.dev;
+	Referrer-Policy: strict-origin-when-cross-origin
 	X-Content-Type-Options: nosniff
 	X-Frame-Options: DENY
-  X-XSS-Protection: 1; mode=block
+	X-XSS-Protection: 1; mode=block
+	Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
 
+# Cache-Control
+# Fingerprinted assets are safe to cache immutably because Astro includes a content hash in the filename.
 /*.js
 	Cache-Control: public, immutable, max-age=31536000
 
 /*.css
-	Cache-Control: public, immutable, max-age=31536000
-
-/feed.xml
-	Content-Type: application/rss+xml; charset=utf-8
-
-/*.webmanifest
-	Content-Type: application/json; charset=utf-8
-
-/*.svg
-	Content-Type: image/svg+xml; charset=utf-8
-
-/favicon.ico
 	Cache-Control: public, immutable, max-age=31536000
 
 /icons/*
@@ -28,6 +19,36 @@
 
 /assets/*
 	Cache-Control: public, immutable, max-age=31536000
+
+/_astro/*
+	Cache-Control: public, immutable, max-age=31536000
+
+# Non-fingerprinted files should keep a long cache, but remain revalidatable.
+/favicon.ico
+	Cache-Control: public, max-age=31536000
+
+/images/*
+	Cache-Control: public, max-age=31536000
+
+# Content-Type
+/feed.xml
+	Content-Type: application/rss+xml; charset=utf-8
+	Access-Control-Allow-Origin: *
+
+/feed.json
+	Content-Type: application/feed+json; charset=utf-8
+	Access-Control-Allow-Origin: *
+
+/*.webmanifest
+	Content-Type: application/json; charset=utf-8
+
+/*.svg
+	Content-Type: image/svg+xml; charset=utf-8
+
+# Public machine-readable files
+/human.json
+	Content-Type: application/json; charset=utf-8
+	Access-Control-Allow-Origin: *
 
 /.well-known/webfinger
 	Content-Type: application/jrd+json

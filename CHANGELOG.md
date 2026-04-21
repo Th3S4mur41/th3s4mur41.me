@@ -1,3 +1,73 @@
+## [2.56.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.56.1...v2.56.2) (2026-04-17)
+
+
+### Bug Fixes
+
+* update catch-all redirect to point to custom 404 page ([de4652c](https://github.com/Th3S4mur41/th3s4mur41.me/commit/de4652cc73dda64617b70d1fec9d04be7e315ab9))
+
+## [2.56.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.56.0...v2.56.1) (2026-04-17)
+
+
+### Bug Fixes
+
+* add catch-all redirect to return 404 for unmapped paths ([af7b005](https://github.com/Th3S4mur41/th3s4mur41.me/commit/af7b005186e0d4baebfd2cecae20c63155cd9535))
+
+# [2.56.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.55.0...v2.56.0) (2026-04-15)
+
+
+### Features
+
+* **CodePen:** enhance embed functionality with v2 support ([#2283](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2283)) ([7d6c98c](https://github.com/Th3S4mur41/th3s4mur41.me/commit/7d6c98c2a99e811040af3cd05bcdf2e853b3a520))
+
+# [2.55.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.54.0...v2.55.0) (2026-04-15)
+
+
+### Features
+
+* **CodePen:** enhance embed functionality with v2 support ([#2281](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2281)) ([65ff524](https://github.com/Th3S4mur41/th3s4mur41.me/commit/65ff5248313c1eea9c596de03ce6331ea0c7ee47))
+
+# [2.54.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.53.1...v2.54.0) (2026-04-14)
+
+
+### Features
+
+* **blog:** add syndication links for a11y tips article ([8f4254b](https://github.com/Th3S4mur41/th3s4mur41.me/commit/8f4254bfdaac113a14a9de1308587cfd0a65b1d6))
+
+## [2.53.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.53.0...v2.53.1) (2026-04-14)
+
+
+### Bug Fixes
+
+* **blog:** correct publication date ([b1deb49](https://github.com/Th3S4mur41/th3s4mur41.me/commit/b1deb494b94a8c7efa667d6271c2192cfeec7e64))
+
+# [2.53.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.52.1...v2.53.0) (2026-04-14)
+
+
+### Features
+
+* **blog:** add new a11y-tips article about labels ([#2275](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2275)) ([5431ee5](https://github.com/Th3S4mur41/th3s4mur41.me/commit/5431ee531d797d005ce023f82358b0bff7191039))
+
+## [2.52.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.52.0...v2.52.1) (2026-04-14)
+
+
+### Bug Fixes
+
+* **perf:** update CSS import to preload styles ([#2276](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2276)) ([82635cd](https://github.com/Th3S4mur41/th3s4mur41.me/commit/82635cd7047f950c0646f5f9aaa8b8b53f8bdbbf))
+
+# [2.52.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.51.0...v2.52.0) (2026-04-13)
+
+
+### Features
+
+* add showHeading prop to to avoid duplicate h1 on blog posts ([4c6d54c](https://github.com/Th3S4mur41/th3s4mur41.me/commit/4c6d54c2be9e88617c7144fbd7da0335a3c0c2da))
+
+# [2.51.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.50.2...v2.51.0) (2026-04-09)
+
+
+### Features
+
+* add human.json support and engineering standards documentation ([#2266](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2266)) ([9f3715d](https://github.com/Th3S4mur41/th3s4mur41.me/commit/9f3715d4b7326f54b59e35c4d380cc2576c661f5))
+
 ## [2.50.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.50.1...v2.50.2) (2026-04-02)
 
 

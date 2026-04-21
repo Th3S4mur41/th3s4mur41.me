@@ -1,8 +1,8 @@
 main {
-	--toc-row: 3 / span 5;
+	--toc-row: 3 / span 10;
 
 	&:has(.eyebrow + h1) {
-		--toc-row: 4 / span 5;
+		--toc-row: 4 / span 10;
 	}
 }
 

@@ -55,6 +55,8 @@ jobs:
         continue-on-error: true # There won't be an artifact in workflow without build job
         with:
           name: build
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: '📦 Release'
         id: release

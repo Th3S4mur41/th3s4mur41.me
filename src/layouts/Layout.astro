@@ -1,15 +1,15 @@
 ---
-import "../index.css";
-
 import logo from "/src/assets/logo.png";
 import heroImage from "/src/assets/Th3S4mur41_no-bg.png";
 import Image from "/src/components/Image.astro";
 import OpenGraph from "../components/OpenGraph.astro";
 import Socials from "../components/Socials.astro";
+import styles from "../index.css?url";
 
 interface Props {
 	title?: string;
 	heading?: string;
+	showHeading?: boolean;
 	tagline?: string;
 	image?: any;
 	imageAlt?: string;
@@ -27,12 +27,26 @@ interface Props {
 
 const { title, image, description, imageAlt } = Astro.props;
 const siteName = "Th3S4mur41";
+const showHeading = Astro.props.showHeading ?? true;
 const pageTitle = Astro.props.tagline
 	? `${siteName} | ${Astro.props.tagline}`
 	: title ? `${title} | ${siteName}` : `${siteName}`;
 const header = Astro.props.heading ?? title ?? siteName;
 const currentYear = new Date().getFullYear();
 const slug = Astro.url.pathname.replace(/^\/|\/$/g, "").replace(/\//g, "-") || "home";
+const canonicalBaseUrl = Astro.site ?? Astro.url;
+const normalizedCanonical = Astro.props.canonical?.trim() || undefined;
+const canonicalUrl = (() => {
+	if (!normalizedCanonical) {
+		return new URL(Astro.url.pathname, canonicalBaseUrl).toString();
+	}
+
+	try {
+		return new URL(normalizedCanonical, canonicalBaseUrl).toString();
+	} catch {
+		return new URL(Astro.url.pathname, canonicalBaseUrl).toString();
+	}
+})();
 
 // Default meta description (~150 chars) optimized for primary topics without truncation in SERPs
 const desc =
@@ -61,11 +75,13 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
+		<link rel="preload" href={styles} as="style" />
 		<!-- mobile -->
 		<meta name="HandheldFriendly" content="true" />
 		<!-- Viewport -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 		<meta name="text-scale" content="scale" />
+		<link rel="stylesheet" href={styles} />
 		<!-- Local -->
 		<meta name="geo.region" content="BE" />
 		<meta name="geo.placename" content="La Calamine" />
@@ -82,9 +98,7 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 		{Astro.props.noIndex && (
 			<meta name="robots" content="noindex, nofollow" />
 		)}
-		{Astro.props.canonical && (
-			<link rel="canonical" href={Astro.props.canonical} />
-		)}
+		<link rel="canonical" href={canonicalUrl} />
 		{Astro.props.translations && (
 			[
 				<link rel="alternate" hreflang="en" href={Astro.url.href} />,
@@ -101,7 +115,8 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 		<link rel="me" href="https://www.fronta11y.org/author/mvanderheyden/" />
 		<link rel="webmention" href="https://webmention.io/th3s4mur41.me/webmention" />
 		<link rel="pingback" href="https://webmention.io/th3s4mur41.me/xmlrpc" />
-
+		<link rel="human-json" href="/human.json" />
+		
 		<!-- Icon -->
 		<link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" />
 		<link rel="apple-touch-icon" href="/icons/favicon-180.png" />
@@ -123,7 +138,6 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 		<!-- <a href="#main" class="skip-link">Skip to main content</a> -->
 		{!Astro.props.noHeader && (
 			<header>
-				<h1>{header}</h1>
 				<Image src={heroImage} alt="Modern-day samurai kneeling in traditional armor, sword in hand, against a vibrant wall of multicolored paint splashes — symbolizing the fusion of ancient warrior spirit with contemporary creativity." loading="eager" fetchpriority="high" />
 			</header>
 		)}
@@ -137,6 +151,7 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 			</ul>
 		</nav>
 		<main id="main">
+			{showHeading && header && <h1>{header}</h1>}
 			<slot />
 		</main>
 		<slot name="aside" />
@@ -147,6 +162,7 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 				<nav aria-label="footer">
 					<a href="https://github.com/Th3S4mur41/th3s4mur41.me/issues" target="_blank" rel="noopener noreferrer">Feedback</a>
 					<a href="/feed.xml">RSS</a>
+					<a href="/specs/">Specs</a>
 				</nav>
 				<div class="copyright">
 					<Image

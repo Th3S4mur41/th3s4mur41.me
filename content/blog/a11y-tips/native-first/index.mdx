@@ -1,0 +1,30 @@
+---
+title: 'Native Elements: Leveraging Built-in Browser Features'
+date: 2026-04-14T09:00:00Z
+published: false
+image: ../Practical_Accessibility_Tips_for_Developers-v2.jpg
+imageAlt: 'Comic-style illustration of Michaël Vanderheyden wearing a baseball cap and samurai-themed shirt, working on a laptop with a samurai sticker. To the side, accessibility icons and the hashtag #A11yTips promote practical accessibility tips for developers.'
+description: ''
+tags:
+  - Accessibility
+  - WCAG
+keywords:
+  - accessibility
+  - WCAG
+  - web accessibility
+  - a11y
+---
+
+# Native Elements: Leveraging Built-in Browser Features
+
+![Comic-style illustration of Michaël Vanderheyden wearing a baseball cap and samurai-themed shirt, working on a laptop with a samurai sticker. To the side, accessibility icons and the hashtag #A11yTips promote practical accessibility tips for developers.](../Practical_Accessibility_Tips_for_Developers-v2.jpg)
+
+Modern browsers ship with powerful native HTML elements that solve common UI challenges without extra libraries or complex workarounds. By leaning on these built-in features, developers can reduce code complexity, improve performance, and ensure accessibility is handled at the platform level.
+The first rule of ARIA is: don't use ARIA.
+Accessibility testing tools often suggest adding ARIA attributes to fix issues, but in many cases this isn't necessary - or even recommended - if you use semantic HTML correctly. As the W3C famously states: "The first rule of ARIA is: don't use ARIA." Native elements already provide the semantics and behaviors assistive technologies rely on, so proper use of them often eliminates the need for extra attributes.
+One great example is the `<dialog>` element:
+Improved performance by avoiding heavy JavaScript libraries
+No z-index conflicts since dialogs render in the top layer
+Support for the command attribute or invoker API, enabling dialogs to work without client-side scripting
+
+Accessibility and usability benefits include automatic focus management when dialogs open and close, and setting background content to inert to trap keyboard focus within the modal.
