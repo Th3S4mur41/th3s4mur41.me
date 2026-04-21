@@ -35,11 +35,12 @@ export async function GET(context) {
 	const feedUrl = new URL("/feed.xml", site).href;
 	const iconUrl = new URL("/icons/favicon-512.png", site).href;
 
-	const [blogEntries, speakingEntries] = await Promise.all([
-		getCollection("blog", ({ data }) => isVisibleContent(data, { now, previewFuture })),
+	const [allBlogEntries, speakingEntries] = await Promise.all([
+		getCollection("blog"),
 		getCollection("speaking", ({ data }) => isVisibleContent(data, { now, previewFuture })),
 	]);
-	const blogEntryIds = getEntryIds(blogEntries);
+	const blogEntryIds = getEntryIds(allBlogEntries);
+	const blogEntries = allBlogEntries.filter((entry) => isVisibleContent(entry.data, { now, previewFuture }));
 	const blogPosts = blogEntries.filter((entry) => !isSeriesContainerId(entry.id, blogEntryIds));
 
 	const sortedEntries = [

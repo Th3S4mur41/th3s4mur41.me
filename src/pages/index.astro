@@ -11,8 +11,9 @@ import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/conten
 const now = new Date();
 const previewFuture = isPreviewFutureContentEnabled();
 
-const rawBlog = await getCollection("blog", ({ data }: any) => isVisibleContent(data, { now, previewFuture }));
-const rawBlogIds = getEntryIds(rawBlog);
+const allBlogEntries = await getCollection("blog");
+const rawBlog = allBlogEntries.filter(({ data }: any) => isVisibleContent(data, { now, previewFuture }));
+const rawBlogIds = getEntryIds(allBlogEntries);
 const blog = rawBlog
 	.filter((entry: any) => !isSeriesContainerId(entry.id, rawBlogIds))
 	.map((post: any) => ({ ...post, section: "blog" }));

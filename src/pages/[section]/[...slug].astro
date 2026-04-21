@@ -26,15 +26,15 @@ export async function getStaticPaths() {
 
 	const [blogEntries, speakingEntries] = await Promise.all([getCollection("blog"), getCollection("speaking")]);
 
+	const allBlogIds = getEntryIds(blogEntries);
 	const visibleBlogEntries = blogEntries.filter((entry: any) => isVisibleContent(entry.data, { now, previewFuture }));
 	const visibleSpeakingEntries = speakingEntries.filter((entry: any) => isVisibleContent(entry.data, { now, previewFuture }));
-	const visibleBlogIds = getEntryIds(visibleBlogEntries);
 	const visibleBlogByNormalizedId = new Map(
 		visibleBlogEntries.map((entry: any) => [normalizeEntryId(entry.id), entry] as const),
 	);
 
 	const blogPaths = visibleBlogEntries
-		.filter((entry: any) => !isSeriesContainerId(entry.id, visibleBlogIds))
+		.filter((entry: any) => !isSeriesContainerId(entry.id, allBlogIds))
 		.map((entry: any) => {
 			const seriesSlug = getSeriesSlug(entry.id);
 			const seriesEntry = (seriesSlug ? visibleBlogByNormalizedId.get(seriesSlug) : null) as any;
@@ -109,10 +109,11 @@ let seriesArticles: any[] = [];
 let seriesIntroEntry: any | null = null;
 
 if (!article && section === "blog") {
-	const visibleBlogEntries = (await getCollection("blog")).filter((entry: any) =>
+	const allBlogEntries = await getCollection("blog");
+	const allBlogIds = getEntryIds(allBlogEntries);
+	const visibleBlogEntries = allBlogEntries.filter((entry: any) =>
 		isVisibleContent(entry.data, { now, previewFuture }),
 	);
-	const visibleBlogIds = visibleBlogEntries.map((entry: any) => entry.id);
 	const hasSeriesChildren = visibleBlogEntries.some((entry: any) => {
 		const id = normalizeEntryId(entry.id);
 		return id !== normalizedSlug && id.startsWith(`${normalizedSlug}/`);
@@ -125,7 +126,7 @@ if (!article && section === "blog") {
 				const id = normalizeEntryId(entry.id);
 				if (id === normalizedSlug) return false;
 				if (!id.startsWith(`${normalizedSlug}/`)) return false;
-				return !isSeriesContainerId(entry.id, visibleBlogIds);
+				return !isSeriesContainerId(entry.id, allBlogIds);
 			})
 			.sort((a: any, b: any) => b.data.date.valueOf() - a.data.date.valueOf());
 	}

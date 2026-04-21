@@ -8,10 +8,11 @@ import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/conten
 const now = new Date();
 const previewFuture = isPreviewFutureContentEnabled();
 
-// Fetch collections
-const blog = await getCollection("blog", ({ data }: any) => isVisibleContent(data, { now, previewFuture }));
+// Fetch all blog entries first so series container detection is not affected by visibility.
+const allBlogEntries = await getCollection("blog");
+const blog = allBlogEntries.filter(({ data }: any) => isVisibleContent(data, { now, previewFuture }));
 const speaking = await getCollection("speaking", ({ data }: any) => isVisibleContent(data, { now, previewFuture }));
-const blogIds = getEntryIds(blog);
+const blogIds = getEntryIds(allBlogEntries);
 
 const blogPosts = blog.filter((entry: any) => !isSeriesContainerId(entry.id, blogIds));
 
