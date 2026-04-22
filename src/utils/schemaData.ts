@@ -118,6 +118,7 @@ export const getPersonData = (origin: string) => {
 			"https://th3s4mur41.medium.com/",
 			"https://www.instagram.com/th3s4mur41/",
 			"https://twitter.com/Th3S4mur41",
+			"https://x.com/Th3S4mur41",
 			"https://fosstodon.org/@Th3S4mur41",
 			"https://www.youtube.com/@Th3S4mur41",
 			"https://www.fronta11y.org/author/mvanderheyden/",
@@ -130,6 +131,7 @@ export const getPersonData = (origin: string) => {
 			"https://www.npmjs.com/~th3s4mur41",
 			"https://npmx.dev/org/th3s4mur41",
 			"https://techcommunity.microsoft.com/users/th3s4mur41/111608",
+			"https://www.figma.com/@Th3S4mur41",
 		],
 	};
 };
