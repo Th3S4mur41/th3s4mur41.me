@@ -1,3 +1,10 @@
+## [2.57.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.57.1...v2.57.2) (2026-04-22)
+
+
+### Bug Fixes
+
+* **headers:** update Content-Security-Policy ([#2302](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2302)) ([020f090](https://github.com/Th3S4mur41/th3s4mur41.me/commit/020f0904a73b0098cdc47cb77d979c21dc46cfc4))
+
 ## [2.57.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.57.0...v2.57.1) (2026-04-22)
 
 
