@@ -114,6 +114,12 @@ We’ve all seen it: a developer sees an a11y error, copies the "Suggested Fix" 
 
 **AI doesn't just provide a fix; it provides a *harmonious* fix**. By feeding the AI the specific code snippet, the WCAG violation, and custom instructions (such as general a11y best practices or framework-specific accessibility practices), it can generate a solution that respects your existing framework, state management, and [ARIA patterns](https://www.w3.org/WAI/ARIA/apg/). It moves us from "potential fixes" to "ready-to-merge code."
 
+> [!NOTE]
+> [Michael Fairchild](https://bsky.app/profile/mfairchild365.bsky.social) makes a very similar point in [Embedding Accessibility into AI-based software development](https://dev.to/mfairchild365/embedding-accessibility-into-ai-based-software-development-282k).
+> LLMs usually do not produce accessible code by default, but output quality improves a lot when you give clear accessibility instructions.
+> 
+> **Practical takeaway:** if you do not bake accessibility into prompts, tooling, and review gates, AI can speed up accessibility debt just as fast as it speeds up delivery.
+
 ### Bridging the Gap Between Audit and Code
 
 Audits are often the "source of truth," but they come with a major hurdle: testers are rarely developers.
