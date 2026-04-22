@@ -6,7 +6,7 @@
 	X-XSS-Protection: 1; mode=block
 	Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
 	Cross-Origin-Opener-Policy: same-origin
-  Cross-Origin-Embedder-Policy: credentialless
+  Cross-Origin-Embedder-Policy: unsafe-none
   Cross-Origin-Resource-Policy: cross-origin
 
 # Cache-Control
