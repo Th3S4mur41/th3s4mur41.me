@@ -5,6 +5,9 @@
 	X-Frame-Options: DENY
 	X-XSS-Protection: 1; mode=block
 	Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+	Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: credentialless
+  Cross-Origin-Resource-Policy: cross-origin
 
 # Cache-Control
 # Fingerprinted assets are safe to cache immutably because Astro includes a content hash in the filename.
