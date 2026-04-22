@@ -1,3 +1,10 @@
+## [2.57.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.57.0...v2.57.1) (2026-04-22)
+
+
+### Bug Fixes
+
+* **headers:** update Content-Security-Policy to include additional hash values ([1924bcb](https://github.com/Th3S4mur41/th3s4mur41.me/commit/1924bcbfb1f14e0bc7e2d305900a816714bcf714))
+
 # [2.57.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.56.3...v2.57.0) (2026-04-22)
 
 
