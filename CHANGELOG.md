@@ -1,3 +1,11 @@
+# [2.57.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.56.3...v2.57.0) (2026-04-22)
+
+
+### Features
+
+* **blog:** update contrast article with new insights on WCAG and APCA ([0267318](https://github.com/Th3S4mur41/th3s4mur41.me/commit/02673186ebc3ec75779d0622bc6f56be45447c27))
+* **schema:** add additional social media links ([085f15b](https://github.com/Th3S4mur41/th3s4mur41.me/commit/085f15b64c9e5f5c7a6ad739df28bd470262e3d8))
+
 ## [2.56.3](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.56.2...v2.56.3) (2026-04-21)
 
 
