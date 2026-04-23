@@ -44,8 +44,6 @@ interface Props {
 	featured?: boolean;
 	/** Editorially pinned card state, independent from layout emphasis. */
 	pinned?: boolean;
-	/** @deprecated Prefer `pinned`; retained for backward compatibility. */
-	highlight?: boolean;
 }
 
 const props = Astro.props as Props;
@@ -60,14 +58,12 @@ const {
 	type,
 	featured = false,
 	pinned = false,
-	highlight = false,
 } = props;
-
-const isPinned = pinned || highlight;
 
 const resolvedHref = href ?? `/${section}/${article.id}/`;
 const sanitizedId = article.id.replace(/\//g, "-");
 const descriptionId = `article-description-${section}-${sanitizedId}`;
+// Keep view-transition names stable and CSS-safe for nested content paths.
 const transitionId = sanitizedId;
 
 const dateValue = typeof article.data.date === "string" ? article.data.date : article.data.date.toISOString();
@@ -75,6 +71,7 @@ const dateObj = new Date(article.data.date);
 const resolvedType = type ?? article.data.type;
 
 type HeadingTagName = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+// Cards default to h2 and can be shifted down by context (e.g. list inside a section).
 const headingLevel = Math.min(6, Math.max(1, 2 + headingOffset));
 const HeadingTag = `h${headingLevel}` as HeadingTagName;
 
@@ -86,6 +83,7 @@ const resolvedImageAlt = article.data.imageAlt ?? "";
 const readingStats = section === "blog" ? article.data.readingTime : undefined;
 
 // TODO: consider extracting this formatting logic into a shared utility function (duplicated in ArticlePageHeader) and reusing it across the codebase for consistency)
+// Only show reading metadata when both duration text and a valid word count exist.
 const readingText = readingStats && typeof readingStats.text === "string" ? readingStats.text : null;
 const candidateWordCount = readingStats?.words;
 const wordCount = typeof candidateWordCount === "number" && Number.isFinite(candidateWordCount) && candidateWordCount > 0
@@ -94,39 +92,9 @@ const wordCount = typeof candidateWordCount === "number" && Number.isFinite(cand
 const formattedWords = typeof wordCount === "number" ? new Intl.NumberFormat("en-GB").format(wordCount) : null;
 const readingMeta = readingText && formattedWords ? `${readingText} • ${formattedWords} words` : null;
 
-// Biome currently doesn't reliably detect Astro template usage.
-void [
-	article,
-	section,
-	resolvedHref,
-	sanitizedId,
-	showType,
-	resolvedType,
-	featured,
-	pinned,
-	highlight,
-	isPinned,
-	dateValue,
-	dateObj,
-	descriptionId,
-	headingOffset,
-	HeadingTag,
-	transitionId,
-	resolvedImage,
-	resolvedImageAlt,
-	imageLoading,
-	readingStats,
-	readingText,
-	candidateWordCount,
-	wordCount,
-	readingMeta,
-	formatSiteDate,
-	Image,
-
-];
 ---
 
-	<article class:list={["card", { featured, pinned: isPinned, highlight: isPinned }]}>
+	<article class:list={["card", { featured, pinned }]}>
 		<HeadingTag style={`view-transition-name: article-title-${transitionId};`}><a href={resolvedHref}>
 			{article.data.title}</a></HeadingTag>
 		{showType && resolvedType && <span class="type">{resolvedType}</span>}

@@ -111,7 +111,7 @@ article.card {
 		justify-self: end;
 	}
 
-	&.highlight {
+	&.featured {
 		grid-template-columns: [image-start] 0.5em [title-start teaser-start meta-start type-start] 1fr [meta-end date-start] auto [date-end
 				title-end teaser-end type-end] 0.5em [image-end];
 		grid-template-rows: [image-start type-start] auto [image-end type-end meta-start date-start] auto [meta-end date-end
