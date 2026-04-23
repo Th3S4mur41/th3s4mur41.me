@@ -36,6 +36,7 @@ article.card {
 	& > :is(h1, h2, h3, h4, h5, h6) {
 		grid-area: title;
 		margin: 0;
+		font-size: 1.25rem;
 		z-index: 1;
 		/* TODO: replace through ident() when available - https://drafts.csswg.org/css-values-5/#funcdef-ident
 			  In the meantime, set view-transition-name inline in template */
