@@ -108,8 +108,8 @@ const readingMeta = readingText && formattedWords ? `${readingText} • ${format
 			/>
 		)}
 		<p class="p-summary" id={descriptionId}>{article.data.description}</p>
-		{readingMeta && <p class="reading-meta">{readingMeta}</p>}
 		<time class="dt-published" datetime={dateValue}>
 			{formatSiteDate(dateObj)}
 		</time>
+		{readingMeta && <div class="reading-meta">{readingMeta}</div>}
 	</article>

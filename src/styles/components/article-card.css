@@ -4,7 +4,7 @@
 
 article.card {
 	display: grid;
-	grid-template-columns: [image-start] 0.5em [title-start teaser-start meta-start type-start] 1fr [meta-end date-start] auto [date-end
+	grid-template-columns: [image-start] 0.5em [title-start teaser-start date-start type-start] 1fr [date-end meta-start] auto [meta-end
 			title-end teaser-end type-end] 0.5em [image-end];
 	grid-template-rows: [image-start type-start] auto [image-end type-end meta-start date-start] auto [meta-end date-end
 			title-start] auto [title-end teaser-start] auto [teaser-end] 0.5em;
@@ -21,11 +21,16 @@ article.card {
 	@container (width >= 40rem) {
 		grid-template-columns:
 			[image-start] 0.5em [type-start] 30ch [type-end]
-			0.5em [image-end] 1em [title-start teaser-start meta-start] 1fr [meta-end date-start] 1fr [title-end teaser-end
-				date-end] 0.5em;
+			0.5em [image-end] 1em [title-start teaser-start date-start] auto [date-end meta-start] 1fr [title-end teaser-end
+				meta-end] 0.5em;
 		grid-template-rows: [image-start type-start] 0.5em [title-start] auto [title-end meta-start date-start] auto [meta-end
 				date-end] 0.5em [teaser-start] 1fr [teaser-end] 0.5em [image-end type-end];
 		row-gap: 0;
+
+		&:not(.featured) > .reading-meta:not(:empty)::before {
+			content: "•" / "";
+			margin-inline: 1ch;
+		}
 	}
 
 	& > :is(h1, h2, h3, h4, h5, h6) {
@@ -58,7 +63,7 @@ article.card {
 	& img {
 		grid-area: image;
 		inline-size: 100%;
-		block-size: 100%;
+		block-size: 100% !important; /* TODO: remove !important in https://github.com/Th3S4mur41/th3s4mur41.me/issues/2147 */
 		max-block-size: 100%;
 		object-fit: cover;
 		border-radius: 0.5rem;
@@ -99,11 +104,10 @@ article.card {
 		grid-area: date;
 		font-size: 0.875rem;
 		color: var(--color-subtle-text);
-		justify-self: end;
 	}
 
 	&.featured {
-		grid-template-columns: [image-start] 0.5em [title-start teaser-start meta-start type-start] 1fr [meta-end date-start] auto [date-end
+		grid-template-columns: [image-start] 0.5em [title-start teaser-start date-start type-start] 1fr [date-end meta-start] auto [meta-end
 				title-end teaser-end type-end] 0.5em [image-end];
 		grid-template-rows: [image-start type-start] auto [image-end type-end meta-start date-start] auto [meta-end date-end
 				title-start] auto [title-end teaser-start] auto [teaser-end] 0.5em;
