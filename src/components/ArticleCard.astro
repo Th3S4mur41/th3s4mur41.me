@@ -1,7 +1,6 @@
 ---
 import type { ImageMetadata } from "astro";
 import { formatSiteDate } from "../utils/config";
-import { normalizePath } from "../utils/normalizePath";
 import Image from "./Image.astro";
 
 interface ReadingStats {
@@ -19,7 +18,7 @@ interface Props {
 			description: string;
 			date: string | Date;
 			type?: string;
-			image?: string;
+			image?: ImageMetadata;
 			imageAlt?: string;
 			readingTime?: ReadingStats;
 		};
@@ -51,15 +50,6 @@ interface Props {
 
 const props = Astro.props as Props;
 
-const blogImages = import.meta.glob("/content/blog/**/*.{jpg,png,webp}", { eager: true }) as Record<
-	string,
-	{ default: ImageMetadata }
->;
-const speakingImages = import.meta.glob("/content/speaking/**/*.{jpg,png,webp}", { eager: true }) as Record<
-	string,
-	{ default: ImageMetadata }
->;
-
 const {
 	article,
 	section,
@@ -88,13 +78,7 @@ type HeadingTagName = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 const headingLevel = Math.min(6, Math.max(1, 2 + headingOffset));
 const HeadingTag = `h${headingLevel}` as HeadingTagName;
 
-const imagePools = { blog: blogImages, speaking: speakingImages } as const;
-const resolvedImage = (() => {
-	if (!article.data.image) return undefined;
-	const imagePath = normalizePath(`/content/${section}/${article.id}/${article.data.image}`);
-	const pool = (imagePools as Record<string, Record<string, { default: ImageMetadata }>>)[section];
-	return pool?.[imagePath]?.default;
-})();
+const resolvedImage = article.data.image;
 
 const resolvedImageAlt = article.data.imageAlt ?? "";
 
@@ -138,7 +122,6 @@ void [
 	readingMeta,
 	formatSiteDate,
 	Image,
-	normalizePath,
 
 ];
 ---
