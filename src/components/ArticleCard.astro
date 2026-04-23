@@ -94,21 +94,22 @@ const readingMeta = readingText && formattedWords ? `${readingText} • ${format
 
 ---
 
-	<article class:list={["card", { featured, pinned }]}>
-		<HeadingTag style={`view-transition-name: article-title-${transitionId};`}><a href={resolvedHref}>
+	<article class:list={["card", "h-entry", { featured, pinned }]}> 
+		<HeadingTag class="p-name" style={`view-transition-name: article-title-${transitionId};`}><a class="u-url" href={resolvedHref}>
 			{article.data.title}</a></HeadingTag>
 		{showType && resolvedType && <span class="type">{resolvedType}</span>}
 		{resolvedImage && (
 			<Image
 				src={resolvedImage}
 				alt={resolvedImageAlt}
+				class="u-featured"
 				loading={imageLoading}
 				style={`view-transition-name: article-hero-image-${transitionId};`}
 			/>
 		)}
-		<p id={descriptionId}>{article.data.description}</p>
+		<p class="p-summary" id={descriptionId}>{article.data.description}</p>
 		{readingMeta && <p class="reading-meta">{readingMeta}</p>}
-		<time datetime={dateValue}>
+		<time class="dt-published" datetime={dateValue}>
 			{formatSiteDate(dateObj)}
 		</time>
 	</article>
