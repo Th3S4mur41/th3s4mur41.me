@@ -68,12 +68,22 @@ const PASSTHROUGH_HTML_ELEMENTS = new Set([
 	"output",
 ]);
 
-/** Return the image module (default export) from the appropriate pool. */
-function getImageModule(section, entryId, filename) {
-	if (!filename) return null;
-	// When the content schema uses Astro's image() helper, the image field is
-	// already an ImageMetadata object — return it directly without pool lookup.
-	if (typeof filename === "object") return filename;
+/**
+ * Return the resolved ImageMetadata for the given image reference.
+ *
+ * @param {string} section  - Collection name ("blog" | "speaking").
+ * @param {string} entryId  - Entry ID (e.g. "my-article").
+ * @param {import('astro').ImageMetadata|string|undefined} image
+ *   Either an ImageMetadata object (produced by Astro's `image()` schema
+ *   helper) or a plain filename/path string (legacy).
+ * @returns {import('astro').ImageMetadata|null}
+ */
+function getImageModule(section, entryId, image) {
+	if (!image) return null;
+	// ImageMetadata objects carry `src`, `width`, and `format` — short-circuit
+	// without any pool lookup when we already have the resolved metadata.
+	if (typeof image === "object" && "src" in image && "width" in image && "format" in image) return image;
+	const filename = /** @type {string} */ (image);
 	const pool = IMAGE_POOLS[section];
 	const cleaned = filename.replace(/^\.\//, "");
 	const candidates = cleaned.startsWith("/")
@@ -322,12 +332,14 @@ export async function renderBodyToHtml(entry, site) {
  *
  * @param {string} section   - Collection name ("blog" | "speaking").
  * @param {string} entryId   - Entry ID (e.g. "my-article").
- * @param {string|undefined} filename - Image filename from frontmatter.
+ * @param {import('astro').ImageMetadata|string|undefined} image
+ *   Resolved ImageMetadata (from Astro's `image()` schema helper) or a plain
+ *   filename string (legacy path-based lookup).
  * @param {URL|string} site  - Site origin for building absolute URLs.
  * @returns {Promise<string|null>}
  */
-export async function getHeroImageUrl(section, entryId, filename, site) {
-	const imgModule = getImageModule(section, entryId, filename);
+export async function getHeroImageUrl(section, entryId, image, site) {
+	const imgModule = getImageModule(section, entryId, image);
 	if (!imgModule) return null;
 	// Use the configured format, or fall back to the source image's own
 	// format so Astro doesn't silently convert to webp by default.
