@@ -33,6 +33,16 @@ article.card {
 		}
 	}
 
+	@media (prefers-reduced-motion: no-preference) {
+		animation: fadeIn 1s ease-out 0.1s both;
+		/* biome-ignore lint/correctness/noUnknownProperty: progressive enhancement */
+		animation-trigger: --t play-forwards play-backwards;
+		/* biome-ignore lint/correctness/noUnknownProperty: progressive enhancement */
+		timeline-trigger: --t view() entry 50% exit 50%;
+		/* biome-ignore lint/correctness/noUnknownProperty: progressive enhancement */
+		trigger-scope: --t;
+	}
+
 	& > :is(h1, h2, h3, h4, h5, h6) {
 		grid-area: title;
 		margin: 0;
