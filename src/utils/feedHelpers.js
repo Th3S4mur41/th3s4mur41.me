@@ -71,6 +71,9 @@ const PASSTHROUGH_HTML_ELEMENTS = new Set([
 /** Return the image module (default export) from the appropriate pool. */
 function getImageModule(section, entryId, filename) {
 	if (!filename) return null;
+	// When the content schema uses Astro's image() helper, the image field is
+	// already an ImageMetadata object — return it directly without pool lookup.
+	if (typeof filename === "object") return filename;
 	const pool = IMAGE_POOLS[section];
 	const cleaned = filename.replace(/^\.\//, "");
 	const candidates = cleaned.startsWith("/")
