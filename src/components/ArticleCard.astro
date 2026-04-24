@@ -1,8 +1,7 @@
 ---
 import type { ImageMetadata } from "astro";
-import Image from "/src/components/Image.astro";
 import { formatSiteDate } from "../utils/config";
-import { normalizePath } from "../utils/normalizePath";
+import Image from "./Image.astro";
 
 interface ReadingStats {
 	text?: string;
@@ -16,10 +15,10 @@ interface Props {
 		id: string;
 		data: {
 			title: string;
-			description: string;
+			description?: string;
 			date: string | Date;
 			type?: string;
-			image?: string;
+			image?: ImageMetadata;
 			imageAlt?: string;
 			readingTime?: ReadingStats;
 		};
@@ -41,26 +40,29 @@ interface Props {
 	showType?: boolean;
 	type?: string;
 
-	highlight?: boolean;
+	/** Emphasized treatment for prominent cards (e.g., larger hero or typography). */
+	featured?: boolean;
+	/** Editorially pinned card state, independent from layout emphasis. */
+	pinned?: boolean;
 }
 
 const props = Astro.props as Props;
 
-const blogImages = import.meta.glob("/content/blog/**/*.{jpg,png,webp}", { eager: true }) as Record<
-	string,
-	{ default: ImageMetadata }
->;
-const speakingImages = import.meta.glob("/content/speaking/**/*.{jpg,png,webp}", { eager: true }) as Record<
-	string,
-	{ default: ImageMetadata }
->;
-
-const { article, section, href, headingOffset = 0, imageLoading, showType = false, type, highlight = false } = props;
+const {
+	article,
+	section,
+	href,
+	headingOffset = 0,
+	imageLoading,
+	showType = false,
+	type,
+	featured = false,
+	pinned = false,
+} = props;
 
 const resolvedHref = href ?? `/${section}/${article.id}/`;
 const sanitizedId = article.id.replace(/\//g, "-");
-const headerId = `article-header-${section}-${sanitizedId}`;
-const descriptionId = `article-description-${section}-${sanitizedId}`;
+// Keep view-transition names stable and CSS-safe for nested content paths.
 const transitionId = sanitizedId;
 
 const dateValue = typeof article.data.date === "string" ? article.data.date : article.data.date.toISOString();
@@ -68,16 +70,11 @@ const dateObj = new Date(article.data.date);
 const resolvedType = type ?? article.data.type;
 
 type HeadingTagName = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+// Cards default to h2 and can be shifted down by context (e.g. list inside a section).
 const headingLevel = Math.min(6, Math.max(1, 2 + headingOffset));
 const HeadingTag = `h${headingLevel}` as HeadingTagName;
 
-const imagePools = { blog: blogImages, speaking: speakingImages } as const;
-const resolvedImage = (() => {
-	if (!article.data.image) return undefined;
-	const imagePath = normalizePath(`/content/${section}/${article.id}/${article.data.image}`);
-	const pool = (imagePools as Record<string, Record<string, { default: ImageMetadata }>>)[section];
-	return pool?.[imagePath]?.default;
-})();
+const resolvedImage = article.data.image;
 
 const resolvedImageAlt = article.data.imageAlt ?? "";
 
@@ -85,6 +82,7 @@ const resolvedImageAlt = article.data.imageAlt ?? "";
 const readingStats = section === "blog" ? article.data.readingTime : undefined;
 
 // TODO: consider extracting this formatting logic into a shared utility function (duplicated in ArticlePageHeader) and reusing it across the codebase for consistency)
+// Only show reading metadata when both duration text and a valid word count exist.
 const readingText = readingStats && typeof readingStats.text === "string" ? readingStats.text : null;
 const candidateWordCount = readingStats?.words;
 const wordCount = typeof candidateWordCount === "number" && Number.isFinite(candidateWordCount) && candidateWordCount > 0
@@ -93,53 +91,26 @@ const wordCount = typeof candidateWordCount === "number" && Number.isFinite(cand
 const formattedWords = typeof wordCount === "number" ? new Intl.NumberFormat("en-GB").format(wordCount) : null;
 const readingMeta = readingText && formattedWords ? `${readingText} • ${formattedWords} words` : null;
 
-// Biome currently doesn't reliably detect Astro template usage.
-void [
-	article,
-	section,
-	resolvedHref,
-	sanitizedId,
-	showType,
-	resolvedType,
-	dateValue,
-	dateObj,
-	headerId,
-	descriptionId,
-	headingOffset,
-	HeadingTag,
-	transitionId,
-	resolvedImage,
-	resolvedImageAlt,
-	imageLoading,
-	readingStats,
-	readingText,
-	candidateWordCount,
-	wordCount,
-	readingMeta,
-	formatSiteDate,
-	Image,
-	normalizePath,
-
-];
 ---
 
-<!-- TODO: Refactor component and layout  for reusability (e.g. container query) and accessibility (move the link inside the article) -->
-<a class="card post" href={resolvedHref} aria-labelledby={headerId} aria-describedby={descriptionId}>
-	<article class:list={[{ highlight }]} aria-labelledby={headerId}>
-		<HeadingTag id={headerId} style={`view-transition-name: article-title-${transitionId};`}>{article.data.title}</HeadingTag>
+	<article class:list={["card", "h-entry", { featured, pinned }]}> 
+		<HeadingTag class="p-name" style={`view-transition-name: article-title-${transitionId};`}><a class="u-url" href={resolvedHref}>
+			{article.data.title}</a></HeadingTag>
 		{showType && resolvedType && <span class="type">{resolvedType}</span>}
 		{resolvedImage && (
 			<Image
 				src={resolvedImage}
 				alt={resolvedImageAlt}
+				class="u-featured"
 				loading={imageLoading}
 				style={`view-transition-name: article-hero-image-${transitionId};`}
 			/>
 		)}
-		<p id={descriptionId}>{article.data.description}</p>
-		{readingMeta && <p class="reading-meta">{readingMeta}</p>}
-		<time datetime={dateValue}>
+		{article.data.description && (
+		<p class="p-summary">{article.data.description}</p>
+		)}
+		<time class="dt-published" datetime={dateValue}>
 			{formatSiteDate(dateObj)}
 		</time>
+		{readingMeta && <div class="reading-meta">{readingMeta}</div>}
 	</article>
-</a>

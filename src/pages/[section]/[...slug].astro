@@ -1,7 +1,6 @@
 ---
 import { getImage } from "astro:assets";
 import { getCollection, render } from "astro:content";
-import path from "node:path";
 import ArticleCard from "../../components/ArticleCard.astro";
 import BlogPostingSchema from "../../components/BlogPostingSchema.astro";
 import Image from "../../components/Image.astro";
@@ -150,52 +149,14 @@ if (!isSeriesPage && article) {
 const ArticleContent = !isSeriesPage && article ? (await render(article)).Content : null;
 const SeriesIntroContent = isSeriesPage && seriesIntroEntry ? (await render(seriesIntroEntry)).Content : null;
 
-// Import images from both collections eagerly (Astro will tree-shake unused).
-const blogImages = import.meta.glob("/content/blog/**/*.{jpg,png,webp}", { eager: true });
-const speakingImages = import.meta.glob("/content/speaking/**/*.{jpg,png,webp}", { eager: true });
-const imagePools: Record<string, Record<string, unknown>> = {
-	blog: blogImages,
-	speaking: speakingImages,
-};
-
-function normalizePosix(p: string): string {
-	return path.posix.normalize(p);
-}
-
-// NOTE: `article.data.image` may reference an image in the same folder as the post,
-// but it can also reference shared assets elsewhere inside the collection (e.g. "../hero.png").
-// We resolve by trying a couple of normalized candidates against the eager glob pool.
-let imagePath: string | undefined;
-let resolvedImage: unknown;
+// With `image()` in collection schema, content image frontmatter is resolved to ImageMetadata.
 const pageEntry = isSeriesPage ? seriesIntroEntry : article;
-const imageEntryId = pageEntry ? normalizeEntryId(pageEntry.id) : normalizedSlug;
-
-if (pageEntry?.data.image) {
-	const raw = typeof pageEntry.data.image === "string" ? pageEntry.data.image.trim() : "";
-	if (raw) {
-		const pool = imagePools[section];
-		const cleaned = raw.replace(/^\.\//, "");
-		const postDir = `/content/${section}/${imageEntryId}/`;
-		const collectionDir = `/content/${section}/`;
-		const candidates = cleaned.startsWith("/")
-			? [normalizePosix(cleaned)]
-			: [normalizePosix(path.posix.join(postDir, cleaned)), normalizePosix(path.posix.join(collectionDir, cleaned))];
-
-		for (const candidate of candidates) {
-			const mod = pool[candidate];
-			if (mod && typeof mod === "object" && (mod as { default?: unknown }).default) {
-				imagePath = candidate;
-				resolvedImage = (mod as { default?: unknown }).default;
-				break;
-			}
-		}
-	}
-}
+const resolvedImage = pageEntry?.data.image;
 
 const img =
-	imagePath && resolvedImage
+	resolvedImage
 		? await getImage({
-				src: resolvedImage as unknown as string,
+				src: resolvedImage,
 				width: 1200,
 				height: 630,
 				format: "jpg",
