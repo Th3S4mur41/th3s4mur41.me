@@ -54,7 +54,10 @@ article.card {
 
 			&:is(:hover, :focus) {
 				text-decoration: underline;
-				outline: none;
+				@supports selector(:has(:focus-visible)) {
+					/* outline is set on the card when the link is focused, so we need to set it to none on the link itself to avoid double outlines */
+					outline: none;
+				}
 			}
 		}
 	}
