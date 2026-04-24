@@ -62,7 +62,6 @@ const {
 
 const resolvedHref = href ?? `/${section}/${article.id}/`;
 const sanitizedId = article.id.replace(/\//g, "-");
-const descriptionId = `article-description-${section}-${sanitizedId}`;
 // Keep view-transition names stable and CSS-safe for nested content paths.
 const transitionId = sanitizedId;
 
@@ -107,7 +106,9 @@ const readingMeta = readingText && formattedWords ? `${readingText} • ${format
 				style={`view-transition-name: article-hero-image-${transitionId};`}
 			/>
 		)}
-		<p class="p-summary" id={descriptionId}>{article.data.description}</p>
+		{article.data.description && (
+		<p class="p-summary">{article.data.description}</p>
+		)}
 		<time class="dt-published" datetime={dateValue}>
 			{formatSiteDate(dateObj)}
 		</time>
