@@ -1,3 +1,10 @@
+# [2.58.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.57.2...v2.58.0) (2026-04-27)
+
+
+### Features
+
+* add site.standard.publication endpoint with appropriate headers ([6ae1b9e](https://github.com/Th3S4mur41/th3s4mur41.me/commit/6ae1b9ebfe193e109e6b4168c6caef810dda8bf1))
+
 ## [2.57.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.57.1...v2.57.2) (2026-04-22)
 
 
