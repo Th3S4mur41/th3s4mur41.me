@@ -65,8 +65,5 @@
 		"release": "semantic-release",
 		"version": "npm run lint:fix",
 		"prepare": "husky"
-	},
-	"overrides": {
-		"@astrojs/internal-helpers": "0.8.0"
 	}
 }
