@@ -24,14 +24,14 @@
 		"@astrojs/rss": "^4.0.18",
 		"@astrojs/sitemap": "^3.7.2",
 		"@fontsource/cascadia-code": "^5.2.3",
-		"astro": "^6.1.8",
+		"astro": "^6.1.9",
 		"baseline-status": "^1.1.1",
 		"reading-time": "^1.5.0",
 		"rehype-github-alerts": "^4.2.0",
 		"unist-util-visit": "^5.1.0"
 	},
 	"devDependencies": {
-		"@astrojs/mdx": "^5.0.3",
+		"@astrojs/mdx": "^5.0.4",
 		"@biomejs/biome": "2.4.13",
 		"@commitlint/cli": "^20.5.2",
 		"@commitlint/config-conventional": "^20.5.0",
@@ -65,8 +65,5 @@
 		"release": "semantic-release",
 		"version": "npm run lint:fix",
 		"prepare": "husky"
-	},
-	"overrides": {
-		"@astrojs/internal-helpers": "0.8.0"
 	}
 }
