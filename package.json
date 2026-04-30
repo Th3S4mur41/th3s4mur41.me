@@ -43,7 +43,7 @@
 		"concurrently": "^9.2.1",
 		"cssnano": "^7.1.7",
 		"husky": "^9.1.7",
-		"postcss": "^8.5.12",
+		"postcss": "^8.5.13",
 		"postcss-preset-env": "^11.2.1",
 		"prettier": "^3.8.3",
 		"typescript": "^6.0.3",
