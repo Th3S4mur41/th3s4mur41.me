@@ -41,7 +41,7 @@
 		"astro-compress": "^2.4.1",
 		"browserslist": "^4.28.2",
 		"concurrently": "^9.2.1",
-		"cssnano": "^7.1.7",
+		"cssnano": "^7.1.8",
 		"husky": "^9.1.7",
 		"postcss": "^8.5.13",
 		"postcss-preset-env": "^11.2.1",
