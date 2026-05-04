@@ -1,11 +1,12 @@
 ---
-title: 'Grid lanes layout with subgrid: No more wrapper'
+title: 'Grid Lanes, Subgrid, and No Extra Wrappers'
 date: 2026-05-19T00:00:00Z
 published: true
 image: '../michael-slashing-the-JS-logo-with-katana.jpg'
 imageAlt: 'Comic-style illustration of Michaël Vanderheyden slashing the JavaScript logo with a katana'
 description: >-
-  Plaeholder.
+  A narrative walkthrough of how grid lanes, subgrid, and anchor positioning let
+  me remove wrapper-heavy CSS workarounds as a progressive enhancement.
 tags:
   - HTML
   - CSS
@@ -19,31 +20,26 @@ keywords:
 
 import CodePen from '/src/components/CodePen.astro';
 
-# Grid lanes layout with subgrid: No more wrapper
+# Grid Lanes, Subgrid, and No Extra Wrappers
 
 ![Comic-style illustration of Michaël Vanderheyden slashing the JavaScript logo with a katana](../michael-slashing-the-JS-logo-with-katana.jpg)
 
-Using grid to setup the basic layout of a website is a pretty common practice, one that I also like to use myself.
-Grid can also be a great tool for blogs if you want the content to usually be centered, but with some elements like quotes or images bleeding out or spanning the entire width of the page (like e.g. hero image).
+The goal of this series is simple: build on modern HTML and CSS to remove old workarounds and JavaScript fixes, and build modern, robust UIs through progressive enhancement.
 
-Now while the page layout enclosing the page's header, main and footer can use a different grid layout than the one used for the content, it can also rely on the same grid, and use subgrid for the content. This way, you can have a single grid layout for the entire page, and use subgrid to create different layouts for different sections of the page without needing to wrap them in additional elements.
+For the first post, I wanted to focus on something that has been bugging me on my own page since I added it and wanted to test a better solution.
+For article pages, I want body content centered for readability, with occasional full-bleed elements like hero images, quotes, or media blocks. The classic approach is a grid-based full-bleed layout, like Josh Comeau's write-up on [Full-Bleed Layout Using CSS Grid](https://www.joshwcomeau.com/css/full-bleed/). A page-level grid plus subgrid is already a solid base for this and helps align content across sections without structural div soup.
 
 TODO: add image here.
 
-That works all pretty well.
+The challenge shows up on wider screens. That's where I want to move secondary content, like a table of contents and reactions, into a sidebar. Historically, this is where wrappers and magic numbers creep in.
+I wanted a version that still works with markdown-generated content, with no extra container choreography in the markup.
 
-What I like to do now, is on larger screens to move secondary content like a table of contents or social media links and reactions to the sidebar.
-Now, there are various ways to do that, most of them however require to add some wrapper.
-I was however looking for a solution that would allow me to do that without needing to add any wrapper, something that would work right away with content generated from markdown.
+## Start from content, not containers
 
-Turns out, with a bit of modern CSS, it will be soon possible to do that with a combination of, grid-lanes, subgrid and anchor-positioning.
+The article body is generated from markdown, so the structure is naturally linear: headings, paragraphs, media, and a footer.
 
-## The content
-
-Let's start with the content of the article.
-
-It is generated from markdown, so it is a simple flow of block elements, with some inline elements here and there.
-I'm injecting a table of contents after the h1 and some social media links and reactions in the article footer.
+I use a rehype plugin to generate and inject a table of contents after the h1.
+Reactions are added by Astro logic at build time in the footer. No wrapper around "main content" and "sidebar" blocks.
 
 ```html 
  <article>
@@ -58,71 +54,108 @@ I'm injecting a table of contents after the h1 and some social media links and r
   </article>
 ```
 
-For readability, I like to limit the width of the content, and center it on the page, while allowing some elements to bleed out or span the entire width of the page.
+That is ideal for Lean Web: semantic HTML first, then layout as enhancement.
+This is also the structure this very page you are looking at is built on.
 
-## The sidebar
+## Where the old workaround starts
 
-On larger screens though, there starts to be a lot of wasted space on the sides, and I would like to move some of the secondary content to the sidebar.
-So the first thing I usually do, is to move the table of contents to the sidebar.
+On larger screens, side space is often underused, so moving the table of contents to the sidebar was a natural next step.
 
-And here comes the first problem, while moving an element in a spearate column is straightforward, the rows are the problematic area.
-If I keep the table of contentsin the first row, e.g. the same row as the h1, then the h1 will take as much vertical space as the table of contents, which is not what I want.
-
-ADD SCREENSHOT HERE
-
-Unfortunately, since there is no way to know in advance how much vertical space the table of contents will take and spanning the rows to -1 is not an option since all rows are implicit, there is no way to make the h1 take only the space it needs and let the table of contents take the rest of the space in that row.
-So the workaround is to use a magic number of rows, that is smaller than the rows of the expected article content, but still big enough to cover the table of contents.
+Moving across columns is easy. Rows are where things get awkward.
+In a grid, the table of contents shares the first row with the h1 or the first paragraph, this row grows to match the table of contents height which is usually bigger than the content.
+As a result, the first element is then followed by a weird spacing.
 
 ADD SCREENSHOT HERE
 
-While that usually works, it is not a very robust solution.
-Moreover, it reserves more space than needed which makes in weird to add more content like reactions below.
+The table of contents height depends on content, so hard-coding row spans is guesswork.
+The classic workaround is "magic number" row spans: big enough for most cases, hopefully not too big to potentially break things.
 
 ADD SCREENSHOT HERE
 
-## The solution: grid-lanes
+While this solution works to some extent, allowing me to move the table of contents to the sidebar without changing the HTML structure, it is still a workaround and I don't like magic numbers.
 
-Grid-lanes is a new CSS feature that allows to define named lanes in a grid, and then place items in those lanes without the items on different lanes affecting the size of each other.
+## The solution: grid lanes
+
+<baseline-status featureId="grid-lanes"></baseline-status>
+
+Grid lanes let you define named lanes and place items so they do not force sizing behavior across lanes the way traditional track sharing does.
 
 ADD SCREENSHOT HERE
 
-So, what we do is define a lane for the main content and a lane for the sidebar, and then we can place the table of contents in the sidebar lane without it affecting the size of the h1 in the main content lane.
-So no more workaround with magic numbers, and as a direct win, I can also place the reactions in the sidebar lane without any weird spacing issues.
+In practice, I define a content lane and a sidebar lane, then place the table of contents in the sidebar lane.
+Now the first content element keeps its natural height, and the old row-span workaround disappears.
+That works great if the columns are defined in the the article, but what if like on this page, the columns are defined in a parent?
 
-### What about subgrid
+### What about subgrid?
 
-But since we no longer use display grid, we can't use subgrid to place the content of the article in the main layout, right.
-Wrong. While the lanes behave differently than regular grid tracks, the other axis still behaves like a regular grid, which means that we can still use subgrid to place the content of the article in the main layout.
+At first glance, it feels like moving to lanes might block subgrid.
+But the non-lane axis still behaves like regular grid, so subgrid remains useful for content alignment.
 
 > [!WARNING]
-> At the time of writing, while Chrome does support grid-lanes with experimental features enabled, it does not yet support the combination of grid-lanes and subgrid, which is a bit of a bummer, but hopefully it will be supported soon.
+> At the time of writing, Chrome supports grid lanes behind experimental flags, but the combination with subgrid is not fully there yet.
+> This pattern should be treated as progressive enhancement knowing that it might break with experimental implementation
 
-## Make it stick
+## More content in the sidebar
 
-Now usually, I like to make the table of contents sticky, so that it stays visible while scrolling through the article.
-That is also possible with grid-lanes, just setting the position to sticky. Nothing changes here.
+Now the the table of content is using the exact height it needs, we could think about moving more things to the sidebar.
+On this page, the natural next item would be the article footer or the reactions.
 
-But I also want the reactions to be sticky below the table of contents.
-The problem, I don't know the size of the table of contents, so it's impossible to set a top value for the reactions that would work in all cases.
+With `grid-lanes`, moving the footer to the sidebar is straightforward and it gets place right below the table of contents where I would expect it.
 
-The solution: anchor positioning.
-By defining an anchor on the table of contents, I can then position the reactions right below it, without needing any magic number.
+## Make sidebar elements stick without guessing offsets
 
+I usually keep the table of contents sticky so readers can navigate while scrolling.
+That part is straightforward and doesn't change with `grid-lanes`
+
+The trickier part now is the footer below it. I do not know the table of contents' height ahead of time, so a fixed top offset is just another magic number waiting to fail.
+
+### The dream solution: sticking to an anchor
+
+The perfect solution to this problem would be to set `position: sticky` to the footer but instead of a fixed number for the `inset-block-start` (or `top`), we would use the table of contents as an anchor.
+The solution would be:
+
+```css
+nav.toc {
+  anchor-name: --toc;
+}
+footer {
+  grid-column: sidebar;
+  position: sticky;
+  inset-block-start: anchor(--toc end);
+}
+```
+
+Unfortunately, combioning `position: sticky` with anchor positioning, isn't currently possible.
+
+### The second shift: anchor positioning
+
+<baseline-status featureId="anchor-positioning"></baseline-status>
+
+So instead, I can use anchor positioning to place the footer right below the table of contents, and it will stay there as the content grows.
+
+This solves the happy path cleanly, but there is still a caveat.
+If sidebar content becomes taller than the viewport, the anchored element can be pushed down and overflow the page's footer or worse bleed out of the viewport.
+In this case unfortunately, we'll have to go back to our magic number workaround and add the estimaged height of the footer as a `margin-block-end` of the table-of contents.
+
+Check out the CodePen below for a demo of this pattern, and feel free to fork it and experiment with it yourself.
 <CodePen
 	title="grid-lanes and subgrid"
 	href="https://codepen.io/editor/th3s4mur41/pen/019db588-5eee-7500-bb0b-f33009caac30"
-	defaultTab="result"
-	description="Interactive CodePen demo comparing contrast outcomes for WCAG vs APCA."
+  defaultTab="result"
+  description="Interactive CodePen demo of a wrapper-free article layout using grid lanes, subgrid, and anchor positioning."
 />
 
-This is a pretty neat solution, but there is a catch...
-If the content of the sidebar gets bigger than the viewport, the anchored element might be pushed out the bottom and not scroll up once you reach the end of the page.
+## Why this belongs in the Lean Web series
 
-A potential solution for that would be  a combination of sticky and anchored positioning where the element would stick to an anchor instead of the viewport, but that is just wishful thinking for now.
+This pattern is not a silver bullet, and wrappers are still sometimes the pragmatic choice.
 
-## Conclusion
+But it captures a Lean Web principle I care about: when the platform grows, we should remove complexity, not just move it around.
 
-This pattern might be useful in some cases, but it is not a silver bullet. Sometimes a  wrapper might be easier to manage or create a more robust layout.
-But it is a nice addition to the CSS toolbox, and it will be interesting to see how it can be used.
+Here, that means:
 
-Let me know if you have any other ideas on how to use it, or if you have any feedback on the pattern.
+- keeping markdown-native HTML structure
+- avoiding wrapper-only layout elements
+- removing row-span and offset magic numbers
+- shipping it as progressive enhancement while browser support matures
+
+If you are experimenting with similar patterns, I would love to hear what worked, what broke, and what fallback strategy you picked.
