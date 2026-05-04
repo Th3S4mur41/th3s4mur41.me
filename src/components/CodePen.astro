@@ -1,6 +1,17 @@
 ---
 
-
+/**
+ * CodePen embed component with support for v1 and v2 URLs.
+ *
+ * CodePen v2 URLs use the /editor/ prefix (e.g., https://codepen.io/editor/<user>/pen/<uuid>).
+ * These URLs require client-side oEmbed resolution to extract the slug hash, adding latency and a failure mode.
+ *
+ * For best performance and reliability, provide explicit props:
+ *   <CodePen user="username" slugHash="ABC123" version={2} ... />
+ *
+ * When explicit props are provided, no oEmbed lookup is needed and embeds load quickly and reliably.
+ * The oEmbed fallback is still available for v2 URLs without explicit slugHash props.
+ */
 
 export interface Props {
 	title: string;
@@ -64,6 +75,13 @@ try {
 }
 
 const canResolveV2SlugClientSide = version === 2 && !slugHash;
+
+if (canResolveV2SlugClientSide && import.meta.env.DEV) {
+	console.warn(
+		`CodePen: v2 URL requires oEmbed resolution. For faster, more reliable embeds, provide explicit props: user="${user}" slugHash="<hash>" version={2}`,
+		{ href },
+	);
+}
 
 if (!user) {
 	throw new Error(
