@@ -93,7 +93,7 @@ article {
     grid-column: content;
   }
 }
-nav.toc {
+nav.table-of-contents {
   grid-column: sidebar;
   grid-row: 1 / span 10; /* magic number */
 }
@@ -121,7 +121,7 @@ article {
     display: grid;
   }
 }
-nav.toc {
+nav.table-of-contents {
   grid-column: sidebar;
   @supports not (display: grid-lanes) {
     grid-row: 1 / span 10; /* magic number */
@@ -156,7 +156,7 @@ article {
     display: grid;
   }
 }
-nav.toc {
+nav.table-of-contents {
   grid-column: sidebar;
   @supports not (display: grid-lanes) {
     grid-row: 1 / span 10; /* magic number */
@@ -188,7 +188,7 @@ The ideal solution would be to make the footer sticky, but instead of a fixed `i
 Something like this:
 
 ```css
-nav.toc {
+nav.table-of-contents {
   anchor-name: --toc;
 }
 footer {
@@ -212,7 +212,7 @@ If the sidebar content grows taller than the viewport, the anchored element can 
 In that case, we have to fall back to a magic number and add the estimated height of the footer as a `margin-block-end` on the table of contents.
 
 ```css
-nav.toc {
+nav.table-of-contents {
   anchor-name: --toc;
   margin-block-end: 15rem; /* fallback: estimated height of the footer */
 }
