@@ -2,7 +2,7 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 import compress from "astro-compress";
-import { rehypeGithubAlerts } from "rehype-github-alerts";
+import { defaultBuild, rehypeGithubAlerts } from "rehype-github-alerts";
 import {
 	rehypeExternalLinks,
 	rehypeHeadingDates,
@@ -13,10 +13,22 @@ import {
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.js";
 import { SITE_CONFIG } from "./src/utils/config.js";
 
+const rehypeGithubAlertsOptions = {
+	build: (alertOptions, originalChildren) => {
+		const alert = defaultBuild(alertOptions, originalChildren);
+		if (alert?.type === "element") {
+			alert.tagName = "aside";
+		}
+
+		return alert;
+	},
+};
+
 const sharedRehypePlugins = [
 	rehypeHeadingDates,
 	rehypeInjectToc,
 	rehypeViewTransitionNames,
+	[rehypeGithubAlerts, rehypeGithubAlertsOptions],
 	rehypeOptimizeFirstImage,
 	rehypeExternalLinks,
 ];
@@ -24,7 +36,7 @@ const mdxRehypePlugins = [
 	rehypeHeadingDates,
 	rehypeInjectToc,
 	rehypeViewTransitionNames,
-	rehypeGithubAlerts,
+	[rehypeGithubAlerts, rehypeGithubAlertsOptions],
 	rehypeOptimizeFirstImage,
 	rehypeExternalLinks,
 ];
