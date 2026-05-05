@@ -18,6 +18,7 @@ const rehypeGithubAlertsOptions = {
 		const alert = defaultBuild(alertOptions, originalChildren);
 		if (alert?.type === "element") {
 			alert.tagName = "aside";
+			alert.properties = { ...alert.properties, ariaLabel: alertOptions.title };
 		}
 
 		return alert;
