@@ -1,3 +1,10 @@
+# [2.60.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.59.0...v2.60.0) (2026-05-06)
+
+
+### Features
+
+* add lean web series post about `grid-lanes` and `subgrid`  ([#2320](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2320)) ([f7f4e80](https://github.com/Th3S4mur41/th3s4mur41.me/commit/f7f4e80336f799798785a1f568393fcdff78b850))
+
 # [2.59.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.58.1...v2.59.0) (2026-05-06)
 
 
