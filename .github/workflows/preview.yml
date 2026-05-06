@@ -8,7 +8,7 @@ on:
   workflow_run:
     workflows: [Checks]
     types: [completed]
-    branches-ignore: [main, next, beta, alpha]
+    branches-ignore: [main, next, beta, alpha, gh-cache]
 
 permissions:
   contents: read

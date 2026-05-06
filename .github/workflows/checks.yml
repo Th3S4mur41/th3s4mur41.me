@@ -7,7 +7,7 @@ name: Checks
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-
+    branches-ignore: [gh-cache]
   push:
     branches: [main, next, beta, alpha]
 
