@@ -69,7 +69,12 @@ On larger screens, side space is often underused, so moving the table of content
 
 Moving across columns is easy. Rows are where things get awkward.
 In a grid, the table of contents shares the first row with the h1 or first paragraph. That row then grows to match the TOC height, which is usually much taller than a single heading.
-As a result, the heading ends up with a lot of empty space below it.
+As a result, the heading (or first paragraph) ends up with a lot of empty space below it.
+
+<figure>
+  ![website layout screenshot showing an article with a table of contents in a sidebar. The table of contents is taller than the first paragraph it shares a grid row with. Overlaying dashed lines highlight the underlying grid structure.](toc-in-sidebar-without-span.jpg)
+  <figcaption>Because the table of contents and the first paragraph share the same grid row, the row height is determined by the taller element. This results in unintended trailing white space beneath the first paragraph, breaking the visual flow of the article content.</figcaption>
+</figure>
 
 The TOC height depends on content, so hard-coding row spans is guesswork.
 The classic workaround is a "magic number" row span: big enough for most cases, but still just a guess.
@@ -230,7 +235,7 @@ Check out the CodePen below for a demo of this pattern, and feel free to fork it
   description="Interactive CodePen demo of a wrapper-free article layout using grid lanes, subgrid, and anchor positioning."
 />
 
-## Why this belongs in the Lean Web series
+## Wrapping up
 
 This pattern is not a silver bullet, and wrappers are still sometimes the pragmatic choice.
 
