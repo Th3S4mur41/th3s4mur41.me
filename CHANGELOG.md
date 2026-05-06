@@ -1,3 +1,67 @@
+## [2.60.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.60.0...v2.60.1) (2026-05-06)
+
+
+### Bug Fixes
+
+* update branch ignore rules in workflows for better management ([bf6cd6b](https://github.com/Th3S4mur41/th3s4mur41.me/commit/bf6cd6b72cb2f0d85d49deb67d7becebdf67903c))
+
+# [2.60.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.59.0...v2.60.0) (2026-05-06)
+
+
+### Features
+
+* add lean web series post about `grid-lanes` and `subgrid`  ([#2320](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2320)) ([f7f4e80](https://github.com/Th3S4mur41/th3s4mur41.me/commit/f7f4e80336f799798785a1f568393fcdff78b850))
+
+# [2.59.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.58.1...v2.59.0) (2026-05-06)
+
+
+### Features
+
+* update rehypeGithubAlerts to output aside ([#2324](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2324)) ([9db91ca](https://github.com/Th3S4mur41/th3s4mur41.me/commit/9db91ca0289940fea6a7f05ebba889aa942956e6))
+
+## [2.58.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.58.0...v2.58.1) (2026-04-27)
+
+
+### Bug Fixes
+
+* deliver site.standard.publication as json ([20e579c](https://github.com/Th3S4mur41/th3s4mur41.me/commit/20e579c50c465c68529a90de4079e0ab74604e35))
+
+# [2.58.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.57.2...v2.58.0) (2026-04-27)
+
+
+### Features
+
+* add site.standard.publication endpoint with appropriate headers ([6ae1b9e](https://github.com/Th3S4mur41/th3s4mur41.me/commit/6ae1b9ebfe193e109e6b4168c6caef810dda8bf1))
+
+## [2.57.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.57.1...v2.57.2) (2026-04-22)
+
+
+### Bug Fixes
+
+* **headers:** update Content-Security-Policy ([#2302](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2302)) ([020f090](https://github.com/Th3S4mur41/th3s4mur41.me/commit/020f0904a73b0098cdc47cb77d979c21dc46cfc4))
+
+## [2.57.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.57.0...v2.57.1) (2026-04-22)
+
+
+### Bug Fixes
+
+* **headers:** update Content-Security-Policy to include additional hash values ([1924bcb](https://github.com/Th3S4mur41/th3s4mur41.me/commit/1924bcbfb1f14e0bc7e2d305900a816714bcf714))
+
+# [2.57.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.56.3...v2.57.0) (2026-04-22)
+
+
+### Features
+
+* **blog:** update contrast article with new insights on WCAG and APCA ([0267318](https://github.com/Th3S4mur41/th3s4mur41.me/commit/02673186ebc3ec75779d0622bc6f56be45447c27))
+* **schema:** add additional social media links ([085f15b](https://github.com/Th3S4mur41/th3s4mur41.me/commit/085f15b64c9e5f5c7a6ad739df28bd470262e3d8))
+
+## [2.56.3](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.56.2...v2.56.3) (2026-04-21)
+
+
+### Bug Fixes
+
+* **blog:** remove empty series from feeds ([72d478c](https://github.com/Th3S4mur41/th3s4mur41.me/commit/72d478c47e5c707f94a11feab8f7f4795c6e209b))
+
 ## [2.56.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.56.1...v2.56.2) (2026-04-17)
 
 

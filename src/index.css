@@ -1,6 +1,7 @@
 @import url("styles/base.css");
 @import url("styles/animation.css");
 
+@import url("styles/components/article-card.css");
 @import url("styles/components/socials.css");
 @import url("styles/components/table-of-contents.css");
 

@@ -1,10 +1,13 @@
 /*
-	Content-Security-Policy: default-src 'self'; script-src 'self' https://static.cloudflareinsights.com https://public.codepenassets.com https://codepen.io 'sha256-tf144n4Z6I7tBam8CoexaYkxvMesJwnesj2TlJzYanY=' 'sha256-bRfoV3+LSpKTJa/+rU6tN2QNXHORDRVCxQiJ0AXnfdU='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://codepen.io https://cdpn.io https://*.codepenassets.com https://avatars.webmention.io/ https://cdn.bsky.app; font-src 'self'; frame-src https://codepen.io https://cdpn.io; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests; connect-src 'self' https://static.cloudflareinsights.com https://cloudflareinsights.com https://*.cloudflareinsights.com https://public.codepenassets.com https://api.webstatus.dev;
+	Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://cloudflareinsights.com https://*.cloudflareinsights.com https://public.codepenassets.com https://codepen.io https://th3s4mur41.me/cdn-cgi/zaraz/; script-src-attr 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://codepen.io https://cdpn.io https://*.codepenassets.com https://avatars.webmention.io/ https://cdn.bsky.app; font-src 'self'; frame-src https://codepen.io https://cdpn.io; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests; connect-src 'self' https://static.cloudflareinsights.com https://cloudflareinsights.com https://*.cloudflareinsights.com https://public.codepenassets.com https://api.webstatus.dev https://th3s4mur41.me/cdn-cgi/zaraz/;
 	Referrer-Policy: strict-origin-when-cross-origin
 	X-Content-Type-Options: nosniff
 	X-Frame-Options: DENY
 	X-XSS-Protection: 1; mode=block
 	Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+	Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: unsafe-none
+  Cross-Origin-Resource-Policy: cross-origin
 
 # Cache-Control
 # Fingerprinted assets are safe to cache immutably because Astro includes a content hash in the filename.
@@ -53,3 +56,8 @@
 /.well-known/webfinger
 	Content-Type: application/jrd+json
 	Access-Control-Allow-Origin: *
+
+/.well-known/site.standard.publication
+	Content-Type: application/json; charset=utf-8
+	Access-Control-Allow-Origin: *
+	

@@ -1,6 +1,7 @@
 ---
 title: 'Contrast: Beyond WCAG Compliance'
 date: 2026-01-14T10:00:00Z
+updated: 2026-04-22T00:00:00Z
 image: ../Practical_Accessibility_Tips_for_Developers-v2.jpg
 imageAlt: 'Comic-style illustration of Michaël Vanderheyden wearing a baseball cap and samurai-themed shirt, working on a laptop with a samurai sticker. To the side, accessibility icons and the hashtag #A11yTips promote practical accessibility tips for developers.'
 description: 'Discover why APCA offers more perceptually accurate approach to color contrast than traditional WCAG standards for better readability.'
@@ -152,3 +153,25 @@ the text against the page background (e.g. `body`) rather than the yellow backgr
 Tools and rules are there to help you make better decisions, not to replace judgment. The real goal of contrast work isn’t “passing a checker”, it’s making content that people can comfortably read and use.
 
 Ideally, aim to satisfy both WCAG and APCA. But when you can’t (or when the two point you in different directions), favor real user experience over compliance: validate with real content, real contexts, and—when possible—real users.
+
+
+## UPDATE - 2026-04-22
+
+Following a [discussion on Bluesky with Stef Walter](https://bsky.app/profile/th3s4mur41.me/post/3mjmscpguyc2n), I felt this post needed a brief update.
+
+The conversation was sparked by Adrian Roselli's post, [WCAG3 contrast as of April 2026](https://adrianroselli.com/2026/04/wcag3-contrast-as-of-april-2026.html), where he explains why dismissing WCAG in favor of APCA is problematic for several reasons:
+
+- Legal risk: following APCA instead of WCAG can create legal exposure, since many regulations and standards reference WCAG. APCA may be more perceptually accurate, but it is not yet recognized as a legal baseline.
+- APCA was marked for removal from the WCAG 3 working draft.
+- The APCA versions discussed in earlier drafts were very early and are now obsolete.
+- WCAG 3 is still years away from completion.
+
+My view remains that the WCAG contrast algorithm has known limitations, and APCA is often a better model for perceived readability—regardless of its uncertain status in WCAG3 .
+
+That said, when colors are problematic, the first step should be to aim for a middle ground that passes both WCAG and APCA checks.
+Depending on brand requirements, that can be difficult or even impossible.
+
+In those cases, my personal approach is to **prioritize user experience over strict compliance**.
+That approach can still carry legal risk, since WCAG remains the referenced standard in many regulations. It is a trade-off each organization needs to evaluate based on its context and risk tolerance.
+
+If a decision is made to dismiss WCAG contrast in favor of APCA, that decision **must** be clearly documented in the accessibility statement, including the explanation and reasoning behind it.

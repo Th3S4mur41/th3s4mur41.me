@@ -99,6 +99,7 @@ describe("RSS feed (feed.xml)", () => {
 			.map((link) => toPathname(link));
 
 		expect(linkPaths).not.toContain("/blog/a11y-tips/");
+		expect(linkPaths).not.toContain("/blog/the-lean-web/");
 		expect(linkPaths).toContain("/blog/a11y-tips/contrast/");
 	});
 
@@ -204,6 +205,7 @@ describe("JSON feed (feed.json)", () => {
 		const itemPaths = feed.items.map((item) => toPathname(item.url));
 
 		expect(itemPaths).not.toContain("/blog/a11y-tips/");
+		expect(itemPaths).not.toContain("/blog/the-lean-web/");
 		expect(itemPaths).toContain("/blog/a11y-tips/contrast/");
 	});
 
