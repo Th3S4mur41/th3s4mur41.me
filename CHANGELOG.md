@@ -1,3 +1,10 @@
+## [2.60.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.60.0...v2.60.1) (2026-05-06)
+
+
+### Bug Fixes
+
+* update branch ignore rules in workflows for better management ([bf6cd6b](https://github.com/Th3S4mur41/th3s4mur41.me/commit/bf6cd6b72cb2f0d85d49deb67d7becebdf67903c))
+
 # [2.60.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.59.0...v2.60.0) (2026-05-06)
 
 
