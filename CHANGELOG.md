@@ -1,3 +1,10 @@
+# [2.59.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.58.1...v2.59.0) (2026-05-06)
+
+
+### Features
+
+* update rehypeGithubAlerts to output aside ([#2324](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2324)) ([9db91ca](https://github.com/Th3S4mur41/th3s4mur41.me/commit/9db91ca0289940fea6a7f05ebba889aa942956e6))
+
 ## [2.58.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.58.0...v2.58.1) (2026-04-27)
 
 
