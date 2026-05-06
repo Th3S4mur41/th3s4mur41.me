@@ -17,8 +17,14 @@ const rehypeGithubAlertsOptions = {
 	build: (alertOptions, originalChildren) => {
 		const alert = defaultBuild(alertOptions, originalChildren);
 		if (alert?.type === "element") {
+			const title = typeof alertOptions.title === "string" ? alertOptions.title.trim() : "";
+
 			alert.tagName = "aside";
-			alert.properties = { ...alert.properties, ariaLabel: alertOptions.title };
+			alert.properties = {
+				...alert.properties,
+				// Rehype/HAST properties should use attribute-style ARIA keys.
+				...(title ? { "aria-label": title } : {}),
+			};
 		}
 
 		return alert;
