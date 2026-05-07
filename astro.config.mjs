@@ -2,9 +2,10 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 import compress from "astro-compress";
-import { defaultBuild, rehypeGithubAlerts } from "rehype-github-alerts";
 import {
 	rehypeExternalLinks,
+	rehypeGithubAlerts,
+	rehypeGithubAlertsA11yOptions,
 	rehypeHeadingDates,
 	rehypeInjectToc,
 	rehypeOptimizeFirstImage,
@@ -13,29 +14,11 @@ import {
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.js";
 import { SITE_CONFIG } from "./src/utils/config.js";
 
-const rehypeGithubAlertsOptions = {
-	build: (alertOptions, originalChildren) => {
-		const alert = defaultBuild(alertOptions, originalChildren);
-		if (alert?.type === "element") {
-			const title = typeof alertOptions.title === "string" ? alertOptions.title.trim() : "";
-
-			alert.tagName = "aside";
-			alert.properties = {
-				...alert.properties,
-				// Rehype/HAST properties should use attribute-style ARIA keys.
-				...(title ? { "aria-label": title } : {}),
-			};
-		}
-
-		return alert;
-	},
-};
-
 const sharedRehypePlugins = [
 	rehypeHeadingDates,
 	rehypeInjectToc,
 	rehypeViewTransitionNames,
-	[rehypeGithubAlerts, rehypeGithubAlertsOptions],
+	[rehypeGithubAlerts, rehypeGithubAlertsA11yOptions],
 	rehypeOptimizeFirstImage,
 	rehypeExternalLinks,
 ];
@@ -43,7 +26,7 @@ const mdxRehypePlugins = [
 	rehypeHeadingDates,
 	rehypeInjectToc,
 	rehypeViewTransitionNames,
-	[rehypeGithubAlerts, rehypeGithubAlertsOptions],
+	[rehypeGithubAlerts, rehypeGithubAlertsA11yOptions],
 	rehypeOptimizeFirstImage,
 	rehypeExternalLinks,
 ];
