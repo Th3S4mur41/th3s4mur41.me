@@ -20,18 +20,27 @@ function getCustomAlertTitle(originalChildren) {
 	return getNodeText(strong).trim();
 }
 
+function getAlertBodyChildren(originalChildren, customTitle) {
+	if (!customTitle) return originalChildren;
+	// When a dedicated title paragraph exists (`**Title**`), remove it from body content
+	// and surface it as the alert heading instead.
+	return originalChildren.slice(1);
+}
+
 export const rehypeGithubAlertsA11yOptions = {
 	build: (alertOptions, originalChildren) => {
-		const alert = defaultBuild(alertOptions, originalChildren);
-		if (alert?.type === "element") {
-			const customTitle = getCustomAlertTitle(originalChildren);
+		const customTitle = getCustomAlertTitle(originalChildren);
+		const normalizedChildren = getAlertBodyChildren(originalChildren, customTitle);
+		const normalizedAlertOptions = customTitle ? { ...alertOptions, title: customTitle } : alertOptions;
+		const alert = defaultBuild(normalizedAlertOptions, normalizedChildren);
 
+		if (alert?.type === "element") {
 			if (customTitle) {
 				alert.tagName = "aside";
 				alert.properties = {
 					...alert.properties,
 					// Rehype/HAST properties should use attribute-style ARIA keys.
-					"aria-label": customTitle,
+					"aria-label": `${alertOptions.title}: ${customTitle}`,
 				};
 			} else {
 				alert.tagName = "div";
