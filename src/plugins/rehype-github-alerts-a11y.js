@@ -12,9 +12,16 @@ function getCustomAlertTitle(originalChildren) {
 
 	const firstChild = originalChildren[0];
 	if (!firstChild || firstChild.type !== "element" || firstChild.tagName !== "p") return "";
-	if (!Array.isArray(firstChild.children) || firstChild.children.length !== 1) return "";
+	if (!Array.isArray(firstChild.children)) return "";
 
-	const strong = firstChild.children[0];
+	const normalizedChildren = firstChild.children.filter((child) => {
+		if (child.type !== "text") return true;
+		return typeof child.value !== "string" || child.value.trim() !== "";
+	});
+
+	if (normalizedChildren.length !== 1) return "";
+
+	const strong = normalizedChildren[0];
 	if (!strong || strong.type !== "element" || strong.tagName !== "strong") return "";
 
 	return getNodeText(strong).trim();
@@ -27,9 +34,16 @@ function getAlertBodyChildren(originalChildren, customTitle) {
 	return originalChildren.slice(1);
 }
 
+function getAlertTypeTitle(alertOptions) {
+	if (!alertOptions || typeof alertOptions !== "object") return "";
+	if (typeof alertOptions.title !== "string") return "";
+	return alertOptions.title.trim();
+}
+
 export const rehypeGithubAlertsA11yOptions = {
 	build: (alertOptions, originalChildren) => {
 		const customTitle = getCustomAlertTitle(originalChildren);
+		const alertTypeTitle = getAlertTypeTitle(alertOptions);
 		const normalizedChildren = getAlertBodyChildren(originalChildren, customTitle);
 		const normalizedAlertOptions = customTitle ? { ...alertOptions, title: customTitle } : alertOptions;
 		const alert = defaultBuild(normalizedAlertOptions, normalizedChildren);
@@ -37,10 +51,11 @@ export const rehypeGithubAlertsA11yOptions = {
 		if (alert?.type === "element") {
 			if (customTitle) {
 				alert.tagName = "aside";
+				const accessibleLabel = alertTypeTitle ? `${alertTypeTitle}: ${customTitle}` : customTitle;
 				alert.properties = {
 					...alert.properties,
 					// Rehype/HAST properties should use attribute-style ARIA keys.
-					"aria-label": `${alertOptions.title}: ${customTitle}`,
+					"aria-label": accessibleLabel,
 				};
 			} else {
 				alert.tagName = "div";
