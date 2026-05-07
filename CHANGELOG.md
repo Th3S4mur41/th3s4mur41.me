@@ -1,3 +1,10 @@
+## [2.60.3](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.60.2...v2.60.3) (2026-05-07)
+
+
+### Bug Fixes
+
+* add missing front matter separator ([ddc4b6a](https://github.com/Th3S4mur41/th3s4mur41.me/commit/ddc4b6ac48c4183e2a154fec0c1456d4c0fba692))
+
 ## [2.60.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.60.1...v2.60.2) (2026-05-07)
 
 
