@@ -1,7 +1,6 @@
 ---
 import { getImage } from "astro:assets";
 import { getCollection, render } from "astro:content";
-import path from "node:path";
 import ArticleCard from "../../components/ArticleCard.astro";
 import BlogPostingSchema from "../../components/BlogPostingSchema.astro";
 import Image from "../../components/Image.astro";
@@ -26,15 +25,15 @@ export async function getStaticPaths() {
 
 	const [blogEntries, speakingEntries] = await Promise.all([getCollection("blog"), getCollection("speaking")]);
 
+	const allBlogIds = getEntryIds(blogEntries);
 	const visibleBlogEntries = blogEntries.filter((entry: any) => isVisibleContent(entry.data, { now, previewFuture }));
 	const visibleSpeakingEntries = speakingEntries.filter((entry: any) => isVisibleContent(entry.data, { now, previewFuture }));
-	const visibleBlogIds = getEntryIds(visibleBlogEntries);
 	const visibleBlogByNormalizedId = new Map(
 		visibleBlogEntries.map((entry: any) => [normalizeEntryId(entry.id), entry] as const),
 	);
 
 	const blogPaths = visibleBlogEntries
-		.filter((entry: any) => !isSeriesContainerId(entry.id, visibleBlogIds))
+		.filter((entry: any) => !isSeriesContainerId(entry.id, allBlogIds))
 		.map((entry: any) => {
 			const seriesSlug = getSeriesSlug(entry.id);
 			const seriesEntry = (seriesSlug ? visibleBlogByNormalizedId.get(seriesSlug) : null) as any;
@@ -109,10 +108,11 @@ let seriesArticles: any[] = [];
 let seriesIntroEntry: any | null = null;
 
 if (!article && section === "blog") {
-	const visibleBlogEntries = (await getCollection("blog")).filter((entry: any) =>
+	const allBlogEntries = await getCollection("blog");
+	const allBlogIds = getEntryIds(allBlogEntries);
+	const visibleBlogEntries = allBlogEntries.filter((entry: any) =>
 		isVisibleContent(entry.data, { now, previewFuture }),
 	);
-	const visibleBlogIds = visibleBlogEntries.map((entry: any) => entry.id);
 	const hasSeriesChildren = visibleBlogEntries.some((entry: any) => {
 		const id = normalizeEntryId(entry.id);
 		return id !== normalizedSlug && id.startsWith(`${normalizedSlug}/`);
@@ -125,7 +125,7 @@ if (!article && section === "blog") {
 				const id = normalizeEntryId(entry.id);
 				if (id === normalizedSlug) return false;
 				if (!id.startsWith(`${normalizedSlug}/`)) return false;
-				return !isSeriesContainerId(entry.id, visibleBlogIds);
+				return !isSeriesContainerId(entry.id, allBlogIds);
 			})
 			.sort((a: any, b: any) => b.data.date.valueOf() - a.data.date.valueOf());
 	}
@@ -149,52 +149,14 @@ if (!isSeriesPage && article) {
 const ArticleContent = !isSeriesPage && article ? (await render(article)).Content : null;
 const SeriesIntroContent = isSeriesPage && seriesIntroEntry ? (await render(seriesIntroEntry)).Content : null;
 
-// Import images from both collections eagerly (Astro will tree-shake unused).
-const blogImages = import.meta.glob("/content/blog/**/*.{jpg,png,webp}", { eager: true });
-const speakingImages = import.meta.glob("/content/speaking/**/*.{jpg,png,webp}", { eager: true });
-const imagePools: Record<string, Record<string, unknown>> = {
-	blog: blogImages,
-	speaking: speakingImages,
-};
-
-function normalizePosix(p: string): string {
-	return path.posix.normalize(p);
-}
-
-// NOTE: `article.data.image` may reference an image in the same folder as the post,
-// but it can also reference shared assets elsewhere inside the collection (e.g. "../hero.png").
-// We resolve by trying a couple of normalized candidates against the eager glob pool.
-let imagePath: string | undefined;
-let resolvedImage: unknown;
+// With `image()` in collection schema, content image frontmatter is resolved to ImageMetadata.
 const pageEntry = isSeriesPage ? seriesIntroEntry : article;
-const imageEntryId = pageEntry ? normalizeEntryId(pageEntry.id) : normalizedSlug;
-
-if (pageEntry?.data.image) {
-	const raw = typeof pageEntry.data.image === "string" ? pageEntry.data.image.trim() : "";
-	if (raw) {
-		const pool = imagePools[section];
-		const cleaned = raw.replace(/^\.\//, "");
-		const postDir = `/content/${section}/${imageEntryId}/`;
-		const collectionDir = `/content/${section}/`;
-		const candidates = cleaned.startsWith("/")
-			? [normalizePosix(cleaned)]
-			: [normalizePosix(path.posix.join(postDir, cleaned)), normalizePosix(path.posix.join(collectionDir, cleaned))];
-
-		for (const candidate of candidates) {
-			const mod = pool[candidate];
-			if (mod && typeof mod === "object" && (mod as { default?: unknown }).default) {
-				imagePath = candidate;
-				resolvedImage = (mod as { default?: unknown }).default;
-				break;
-			}
-		}
-	}
-}
+const resolvedImage = pageEntry?.data.image;
 
 const img =
-	imagePath && resolvedImage
+	resolvedImage
 		? await getImage({
-				src: resolvedImage as unknown as string,
+				src: resolvedImage,
 				width: 1200,
 				height: 630,
 				format: "jpg",
