@@ -101,7 +101,7 @@ If your test scrolls to a section to check for compliance, and that section uses
 </figure>
 
 > [!NOTE]
-> **The Irony** 
+> **The Irony**
 >
 > The site might be perfectly accessible once the user finishes scrolling, but the automation tool lacks the "context" of the scroll-linked state.
 
@@ -130,7 +130,7 @@ There is no "magic button" in current automation frameworks to handle SDA global
 Setting [`prefers-reduced-motion`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion) is the standard "go-to" for automation. By setting the browser's emulation to `reduced`, many CSS animations are stripped away.
 
 > [!WARNING]
-> **The Flaw with `prefers-reduced-motion`** 
+> **The Flaw with `prefers-reduced-motion`**
 > 
 > SDA is often used for simple opacity fades (like the CodePen example). Technically, a fade isn't "motion," so many developers don't wrap these in a media query. If the animation isn't wrapped in `@media (prefers-reduced-motion: no-preference)`, the test will still catch the text in a semi-transparent state.
 >
@@ -153,7 +153,7 @@ await page.evaluate(() => window.scrollTo(0, 500));
 ```
 
 > [!WARNING]
-> **The Flaw with mocking** 
+> **The Flaw with mocking**
 >
 > This works for a specific visual regression check of a single component, but it's a nightmare for accessibility (a11y) audits. Tools like axe-core usually scan the entire page. You can't easily "scroll-and-scan" every 10 pixels to ensure every element is at 100% opacity when the scanner hits it. It's simply too much overhead.
 
