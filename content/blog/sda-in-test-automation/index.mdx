@@ -91,7 +91,9 @@ The friction isn't just visual; it's functional. Automated accessibility tools l
 If your test scrolls to a section to check for compliance, and that section uses an SDA to fade text in, the tool might catch the text while it's at 30% opacity.
 
 > [!IMPORTANT]
-> **The Result:** Your accessibility audit will report "False Positive" contrast violations even though the final rendered state meets WCAG requirements.
+> **The Result: False Positives**
+> 
+>  Your accessibility audit will report "False Positive" contrast violations even though the final rendered state meets WCAG requirements.
 
 <figure>
 ![Axe DevTools screenshot showing a WCAG 2 AA color‑contrast violation triggered during an SDA fade‑in animation.](axe-core-color-contrast-error.png)
@@ -99,7 +101,9 @@ If your test scrolls to a section to check for compliance, and that section uses
 </figure>
 
 > [!NOTE]
-> **The Irony:** The site might be perfectly accessible once the user finishes scrolling, but the automation tool lacks the "context" of the scroll-linked state.
+> **The Irony**
+>
+> The site might be perfectly accessible once the user finishes scrolling, but the automation tool lacks the "context" of the scroll-linked state.
 
 ## Scroll-Triggered vs. Scroll-Driven
 
@@ -126,7 +130,9 @@ There is no "magic button" in current automation frameworks to handle SDA global
 Setting [`prefers-reduced-motion`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion) is the standard "go-to" for automation. By setting the browser's emulation to `reduced`, many CSS animations are stripped away.
 
 > [!WARNING]
-> **The Flaw:** SDA is often used for simple opacity fades (like the CodePen example). Technically, a fade isn't "motion," so many developers don't wrap these in a media query. If the animation isn't wrapped in `@media (prefers-reduced-motion: no-preference)`, the test will still catch the text in a semi-transparent state.
+> **The Flaw with `prefers-reduced-motion`**
+> 
+> SDA is often used for simple opacity fades (like the CodePen example). Technically, a fade isn't "motion," so many developers don't wrap these in a media query. If the animation isn't wrapped in `@media (prefers-reduced-motion: no-preference)`, the test will still catch the text in a semi-transparent state.
 >
 > From a user perspective, an opacity fade should probably not be wrapped in `@media (prefers-reduced-motion: no-preference)`. Doing so purely to pass test automation would compromise the experience for users who've enabled `prefers-reduced-motion` for medical reasons (e.g., vestibular disorders).
 
@@ -147,7 +153,9 @@ await page.evaluate(() => window.scrollTo(0, 500));
 ```
 
 > [!WARNING]
-> **The Flaw:** This works for a specific visual regression check of a single component, but it's a nightmare for accessibility (a11y) audits. Tools like axe-core usually scan the entire page. You can't easily "scroll-and-scan" every 10 pixels to ensure every element is at 100% opacity when the scanner hits it. It's simply too much overhead.
+> **The Flaw with mocking**
+>
+> This works for a specific visual regression check of a single component, but it's a nightmare for accessibility (a11y) audits. Tools like axe-core usually scan the entire page. You can't easily "scroll-and-scan" every 10 pixels to ensure every element is at 100% opacity when the scanner hits it. It's simply too much overhead.
 
 ### Linearizing or Disabling Timelines (The Technical Hack)
 
@@ -168,7 +176,9 @@ body:not([data-a11y-testing]) .animated-element {
 ```
 
 > [!WARNING]
-> **The Flaw:** This isn't "testing the site"—it's testing a modified version. If your CSS override accidentally masks a bug that only exists during animation, your test loses validity.
+> **The Flaw with CSS Overrides**
+>
+> This isn't "testing the site"—it's testing a modified version. If your CSS override accidentally masks a bug that only exists during animation, your test loses validity.
 >
 > Additionally, depending on your test strategy, this may not be possible. For example, running an a11y audit with axe-core doesn't allow custom CSS injection, especially when auditing production websites.
 
