@@ -33,6 +33,10 @@ I wanted something that still works with markdown-generated content, with no ext
 
 I'll walk through the old workaround first, then the grid lanes fix, and finally the anchor positioning tradeoff.
 
+> [!NOTE]
+> While `grid-lanes` is the technical name of the feature, it was long discussed and documented and might be better known as [Masonry layout](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Grid_layout/Masonry_layout).
+
+
 ## Start from content, not containers
 
 The article body is generated from markdown, so the structure is naturally linear: headings, paragraphs, media, and a footer.
@@ -49,7 +53,6 @@ Reactions are added by Astro logic at build time in the footer. No wrapper aroun
       <nav class="table-of-contents">...</nav>
       <p>...</p>
       <p>...</p>
-      ...
       <footer>
         <div class="reactions">...</div>
       </footer>
@@ -67,7 +70,7 @@ This is also how this very page is built.
 On larger screens, side space is often underused, so moving the table of contents to the sidebar was a natural next step.
 
 Moving across columns is easy. Rows are where things get awkward.
-In a grid, the table of contents shares the first row with the h1 or first paragraph. That row then grows to match the TOC height, which is usually much taller than a single heading.
+In a grid, the table of contents shares the first row with the h1 or first paragraph. That row then grows to match the table of contents height, which is usually much taller than a single heading.
 As a result, the heading (or first paragraph) ends up with a lot of empty space below it.
 
 <figure>
@@ -75,7 +78,7 @@ As a result, the heading (or first paragraph) ends up with a lot of empty space 
   <figcaption>Because the table of contents and the first paragraph share the same grid row, the row height is determined by the taller element. This results in unintended trailing white space beneath the first paragraph, breaking the visual flow of the article content.</figcaption>
 </figure>
 
-The TOC height depends on content, so hard-coding row spans is guesswork.
+The table of contents height depends on content, so hard-coding row spans is guesswork.
 The classic workaround is a "magic number" row span: big enough for most cases, but still just a guess.
 
 ```css
@@ -139,7 +142,7 @@ That works great when the columns are defined on the article itself — but what
 
 ### What about subgrid?
 
-At first glance, it feels like moving to lanes might break subgrid.
+At first glance, it feels like moving to lanes might break [subgrid](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Grid_layout/Subgrid).
 But only the lane axis behaves differently — the other axis still works like a regular grid, so subgrid remains fully usable.
 
 ```css
@@ -202,7 +205,7 @@ footer {
 }
 ```
 
-Unfortunately, combining `position: sticky` with anchor positioning is not currently possible.
+Unfortunately, combining `position: sticky` with [anchor positioning](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Anchor_positioning) is not currently possible.
 
 ### The second shift: anchor positioning
 
