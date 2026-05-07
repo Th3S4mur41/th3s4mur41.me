@@ -1,3 +1,10 @@
+## [2.60.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.60.1...v2.60.2) (2026-05-07)
+
+
+### Bug Fixes
+
+* clarify terminology for grid-lanes feature in article ([851ccfb](https://github.com/Th3S4mur41/th3s4mur41.me/commit/851ccfbe7f7f1b1b4e65054bbd3d69161d64d49e))
+
 ## [2.60.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.60.0...v2.60.1) (2026-05-06)
 
 
