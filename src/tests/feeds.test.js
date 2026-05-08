@@ -9,18 +9,19 @@
  */
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 
 const DIST_DIR = resolve(import.meta.dirname, "../../dist");
 const REQUIRED_DIST_FEED_FILES = ["feed.xml", "feed.json"];
 
-const missingDistFeedFiles = REQUIRED_DIST_FEED_FILES.filter((name) => !existsSync(resolve(DIST_DIR, name)));
-
-if (missingDistFeedFiles.length > 0) {
-	throw new Error(
-		`Missing generated feed artifact(s): ${missingDistFeedFiles.join(", ")} in dist/. Run "npm run build" before running feed tests.`,
-	);
-}
+beforeAll(() => {
+	const missingDistFeedFiles = REQUIRED_DIST_FEED_FILES.filter((name) => !existsSync(resolve(DIST_DIR, name)));
+	if (missingDistFeedFiles.length > 0) {
+		throw new Error(
+			`Missing generated feed artifact(s): ${missingDistFeedFiles.join(", ")} in dist/. Run "npm run build" before running feed tests.`,
+		);
+	}
+});
 
 // ---------------------------------------------------------------------------
 // Helpers
