@@ -1,3 +1,10 @@
+## [2.61.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.61.0...v2.61.1) (2026-05-08)
+
+
+### Bug Fixes
+
+* **blog:** update last modified date and add new section on APCA discussions ([fcf3d7f](https://github.com/Th3S4mur41/th3s4mur41.me/commit/fcf3d7f19c3ab9fa087ed533c5a37ba901f29635))
+
 # [2.61.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.60.4...v2.61.0) (2026-05-08)
 
 
