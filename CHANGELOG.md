@@ -1,3 +1,10 @@
+# [2.61.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.60.4...v2.61.0) (2026-05-08)
+
+
+### Features
+
+* **blog:** add ai in accessibility test automation post ([#2335](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2335)) ([b60bf27](https://github.com/Th3S4mur41/th3s4mur41.me/commit/b60bf2780d90202140ad18b10bef31ea95d4dbe6))
+
 ## [2.60.4](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.60.3...v2.60.4) (2026-05-07)
 
 
