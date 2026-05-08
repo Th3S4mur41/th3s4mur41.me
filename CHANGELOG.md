@@ -1,3 +1,10 @@
+## [2.60.4](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.60.3...v2.60.4) (2026-05-07)
+
+
+### Bug Fixes
+
+* only render alerts as aside with unique label ([#2349](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2349)) ([605945d](https://github.com/Th3S4mur41/th3s4mur41.me/commit/605945da35fbfaf90540c4813cb93b3aee1b56de))
+
 ## [2.60.3](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.60.2...v2.60.3) (2026-05-07)
 
 
