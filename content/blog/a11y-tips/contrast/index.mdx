@@ -1,7 +1,7 @@
 ---
 title: 'Contrast: Beyond WCAG Compliance'
 date: 2026-01-14T10:00:00Z
-updated: 2026-04-22T00:00:00Z
+updated: 2026-05-08T00:00:00Z
 image: ../Practical_Accessibility_Tips_for_Developers-v2.jpg
 imageAlt: 'Comic-style illustration of Michaël Vanderheyden wearing a baseball cap and samurai-themed shirt, working on a laptop with a samurai sticker. To the side, accessibility icons and the hashtag #A11yTips promote practical accessibility tips for developers.'
 description: 'Discover why APCA offers more perceptually accurate approach to color contrast than traditional WCAG standards for better readability.'
@@ -175,3 +175,12 @@ In those cases, my personal approach is to **prioritize user experience over str
 That approach can still carry legal risk, since WCAG remains the referenced standard in many regulations. It is a trade-off each organization needs to evaluate based on its context and risk tolerance.
 
 If a decision is made to dismiss WCAG contrast in favor of APCA, that decision **must** be clearly documented in the accessibility statement, including the explanation and reasoning behind it.
+
+## UPDATE - 2026-05-08
+
+Thanks to [Myndex](https://bsky.app/profile/myndex.bsky.social) for following up on the previous update and highlighting an important point:
+while early versions of APCA were indeed removed from the WCAG 3 Working Draft, discussions about better contrast algorithms are still ongoing in the working group.
+
+You might also want to check out [Bridge-PCA](https://bridgepca.com/), a drop-in replacement for WCAG 2.
+Bridge-PCA reports contrast not only as the APCA Lc value (lightness contrast), but also as a WCAG 2-compatible ratio display, but with a better algorithm.
+
