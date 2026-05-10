@@ -51,7 +51,7 @@
 		"wrangler": "^4.90.0"
 	},
 	"optionalDependencies": {
-		"lint-staged": "^17.0.2",
+		"lint-staged": "^17.0.4",
 		"semantic-release": "^25.0.3"
 	},
 	"scripts": {
