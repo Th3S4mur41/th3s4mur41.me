@@ -44,6 +44,14 @@ const blogSchema = ({ image }) =>
 			)
 			.optional(),
 		syndication: z.array(z.string().url()).optional(),
+		coauthors: z
+			.array(
+				z.object({
+					name: z.string(),
+					url: z.string().url().optional(),
+				}),
+			)
+			.optional(),
 		reactions: z.boolean().optional().default(true),
 	});
 

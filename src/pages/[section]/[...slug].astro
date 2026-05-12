@@ -1,5 +1,11 @@
 ---
 
+
+
+
+
+
+
 import { getImage } from "astro:assets";
 import { getCollection, render } from "astro:content";
 import ArticleCard from "../../components/ArticleCard.astro";
@@ -275,6 +281,7 @@ void [
 			url={Astro.url.href}
 			canonical={article.data.canonical}
 			translations={article.data.translations}
+			coauthors={article.data.coauthors}
 		/>
 	)}
 
@@ -323,11 +330,24 @@ void [
 							Published on <time datetime={article.data.date}>{formatSiteDate(article.data.date)}</time>
 							{article.data.canonical && (
 								<>
-									{" "}via <a href={article.data.canonical} target="_blank" rel="noopener noreferrer">
-										{new URL(article.data.canonical).hostname.replace(/^www\./, "").split(".")[0]}
-									</a>
+									{" "}via <a href={article.data.canonical} target="_blank" rel="noopener noreferrer">{new URL(article.data.canonical).hostname.replace(/^www\./, "").split(".")[0]}</a>
 								</>
-							)} by <a href="/about/" class="author">Michaël Vanderheyden</a>
+							)} by{" "}
+						<a href="/about/" class="author">Michaël Vanderheyden</a>
+						{article.data.coauthors && article.data.coauthors.length > 0 && (
+							<>
+								{article.data.coauthors.map((coauthor, index) => (
+									<>
+										{index === article.data.coauthors.length - 1 ? " and " : ", "}
+										{coauthor.url ? (
+											<a href={coauthor.url} class="author" target="_blank" rel="external noopener">{coauthor.name}</a>
+										) : (
+											<span class="author">{coauthor.name}</span>
+										)}
+									</>
+								))}
+							</>
+						)}
 						</p>
 						{article.data.updated && (
 							<p class="updated">
