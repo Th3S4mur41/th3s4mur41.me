@@ -45,9 +45,8 @@ body:is([class^="blog-"], [class^="speaking-"]) {
 				margin-block-end: 0.25em;
 			}
 		}
-		/* Treat an image following the h1 as the hero image */
-		& h1 + p:has(img),
-		& .table-of-contents + p:has(img) {
+		/* Treat an image following the h1, reading-meta, or table-of-contents as the hero image */
+		& :where(h1, .reading-meta, .table-of-contents) + p:has(img) {
 			grid-row: 1;
 			grid-column: full-width;
 			margin-block-start: 0;

@@ -57,13 +57,18 @@ export async function GET(context) {
 				renderBodyToHtml(entry, site),
 			]);
 
+			const authors = ["Michaël Vanderheyden"];
+			if (entry.data.coauthors && entry.data.coauthors.length > 0) {
+				authors.push(...entry.data.coauthors.map((ca) => ca.name));
+			}
+
 			return {
 				title: entry.data.title,
 				description: sanitizeDescription(entry.data.description ?? ""),
 				pubDate: entry.data.date,
 				link: `/${section}/${entry.id}/`,
 				categories: entry.data.tags ?? [],
-				author: "Michaël Vanderheyden",
+				author: authors.join(", "),
 				// length: 0 — file size of processed images is not available at build time.
 				// Most RSS readers treat 0 as "unknown" and still load the image correctly.
 				...(heroImageUrl && { enclosure: { url: heroImageUrl, type: imageMimeType(heroImageUrl), length: 0 } }),

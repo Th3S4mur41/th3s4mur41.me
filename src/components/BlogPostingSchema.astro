@@ -1,4 +1,5 @@
 ---
+
 import { getPersonData, getWebsiteData } from "../utils/schemaData";
 import StructuredData from "./StructuredData.astro";
 
@@ -8,6 +9,11 @@ interface Translation {
 	url: string;
 	publisherName?: string;
 	publisherUrl?: string;
+}
+
+interface CoAuthor {
+	name: string;
+	url?: string;
 }
 
 interface Props {
@@ -25,9 +31,10 @@ interface Props {
 	url: string;
 	canonical?: string;
 	translations?: Translation[];
+	coauthors?: CoAuthor[];
 }
 
-const { headline, description, datePublished, dateModified, image, url, canonical, translations } = Astro.props;
+const { headline, description, datePublished, dateModified, image, url, canonical, translations, coauthors } = Astro.props;
 
 const origin = Astro.url.origin;
 const absolute = (maybeUrl: string) => new URL(maybeUrl, origin).href;
@@ -58,9 +65,20 @@ const blogPostingData = {
 				},
 			}
 		: {}),
-	author: {
-		"@id": `${origin}/#person`,
-	},
+	author: coauthors && coauthors.length > 0
+		? [
+				{
+					"@id": `${origin}/#person`,
+				},
+				...coauthors.map((coauthor) => ({
+					"@type": "Person",
+					...(coauthor.name ? { name: coauthor.name } : {}),
+					...(coauthor.url ? { url: coauthor.url } : {}),
+				})),
+			]
+		: {
+				"@id": `${origin}/#person`,
+			},
 	publisher: {
 		"@id": `${origin}/#person`,
 	},

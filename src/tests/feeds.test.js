@@ -13,6 +13,8 @@ import { beforeAll, describe, expect, it } from "vitest";
 
 const DIST_DIR = resolve(import.meta.dirname, "../../dist");
 const REQUIRED_DIST_FEED_FILES = ["feed.xml", "feed.json"];
+const COAUTHORED_ENTRY_PATH = "/blog/beyond-compliance-building-accessibility-into-quality-with-test-automation/";
+const COAUTHOR_NAME = "Jörg Jakoby";
 
 beforeAll(() => {
 	const missingDistFeedFiles = REQUIRED_DIST_FEED_FILES.filter((name) => !existsSync(resolve(DIST_DIR, name)));
@@ -138,6 +140,19 @@ describe("RSS feed (feed.xml)", () => {
 		}
 	});
 
+	it("coauthored entry includes co-author in RSS <author>", () => {
+		const itemBlocks = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].map((m) => m[1]);
+		const coauthoredItem = itemBlocks.find((item) => {
+			const link = extractTagContent(item, "link");
+			return toPathname(link) === COAUTHORED_ENTRY_PATH;
+		});
+
+		expect(coauthoredItem).toBeTruthy();
+		const author = extractTagContent(coauthoredItem, "author");
+		expect(author).toContain("Vanderheyden");
+		expect(author).toContain(COAUTHOR_NAME);
+	});
+
 	it("items with a hero image have an <enclosure> with a web-compatible image URL", () => {
 		const enclosures = [...xml.matchAll(/<enclosure[^>]+>/g)].map((m) => m[0]);
 		// Not every item must have an enclosure, but those that do should have a valid image URL.
@@ -234,6 +249,18 @@ describe("JSON feed (feed.json)", () => {
 			expect(item.authors.length).toBeGreaterThan(0);
 			expect(item.authors[0].name).toContain("Vanderheyden");
 		}
+	});
+
+	it("coauthored entry includes additional authors in item.authors", () => {
+		const coauthoredItem = feed.items.find((item) => toPathname(item.url) === COAUTHORED_ENTRY_PATH);
+
+		expect(coauthoredItem).toBeTruthy();
+		expect(Array.isArray(coauthoredItem.authors)).toBe(true);
+		expect(coauthoredItem.authors.length).toBeGreaterThan(1);
+
+		const authorNames = coauthoredItem.authors.map((author) => author.name);
+		expect(authorNames).toContain("Michaël Vanderheyden");
+		expect(authorNames).toContain(COAUTHOR_NAME);
 	});
 
 	it("items with a hero image have an absolute image URL in a web-compatible format", () => {

@@ -31,6 +31,23 @@ export async function GET(context) {
 			renderBodyToHtml(entry, siteUrl),
 		]);
 
+		const authors = [
+			{
+				name: "Michaël Vanderheyden",
+				url: authorUrl,
+				avatar: authorAvatarUrl,
+			},
+		];
+
+		if (entry.data.coauthors && entry.data.coauthors.length > 0) {
+			authors.push(
+				...entry.data.coauthors.map((coauthor) => ({
+					name: coauthor.name,
+					url: coauthor.url ?? undefined,
+				})),
+			);
+		}
+
 		return {
 			id: url,
 			url,
@@ -41,13 +58,7 @@ export async function GET(context) {
 			content_html: contentHtml ?? undefined,
 			date_published: entry.data.date.toISOString(),
 			date_modified: entry.data.updated ? entry.data.updated.toISOString() : undefined,
-			authors: [
-				{
-					name: "Michaël Vanderheyden",
-					url: authorUrl,
-					avatar: authorAvatarUrl,
-				},
-			],
+			authors,
 			tags: entry.data.tags ?? undefined,
 		};
 	};
