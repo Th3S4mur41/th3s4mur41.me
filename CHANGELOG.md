@@ -1,3 +1,10 @@
+# [2.62.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.61.1...v2.62.0) (2026-05-13)
+
+
+### Features
+
+* **blog:** add ref to article on atos blog ([#2360](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2360)) ([6314335](https://github.com/Th3S4mur41/th3s4mur41.me/commit/6314335109e9d9fd2781c31bd104a1853004572f))
+
 ## [2.61.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.61.0...v2.61.1) (2026-05-08)
 
 
