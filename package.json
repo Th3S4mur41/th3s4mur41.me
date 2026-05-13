@@ -33,8 +33,8 @@
 	"devDependencies": {
 		"@astrojs/mdx": "^5.0.4",
 		"@biomejs/biome": "2.4.15",
-		"@commitlint/cli": "^21.0.0",
-		"@commitlint/config-conventional": "^21.0.0",
+		"@commitlint/cli": "^21.0.1",
+		"@commitlint/config-conventional": "^21.0.1",
 		"@semantic-release/changelog": "^6.0.3",
 		"@semantic-release/git": "^10.0.1",
 		"ajv": "^8.20.0",
@@ -48,7 +48,7 @@
 		"prettier": "^3.8.3",
 		"typescript": "^6.0.3",
 		"vitest": "^4.1.6",
-		"wrangler": "^4.90.0"
+		"wrangler": "^4.90.1"
 	},
 	"optionalDependencies": {
 		"lint-staged": "^17.0.4",
