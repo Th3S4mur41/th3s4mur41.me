@@ -133,6 +133,7 @@ export const getPersonData = (origin: string) => {
 			"https://npmx.dev/org/th3s4mur41",
 			"https://techcommunity.microsoft.com/users/th3s4mur41/111608",
 			"https://www.figma.com/@Th3S4mur41",
+			"https://sessionize.com/th3s4mur41/",
 		],
 	};
 };
