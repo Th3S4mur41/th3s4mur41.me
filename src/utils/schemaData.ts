@@ -110,6 +110,7 @@ export const getPersonData = (origin: string) => {
 			},
 		],
 		sameAs: [
+			"https://www.wikidata.org/wiki/Q139832116",
 			"https://www.linkedin.com/in/michaelvanderheyden/",
 			"https://bsky.app/profile/th3s4mur41.me",
 			"https://keytrace.dev/@th3s4mur41.me",
