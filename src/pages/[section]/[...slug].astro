@@ -1,5 +1,7 @@
 ---
 
+
+
 import { getImage } from "astro:assets";
 import { getCollection, render } from "astro:content";
 import ArticleCard from "../../components/ArticleCard.astro";
@@ -12,6 +14,7 @@ import Layout from "../../layouts/Layout.astro";
 import { formatSiteDate } from "../../utils/config.js";
 import { getEntryIds, getSeriesSlug, isSeriesContainerId, normalizeEntryId } from "../../utils/contentSeries";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../../utils/contentVisibility";
+import { getTagDisplayName, sortTags } from "../../utils/tags.js";
 import type { ProcessedWebmentions } from "../../utils/webmentions";
 import { fetchWebmentions, processWebmentions } from "../../utils/webmentions";
 
@@ -354,7 +357,18 @@ void [
 							</svg>
 							<span>Share</span>
 						</button>
-
+						
+						{article.data.tags && article.data.tags.length > 0 && (
+							<p class="tags">
+								<strong>Tags:</strong>{" "}
+								{sortTags(article.data.tags).map((tag, index) => (
+									<>
+										{index > 0 && "• "}
+										<a href={`/blog/tags/${tag}`}>{getTagDisplayName(tag)}</a>
+									</>
+								))}
+							</p>
+						)}
 						<Reactions webmentions={webmentions ?? undefined} syndicationLinks={article.data.syndication} />
 					</footer>
 				</article>
