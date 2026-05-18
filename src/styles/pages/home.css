@@ -75,20 +75,6 @@ body.home {
 			color: var(--color-accent);
 		}
 	}
-	.catchphrase {
-		font-size: clamp(2rem, 1.5rem + 2.5vw, 3.5rem);
-		font-style: italic;
-		font-weight: 700;
-		text-align: center;
-		margin-block: 1em;
-
-		@media (prefers-contrast: no-preference) {
-			background: linear-gradient(180deg, var(--color-text) 30%, oklch(from var(--color-text) 0.7 c h) 100%);
-			background-clip: text;
-			color: transparent;
-			text-shadow: 0 0.25em 0.5em oklch(0 0 0 / 0.2);
-		}
-	}
 
 	.profile {
 		--color-border: var(--color-bg);
