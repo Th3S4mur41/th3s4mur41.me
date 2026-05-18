@@ -1,9 +1,11 @@
 ---
+
 import { getCollection } from "astro:content";
 import ArticleCard from "../components/ArticleCard.astro";
 import Layout from "../layouts/Layout.astro";
 import { getEntryIds, isSeriesContainerId } from "../utils/contentSeries";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/contentVisibility";
+import { getTagDisplayName, sortTags } from "../utils/tags.js";
 
 const now = new Date();
 const previewFuture = isPreviewFutureContentEnabled();
@@ -22,12 +24,39 @@ const combined = [
 	...speaking.map((entry: any) => ({ section: "speaking" as const, entry })),
 ].sort((a, b) => new Date(b.entry.data.date).getTime() - new Date(a.entry.data.date).getTime());
 
+// Get all unique tags from published content
+const tagsWithContent = new Set<string>();
+combined.forEach(({ entry }) => {
+	if (entry.data.tags) {
+		entry.data.tags.forEach((tag: string) => {
+			tagsWithContent.add(tag);
+		});
+	}
+});
+
+// Sort tags for display
+const allTags = sortTags(Array.from(tagsWithContent));
+
 // Ensure linter recognizes these as used in the template section below (Astro template usage not detected by linter).
-void [combined, Layout, ArticleCard];
+void [combined, Layout, ArticleCard, allTags];
 ---
 
 <Layout title="blog" heading="Inside the dojo">
 	<p class="intro">Step into the laboratory! This dojo is where I push the boundaries of HTML and CSS to create inclusive digital experiences. I believe the web should be accessible to everyone—no exceptions. Explore my latest articles on UX engineering, test automation, and the art of clean, accessible code.</p>
+
+	{allTags.length > 0 && (
+		<nav class="tags" aria-label="Filter articles by tag">
+			<ul>
+				{allTags.map((tag) => (
+					<li>
+						<a href={`/blog/tags/${tag}`} class="tag">
+							{getTagDisplayName(tag)}
+						</a>
+					</li>
+				))}
+			</ul>
+		</nav>
+	)}
 {combined.map(({ section, entry }) => {
 	return (
 		<ArticleCard

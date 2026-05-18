@@ -1,4 +1,5 @@
-body.blog {
+body.blog,
+body[class^="blog-tags-"] {
 	main {
 		--grid-columns: [full-width-start] 1fr [margin-start] 1rem [content-start] min(140ch, calc(100vi - 2rem))
 			[content-end] 1rem [margin-end] 1fr [full-width-end];
@@ -11,11 +12,56 @@ body.blog {
 			font-size: clamp(1rem, 0.8645rem + 0.6024vw, 1.25rem);
 			font-weight: 300;
 		}
+		& > nav.tags {
+			margin-block: 1rem 2rem;
+
+			& > ul {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.75rem;
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+
+			a.tag {
+				display: inline-block;
+				padding: 0.5rem 1rem;
+				background-color: var(--color-highlight);
+				color: var(--color-text);
+				text-decoration: none;
+				border-radius: 0.25rem;
+				border: 1px solid oklch(from var(--color-bg) calc(l + 0.15) c h);
+				transition: all 0.2s ease;
+				font-size: 0.9rem;
+				font-weight: 500;
+
+				&:hover {
+					background-color: oklch(from var(--color-highlight) calc(l + 0.1) c h);
+					border-color: var(--color-accent);
+				}
+
+				&:focus {
+					outline: 2px solid var(--color-accent);
+					outline-offset: 2px;
+				}
+
+				&:active {
+					background-color: oklch(from var(--color-highlight) calc(l + 0.15) c h);
+				}
+
+				&[aria-current="page"] {
+					border-color: var(--color-accent);
+					background-color: oklch(from var(--color-highlight) calc(l + 0.12) c h);
+					font-weight: 700;
+				}
+			}
+		}
 	}
 }
 
 /* individual blog pages */
-body:is([class^="blog-"], [class^="speaking-"]) {
+body:is([class^="blog-"]:where(:not([class^="blog-tags-"])), [class^="speaking-"]) {
 	main {
 		margin-block-start: 0;
 	}
