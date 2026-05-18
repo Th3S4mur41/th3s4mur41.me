@@ -1,3 +1,10 @@
+## [2.62.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.62.0...v2.62.1) (2026-05-18)
+
+
+### Bug Fixes
+
+* add rel="me" attribute to social media links ([b423127](https://github.com/Th3S4mur41/th3s4mur41.me/commit/b4231278619f36598f79fb7646b823ae0a5a0c81))
+
 # [2.62.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.61.1...v2.62.0) (2026-05-13)
 
 
