@@ -8,6 +8,7 @@ const CONTENT_BASE = "./content";
 
 // 3. Import reading-time computation
 import { computeReadingTime } from "./utils/readingTime.js";
+import { ALLOWED_TAGS } from "./utils/tags.js";
 
 // 4. Define schema for blog content collection entries
 const blogSchema = ({ image }) =>
@@ -21,7 +22,7 @@ const blogSchema = ({ image }) =>
 		imageAlt: z.string().optional(),
 		published: z.boolean().optional().default(true),
 		description: z.string().optional(),
-		tags: z.array(z.string()).optional(),
+		tags: z.array(z.enum(ALLOWED_TAGS)).optional(),
 		keywords: z.array(z.string()).optional(),
 		readingTime: z
 			.object({
@@ -65,7 +66,7 @@ const speakingSchema = ({ image }) =>
 		imageAlt: z.string().optional(),
 		published: z.boolean().optional().default(true),
 		description: z.string().optional(),
-		tags: z.array(z.string()).optional(),
+		tags: z.array(z.enum(ALLOWED_TAGS)).optional(),
 		keywords: z.array(z.string()).optional(),
 		canonical: z.string().optional(),
 		// Optional override for content published/hosted elsewhere.
