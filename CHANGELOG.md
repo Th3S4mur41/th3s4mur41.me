@@ -1,3 +1,10 @@
+# [2.63.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.62.1...v2.63.0) (2026-05-19)
+
+
+### Features
+
+* add filtering for blog articles by tag ([#2372](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2372)) ([7c16991](https://github.com/Th3S4mur41/th3s4mur41.me/commit/7c1699125dc9dc5d940df63fc3e1be6f4f1d17d1))
+
 ## [2.62.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.62.0...v2.62.1) (2026-05-18)
 
 
