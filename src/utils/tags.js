@@ -11,7 +11,7 @@ export const TAG_DISPLAY_NAMES = {
 	devops: "DevOps",
 	testing: "Testing",
 	ux: "UX",
-	webdev: "Web Development",
+	dx: "Developer Experience",
 	"code-quality": "Code Quality",
 	"how-to": "How-To",
 	ai: "AI",
