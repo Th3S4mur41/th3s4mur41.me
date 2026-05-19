@@ -2,6 +2,10 @@
 
 
 
+
+
+
+
 import { getCollection } from "astro:content";
 import ArticleCard from "../../../components/ArticleCard.astro";
 import Layout from "../../../layouts/Layout.astro";
@@ -92,7 +96,7 @@ void [combined, Layout, ArticleCard, allTags];
 			<ul>
 				{allTags.map((tagOption) => (
 					<li>
-						<a href={`/blog/tags/${tagOption}`} class="tag" aria-current={tagOption === tag ? "page" : undefined}>
+						<a href={`/blog/tags/${tagOption}/`} class="tag" aria-current={tagOption === tag ? "page" : undefined}>
 							{getTagDisplayName(tagOption)}
 						</a>
 					</li>

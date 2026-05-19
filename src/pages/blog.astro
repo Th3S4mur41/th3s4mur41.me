@@ -1,5 +1,7 @@
 ---
 
+
+
 import { getCollection } from "astro:content";
 import ArticleCard from "../components/ArticleCard.astro";
 import Layout from "../layouts/Layout.astro";
@@ -38,7 +40,7 @@ combined.forEach(({ entry }) => {
 const allTags = sortTags(Array.from(tagsWithContent));
 
 // Ensure linter recognizes these as used in the template section below (Astro template usage not detected by linter).
-void [combined, Layout, ArticleCard, allTags];
+void [combined, Layout, ArticleCard, allTags, getTagDisplayName];
 ---
 
 <Layout title="blog" heading="Inside the dojo">
@@ -49,7 +51,7 @@ void [combined, Layout, ArticleCard, allTags];
 			<ul>
 				{allTags.map((tag) => (
 					<li>
-						<a href={`/blog/tags/${tag}`} class="tag">
+						<a href={`/blog/tags/${tag}/`} class="tag">
 							{getTagDisplayName(tag)}
 						</a>
 					</li>

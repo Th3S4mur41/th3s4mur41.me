@@ -2,6 +2,10 @@
 
 
 
+
+
+
+
 import { getImage } from "astro:assets";
 import { getCollection, render } from "astro:content";
 import ArticleCard from "../../components/ArticleCard.astro";
@@ -253,6 +257,8 @@ void [
 	ArticleCard,
 	articleEyebrowText,
 	articleEyebrowHref,
+	getTagDisplayName,
+	sortTags,
 ];
 ---
 
@@ -332,18 +338,16 @@ void [
 							)} by{" "}
 						<a href="/about/" class="author">Michaël Vanderheyden</a>
 						{article.data.coauthors && article.data.coauthors.length > 0 && (
-							<>
-								{article.data.coauthors.map((coauthor, index) => (
-									<>
-										{index === article.data.coauthors.length - 1 ? " and " : ", "}
-										{coauthor.url ? (
-											<a href={coauthor.url} class="author" target="_blank" rel="external noopener">{coauthor.name}</a>
-										) : (
-											<span class="author">{coauthor.name}</span>
-										)}
-									</>
-								))}
-							</>
+							article.data.coauthors.map((coauthor, index) => (
+								<>
+									{index === article.data.coauthors.length - 1 ? " and " : ", "}
+									{coauthor.url ? (
+										<a href={coauthor.url} class="author" target="_blank" rel="external noopener">{coauthor.name}</a>
+									) : (
+										<span class="author">{coauthor.name}</span>
+									)}
+								</>
+							))
 						)}
 						</p>
 						{article.data.updated && (
@@ -361,12 +365,15 @@ void [
 						{article.data.tags && article.data.tags.length > 0 && (
 							<p class="tags">
 								<strong>Tags:</strong>{" "}
-								{sortTags(article.data.tags).map((tag, index) => (
-									<>
-										{index > 0 && "• "}
-										<a href={`/blog/tags/${tag}`}>{getTagDisplayName(tag)}</a>
-									</>
-								))}
+								{sortTags(article.data.tags).map((tag, index) =>
+									index > 0 ? (
+										<>
+											• <a href={`/blog/tags/${tag}/`}>{getTagDisplayName(tag)}</a>
+										</>
+									) : (
+										<a href={`/blog/tags/${tag}/`}>{getTagDisplayName(tag)}</a>
+									)
+								)}
 							</p>
 						)}
 						<Reactions webmentions={webmentions ?? undefined} syndicationLinks={article.data.syndication} />
