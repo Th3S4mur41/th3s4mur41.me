@@ -32,7 +32,8 @@ body[class^="blog-tags-"] {
 				text-decoration: none;
 				border-radius: 0.25rem;
 				border: 1px solid oklch(from var(--color-bg) calc(l + 0.15) c h);
-				transition: all 0.2s ease;
+				transition: 0.2s ease;
+				transition-property: background-color, border-color;
 				font-size: 0.9rem;
 				font-weight: 500;
 
