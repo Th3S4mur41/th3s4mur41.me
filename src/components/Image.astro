@@ -2,6 +2,10 @@
 
 
 
+
+
+
+
 import { getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
 
@@ -95,7 +99,7 @@ if (!isSvg && imageMetadata && originalWidth) {
 		// Generate fallback image (use original format for JPEG, PNG otherwise)
 		fallbackImage = await getImage({
 			src: imageMetadata,
-			width: originalWidth < mediumWidth ? originalWidth : mediumWidth,
+			width: originalWidth < largeWidth ? originalWidth : largeWidth,
 			format: fallbackFormat,
 			quality: 80,
 		});
