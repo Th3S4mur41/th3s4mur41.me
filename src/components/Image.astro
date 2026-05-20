@@ -1,5 +1,7 @@
 ---
 
+
+
 import { getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
 
@@ -31,7 +33,7 @@ const {
 	width,
 	height,
 	sourceContext,
-	widths = { xSmall: 320, small: 640, medium: 1024, large: 1920 },
+	widths,
 	sizes = "auto",
 	loading = "lazy",
 	decoding = "async",
@@ -61,15 +63,19 @@ let shouldUseRawImage = !imageMetadata;
 const rawImageWidth = width ?? imageMetadata?.width;
 const rawImageHeight = height ?? imageMetadata?.height;
 const imageContext = sourceContext ?? Astro.url?.pathname ?? "unknown-source";
+const defaultWidths = { xSmall: 320, small: 480, medium: 820, large: 1440 };
+const heroWidths = { xSmall: 480, small: 820, medium: 1280, large: 1920 };
+const shouldUseHeroWidths = !widths && loading === "eager" && sizes === "auto";
+const presetWidths = shouldUseHeroWidths ? heroWidths : defaultWidths;
+const resolvedWidths = {
+	xSmall: widths?.xSmall ?? presetWidths.xSmall,
+	small: widths?.small ?? presetWidths.small,
+	medium: widths?.medium ?? presetWidths.medium,
+	large: widths?.large ?? presetWidths.large,
+};
 
 if (!isSvg && imageMetadata && originalWidth) {
-	// Normalize widths to ensure all breakpoints have values
-	const {
-		xSmall: xSmallWidth = 320,
-		small: smallWidth = 640,
-		medium: mediumWidth = 1024,
-		large: largeWidth = 1920,
-	} = widths;
+	const { xSmall: xSmallWidth, small: smallWidth, medium: mediumWidth, large: largeWidth } = resolvedWidths;
 
 	const isJpeg = originalFormat.toLowerCase() === "jpg" || originalFormat.toLowerCase() === "jpeg";
 	const fallbackFormat = isJpeg ? "jpg" : "png";
@@ -89,7 +95,7 @@ if (!isSvg && imageMetadata && originalWidth) {
 		// Generate fallback image (use original format for JPEG, PNG otherwise)
 		fallbackImage = await getImage({
 			src: imageMetadata,
-			width: originalWidth < mediumWidth ? originalWidth : mediumWidth,
+			width: originalWidth < largeWidth ? originalWidth : largeWidth,
 			format: fallbackFormat,
 			quality: 80,
 		});
