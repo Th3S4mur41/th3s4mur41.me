@@ -47,7 +47,7 @@
 		"postcss-preset-env": "^11.3.0",
 		"prettier": "^3.8.3",
 		"typescript": "^6.0.3",
-		"vitest": "^4.1.7",
+		"vitest": "^4.1.8",
 		"wrangler": "^4.95.0"
 	},
 	"optionalDependencies": {
