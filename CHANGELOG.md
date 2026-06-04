@@ -1,3 +1,10 @@
+# [2.64.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.63.0...v2.64.0) (2026-06-04)
+
+
+### Features
+
+* **blog:** add article on headingoffset ([#2395](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2395)) ([6b9098d](https://github.com/Th3S4mur41/th3s4mur41.me/commit/6b9098dc52f017b02452109fed6ecbbb05e33327))
+
 # [2.63.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.62.1...v2.63.0) (2026-05-19)
 
 
