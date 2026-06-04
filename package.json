@@ -24,14 +24,14 @@
 		"@astrojs/rss": "^4.0.18",
 		"@astrojs/sitemap": "^3.7.3",
 		"@fontsource/cascadia-code": "^5.2.3",
-		"astro": "^6.4.3",
+		"astro": "^6.4.4",
 		"baseline-status": "^1.1.1",
 		"reading-time": "^1.5.0",
 		"rehype-github-alerts": "^4.2.0",
 		"unist-util-visit": "^5.1.0"
 	},
 	"devDependencies": {
-		"@astrojs/mdx": "^6.0.1",
+		"@astrojs/mdx": "^6.0.2",
 		"@biomejs/biome": "2.4.16",
 		"@commitlint/cli": "^21.0.2",
 		"@commitlint/config-conventional": "^21.0.2",
