@@ -1,3 +1,10 @@
+## [2.65.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.65.0...v2.65.1) (2026-06-08)
+
+
+### Bug Fixes
+
+* improve environment variable handling in parseArgs function ([dadd77b](https://github.com/Th3S4mur41/th3s4mur41.me/commit/dadd77b25e0ce66a576f9381889e9b94280de773))
+
 # [2.65.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.64.0...v2.65.0) (2026-06-08)
 
 
