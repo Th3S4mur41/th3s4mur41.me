@@ -53,11 +53,7 @@ const blogSchema = ({ image }) =>
 					name: z.string(),
 					url: z.string().url().optional(),
 				}),
-			)
-			.optional(),
-		siteStandardDocumentUri: z.string().optional(),
-		reactions: z.boolean().optional().default(true),
-	});
+		siteStandardDocumentUri: z.string().startsWith("at://").optional(),
 
 const speakingSchema = ({ image }) =>
 	z.object({
