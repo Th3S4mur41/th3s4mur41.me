@@ -61,8 +61,20 @@ function normalizePath(pathValue) {
 }
 
 async function resolveContentDir(contentDir) {
+	if (typeof contentDir !== "string" || !contentDir.trim()) {
+		throw new Error("Invalid content directory");
+	}
+
+	const raw = contentDir.trim();
+	const normalizedInput = raw.replaceAll("\\", "/");
+	const segments = normalizedInput.split("/").filter(Boolean);
+	const isAbsolutePath = resolve(raw) === raw;
+	if (isAbsolutePath || segments.includes("..")) {
+		throw new Error(`Invalid content directory: ${contentDir}`);
+	}
+
 	const safeRoot = await realpath(resolve(process.cwd(), "content"));
-	const candidate = await realpath(resolve(process.cwd(), contentDir));
+	const candidate = await realpath(resolve(process.cwd(), raw));
 	if (candidate !== safeRoot && !candidate.startsWith(`${safeRoot}${sep}`)) {
 		throw new Error(`Invalid content directory: ${contentDir}`);
 	}
@@ -177,7 +189,20 @@ async function loadPosts(contentDir, postSlug) {
 
 	for (const filePath of files) {
 		const raw = await readFile(filePath, "utf8");
-		const { data } = matter(raw);
+		let data;
+		try {
+			({ data } = matter(raw, {
+				language: "yaml",
+				engines: {
+					yaml: (s) => matter.engines.yaml(s),
+					json: (s) => JSON.parse(s),
+				},
+				excerpt: false,
+			}));
+		} catch (error) {
+			console.warn(`Skipping ${filePath}: invalid or unsupported frontmatter`);
+			continue;
+		}
 		const slug = getSlugFromFile(contentDir, filePath);
 
 		if (postSlug && slug !== postSlug) continue;

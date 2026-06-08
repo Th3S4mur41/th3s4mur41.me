@@ -108,7 +108,7 @@ function createLoaderWithReadingTime(baseLoader) {
 					data: {
 						...entry.data,
 						...(shouldSetReadingTime ? { readingTime: computedReadingTime } : {}),
-						...(computedDocumentUri ? { siteStandardDocumentUri: computedDocumentUri } : {}),
+						...(shouldSetDocumentUri ? { siteStandardDocumentUri: computedDocumentUri } : {}),
 					},
 				});
 			}
