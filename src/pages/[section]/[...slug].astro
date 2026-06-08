@@ -15,9 +15,10 @@ import PodcastEpisodeSchema from "../../components/PodcastEpisodeSchema.astro";
 import Reactions from "../../components/Reactions.astro";
 import RelatedArticles from "../../components/RelatedArticles.astro";
 import Layout from "../../layouts/Layout.astro";
-import { formatSiteDate } from "../../utils/config.js";
+import { formatSiteDate, SITE_CONFIG } from "../../utils/config.js";
 import { getEntryIds, getSeriesSlug, isSeriesContainerId, normalizeEntryId } from "../../utils/contentSeries";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../../utils/contentVisibility";
+import { toSiteStandardDocumentUri } from "../../utils/siteStandard.js";
 import { getTagDisplayName, sortTags } from "../../utils/tags.js";
 import type { ProcessedWebmentions } from "../../utils/webmentions";
 import { fetchWebmentions, processWebmentions } from "../../utils/webmentions";
@@ -230,6 +231,11 @@ const truncatedTitle = truncateTitle(pageTitle);
 const translations = pageEntry?.data.translations?.map((t: any) => ({ language: t.language, url: t.url })) ?? undefined;
 const articleEyebrowText = !isSeriesPage && section === "blog" && series ? series.title : article?.data.eyebrow;
 const articleEyebrowHref = !isSeriesPage && section === "blog" && series ? `/blog/${series.slug}/` : null;
+const siteStandardPublicationUri = SITE_CONFIG.atproto?.publicationUri;
+const siteStandardDocumentUri =
+	!isSeriesPage && section === "blog" && article
+		? (article.data.siteStandardDocumentUri ?? toSiteStandardDocumentUri(SITE_CONFIG.atproto?.did, article.id))
+		: undefined;
 
 // Fetch webmentions if reactions are enabled for this article
 let webmentions: ProcessedWebmentions | null = null;
@@ -288,8 +294,11 @@ void [
 		/>
 	)}
 
-	{!isSeriesPage && section === "blog" && article?.data.siteStandardDocumentUri && (
-		<link rel="site.standard.document" href={article.data.siteStandardDocumentUri} slot="head" />
+	{!isSeriesPage && section === "blog" && siteStandardDocumentUri && siteStandardPublicationUri && (
+		<Fragment slot="head">
+			<link rel="site.standard.document" href={siteStandardDocumentUri} />
+			<link rel="site.standard.publication" href={siteStandardPublicationUri} />
+		</Fragment>
 	)}
 
 	{!isSeriesPage && section === "speaking" && article?.data.type === "podcast" && (
