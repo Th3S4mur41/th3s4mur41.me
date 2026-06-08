@@ -4,13 +4,13 @@ import { defineCollection, z } from "astro:content";
 // 2. Import loader(s)
 import { glob } from "astro/loaders";
 
-const CONTENT_BASE = "./content";
-
 import { SITE_CONFIG } from "./utils/config.js";
 // 3. Import reading-time computation
 import { computeReadingTime } from "./utils/readingTime.js";
 import { toSiteStandardDocumentUri } from "./utils/siteStandard.js";
 import { ALLOWED_TAGS } from "./utils/tags.js";
+
+const CONTENT_BASE = "./content";
 
 // 4. Define schema for blog content collection entries
 const blogSchema = ({ image }) =>
