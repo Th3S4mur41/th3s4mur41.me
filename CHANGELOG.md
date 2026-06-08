@@ -1,3 +1,10 @@
+## [2.65.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.65.1...v2.65.2) (2026-06-08)
+
+
+### Bug Fixes
+
+* **atproto:** ensure normalized paths end with a trailing slash ([49701ad](https://github.com/Th3S4mur41/th3s4mur41.me/commit/49701ade20a76830cfa6c5856829599101994a2f))
+
 ## [2.65.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.65.0...v2.65.1) (2026-06-08)
 
 
