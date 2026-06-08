@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { readdir, readFile } from "node:fs/promises";
-import { basename, dirname, extname, join, relative } from "node:path";
+import { readdir, readFile, realpath } from "node:fs/promises";
+import { basename, dirname, extname, join, relative, resolve, sep } from "node:path";
 import process from "node:process";
 import { AtpAgent } from "@atproto/api";
 import matter from "gray-matter";
@@ -58,6 +58,15 @@ function normalizePath(pathValue) {
 	if (!value.startsWith("/")) value = `/${value}`;
 	if (value.length > 1 && value.endsWith("/")) value = value.slice(0, -1);
 	return value;
+}
+
+async function resolveContentDir(contentDir) {
+	const safeRoot = await realpath(resolve(process.cwd(), "content"));
+	const candidate = await realpath(resolve(process.cwd(), contentDir));
+	if (candidate !== safeRoot && !candidate.startsWith(`${safeRoot}${sep}`)) {
+		throw new Error(`Invalid content directory: ${contentDir}`);
+	}
+	return candidate;
 }
 
 function toIsoDate(value) {
@@ -306,8 +315,9 @@ async function main() {
 	console.log("Starting ATProto blog sync");
 	if (args.dryRun) console.log("Dry run enabled, no remote changes will be written");
 
-	const posts = await loadPosts(args.contentDir, args.postSlug);
-	console.log(`Loaded ${posts.length} published post(s) from ${args.contentDir}`);
+	const contentDir = await resolveContentDir(args.contentDir);
+	const posts = await loadPosts(contentDir, args.postSlug);
+	console.log(`Loaded ${posts.length} published post(s) from ${contentDir}`);
 
 	if (posts.length === 0) {
 		console.log("No eligible posts found, nothing to do");
