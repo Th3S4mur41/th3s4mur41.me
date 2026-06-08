@@ -1,6 +1,10 @@
 import { visit } from "unist-util-visit";
 
 export const SITE_CONFIG = {
+	atproto: {
+		did: "did:plc:xetli7nktzsvhl74bhl4r4yx",
+		publicationUri: "at://did:plc:xetli7nktzsvhl74bhl4r4yx/site.standard.publication/self",
+	},
 	readingTime: {
 		wordsPerMinute: 130,
 	},

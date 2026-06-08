@@ -5,6 +5,12 @@ import { basename, dirname, extname, join, relative } from "node:path";
 import process from "node:process";
 import { AtpAgent } from "@atproto/api";
 import matter from "gray-matter";
+import { SITE_CONFIG } from "../src/utils/config.js";
+import {
+	SITE_STANDARD_DOCUMENT_COLLECTION,
+	toSiteStandardDocumentRkey,
+	toSiteStandardDocumentUri,
+} from "../src/utils/siteStandard.js";
 
 const DEFAULTS = {
 	contentDir: "content/blog",
@@ -13,7 +19,7 @@ const DEFAULTS = {
 	identifier: "th3s4mur41.me",
 };
 
-const DOCUMENT_COLLECTION = "site.standard.document";
+const DOCUMENT_COLLECTION = SITE_STANDARD_DOCUMENT_COLLECTION;
 
 function parseArgs(argv) {
 	const args = {
@@ -25,7 +31,7 @@ function parseArgs(argv) {
 		siteUrl: process.env.ATPROTO_SITE_URL ?? DEFAULTS.siteUrl,
 		identifier: process.env.ATPROTO_IDENTIFIER ?? DEFAULTS.identifier,
 		service: process.env.ATPROTO_SERVICE,
-		publicationUri: process.env.ATPROTO_PUBLICATION_URI,
+		publicationUri: process.env.ATPROTO_PUBLICATION_URI ?? SITE_CONFIG.atproto?.publicationUri,
 	};
 
 	for (const arg of argv) {
@@ -187,6 +193,7 @@ async function loadPosts(contentDir, postSlug) {
 
 		discoveredPosts.push({
 			slug,
+			rkey: toSiteStandardDocumentRkey(slug),
 			path,
 			title: data.title.trim(),
 			publishedAt,
@@ -346,8 +353,44 @@ async function main() {
 		try {
 			const nextRecord = stripUndefined(createDocumentFromPost(post, siteField));
 			const existing = byPath.get(post.path);
+			const desiredUri = toSiteStandardDocumentUri(did, post.slug);
 
 			if (existing) {
+				if (existing.uri !== desiredUri) {
+					if (!args.force) {
+						stats.skipped += 1;
+						console.warn(`• Skip ${post.path} (existing URI differs: ${existing.uri})`);
+						console.warn("  Re-run with --force to migrate this record to deterministic URI format.");
+						continue;
+					}
+
+					const previousRkey = existing.uri.split("/").at(-1);
+					if (!previousRkey) throw new Error(`Missing rkey for existing record ${existing.uri}`);
+
+					if (args.dryRun) {
+						stats.updated += 1;
+						console.log(`• Would migrate ${post.path} (${existing.uri} -> ${desiredUri})`);
+						continue;
+					}
+
+					await agent.api.com.atproto.repo.deleteRecord({
+						repo: did,
+						collection: DOCUMENT_COLLECTION,
+						rkey: previousRkey,
+					});
+
+					const recreateResponse = await agent.api.com.atproto.repo.createRecord({
+						repo: did,
+						collection: DOCUMENT_COLLECTION,
+						rkey: post.rkey,
+						record: nextRecord,
+					});
+
+					stats.updated += 1;
+					console.log(`• Migrated ${post.path} (${recreateResponse.data.uri})`);
+					continue;
+				}
+
 				if (!args.force && !hasDocumentChanged(existing.value ?? {}, nextRecord)) {
 					stats.skipped += 1;
 					console.log(`• Skip ${post.path} (unchanged)`);
@@ -384,6 +427,7 @@ async function main() {
 			const response = await agent.api.com.atproto.repo.createRecord({
 				repo: did,
 				collection: DOCUMENT_COLLECTION,
+				rkey: post.rkey,
 				record: nextRecord,
 			});
 
