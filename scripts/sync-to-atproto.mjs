@@ -27,11 +27,13 @@ function parseArgs(argv) {
 		force: false,
 		postSlug: undefined,
 		skipAuth: false,
-		contentDir: process.env.ATPROTO_CONTENT_DIR ?? DEFAULTS.contentDir,
-		siteUrl: process.env.ATPROTO_SITE_URL ?? DEFAULTS.siteUrl,
-		identifier: process.env.ATPROTO_IDENTIFIER ?? DEFAULTS.identifier,
+		contentDir: (process.env.ATPROTO_CONTENT_DIR && process.env.ATPROTO_CONTENT_DIR.trim()) || DEFAULTS.contentDir,
+		siteUrl: (process.env.ATPROTO_SITE_URL && process.env.ATPROTO_SITE_URL.trim()) || DEFAULTS.siteUrl,
+		identifier: (process.env.ATPROTO_IDENTIFIER && process.env.ATPROTO_IDENTIFIER.trim()) || DEFAULTS.identifier,
 		service: process.env.ATPROTO_SERVICE,
-		publicationUri: process.env.ATPROTO_PUBLICATION_URI ?? SITE_CONFIG.atproto?.publicationUri,
+		publicationUri:
+			(process.env.ATPROTO_PUBLICATION_URI && process.env.ATPROTO_PUBLICATION_URI.trim()) ||
+			SITE_CONFIG.atproto?.publicationUri,
 	};
 
 	for (const arg of argv) {
