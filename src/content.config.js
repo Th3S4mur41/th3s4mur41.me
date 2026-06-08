@@ -4,11 +4,13 @@ import { defineCollection, z } from "astro:content";
 // 2. Import loader(s)
 import { glob } from "astro/loaders";
 
-const CONTENT_BASE = "./content";
-
+import { SITE_CONFIG } from "./utils/config.js";
 // 3. Import reading-time computation
 import { computeReadingTime } from "./utils/readingTime.js";
+import { toSiteStandardDocumentUri } from "./utils/siteStandard.js";
 import { ALLOWED_TAGS } from "./utils/tags.js";
+
+const CONTENT_BASE = "./content";
 
 // 4. Define schema for blog content collection entries
 const blogSchema = ({ image }) =>
@@ -53,6 +55,7 @@ const blogSchema = ({ image }) =>
 				}),
 			)
 			.optional(),
+		siteStandardDocumentUri: z.string().startsWith("at://").optional(),
 		reactions: z.boolean().optional().default(true),
 	});
 
@@ -82,13 +85,21 @@ function createLoaderWithReadingTime(baseLoader) {
 		name: `${baseLoader.name}-with-reading-time`,
 		load: async (context) => {
 			await baseLoader.load(context);
+			const atprotoDid = SITE_CONFIG.atproto?.did;
 
 			for (const [id, entry] of context.store.entries()) {
-				if (entry?.data?.readingTime) continue;
-				const computed = computeReadingTime(entry?.body);
-				if (!computed) continue;
+				const computedReadingTime = entry?.data?.readingTime ?? computeReadingTime(entry?.body);
+				const computedDocumentUri = atprotoDid ? toSiteStandardDocumentUri(atprotoDid, id) : undefined;
+
+				const shouldSetReadingTime = !entry?.data?.readingTime && Boolean(computedReadingTime);
+				const shouldSetDocumentUri = Boolean(
+					computedDocumentUri && entry?.data?.siteStandardDocumentUri !== computedDocumentUri,
+				);
+
+				if (!shouldSetReadingTime && !shouldSetDocumentUri) continue;
+
 				// Drop digest so DataStore.set does not short-circuit unchanged entries;
-				// we are intentionally mutating entry.data by adding readingTime.
+				// we are intentionally mutating derived entry fields.
 				const { digest: _digest, ...entryWithoutDigest } = entry;
 
 				context.store.set({
@@ -96,7 +107,8 @@ function createLoaderWithReadingTime(baseLoader) {
 					id,
 					data: {
 						...entry.data,
-						readingTime: computed,
+						...(shouldSetReadingTime ? { readingTime: computedReadingTime } : {}),
+						...(shouldSetDocumentUri ? { siteStandardDocumentUri: computedDocumentUri } : {}),
 					},
 				});
 			}

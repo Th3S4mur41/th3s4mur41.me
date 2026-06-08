@@ -288,6 +288,10 @@ void [
 		/>
 	)}
 
+	{!isSeriesPage && section === "blog" && article?.data.siteStandardDocumentUri && (
+		<link rel="site.standard.document" href={article.data.siteStandardDocumentUri} slot="head" />
+	)}
+
 	{!isSeriesPage && section === "speaking" && article?.data.type === "podcast" && (
 		<PodcastEpisodeSchema
 			slot="head"

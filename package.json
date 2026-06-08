@@ -11,8 +11,8 @@
 		"website"
 	],
 	"engines": {
-		"node": ">= 20.0.0",
-		"npm": ">= 9.0.0"
+		"node": ">= 22.0.0",
+		"npm": ">= 10.0.0"
 	},
 	"bugs": "https://github.com/Th3S4mur41/th3s4mur41.me/issues",
 	"repository": {
@@ -32,6 +32,7 @@
 	},
 	"devDependencies": {
 		"@astrojs/mdx": "^6.0.2",
+		"@atproto/api": "^0.20.9",
 		"@biomejs/biome": "2.4.16",
 		"@commitlint/cli": "^21.0.2",
 		"@commitlint/config-conventional": "^21.0.2",
@@ -48,7 +49,8 @@
 		"prettier": "^3.8.3",
 		"typescript": "^6.0.3",
 		"vitest": "^4.1.8",
-		"wrangler": "^4.98.0"
+		"wrangler": "^4.98.0",
+		"yaml": "^2.9.0"
 	},
 	"optionalDependencies": {
 		"lint-staged": "^17.0.7",
@@ -58,6 +60,8 @@
 		"start": "astro dev",
 		"start:prod": "astro preview",
 		"build": "astro build",
+		"sync:atproto": "node scripts/sync-to-atproto.mjs",
+		"sync:atproto:dry": "node scripts/sync-to-atproto.mjs --dry-run",
 		"build:favicon": "real-favicon check-for-update --fail-on-update faviconData.json",
 		"lint": "prettier --check --ignore-unknown --no-error-on-unmatched-pattern . && biome ci .",
 		"lint:fix": "prettier --write --ignore-unknown --no-error-on-unmatched-pattern . && biome check --write .",
