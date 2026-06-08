@@ -191,14 +191,7 @@ async function loadPosts(contentDir, postSlug) {
 		const raw = await readFile(filePath, "utf8");
 		let data;
 		try {
-			({ data } = matter(raw, {
-				language: "yaml",
-				engines: {
-					yaml: (s) => matter.engines.yaml(s),
-					json: (s) => JSON.parse(s),
-				},
-				excerpt: false,
-			}));
+			({ data } = matter(raw));
 		} catch (error) {
 			console.warn(`Skipping ${filePath}: invalid or unsupported frontmatter`);
 			continue;
@@ -331,6 +324,59 @@ function buildLookupMaps(records) {
 	return { byPath };
 }
 
+function printLocalPreview(posts) {
+	for (const post of posts) {
+		console.log(`• Would sync ${post.path}`);
+	}
+}
+
+function getSessionFromEnv() {
+	const rawSession = process.env.ATPROTO_SESSION_JSON;
+	if (!rawSession) return undefined;
+
+	try {
+		const parsed = JSON.parse(rawSession);
+		if (!parsed || typeof parsed !== "object") return undefined;
+		if (typeof parsed.did !== "string" || typeof parsed.accessJwt !== "string") return undefined;
+		return parsed;
+	} catch {
+		return undefined;
+	}
+}
+
+async function createAuthenticatedAgent(args, appPassword) {
+	const identifierDid = await resolveDidFromIdentifier(args.identifier);
+	const service = args.service ?? (await resolvePdsServiceFromDid(identifierDid));
+	const agent = new AtpAgent({ service });
+
+	if (args.skipAuth) {
+		const existingSession = getSessionFromEnv();
+		if (!existingSession) {
+			throw new Error("--skip-auth requires ATPROTO_SESSION_JSON with an existing session (did/accessJwt/refreshJwt)");
+		}
+
+		agent.resumeSession(existingSession);
+		await agent.api.com.atproto.server.getSession();
+		const did = existingSession.did;
+		console.log(`Using existing ATProto session for ${did}`);
+		console.log(`Using PDS service: ${service}`);
+		return { agent, did, service };
+	}
+
+	if (!appPassword) {
+		throw new Error("ATPROTO_APP_PASSWORD is required unless --skip-auth is used");
+	}
+
+	const session = await agent.login({
+		identifier: args.identifier,
+		password: appPassword,
+	});
+	const did = session.data.did;
+	console.log(`Authenticated as ${args.identifier} (${did})`);
+	console.log(`Using PDS service: ${service}`);
+	return { agent, did, service };
+}
+
 async function main() {
 	const args = parseArgs(process.argv.slice(2));
 	const appPassword = process.env.ATPROTO_APP_PASSWORD;
@@ -349,28 +395,32 @@ async function main() {
 		return;
 	}
 
-	if ((args.dryRun && args.skipAuth) || !appPassword) {
-		if (!appPassword) {
-			console.log("ATPROTO_APP_PASSWORD not set, showing local dry-run preview only");
+	if (args.dryRun) {
+		if (args.skipAuth) {
+			console.log("Skip-auth + dry-run: local preview mode");
+			printLocalPreview(posts);
+			return;
 		}
 
-		for (const post of posts) {
-			console.log(`• Would sync ${post.path}`);
+		if (!appPassword) {
+			console.warn("ATPROTO_APP_PASSWORD not set; skipping auth check and continuing with local preview");
+			printLocalPreview(posts);
+			return;
 		}
+
+		try {
+			await createAuthenticatedAgent(args, appPassword);
+			console.log("Dry-run auth check succeeded");
+		} catch (error) {
+			const message = error instanceof Error ? error.message : String(error);
+			console.warn(`Dry-run auth check failed: ${message}`);
+		}
+
+		printLocalPreview(posts);
 		return;
 	}
 
-	const service = args.service ?? (await resolvePdsServiceFromDid(await resolveDidFromIdentifier(args.identifier)));
-
-	const agent = new AtpAgent({ service });
-	const session = await agent.login({
-		identifier: args.identifier,
-		password: appPassword,
-	});
-	const did = session.data.did;
-
-	console.log(`Authenticated as ${args.identifier} (${did})`);
-	console.log(`Using PDS service: ${service}`);
+	const { agent, did } = await createAuthenticatedAgent(args, appPassword);
 	console.log(`Using site field: ${siteField}`);
 
 	const existingRecords = await listAllDocuments(agent, did);
