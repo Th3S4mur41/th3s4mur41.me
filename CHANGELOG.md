@@ -1,3 +1,10 @@
+# [2.65.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.64.0...v2.65.0) (2026-06-08)
+
+
+### Features
+
+* add support for site.standard  ([#2398](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2398)) ([2769c78](https://github.com/Th3S4mur41/th3s4mur41.me/commit/2769c78e17598cf211199e97492a1fe718fab1e0))
+
 # [2.64.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.63.0...v2.64.0) (2026-06-04)
 
 
