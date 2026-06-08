@@ -43,14 +43,14 @@
 		"browserslist": "^4.28.2",
 		"concurrently": "^10.0.3",
 		"cssnano": "^8.0.1",
-		"gray-matter": "^4.0.3",
 		"husky": "^9.1.7",
 		"postcss": "^8.5.15",
 		"postcss-preset-env": "^11.3.0",
 		"prettier": "^3.8.3",
 		"typescript": "^6.0.3",
 		"vitest": "^4.1.8",
-		"wrangler": "^4.98.0"
+		"wrangler": "^4.98.0",
+		"yaml": "^2.9.0"
 	},
 	"optionalDependencies": {
 		"lint-staged": "^17.0.7",

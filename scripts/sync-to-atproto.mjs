@@ -4,7 +4,7 @@ import { readdir, readFile, realpath } from "node:fs/promises";
 import { basename, dirname, extname, join, relative, resolve, sep } from "node:path";
 import process from "node:process";
 import { AtpAgent } from "@atproto/api";
-import matter from "gray-matter";
+import { parse as parseYaml } from "yaml";
 import { SITE_CONFIG } from "../src/utils/config.js";
 import {
 	SITE_STANDARD_DOCUMENT_COLLECTION,
@@ -58,6 +58,16 @@ function normalizePath(pathValue) {
 	if (!value.startsWith("/")) value = `/${value}`;
 	if (value.length > 1 && value.endsWith("/")) value = value.slice(0, -1);
 	return value;
+}
+
+function parseYamlFrontmatter(raw) {
+	if (typeof raw !== "string" || !raw.startsWith("---")) return {};
+
+	const match = raw.match(/^---\s*\r?\n([\s\S]*?)\r?\n---\s*(?:\r?\n|$)/);
+	if (!match) return {};
+
+	const parsed = parseYaml(match[1]);
+	return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
 }
 
 async function resolveContentDir(contentDir) {
@@ -201,7 +211,7 @@ async function loadPosts(contentDir, postSlug) {
 		const raw = await readFile(filePath, "utf8");
 		let data;
 		try {
-			({ data } = matter(raw, { language: "yaml" }));
+			data = parseYamlFrontmatter(raw);
 		} catch (_error) {
 			console.warn(`Skipping ${filePath}: invalid or unsupported frontmatter`);
 			continue;
