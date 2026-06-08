@@ -58,7 +58,7 @@ function normalizePath(pathValue) {
 	let value = pathValue.trim();
 	if (!value) return undefined;
 	if (!value.startsWith("/")) value = `/${value}`;
-	if (value.length > 1 && value.endsWith("/")) value = value.slice(0, -1);
+	if (value !== "/" && !value.endsWith("/")) value = `${value}/`;
 	return value;
 }
 
@@ -238,7 +238,7 @@ async function loadPosts(contentDir, postSlug) {
 
 		const updatedAt = toIsoDate(data.updated);
 		const description = typeof data.description === "string" ? data.description.trim() : undefined;
-		const path = normalizePath(`/blog/${slug}`);
+		const path = normalizePath(`/blog/${slug}/`);
 
 		discoveredPosts.push({
 			slug,
