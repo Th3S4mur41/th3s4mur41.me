@@ -201,7 +201,7 @@ async function loadPosts(contentDir, postSlug) {
 		const raw = await readFile(filePath, "utf8");
 		let data;
 		try {
-			({ data } = matter(raw));
+			({ data } = matter(raw, { language: "yaml" }));
 		} catch (_error) {
 			console.warn(`Skipping ${filePath}: invalid or unsupported frontmatter`);
 			continue;
