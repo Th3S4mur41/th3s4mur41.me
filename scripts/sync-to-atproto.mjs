@@ -67,14 +67,23 @@ async function resolveContentDir(contentDir) {
 
 	const raw = contentDir.trim();
 	const normalizedInput = raw.replaceAll("\\", "/");
-	const segments = normalizedInput.split("/").filter(Boolean);
-	const isAbsolutePath = resolve(raw) === raw;
-	if (isAbsolutePath || segments.includes("..")) {
+	if (normalizedInput.includes("\0")) {
 		throw new Error(`Invalid content directory: ${contentDir}`);
 	}
 
 	const safeRoot = await realpath(resolve(process.cwd(), "content"));
-	const candidate = await realpath(resolve(process.cwd(), raw));
+	const relativeInput = normalizedInput.startsWith("content/")
+		? normalizedInput.slice("content/".length)
+		: normalizedInput === "content"
+			? ""
+			: normalizedInput;
+	const segments = relativeInput.split("/").filter(Boolean);
+	const isAbsolutePath = resolve(raw) === raw;
+	if (isAbsolutePath || segments.includes("..") || segments.includes(".")) {
+		throw new Error(`Invalid content directory: ${contentDir}`);
+	}
+
+	const candidate = await realpath(resolve(safeRoot, ...segments));
 	if (candidate !== safeRoot && !candidate.startsWith(`${safeRoot}${sep}`)) {
 		throw new Error(`Invalid content directory: ${contentDir}`);
 	}
@@ -111,7 +120,8 @@ function getSlugFromFile(contentDir, filePath) {
 	const ext = extname(rel);
 	const relWithoutExt = rel.slice(0, -ext.length);
 	if (basename(relWithoutExt) === "index") {
-		return dirname(relWithoutExt).replaceAll("\\", "/");
+		const parentDir = dirname(relWithoutExt).replaceAll("\\", "/");
+		return parentDir === "." ? "" : parentDir;
 	}
 	return relWithoutExt;
 }
@@ -192,7 +202,7 @@ async function loadPosts(contentDir, postSlug) {
 		let data;
 		try {
 			({ data } = matter(raw));
-		} catch (error) {
+		} catch (_error) {
 			console.warn(`Skipping ${filePath}: invalid or unsupported frontmatter`);
 			continue;
 		}
@@ -345,6 +355,7 @@ function getSessionFromEnv() {
 }
 
 async function createAuthenticatedAgent(args, appPassword) {
+	const configuredDid = SITE_CONFIG.atproto?.did;
 	const identifierDid = await resolveDidFromIdentifier(args.identifier);
 	const service = args.service ?? (await resolvePdsServiceFromDid(identifierDid));
 	const agent = new AtpAgent({ service });
@@ -358,6 +369,9 @@ async function createAuthenticatedAgent(args, appPassword) {
 		agent.resumeSession(existingSession);
 		await agent.api.com.atproto.server.getSession();
 		const did = existingSession.did;
+		if (configuredDid && did !== configuredDid) {
+			throw new Error(`Authenticated DID ${did} does not match configured SITE_CONFIG.atproto.did ${configuredDid}`);
+		}
 		console.log(`Using existing ATProto session for ${did}`);
 		console.log(`Using PDS service: ${service}`);
 		return { agent, did, service };
@@ -372,6 +386,9 @@ async function createAuthenticatedAgent(args, appPassword) {
 		password: appPassword,
 	});
 	const did = session.data.did;
+	if (configuredDid && did !== configuredDid) {
+		throw new Error(`Authenticated DID ${did} does not match configured SITE_CONFIG.atproto.did ${configuredDid}`);
+	}
 	console.log(`Authenticated as ${args.identifier} (${did})`);
 	console.log(`Using PDS service: ${service}`);
 	return { agent, did, service };
