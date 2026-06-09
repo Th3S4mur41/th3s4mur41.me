@@ -120,7 +120,7 @@ article.card {
 		color: var(--color-subtle-text);
 	}
 
-	&.featured {
+	&.featured:has(img) {
 		grid-template-columns: [image-start] 0.5em [title-start teaser-start date-start type-start] 1fr [date-end meta-start] auto [meta-end
 				title-end teaser-end type-end] 0.5em [image-end];
 		grid-template-rows: [image-start type-start] auto [image-end type-end meta-start date-start] auto [meta-end date-end
@@ -141,5 +141,31 @@ article.card {
 	}
 	&:has(a:focus-visible) {
 		outline: 2px solid var(--color-accent);
+	}
+
+	/* Notes */
+	&:not(:has(img)) {
+		grid-template-columns: 0.5em [title-start teaser-start type-start] auto [type-end date-start] 1fr [title-end
+				teaser-end date-end] 0.5em;
+		grid-template-rows: 0.5em [type-start date-start] auto [type-end date-end title-start] auto [title-end teaser-start] auto [teaser-end] 0.5em;
+		column-gap: 0.5rem;
+		& .type {
+			background: var(--color-accent);
+			color: var(--color-bg);
+		}
+		& time {
+			align-self: center;
+		}
+		& h2,
+		h3,
+		p {
+			color: var(--color-text);
+			font-size: 1.5em;
+			font-weight: 300;
+			line-height: 1.2;
+			letter-spacing: 0.05ch;
+			text-transform: unset;
+			text-wrap: balance;
+		}
 	}
 }
