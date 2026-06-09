@@ -35,9 +35,10 @@ export async function GET(context) {
 	const feedUrl = new URL("/feed.xml", site).href;
 	const iconUrl = new URL("/icons/favicon-512.png", site).href;
 
-	const [allBlogEntries, speakingEntries] = await Promise.all([
+	const [allBlogEntries, speakingEntries, notesEntries] = await Promise.all([
 		getCollection("blog"),
 		getCollection("speaking", ({ data }) => isVisibleContent(data, { now, previewFuture })),
+		getCollection("notes", ({ data }) => isVisibleContent(data, { now, previewFuture })),
 	]);
 	const blogEntryIds = getEntryIds(allBlogEntries);
 	const blogEntries = allBlogEntries.filter((entry) => isVisibleContent(entry.data, { now, previewFuture }));
@@ -46,6 +47,7 @@ export async function GET(context) {
 	const sortedEntries = [
 		...blogPosts.map((entry) => ({ section: "blog", entry })),
 		...speakingEntries.map((entry) => ({ section: "speaking", entry })),
+		...notesEntries.map((entry) => ({ section: "notes", entry })),
 	]
 		.sort((a, b) => b.entry.data.date.valueOf() - a.entry.data.date.valueOf())
 		.slice(0, FEED_LIMIT);

@@ -16,6 +16,7 @@ const previewFuture = isPreviewFutureContentEnabled();
 const allBlogEntries = await getCollection("blog");
 const blog = allBlogEntries.filter(({ data }: any) => isVisibleContent(data, { now, previewFuture }));
 const speaking = await getCollection("speaking", ({ data }: any) => isVisibleContent(data, { now, previewFuture }));
+const notes = await getCollection("notes", ({ data }: any) => isVisibleContent(data, { now, previewFuture }));
 const blogIds = getEntryIds(allBlogEntries);
 
 const blogPosts = blog.filter((entry: any) => !isSeriesContainerId(entry.id, blogIds));
@@ -24,6 +25,7 @@ const blogPosts = blog.filter((entry: any) => !isSeriesContainerId(entry.id, blo
 const combined = [
 	...blogPosts.map((entry: any) => ({ section: "blog" as const, entry })),
 	...speaking.map((entry: any) => ({ section: "speaking" as const, entry })),
+	...notes.map((entry: any) => ({ section: "notes" as const, entry })),
 ].sort((a, b) => new Date(b.entry.data.date).getTime() - new Date(a.entry.data.date).getTime());
 
 // Get all unique tags from published content

@@ -16,9 +16,10 @@ export async function GET(context) {
 	const now = new Date();
 	const previewFuture = isPreviewFutureContentEnabled();
 
-	const [allBlogEntries, speakingEntries] = await Promise.all([
+	const [allBlogEntries, speakingEntries, notesEntries] = await Promise.all([
 		getCollection("blog"),
 		getCollection("speaking", ({ data }) => isVisibleContent(data, { now, previewFuture })),
+		getCollection("notes", ({ data }) => isVisibleContent(data, { now, previewFuture })),
 	]);
 	const blogEntryIds = getEntryIds(allBlogEntries);
 	const blogEntries = allBlogEntries.filter((entry) => isVisibleContent(entry.data, { now, previewFuture }));
@@ -67,6 +68,7 @@ export async function GET(context) {
 		await Promise.all([
 			...blogPosts.map((entry) => toItem("blog", entry)),
 			...speakingEntries.map((entry) => toItem("speaking", entry)),
+			...notesEntries.map((entry) => toItem("notes", entry)),
 		])
 	)
 		.sort((a, b) => (b.date_published ?? "").localeCompare(a.date_published ?? ""))

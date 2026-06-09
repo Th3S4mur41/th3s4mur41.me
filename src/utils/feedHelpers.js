@@ -12,14 +12,16 @@ import { visit } from "unist-util-visit";
 const CONTENT_ROOT = "/content";
 const BLOG_CONTENT_SEGMENT = `${CONTENT_ROOT}/blog/`;
 const SPEAKING_CONTENT_SEGMENT = `${CONTENT_ROOT}/speaking/`;
+const NOTES_CONTENT_SEGMENT = `${CONTENT_ROOT}/notes/`;
 
 // Eagerly import all content images so they can be resolved to processed asset URLs.
 export const blogImages = import.meta.glob("/content/blog/**/*.{jpg,jpeg,png,webp,gif,avif,svg}", { eager: true });
 export const speakingImages = import.meta.glob("/content/speaking/**/*.{jpg,jpeg,png,webp,gif,avif,svg}", {
 	eager: true,
 });
+export const notesImages = import.meta.glob("/content/notes/**/*.{jpg,jpeg,png,webp,gif,avif,svg}", { eager: true });
 
-const IMAGE_POOLS = { blog: blogImages, speaking: speakingImages };
+const IMAGE_POOLS = { blog: blogImages, speaking: speakingImages, notes: notesImages };
 
 /**
  * Image format to request when processing feed images via `getImage`.
@@ -104,6 +106,7 @@ function getSectionFromFilePath(filePath) {
 	if (!filePath) return null;
 	if (filePath.includes(BLOG_CONTENT_SEGMENT) || filePath.startsWith("content/blog/")) return "blog";
 	if (filePath.includes(SPEAKING_CONTENT_SEGMENT) || filePath.startsWith("content/speaking/")) return "speaking";
+	if (filePath.includes(NOTES_CONTENT_SEGMENT) || filePath.startsWith("content/notes/")) return "notes";
 	return null;
 }
 
