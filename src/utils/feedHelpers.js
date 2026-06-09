@@ -281,6 +281,32 @@ function stripH1() {
 	};
 }
 
+function humanizeSlug(value) {
+	return (
+		value
+			.split("/")
+			.filter(Boolean)
+			.pop()
+			?.split("-")
+			.map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+			.join(" ") ?? value
+	);
+}
+
+function getPlainTextExcerpt(markdown, maxLength = 160) {
+	const text = markdown
+		.replace(/^---[\s\S]*?---\s*/m, "")
+		.replace(/```[\s\S]*?```/g, " ")
+		.replace(/`([^`]+)`/g, "$1")
+		.replace(/\[(.*?)\]\((.*?)\)/g, "$1")
+		.replace(/[>#*_~=-]/g, " ")
+		.replace(/\s+/g, " ")
+		.trim();
+
+	if (text.length <= maxLength) return text;
+	return `${text.slice(0, maxLength).trimEnd()}...`;
+}
+
 // ---------------------------------------------------------------------------
 // Public API
 // ---------------------------------------------------------------------------
@@ -325,6 +351,31 @@ export async function renderBodyToHtml(entry, site) {
 		.process(body);
 
 	return String(result);
+}
+
+/**
+ * Resolve a stable feed item title for entries that may omit frontmatter title
+ * (for example short-form notes).
+ *
+ * @param {object} entry - Astro content entry.
+ * @returns {string}
+ */
+export function getFeedTitle(entry) {
+	return entry?.data?.title?.trim() || humanizeSlug(entry?.id ?? "untitled");
+}
+
+/**
+ * Resolve a feed summary using frontmatter description when present, otherwise
+ * derive a short excerpt from the entry body.
+ *
+ * @param {object} entry - Astro content entry.
+ * @param {number} [maxLength=160] - Maximum summary length.
+ * @returns {string}
+ */
+export function getFeedSummary(entry, maxLength = 160) {
+	if (entry?.data?.description?.trim()) return entry.data.description.trim();
+	if (entry?.body) return getPlainTextExcerpt(entry.body, maxLength);
+	return "";
 }
 
 /**

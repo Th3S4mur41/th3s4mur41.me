@@ -1,7 +1,7 @@
 import { getCollection } from "astro:content";
 import { getEntryIds, isSeriesContainerId } from "../utils/contentSeries";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/contentVisibility";
-import { getHeroImageUrl, renderBodyToHtml } from "../utils/feedHelpers";
+import { getFeedSummary, getFeedTitle, getHeroImageUrl, renderBodyToHtml } from "../utils/feedHelpers";
 
 const FEED_LIMIT = 50;
 
@@ -53,8 +53,8 @@ export async function GET(context) {
 			id: url,
 			url,
 			external_url: entry.data.canonical ?? undefined,
-			title: entry.data.title,
-			summary: entry.data.description ?? undefined,
+			title: getFeedTitle(entry),
+			summary: getFeedSummary(entry) || undefined,
 			image: heroImageUrl ?? undefined,
 			content_html: contentHtml ?? undefined,
 			date_published: entry.data.date.toISOString(),

@@ -2,7 +2,7 @@ import { getCollection } from "astro:content";
 import rss from "@astrojs/rss";
 import { getEntryIds, isSeriesContainerId } from "../utils/contentSeries";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../utils/contentVisibility";
-import { getHeroImageUrl, renderBodyToHtml } from "../utils/feedHelpers";
+import { getFeedSummary, getFeedTitle, getHeroImageUrl, renderBodyToHtml } from "../utils/feedHelpers";
 
 const escapeXmlText = (value) =>
 	value
@@ -65,8 +65,8 @@ export async function GET(context) {
 			}
 
 			return {
-				title: entry.data.title,
-				description: sanitizeDescription(entry.data.description ?? ""),
+				title: getFeedTitle(entry),
+				description: sanitizeDescription(getFeedSummary(entry)),
 				pubDate: entry.data.date,
 				link: `/${section}/${entry.id}/`,
 				categories: entry.data.tags ?? [],
