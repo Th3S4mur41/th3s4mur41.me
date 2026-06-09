@@ -283,7 +283,7 @@ const articleEyebrowText = !isSeriesPage && section === "blog" && series ? serie
 const articleEyebrowHref = !isSeriesPage && section === "blog" && series ? `/blog/${series.slug}/` : null;
 const siteStandardPublicationUri = SITE_CONFIG.atproto?.publicationUri;
 const siteStandardDocumentUri =
-	!isSeriesPage && section === "blog" && article
+	!isSeriesPage && article
 		? (article.data.siteStandardDocumentUri ?? toSiteStandardDocumentUri(SITE_CONFIG.atproto?.did, article.id))
 		: undefined;
 
@@ -344,7 +344,7 @@ void [
 		/>
 	)}
 
-	{!isSeriesPage && section === "blog" && siteStandardDocumentUri && siteStandardPublicationUri && (
+	{!isSeriesPage && siteStandardDocumentUri && siteStandardPublicationUri && (
 		<Fragment slot="head">
 			<link rel="site.standard.document" href={siteStandardDocumentUri} />
 			<link rel="site.standard.publication" href={siteStandardPublicationUri} />
