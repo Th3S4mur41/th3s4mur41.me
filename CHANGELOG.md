@@ -1,3 +1,10 @@
+# [2.66.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.65.2...v2.66.0) (2026-06-10)
+
+
+### Features
+
+* add notes functionality ([#2400](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2400)) ([af0e072](https://github.com/Th3S4mur41/th3s4mur41.me/commit/af0e0721311ee565d5a5a5b1cc5e33def6215e2c))
+
 ## [2.65.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.65.1...v2.65.2) (2026-06-08)
 
 
