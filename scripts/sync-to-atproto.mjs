@@ -74,6 +74,35 @@ function parseYamlFrontmatter(raw) {
 	return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
 }
 
+function stripYamlFrontmatter(raw) {
+	if (typeof raw !== "string") return "";
+	return raw.replace(/^---\s*\r?\n[\s\S]*?\r?\n---\s*(?:\r?\n|$)/, "");
+}
+
+function getPlainTextContent(markdown) {
+	if (typeof markdown !== "string" || !markdown.trim()) return undefined;
+
+	const text = markdown
+		.replace(/^\s*(?:import|export)\b.*$/gm, " ")
+		.replace(/```[\s\S]*?```/g, " ")
+		.replace(/`([^`]+)`/g, "$1")
+		.replace(/\[(.*?)\]\((.*?)\)/g, "$1")
+		.replace(/[>#*_~=-]/g, " ")
+		.replace(/\s+/g, " ")
+		.trim();
+
+	return text || undefined;
+}
+
+function truncateText(value, maxLength) {
+	if (typeof value !== "string") return undefined;
+	const text = value.trim();
+	if (!text) return undefined;
+	if (!Number.isFinite(maxLength) || maxLength <= 0) return text;
+	if (text.length <= maxLength) return text;
+	return `${text.slice(0, maxLength).trimEnd()}...`;
+}
+
 async function resolveContentDir(contentDir) {
 	if (typeof contentDir !== "string" || !contentDir.trim()) {
 		throw new Error("Invalid content directory");
@@ -212,6 +241,7 @@ async function loadPosts(contentDir, postSlug) {
 	const files = await findMarkdownFiles(contentDir);
 	const discoveredPosts = [];
 	const normalizedPostSlug = postSlug?.replace(/^\/+|\/+$/g, "");
+	const NOTE_DESCRIPTION_MAX_LENGTH = 300;
 
 	for (const filePath of files) {
 		const relToContentRoot = relative(contentRoot, filePath).replaceAll("\\", "/");
@@ -249,7 +279,13 @@ async function loadPosts(contentDir, postSlug) {
 		}
 
 		const updatedAt = toIsoDate(data.updated);
-		const description = typeof data.description === "string" ? data.description.trim() : undefined;
+		const trimmedDescription = typeof data.description === "string" ? data.description.trim() : "";
+		const body = stripYamlFrontmatter(raw);
+		const description = trimmedDescription
+			? trimmedDescription
+			: section === "notes"
+				? truncateText(getPlainTextContent(body), NOTE_DESCRIPTION_MAX_LENGTH)
+				: undefined;
 		const path = normalizePath(`/${section}/${slug}/`);
 		const documentId = section === "blog" ? slug : entryId;
 
