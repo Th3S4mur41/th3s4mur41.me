@@ -79,6 +79,21 @@ const speakingSchema = ({ image }) =>
 		reactions: z.boolean().optional().default(true),
 	});
 
+const notesSchema = z.object({
+	title: z.string(),
+	type: z.enum(["note"]).optional().default("note"),
+	date: z.date(),
+	updated: z.date().optional(),
+	published: z.boolean().optional().default(true),
+	description: z.string().optional(),
+	slug: z.string().optional(),
+	tags: z.array(z.enum(ALLOWED_TAGS)).optional(),
+	keywords: z.array(z.string()).optional(),
+	canonical: z.string().optional(),
+	syndication: z.array(z.string().url()).optional(),
+	reactions: z.boolean().optional().default(true),
+});
+
 // 5. Create a custom loader wrapper that computes reading-time for collection entries
 function createLoaderWithReadingTime(baseLoader) {
 	return {
@@ -127,5 +142,10 @@ const speaking = defineCollection({
 	schema: speakingSchema,
 });
 
+const notes = defineCollection({
+	loader: glob({ pattern: "**/*.{md,mdx}", base: `${CONTENT_BASE}/notes` }),
+	schema: notesSchema,
+});
+
 // 7. Export a single `collections` object to register your collection(s)
-export const collections = { blog, speaking };
+export const collections = { blog, speaking, notes };

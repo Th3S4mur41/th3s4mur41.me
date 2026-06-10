@@ -24,7 +24,7 @@ import type { ProcessedWebmentions } from "../../utils/webmentions";
 import { fetchWebmentions, processWebmentions } from "../../utils/webmentions";
 
 /**
- * Unified dynamic route for both blog posts and speaking entries.
+ * Unified dynamic route for blog posts, speaking entries, and notes.
  * Supports draft preview slugs prefixed with `_draft-` the same way the original
  * individual route files did. Eliminates duplicated logic (images, title truncation, meta setup).
  */
@@ -32,11 +32,16 @@ export async function getStaticPaths() {
 	const now = new Date();
 	const previewFuture = isPreviewFutureContentEnabled();
 
-	const [blogEntries, speakingEntries] = await Promise.all([getCollection("blog"), getCollection("speaking")]);
+	const [blogEntries, speakingEntries, notesEntries] = await Promise.all([
+		getCollection("blog"),
+		getCollection("speaking"),
+		getCollection("notes"),
+	]);
 
 	const allBlogIds = getEntryIds(blogEntries);
 	const visibleBlogEntries = blogEntries.filter((entry: any) => isVisibleContent(entry.data, { now, previewFuture }));
 	const visibleSpeakingEntries = speakingEntries.filter((entry: any) => isVisibleContent(entry.data, { now, previewFuture }));
+	const visibleNotesEntries = notesEntries.filter((entry: any) => isVisibleContent(entry.data, { now, previewFuture }));
 	const visibleBlogByNormalizedId = new Map(
 		visibleBlogEntries.map((entry: any) => [normalizeEntryId(entry.id), entry] as const),
 	);
@@ -68,6 +73,11 @@ export async function getStaticPaths() {
 		props: { article: entry, section: "speaking" },
 	}));
 
+	const notesPaths = visibleNotesEntries.map((entry: any) => ({
+		params: { section: "notes", slug: normalizeEntryId(entry.id) },
+		props: { article: entry, section: "notes" },
+	}));
+
 	const seriesSlugs = new Set<string>();
 	for (const entry of visibleBlogEntries) {
 		const seriesSlug = getSeriesSlug(entry.id);
@@ -79,7 +89,7 @@ export async function getStaticPaths() {
 		props: { section: "blog" },
 	}));
 
-	const paths = [...blogPaths, ...speakingPaths, ...seriesPaths];
+	const paths = [...blogPaths, ...speakingPaths, ...notesPaths, ...seriesPaths];
 
 	return paths;
 }
@@ -90,7 +100,7 @@ const { section, slug } = Astro.params as {
 	slug?: string;
 };
 
-const SUPPORTED_SECTIONS = ["blog", "speaking"] as const;
+const SUPPORTED_SECTIONS = ["blog", "speaking", "notes"] as const;
 type Section = (typeof SUPPORTED_SECTIONS)[number];
 
 if (!section || !SUPPORTED_SECTIONS.includes(section as Section)) {
@@ -226,14 +236,44 @@ function humanizeSlug(value: string): string {
 		.join(" ") ?? value;
 }
 
-const pageTitle = pageEntry?.data.title ?? humanizeSlug(normalizedSlug);
+function getPlainTextExcerpt(markdown: string, maxLength = 160): string {
+	const text = markdown
+		.replace(/^---[\s\S]*?---\s*/m, "")
+		.replace(/^\s*(?:import|export)\b.*$/gm, " ")
+		.replace(/```[\s\S]*?```/g, " ")
+		.replace(/`([^`]+)`/g, "$1")
+		.replace(/\[(.*?)\]\((.*?)\)/g, "$1")
+		.replace(/[>#*_~=-]/g, " ")
+		.replace(/\s+/g, " ")
+		.trim();
+
+	if (text.length <= maxLength) return text;
+	return `${text.slice(0, maxLength).trimEnd()}...`;
+}
+
+function hasH1Heading(markdown: string): boolean {
+	if (!markdown) return false;
+	const content = markdown.replace(/^---[\s\S]*?---\s*/m, "");
+	const markdownH1 = /(^|\n)\s*#(?!#)\s+\S/m;
+	const htmlH1 = /<h1(?:\s[^>]*)?>/i;
+	return markdownH1.test(content) || htmlH1.test(content);
+}
+
+const trimmedEntryTitle = pageEntry?.data.title?.trim();
+const pageTitle = trimmedEntryTitle || humanizeSlug(normalizedSlug);
+const noteHasH1 = section === "notes" && article?.body ? hasH1Heading(article.body) : false;
 const truncatedTitle = truncateTitle(pageTitle);
+const resolvedDescription = pageEntry?.data.description?.trim()
+	? pageEntry.data.description
+	: article?.body
+		? getPlainTextExcerpt(article.body)
+		: undefined;
 const translations = pageEntry?.data.translations?.map((t: any) => ({ language: t.language, url: t.url })) ?? undefined;
 const articleEyebrowText = !isSeriesPage && section === "blog" && series ? series.title : article?.data.eyebrow;
 const articleEyebrowHref = !isSeriesPage && section === "blog" && series ? `/blog/${series.slug}/` : null;
 const siteStandardPublicationUri = SITE_CONFIG.atproto?.publicationUri;
 const siteStandardDocumentUri =
-	!isSeriesPage && section === "blog" && article
+	!isSeriesPage && article
 		? (article.data.siteStandardDocumentUri ?? toSiteStandardDocumentUri(SITE_CONFIG.atproto?.did, article.id))
 		: undefined;
 
@@ -270,10 +310,11 @@ void [
 
 <Layout
   title={truncatedTitle}
+	ogTitle={trimmedEntryTitle || pageTitle}
 	showHeading={false}
   image={img}
 	imageAlt={pageEntry?.data.imageAlt}
-  description={pageEntry?.data.description}
+	description={resolvedDescription}
   keywords={pageEntry?.data.keywords}
 	noIndex={!isSeriesPage && pageEntry?.data.published === false}
   canonical={pageEntry?.data.canonical ?? undefined}
@@ -294,7 +335,7 @@ void [
 		/>
 	)}
 
-	{!isSeriesPage && section === "blog" && siteStandardDocumentUri && siteStandardPublicationUri && (
+	{!isSeriesPage && siteStandardDocumentUri && siteStandardPublicationUri && (
 		<Fragment slot="head">
 			<link rel="site.standard.document" href={siteStandardDocumentUri} />
 			<link rel="site.standard.publication" href={siteStandardPublicationUri} />
@@ -335,47 +376,55 @@ void [
 	) : (
 		article && (
 			<article>
+				{section === "notes" && !noteHasH1 && <h1 class="visually-hidden">{pageTitle}</h1>}
 					{articleEyebrowText && (
 						<p class="eyebrow">
 							{articleEyebrowHref ? <a href={articleEyebrowHref}>{articleEyebrowText}</a> : articleEyebrowText}
 						</p>
 					)}
-					{ArticleContent && <ArticleContent components={{ img: Image }} />}
+					{ArticleContent && (
+						<ArticleContent components={{ img: Image }} />
+					)}
 					<footer>
 						<p class="published">
 							Published on <time datetime={article.data.date}>{formatSiteDate(article.data.date)}</time>
-							{article.data.canonical && (
+							{section !== "notes" && article.data.canonical && (
 								<>
 									{" "}via <a href={article.data.canonical} target="_blank" rel="noopener noreferrer">{new URL(article.data.canonical).hostname.replace(/^www\./, "").split(".")[0]}</a>
 								</>
-							)} by{" "}
-						<a href="/about/" class="author">Michaël Vanderheyden</a>
-						{article.data.coauthors && article.data.coauthors.length > 0 && (
-							article.data.coauthors.map((coauthor, index) => (
+							)}
+							{section !== "notes" && (
 								<>
-									{index === article.data.coauthors.length - 1 ? " and " : ", "}
-									{coauthor.url ? (
-										<a href={coauthor.url} class="author" target="_blank" rel="external noopener">{coauthor.name}</a>
-									) : (
-										<span class="author">{coauthor.name}</span>
-									)}
+									{" "}by <a href="/about/" class="author">Michaël Vanderheyden</a>
 								</>
-							))
-						)}
+							)}
+							{section !== "notes" && article.data.coauthors && article.data.coauthors.length > 0 && (
+								article.data.coauthors.map((coauthor: any, index: number) => (
+									<>
+										{index === article.data.coauthors.length - 1 ? " and " : ", "}
+										{coauthor.url ? (
+											<a href={coauthor.url} class="author" target="_blank" rel="external noopener">{coauthor.name}</a>
+										) : (
+											<span class="author">{coauthor.name}</span>
+										)}
+									</>
+								))
+							)}
 						</p>
-						{article.data.updated && (
+						{section !== "notes" && article.data.updated && (
 							<p class="updated">
 								Last updated on <time datetime={article.data.updated}>{formatSiteDate(article.data.updated)}</time>
 							</p>
 						)}
-						<button type="button" class="share-button hidden">
-							<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
-								<path d="M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z"></path>
-							</svg>
-							<span>Share</span>
-						</button>
-						
-						{article.data.tags && article.data.tags.length > 0 && (
+						{section !== "notes" && (
+							<button type="button" class="share-button hidden">
+								<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+									<path d="M176,160a39.89,39.89,0,0,0-28.62,12.09l-46.1-29.63a39.8,39.8,0,0,0,0-28.92l46.1-29.63a40,40,0,1,0-8.66-13.45l-46.1,29.63a40,40,0,1,0,0,55.82l46.1,29.63A40,40,0,1,0,176,160Zm0-128a24,24,0,1,1-24,24A24,24,0,0,1,176,32ZM64,152a24,24,0,1,1,24-24A24,24,0,0,1,64,152Zm112,72a24,24,0,1,1,24-24A24,24,0,0,1,176,224Z"></path>
+								</svg>
+								<span>Share</span>
+							</button>
+						)}
+						{section !== "notes" && article.data.tags && article.data.tags.length > 0 && (
 							<p class="tags">
 								<strong>Tags:</strong>{" "}
 								{sortTags(article.data.tags).map((tag, index) =>
@@ -389,13 +438,15 @@ void [
 								)}
 							</p>
 						)}
-						<Reactions webmentions={webmentions ?? undefined} syndicationLinks={article.data.syndication} />
+						{article.data.reactions && (
+							<Reactions webmentions={webmentions ?? undefined} syndicationLinks={article.data.syndication} />
+						)}
 					</footer>
 				</article>
 		)
 	)}
 
-	{!isSeriesPage && article && (
+	{!isSeriesPage && section !== "notes" && article && (
 		<aside slot="aside" aria-label="Related articles">
 			<h2>You might also like</h2>
 			<RelatedArticles currentArticle={article} />

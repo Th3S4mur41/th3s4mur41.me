@@ -23,8 +23,12 @@ const speaking = (await getCollection("speaking", ({ data }: any) => isVisibleCo
 	(entry: any) => ({ ...entry, section: "speaking" }),
 );
 
+const notes = (await getCollection("notes", ({ data }: any) => isVisibleContent(data, { now, previewFuture }))).map(
+	(entry: any) => ({ ...entry, section: "notes" }),
+);
+
 // Combine and sort all posts by date, then take the 3 most recent
-const allPosts = [...blog, ...speaking]
+const allPosts = [...blog, ...speaking, ...notes]
 	.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
 	.slice(0, 3);
 

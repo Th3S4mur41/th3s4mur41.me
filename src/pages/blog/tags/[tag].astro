@@ -25,12 +25,14 @@ export async function getStaticPaths() {
 	const allBlogEntries = await getCollection("blog");
 	const blog = allBlogEntries.filter(({ data }: any) => isVisibleContent(data, { now, previewFuture }));
 	const speaking = await getCollection("speaking", ({ data }: any) => isVisibleContent(data, { now, previewFuture }));
+	const notes = await getCollection("notes", ({ data }: any) => isVisibleContent(data, { now, previewFuture }));
 	const blogIds = getEntryIds(allBlogEntries);
 	const blogPosts = blog.filter((entry: any) => !isSeriesContainerId(entry.id, blogIds));
 
 	const allContent = [
 		...blogPosts.map((entry: any) => ({ section: "blog" as const, entry })),
 		...speaking.map((entry: any) => ({ section: "speaking" as const, entry })),
+		...notes.map((entry: any) => ({ section: "notes" as const, entry })),
 	];
 
 	// Get all unique tags that have content
@@ -58,6 +60,7 @@ const previewFuture = isPreviewFutureContentEnabled();
 const allBlogEntries = await getCollection("blog");
 const blog = allBlogEntries.filter(({ data }: any) => isVisibleContent(data, { now, previewFuture }));
 const speaking = await getCollection("speaking", ({ data }: any) => isVisibleContent(data, { now, previewFuture }));
+const notes = await getCollection("notes", ({ data }: any) => isVisibleContent(data, { now, previewFuture }));
 
 const blogIds = getEntryIds(allBlogEntries);
 const blogPosts = blog.filter((entry: any) => !isSeriesContainerId(entry.id, blogIds));
@@ -65,6 +68,7 @@ const blogPosts = blog.filter((entry: any) => !isSeriesContainerId(entry.id, blo
 const allContent = [
 	...blogPosts.map((entry: any) => ({ section: "blog" as const, entry })),
 	...speaking.map((entry: any) => ({ section: "speaking" as const, entry })),
+	...notes.map((entry: any) => ({ section: "notes" as const, entry })),
 ];
 
 // Build tag navigation from all visible content.

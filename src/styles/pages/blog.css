@@ -429,3 +429,22 @@ baseline-status {
 	display: grid;
 	grid-template-columns: subgrid;
 }
+
+body[class^="notes-"] {
+	main {
+		grid-auto-rows: 1fr;
+	}
+	article {
+		align-self: center;
+
+		& > h1,
+		& > p {
+			font-size: 1.5em;
+			font-weight: 300;
+			line-height: 1.2;
+			letter-spacing: 0.05ch;
+			text-transform: unset;
+			text-wrap: balance;
+		}
+	}
+}

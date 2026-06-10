@@ -14,8 +14,9 @@ interface ReadingStats {
 interface Props {
 	article: {
 		id: string;
+		body?: string;
 		data: {
-			title: string;
+			title?: string;
 			description?: string;
 			date: string | Date;
 			type?: string;
@@ -92,11 +93,46 @@ const wordCount = typeof candidateWordCount === "number" && Number.isFinite(cand
 const formattedWords = typeof wordCount === "number" ? new Intl.NumberFormat("en-GB").format(wordCount) : null;
 const readingMeta = readingText && formattedWords ? `${readingText} • ${formattedWords} words` : null;
 
+function humanizeSlug(value: string): string {
+	return value
+		.split("/")
+		.filter(Boolean)
+		.pop()
+		?.split("-")
+		.map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+		.join(" ") ?? value;
+}
+
+function getPlainTextExcerpt(markdown: string, maxLength = 160): string {
+	const text = markdown
+		.replace(/^---[\s\S]*?---\s*/m, "")
+		.replace(/^\s*(?:import|export)\b.*$/gm, " ")
+		.replace(/```[\s\S]*?```/g, " ")
+		.replace(/`([^`]+)`/g, "$1")
+		.replace(/\[(.*?)\]\((.*?)\)/g, "$1")
+		.replace(/[>#*_~=-]/g, " ")
+		.replace(/\s+/g, " ")
+		.trim();
+
+	if (text.length <= maxLength) return text;
+	return `${text.slice(0, maxLength).trimEnd()}...`;
+}
+
+const NOTE_CARD_SUMMARY_MAX_LENGTH = 300;
+const trimmedTitle = article.data.title?.trim();
+const trimmedDescription = article.data.description?.trim();
+const resolvedCardTitle = trimmedTitle || humanizeSlug(article.id);
+const resolvedSummary = trimmedDescription
+	? trimmedDescription
+	: article.body
+		? getPlainTextExcerpt(article.body, section === "notes" ? NOTE_CARD_SUMMARY_MAX_LENGTH : 160)
+		: null;
+
 ---
 
 	<article class:list={["card", "h-entry", { featured, pinned }]}> 
 		<HeadingTag class="p-name" style={`view-transition-name: article-title-${transitionId};`}><a class="u-url" href={resolvedHref}>
-			{article.data.title}</a></HeadingTag>
+			{resolvedCardTitle}</a></HeadingTag>
 		{showType && resolvedType && <span class="type">{resolvedType}</span>}
 		{resolvedImage && (
 			<Image
@@ -107,8 +143,8 @@ const readingMeta = readingText && formattedWords ? `${readingText} • ${format
 				style={`view-transition-name: article-hero-image-${transitionId};`}
 			/>
 		)}
-		{article.data.description && (
-		<p class="p-summary">{article.data.description}</p>
+		{resolvedSummary && (
+		<p class="p-summary">{resolvedSummary}</p>
 		)}
 		<time class="dt-published" datetime={dateValue}>
 			{formatSiteDate(dateObj)}
