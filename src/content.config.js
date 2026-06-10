@@ -80,7 +80,7 @@ const speakingSchema = ({ image }) =>
 	});
 
 const notesSchema = z.object({
-	title: z.string().optional(),
+	title: z.string(),
 	type: z.enum(["note"]).optional().default("note"),
 	date: z.date(),
 	updated: z.date().optional(),

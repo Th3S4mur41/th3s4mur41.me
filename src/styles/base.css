@@ -600,3 +600,8 @@ blockquote:where(:not([class], [cite])) {
 		display: contents;
 	}
 }
+
+.visually-hidden {
+	position: absolute; /* take out of document flow */
+	clip-path: circle(0); /* reduce clickable area to nothing */
+}

@@ -250,28 +250,16 @@ function getPlainTextExcerpt(markdown: string, maxLength = 160): string {
 	return `${text.slice(0, maxLength).trimEnd()}...`;
 }
 
-function extractMarkdownParagraphs(markdown: string): string[] {
-	const body = markdown.replace(/^---[\s\S]*?---\s*/m, "").trim();
-	if (!body) return [];
-
-	return body
-		.split(/\n\s*\n/g)
-		.map((block) =>
-			block
-				.replace(/```[\s\S]*?```/g, " ")
-				.replace(/`([^`]+)`/g, "$1")
-				.replace(/\[(.*?)\]\((.*?)\)/g, "$1")
-				.replace(/[>#*_~=-]/g, " ")
-				.replace(/\s+/g, " ")
-				.trim(),
-		)
-		.filter(Boolean);
+function hasH1Heading(markdown: string): boolean {
+	if (!markdown) return false;
+	const content = markdown.replace(/^---[\s\S]*?---\s*/m, "");
+	const markdownH1 = /(^|\n)\s*#(?!#)\s+\S/m;
+	const htmlH1 = /<h1(?:\s[^>]*)?>/i;
+	return markdownH1.test(content) || htmlH1.test(content);
 }
 
-const noteParagraphs = section === "notes" && article?.body ? extractMarkdownParagraphs(article.body) : [];
-const noteFirstParagraph = noteParagraphs[0] ?? null;
-const hasDerivedNoteTitle = section === "notes" && !pageEntry?.data.title && Boolean(noteFirstParagraph);
-const pageTitle = pageEntry?.data.title ?? noteFirstParagraph ?? humanizeSlug(normalizedSlug);
+const pageTitle = pageEntry?.data.title ?? humanizeSlug(normalizedSlug);
+const noteHasH1 = section === "notes" && article?.body ? hasH1Heading(article.body) : false;
 const truncatedTitle = truncateTitle(pageTitle);
 const resolvedDescription = pageEntry?.data.description?.trim()
 	? pageEntry.data.description
@@ -320,6 +308,7 @@ void [
 
 <Layout
   title={truncatedTitle}
+	ogTitle={pageEntry?.data.title ?? pageTitle}
 	showHeading={false}
   image={img}
 	imageAlt={pageEntry?.data.imageAlt}
@@ -384,8 +373,8 @@ void [
 		</>
 	) : (
 		article && (
-			<article class:list={[{ "hide-note-lead": hasDerivedNoteTitle }]}>
-				{section === "notes" && <h1>{pageTitle}</h1>}
+			<article>
+				{section === "notes" && !noteHasH1 && <h1 class="visually-hidden">{pageTitle}</h1>}
 					{articleEyebrowText && (
 						<p class="eyebrow">
 							{articleEyebrowHref ? <a href={articleEyebrowHref}>{articleEyebrowText}</a> : articleEyebrowText}

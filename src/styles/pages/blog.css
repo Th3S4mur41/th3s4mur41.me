@@ -446,9 +446,5 @@ body[class^="notes-"] {
 			text-transform: unset;
 			text-wrap: balance;
 		}
-
-		&.hide-note-lead > p:first-of-type {
-			display: none;
-		}
 	}
 }

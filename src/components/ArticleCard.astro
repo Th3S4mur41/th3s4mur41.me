@@ -117,35 +117,15 @@ function getPlainTextExcerpt(markdown: string, maxLength = 160): string {
 	return `${text.slice(0, maxLength).trimEnd()}...`;
 }
 
-function extractMarkdownParagraphs(markdown: string): string[] {
-	const body = markdown.replace(/^---[\s\S]*?---\s*/m, "").trim();
-	if (!body) return [];
-
-	return body
-		.split(/\n\s*\n/g)
-		.map((block) =>
-			block
-				.replace(/```[\s\S]*?```/g, " ")
-				.replace(/`([^`]+)`/g, "$1")
-				.replace(/\[(.*?)\]\((.*?)\)/g, "$1")
-				.replace(/[>#*_~=-]/g, " ")
-				.replace(/\s+/g, " ")
-				.trim(),
-		)
-		.filter(Boolean);
-}
-
-const noteParagraphs = section === "notes" && article.body ? extractMarkdownParagraphs(article.body) : [];
-const noteTitleFallback = noteParagraphs[0] ?? null;
-const noteSummaryFallback = noteParagraphs.length > 1 ? getPlainTextExcerpt(noteParagraphs.slice(1).join(" ")) : null;
-
 const resolvedCardTitle = section === "notes"
-	? (article.data.title ?? noteTitleFallback ?? humanizeSlug(article.id))
+	? (article.data.title ?? humanizeSlug(article.id))
 	: (article.data.title ?? humanizeSlug(article.id));
 const resolvedSummary = article.data.description?.trim()
 	? article.data.description
 	: section === "notes"
-		? noteSummaryFallback
+		? article.body
+			? getPlainTextExcerpt(article.body, Number.MAX_SAFE_INTEGER)
+			: null
 		: article.body
 			? getPlainTextExcerpt(article.body)
 			: null;
