@@ -118,18 +118,15 @@ function getPlainTextExcerpt(markdown: string, maxLength = 160): string {
 	return `${text.slice(0, maxLength).trimEnd()}...`;
 }
 
-const resolvedCardTitle = section === "notes"
-	? (article.data.title ?? humanizeSlug(article.id))
-	: (article.data.title ?? humanizeSlug(article.id));
-const resolvedSummary = article.data.description?.trim()
-	? article.data.description
-	: section === "notes"
-		? article.body
-			? getPlainTextExcerpt(article.body, Number.MAX_SAFE_INTEGER)
-			: null
-		: article.body
-			? getPlainTextExcerpt(article.body)
-			: null;
+const NOTE_CARD_SUMMARY_MAX_LENGTH = 300;
+const trimmedTitle = article.data.title?.trim();
+const trimmedDescription = article.data.description?.trim();
+const resolvedCardTitle = trimmedTitle || humanizeSlug(article.id);
+const resolvedSummary = trimmedDescription
+	? trimmedDescription
+	: article.body
+		? getPlainTextExcerpt(article.body, section === "notes" ? NOTE_CARD_SUMMARY_MAX_LENGTH : 160)
+		: null;
 
 ---
 

@@ -156,9 +156,7 @@ article.card {
 		& time {
 			align-self: center;
 		}
-		& h2,
-		h3,
-		p {
+		& :is(h2, h3, p) {
 			color: var(--color-text);
 			font-size: 1.5em;
 			font-weight: 300;
