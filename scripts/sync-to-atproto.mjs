@@ -13,11 +13,13 @@ import {
 } from "../src/utils/siteStandard.js";
 
 const DEFAULTS = {
-	contentDir: "content/blog",
+	contentDir: "content",
 	siteUrl: "https://th3s4mur41.me",
 	publicationFile: "public/well-known/site.standard.publication.json",
 	identifier: "th3s4mur41.me",
 };
+
+const SYNC_SECTIONS = new Set(["blog", "speaking", "notes"]);
 
 const DOCUMENT_COLLECTION = SITE_STANDARD_DOCUMENT_COLLECTION;
 
@@ -206,10 +208,18 @@ async function findMarkdownFiles(dir) {
 }
 
 async function loadPosts(contentDir, postSlug) {
+	const contentRoot = await realpath(resolve(process.cwd(), "content"));
 	const files = await findMarkdownFiles(contentDir);
 	const discoveredPosts = [];
+	const normalizedPostSlug = postSlug?.replace(/^\/+|\/+$/g, "");
 
 	for (const filePath of files) {
+		const relToContentRoot = relative(contentRoot, filePath).replaceAll("\\", "/");
+		if (relToContentRoot.startsWith("../") || relToContentRoot === "..") continue;
+
+		const [section] = relToContentRoot.split("/");
+		if (!SYNC_SECTIONS.has(section)) continue;
+
 		const raw = await readFile(filePath, "utf8");
 		let data;
 		try {
@@ -218,9 +228,11 @@ async function loadPosts(contentDir, postSlug) {
 			console.warn(`Skipping ${filePath}: invalid or unsupported frontmatter`);
 			continue;
 		}
-		const slug = getSlugFromFile(contentDir, filePath);
+		const sectionDir = join(contentRoot, section);
+		const slug = getSlugFromFile(sectionDir, filePath);
+		const entryId = `${section}/${slug}`;
 
-		if (postSlug && slug !== postSlug) continue;
+		if (normalizedPostSlug && slug !== normalizedPostSlug && entryId !== normalizedPostSlug) continue;
 
 		const published = data.published !== false && data.draft !== true;
 		if (!published) continue;
@@ -232,17 +244,20 @@ async function loadPosts(contentDir, postSlug) {
 
 		const publishedAt = toIsoDate(data.date);
 		if (!publishedAt) {
-			console.warn(`Skipping ${slug || filePath}: invalid date`);
+			console.warn(`Skipping ${entryId || filePath}: invalid date`);
 			continue;
 		}
 
 		const updatedAt = toIsoDate(data.updated);
 		const description = typeof data.description === "string" ? data.description.trim() : undefined;
-		const path = normalizePath(`/blog/${slug}/`);
+		const path = normalizePath(`/${section}/${slug}/`);
+		const documentId = section === "blog" ? slug : entryId;
 
 		discoveredPosts.push({
+			section,
 			slug,
-			rkey: toSiteStandardDocumentRkey(slug),
+			documentId,
+			rkey: toSiteStandardDocumentRkey(documentId),
 			path,
 			title: data.title.trim(),
 			publishedAt,
@@ -252,8 +267,10 @@ async function loadPosts(contentDir, postSlug) {
 		});
 	}
 
-	const allSlugs = discoveredPosts.map((post) => post.slug);
-	const posts = discoveredPosts.filter((post) => !isSeriesContainerSlug(post.slug, allSlugs));
+	const allBlogSlugs = discoveredPosts.filter((post) => post.section === "blog").map((post) => post.slug);
+	const posts = discoveredPosts.filter(
+		(post) => post.section !== "blog" || !isSeriesContainerSlug(post.slug, allBlogSlugs),
+	);
 
 	posts.sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
 	return posts;
@@ -412,7 +429,7 @@ async function main() {
 	const publicationUri = await resolvePublicationUri(args.publicationUri, DEFAULTS.publicationFile);
 	const siteField = publicationUri ?? args.siteUrl;
 
-	console.log("Starting ATProto blog sync");
+	console.log("Starting ATProto content sync");
 	if (args.dryRun) console.log("Dry run enabled, no remote changes will be written");
 
 	const contentDir = await resolveContentDir(args.contentDir);
@@ -467,7 +484,7 @@ async function main() {
 		try {
 			const nextRecord = stripUndefined(createDocumentFromPost(post, siteField));
 			const existing = byPath.get(post.path);
-			const desiredUri = toSiteStandardDocumentUri(did, post.slug);
+			const desiredUri = toSiteStandardDocumentUri(did, post.documentId);
 
 			if (existing) {
 				if (existing.uri !== desiredUri) {
