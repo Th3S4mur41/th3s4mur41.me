@@ -272,9 +272,12 @@ const translations = pageEntry?.data.translations?.map((t: any) => ({ language: 
 const articleEyebrowText = !isSeriesPage && section === "blog" && series ? series.title : article?.data.eyebrow;
 const articleEyebrowHref = !isSeriesPage && section === "blog" && series ? `/blog/${series.slug}/` : null;
 const siteStandardPublicationUri = SITE_CONFIG.atproto?.publicationUri;
+const siteStandardDocumentId =
+	!isSeriesPage && article ? (section === "blog" ? article.id : `${section}/${article.id}`) : undefined;
 const siteStandardDocumentUri =
 	!isSeriesPage && article
-		? (article.data.siteStandardDocumentUri ?? toSiteStandardDocumentUri(SITE_CONFIG.atproto?.did, article.id))
+		? (article.data.siteStandardDocumentUri ??
+			toSiteStandardDocumentUri(SITE_CONFIG.atproto?.did, siteStandardDocumentId))
 		: undefined;
 
 // Fetch webmentions if reactions are enabled for this article
