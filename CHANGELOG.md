@@ -1,3 +1,10 @@
+## [2.66.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.66.0...v2.66.1) (2026-06-10)
+
+
+### Bug Fixes
+
+* **atproto:** include all post types in sync logic ([4084dcc](https://github.com/Th3S4mur41/th3s4mur41.me/commit/4084dcc220815d881d7a50b2d33d70c0732ae760))
+
 # [2.66.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.65.2...v2.66.0) (2026-06-10)
 
 
