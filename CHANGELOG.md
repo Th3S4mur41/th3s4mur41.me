@@ -1,3 +1,10 @@
+## [2.66.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.66.1...v2.66.2) (2026-06-10)
+
+
+### Bug Fixes
+
+* **atproto:** add functions to strip YAML frontmatter and truncate text for notes ([93f0182](https://github.com/Th3S4mur41/th3s4mur41.me/commit/93f0182b697faccd251eb80aad31eb07128ec2c8))
+
 ## [2.66.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.66.0...v2.66.1) (2026-06-10)
 
 
