@@ -1,3 +1,10 @@
+## [2.66.3](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.66.2...v2.66.3) (2026-06-10)
+
+
+### Bug Fixes
+
+* update site standard document URI logic to use derived document ID ([491d75b](https://github.com/Th3S4mur41/th3s4mur41.me/commit/491d75bd1879a675436ceddf421433d9d15333b6))
+
 ## [2.66.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.66.1...v2.66.2) (2026-06-10)
 
 
