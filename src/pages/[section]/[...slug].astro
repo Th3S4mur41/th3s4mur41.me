@@ -436,7 +436,7 @@ void [
 								)}
 							</p>
 						)}
-						{section !== "notes" && (
+						{article.data.reactions && (
 							<Reactions webmentions={webmentions ?? undefined} syndicationLinks={article.data.syndication} />
 						)}
 					</footer>
