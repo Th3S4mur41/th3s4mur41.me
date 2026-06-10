@@ -106,6 +106,7 @@ function humanizeSlug(value: string): string {
 function getPlainTextExcerpt(markdown: string, maxLength = 160): string {
 	const text = markdown
 		.replace(/^---[\s\S]*?---\s*/m, "")
+		.replace(/^\s*(?:import|export)\b.*$/gm, " ")
 		.replace(/```[\s\S]*?```/g, " ")
 		.replace(/`([^`]+)`/g, "$1")
 		.replace(/\[(.*?)\]\((.*?)\)/g, "$1")
