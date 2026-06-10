@@ -259,7 +259,8 @@ function hasH1Heading(markdown: string): boolean {
 	return markdownH1.test(content) || htmlH1.test(content);
 }
 
-const pageTitle = pageEntry?.data.title ?? humanizeSlug(normalizedSlug);
+const trimmedEntryTitle = pageEntry?.data.title?.trim();
+const pageTitle = trimmedEntryTitle || humanizeSlug(normalizedSlug);
 const noteHasH1 = section === "notes" && article?.body ? hasH1Heading(article.body) : false;
 const truncatedTitle = truncateTitle(pageTitle);
 const resolvedDescription = pageEntry?.data.description?.trim()
@@ -309,7 +310,7 @@ void [
 
 <Layout
   title={truncatedTitle}
-	ogTitle={pageEntry?.data.title ?? pageTitle}
+	ogTitle={trimmedEntryTitle || pageTitle}
 	showHeading={false}
   image={img}
 	imageAlt={pageEntry?.data.imageAlt}
