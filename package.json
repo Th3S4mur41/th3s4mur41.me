@@ -48,7 +48,7 @@
 		"postcss-preset-env": "^11.3.1",
 		"prettier": "^3.8.4",
 		"typescript": "^6.0.3",
-		"vitest": "^4.1.8",
+		"vitest": "^4.1.9",
 		"wrangler": "^4.100.0",
 		"yaml": "^2.9.0"
 	},
