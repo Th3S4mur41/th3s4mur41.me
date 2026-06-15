@@ -146,9 +146,12 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 		<nav aria-label="main">
 			<Image class="logo" src={logo} alt="" />
 			<ul>
+				<!-- biome-ignore lint/a11y/useValidAriaValues: https://github.com/biomejs/biome/issues/10657 -->
 				<li><a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Home</a></li>
+				<!-- biome-ignore lint/a11y/useValidAriaValues: https://github.com/biomejs/biome/issues/10657 -->
 				<li><a href="/blog/" aria-current={Astro.url.pathname.startsWith('/blog/') ? 'page' : undefined}>Blog</a></li>
 				<!-- <li><a href="/projects">Projects</a></li> -->
+				<!-- biome-ignore lint/a11y/useValidAriaValues: https://github.com/biomejs/biome/issues/10657 -->
 				<li><a href="/about/" aria-current={Astro.url.pathname === '/about/' ? 'page' : undefined}>About me</a></li>
 			</ul>
 		</nav>
@@ -160,6 +163,7 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 		<footer>
 			<Socials />
 			<small>
+				<!-- biome-ignore lint/a11y/useValidAnchor: https://github.com/biomejs/biome/issues/10656 -->
 				<a href="#" class="to-top">To the top</a>
 				<nav aria-label="footer">
 					<a href="https://github.com/Th3S4mur41/th3s4mur41.me/issues" target="_blank" rel="noopener noreferrer">Feedback</a>
