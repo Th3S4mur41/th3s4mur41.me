@@ -136,7 +136,7 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 		<!-- Performance -->
 		<script type="speculationrules">{"prerender":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}],"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
 	</head>
-	<body class={slug}>
+	<body id="_top" class={slug}>
 		<!-- <a href="#main" class="skip-link">Skip to main content</a> -->
 		{!Astro.props.noHeader && (
 			<header>
@@ -163,8 +163,7 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 		<footer>
 			<Socials />
 			<small>
-				<!-- biome-ignore lint/a11y/useValidAnchor: https://github.com/biomejs/biome/issues/10656 -->
-				<a href="#" class="to-top">To the top</a>
+				<a href="#_top" class="to-top">To the top</a>
 				<nav aria-label="footer">
 					<a href="https://github.com/Th3S4mur41/th3s4mur41.me/issues" target="_blank" rel="noopener noreferrer">Feedback</a>
 					<a href="/feed.xml">RSS</a>
