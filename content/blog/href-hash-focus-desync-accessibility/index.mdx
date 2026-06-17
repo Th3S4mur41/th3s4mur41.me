@@ -1,0 +1,134 @@
+---
+title: 'href="#" and the Focus Trap'
+eyebrow: Valid HTML, Broken UX
+date: 2026-06-17T00:00:00Z
+image: href-hash-focus-desync-accessibility.jpg
+imageAlt: >-
+  A comic-style illustration within a web browser frame shows Michaël Vanderheyden looking confused as a giant diagonal lightning bolt splits the scene. His upper body is shown floating up towards a yellow background box reading "VIEWPORT: SCROLL TO TOP," while his lower body and legs are physically chained to a rusty anchor labeled "keyboard focus trapped in footer" keycap-rubble background
+description: >-
+  An empty href="#" is valid HTML — but it scrolls the page without moving
+  keyboard focus, silently breaking WCAG 2.4.3. Here's why, and the one-line fix.
+tags:
+  - a11y
+  - html
+keywords:
+  - href
+  - accessibility
+  - focus order
+  - biome
+  - wcag 2.4.3
+  - back to top
+  - keyboard navigation
+---
+
+import CodePen from '/src/components/CodePen.astro';
+
+# href="#" and the Focus Trap
+
+![A comic style illustration within a web browser frame shows Michaël Vanderheyden looking confused as a giant diagonal lightning bolt splits the scene. His upper body is shown floating up towards a yellow background box reading 'VIEWPORT: SCROLL TO TOP,' while his lower body and legs are physically chained to a rusty anchor labeled 'keyboard focus trapped in footer' keycap-rubble background](href-hash-focus-desync-accessibility.jpg)
+
+Have you ever added a link to your footer to help users navigate back to the top? It usually looks like this:
+
+```html
+<a href="#">Back to the top</a>
+```
+
+I've seen and used that pattern many times, including on this very website. From an HTML perspective it is absolutely valid ([7.4.6.4 Scrolling to a fragment](https://html.spec.whatwg.org/multipage/browsing-the-web.html#scrolling-to-a-fragment)), and I always assumed it was a harmless shortcut that worked well enough.
+
+Then I updated Biome to 2.5 and it flagged it. I opened a [bug report](https://github.com/biomejs/biome/issues/10656) expecting to close it quickly, but the answer changed my mind: Biome is not rejecting it because of HTML validity, but because of accessibility behavior.
+
+## This Is Not Just a Biome Thing
+
+The rule is actually not new and inspired by other tools that already enforced it:
+
+- [`jsx-a11y/anchor-is-valid`](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/anchor-is-valid.md)
+- [`qwik/jsx-a`](https://qwik.dev/docs/advanced/eslint/#jsx-a)
+
+The difference is scope. So far these checks mostly hit JSX workflows, which is why many of us never stumbled on this in plain HTML. Biome is the first tool (in my daily workflow, at least) that called this out on pure HTML.
+
+> [!NOTE]
+> **Good news**
+> 
+> With Biome extending these checks to plain HTML, this broken pattern may finally get broader visibility.
+
+## What Is Actually Broken?
+
+### Focus desynchronization
+
+An empty hash (`#`) does not point to a specific element ID. When activated, the browser scrolls the page visually, but keyboard focus stays on the trigger element (for example, the footer link you just clicked).
+
+The result is confusing:
+- The page looks like it moved to the top.
+- Focus did not move with it.
+- The next `Tab` keystroke jumps the user back to the bottom context.
+
+### WCAG impact
+
+That behavior creates a mismatch between visual reading sequence and interactive focus sequence, which is exactly the kind of failure [WCAG 2.4.3 (Focus Order)](https://www.w3.org/WAI/WCAG22/Understanding/focus-order.html) is trying to prevent.
+
+## The Workaround (And Why It Works)
+
+Instead of `href="#"`, give the top container an explicit ID and target it:
+
+```html
+<body id="_top">
+  <!-- page content -->
+  <a href="#_top">Back to top</a>
+</body>
+```
+
+You get the same practical scroll effect, but without focus desync.
+
+<CodePen
+	title="Empty Fragment Link"
+	href="https://codepen.io/editor/th3s4mur41/pen/019ecf95-41ec-77cf-9d8c-b35f76b7ea2a"
+	height={500}
+	description="Interactive CodePen demo with two footer links: one with href='#' and another with href='#_top' to demonstrate the focus desynchronization issue and its workaround."
+/>
+
+What you will notice:
+
+- The classic empty `#` keeps focus on the original footer link after scroll. This is visible through the pink outline and background that stays in the footer.
+- The explicit fragment target behaves like normal fragment navigation: focus moves with the scroll, the outline disappears from the link and background color is removed.
+
+Although both solutions scroll to the body element, only the second one behaves consistently with any other fragment link pointing to a heading.
+
+## Real-World Impact on Screen Reader Users
+
+[NVDA Issue #19190](https://github.com/nvaccess/nvda/issues/19190) — "Focus shifts to top of page when activating a link using `href="#"` on Chrome" describes exactly what happens to screen reader users in Chromium-based browsers:
+
+- The viewport jumps to the top.
+- The virtual reading context follows that jump.
+- Native keyboard focus remains on the original footer element.
+- Press `Tab`, and you are yanked straight back down.
+
+## Why Browser Vendors Haven't "Fixed" It
+
+This is a classic boundary problem between assistive technology and browser engines, and the issue trail reflects that.
+
+### Screen reader side
+
+The [NVDA issue](https://github.com/nvaccess/nvda/issues/19190) was initially closed as not planned — the reasoning being that the screen reader is simply reacting to where the browser moved the viewport. It was later reopened and triaged, and the question of who owns the fix is still open.
+
+### Browser engine side
+
+Chromium has addressed a related focus behavior in [Issue #40403681](https://issues.chromium.org/issues/40403681): when a fragment identifier points to a non-focusable element, focus handling was improved in that scope.
+
+The empty fragment case (`href="#"`) was not part of that change and can still be reproduced in Firefox and Safari as well.
+
+### My Take
+
+What makes this especially frustrating is the asymmetry:
+
+- `href="#"` scrolls the page without moving focus.
+- `href="#_top"` often targets the same unfocusable element at the top and yet focus behaves correctly.
+
+Same destination. Completely different focus outcomes. That's hard to defend as intentional design.
+
+I still see this primarily as a browser behavior problem, not a screen reader problem. But because the spec does not define what should happen to focus for an empty fragment navigation, it may need to be updated first.
+
+My expectation is that when navigation to an empty fragment identifier happens, the `body` element should become the **sequential focus navigation starting point**.
+
+## Conclusion
+
+So the fix on our side is straightforward: use the explicit ID approach. It eliminates an accessibility issue with just one line of code. And it's a good reminder that "technically valid" and "actually usable" are not the same thing — sometimes you have to work around browser limitations to deliver a coherent user experience.
