@@ -1,3 +1,10 @@
+# [2.67.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.66.3...v2.67.0) (2026-06-17)
+
+
+### Features
+
+* **blog:** add article on accessibility issues with href="#" links ([#2416](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2416)) ([541a845](https://github.com/Th3S4mur41/th3s4mur41.me/commit/541a845163af9c96f31d7dbfde10cbc263d98a11))
+
 ## [2.66.3](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.66.2...v2.66.3) (2026-06-10)
 
 
