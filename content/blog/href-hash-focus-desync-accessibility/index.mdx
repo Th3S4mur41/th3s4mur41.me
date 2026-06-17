@@ -112,13 +112,11 @@ The [NVDA issue](https://github.com/nvaccess/nvda/issues/19190) was initially cl
 
 ### Browser engine side
 
-Related Chromium reports exist — [Bug #417636](https://bugs.chromium.org/p/chromium/issues/detail?id=417636) and [Bug #262171](https://bugs.chromium.org/p/chromium/issues/detail?id=262171) — but the behavior is treated as spec-compliant: empty fragments trigger a viewport scroll, no explicit focus target is defined, so focus stays where it was.
+Chromium has addressed a related focus behavior in [Issue #40403681](https://issues.chromium.org/issues/40403681): when a fragment identifier points to a non-focusable element, focus handling was improved in that scope.
 
-The behavior is also reproducible in Firefox and Safari, so at least it is consistent across browser engines. The platform treats it as expected architecture, even when the result is confusing to the user.
+The empty fragment case (`href="#"`) was not part of that change and can still be reproduced in Firefox and Safari as well.
 
 ### My Take
-
-I still see this primarily as a browser behavior problem, not a screen reader problem. The behavior is consistent across all major engines, which means the only real fix would require updating the spec and that's unlikely to happen quickly.
 
 What makes this especially frustrating is the asymmetry:
 
@@ -126,6 +124,10 @@ What makes this especially frustrating is the asymmetry:
 - `href="#_top"` often targets the same unfocusable element at the top and yet focus behaves correctly.
 
 Same destination. Completely different focus outcomes. That's hard to defend as intentional design.
+
+I still see this primarily as a browser behavior problem, not a screen reader problem. But because the spec does not define what should happen to focus for an empty fragment navigation, it may need to be updated first.
+
+My expectation is that when navigation to an empty fragment identifier happens, the `body` element should become the **sequential focus navigation starting point**.
 
 ## Conclusion
 
