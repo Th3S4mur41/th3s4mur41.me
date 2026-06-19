@@ -2,6 +2,7 @@
 title: 'href="#" and the Focus Trap'
 eyebrow: Valid HTML, Broken UX
 date: 2026-06-17T00:00:00Z
+updated: 2026-06-19T12:00:00Z
 image: href-hash-focus-desync-accessibility.jpg
 imageAlt: >-
   A comic-style illustration within a web browser frame shows Michaël Vanderheyden looking confused as a giant diagonal lightning bolt splits the scene. His upper body is shown floating up towards a yellow background box reading "VIEWPORT: SCROLL TO TOP," while his lower body and legs are physically chained to a rusty anchor labeled "keyboard focus trapped in footer" keycap-rubble background
@@ -128,7 +129,7 @@ What makes this especially frustrating is the asymmetry:
 
 Same destination. Completely different focus outcomes. That's hard to defend as intentional design.
 
-I still see this primarily as a browser behavior problem, not a screen reader problem. But because the spec does not define what should happen to focus for an empty fragment navigation, it may need to be updated first.
+I still see this primarily as a browser behavior problem, not a screen reader problem. But because the spec does not define what should happen to focus for an empty fragment navigation, it may need to be updated first, which is why I opened [WHATWG HTML Issue #12596](https://github.com/whatwg/html/issues/12596).
 
 My expectation is that when navigation to an empty fragment identifier happens, the `body` element should become the **sequential focus navigation starting point**.
 
