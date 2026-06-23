@@ -1,25 +1,10 @@
+import { defaultBuild } from "rehype-github-alerts";
+
 /**
  * Sätteri HAST plugin that implements GitHub markdown alerts with accessibility enhancements.
  *
- * GitHub alerts are blockquotes with a [!TYPE] admonition marker:
- *   > [!NOTE]
- *   > Content here
- *
- * This plugin:
- * 1. Converts the blockquote to an <aside> when a custom title (**Title** in first paragraph) is provided
- * 2. Sets aria-label to "AlertType: CustomTitle" for better a11y
- * 3. Falls back to <div> wrapping when no custom title is found
- * 4. Extracts the first paragraph's bold text as the custom alert title
- *
- * Example input:
- *   > [!NOTE]
- *   > **Important Note**
- *   > Rest of content
- *
- * Output:
- *   <aside aria-label="Note: Important Note" class="github-alert github-alert-note" ...>
- *     <p>Rest of content</p>
- *   </aside>
+ * It mirrors rehype-github-alerts' default markup, but renders the container as <aside>
+ * and adds an aria-label for screen readers.
  */
 
 const GITHUB_ALERT_TYPES = [
@@ -64,34 +49,51 @@ export function createSatteriGithubAlertsA11yPlugin() {
 
 				// Check if we have a custom title that warrants converting to <aside>
 				if (customTitle) {
-					// Convert blockquote to aside
-					ctx.setProperty(node, "tagName", "aside");
-
-					// Build aria-label
 					const ariaLabel = alertTypeTitle ? `${alertTypeTitle}: ${customTitle}` : customTitle;
-					ctx.setProperty(node, "aria-label", ariaLabel);
+					const originalChildren = removeCustomTitleParagraph(node.children || []);
+					const builtAlert = defaultBuild(
+						{
+							keyword: alertType,
+							title: customTitle,
+							icon: getIconMarkup(alertType),
+						},
+						originalChildren,
+					);
 
-					// Add/update classes
-					const currentClasses = node.properties?.class || "";
-					const classArray = Array.isArray(currentClasses)
-						? currentClasses
-						: typeof currentClasses === "string"
-							? currentClasses.split(" ")
-							: [];
-					const newClasses = [...new Set([...classArray, "github-alert", `github-alert-${alertType.toLowerCase()}`])];
-					ctx.setProperty(node, "class", newClasses);
-
-					// Remove the first paragraph (title paragraph) from children if it only contains **Title**
-					if (node.children && Array.isArray(node.children)) {
-						const newChildren = removeCustomTitleParagraph(node.children);
-						if (newChildren.length !== node.children.length) {
-							ctx.setProperty(node, "children", newChildren);
-						}
+					if (!builtAlert) {
+						return;
 					}
+
+					builtAlert.tagName = "aside";
+					builtAlert.properties = {
+						...builtAlert.properties,
+						"aria-label": ariaLabel,
+					};
+
+					// Return new aside element to replace the blockquote
+					return {
+						...builtAlert,
+					};
 				}
 			},
 		},
 	};
+
+	function getIconMarkup(alertType) {
+		const iconByType = {
+			NOTE: '<svg height="16" viewBox="0 0 16 16" width="16" aria-hidden="true" class="mr-2 octicon octicon-info" version="1.1"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>',
+			INFO: '<svg height="16" viewBox="0 0 16 16" width="16" aria-hidden="true" class="mr-2 octicon octicon-info" version="1.1"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>',
+			TIP: '<svg height="16" viewBox="0 0 16 16" width="16" aria-hidden="true" class="mr-2 octicon octicon-light-bulb" version="1.1"><path d="M8 15.5A1.5 1.5 0 0 0 9.5 14h-3A1.5 1.5 0 0 0 8 15.5ZM8 0a5.5 5.5 0 0 0-3 10.1V12a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1.9A5.5 5.5 0 0 0 8 0Zm0 1.5a4 4 0 0 1 2.4 7.2.75.75 0 0 0-.3.6V12h-4v-2.7a.75.75 0 0 0-.3-.6A4 4 0 0 1 8 1.5Z"></path></svg>',
+			IMPORTANT:
+				'<svg height="16" viewBox="0 0 16 16" width="16" aria-hidden="true" class="mr-2 octicon octicon-alert" version="1.1"><path d="M6.457 1.047c.331-.8 1.423-.8 1.754 0l5.48 13.196A.75.75 0 0 1 13.5 15.5h-11a.75.75 0 0 1-.691-1.047L6.457 1.047ZM8 5a.75.75 0 0 0-.75.75v3.5a.75.75 0 0 0 1.5 0v-3.5A.75.75 0 0 0 8 5Zm0 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"></path></svg>',
+			WARNING:
+				'<svg height="16" viewBox="0 0 16 16" width="16" aria-hidden="true" class="mr-2 octicon octicon-alert" version="1.1"><path d="M6.457 1.047c.331-.8 1.423-.8 1.754 0l5.48 13.196A.75.75 0 0 1 13.5 15.5h-11a.75.75 0 0 1-.691-1.047L6.457 1.047ZM8 5a.75.75 0 0 0-.75.75v3.5a.75.75 0 0 0 1.5 0v-3.5A.75.75 0 0 0 8 5Zm0 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"></path></svg>',
+			CAUTION:
+				'<svg height="16" viewBox="0 0 16 16" width="16" aria-hidden="true" class="mr-2 octicon octicon-alert" version="1.1"><path d="M6.457 1.047c.331-.8 1.423-.8 1.754 0l5.48 13.196A.75.75 0 0 1 13.5 15.5h-11a.75.75 0 0 1-.691-1.047L6.457 1.047ZM8 5a.75.75 0 0 0-.75.75v3.5a.75.75 0 0 0 1.5 0v-3.5A.75.75 0 0 0 8 5Zm0 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"></path></svg>',
+		};
+
+		return iconByType[alertType] ?? iconByType.INFO;
+	}
 
 	function detectAlertType(blockquoteNode) {
 		// GitHub alerts have their type in the first paragraph as a [!TYPE] marker
@@ -99,7 +101,8 @@ export function createSatteriGithubAlertsA11yPlugin() {
 			return null;
 		}
 
-		const firstChild = blockquoteNode.children[0];
+		// Skip leading whitespace text nodes to find the first element child
+		const firstChild = blockquoteNode.children.find((c) => c.type !== "text" || c.value?.trim() !== "");
 		if (firstChild?.type !== "element" || firstChild.tagName !== "p") {
 			return null;
 		}
@@ -117,7 +120,8 @@ export function createSatteriGithubAlertsA11yPlugin() {
 			return "";
 		}
 
-		const firstChild = blockquoteNode.children[0];
+		// Skip leading whitespace text nodes to find the first element child
+		const firstChild = blockquoteNode.children.find((c) => c.type !== "text" || c.value?.trim() !== "");
 		if (firstChild?.type !== "element" || firstChild.tagName !== "p") {
 			return "";
 		}
@@ -152,7 +156,10 @@ export function createSatteriGithubAlertsA11yPlugin() {
 			return children;
 		}
 
-		const firstChild = children[0];
+		// Find the index of the first non-whitespace child (the [!TYPE] paragraph)
+		const firstElemIdx = children.findIndex((c) => c.type !== "text" || c.value?.trim() !== "");
+		if (firstElemIdx === -1) return children;
+		const firstChild = children[firstElemIdx];
 		if (firstChild?.type !== "element" || firstChild.tagName !== "p") {
 			return children;
 		}
@@ -171,7 +178,7 @@ export function createSatteriGithubAlertsA11yPlugin() {
 		if (meaningfulChildren.length <= 1) {
 			const first = meaningfulChildren[0];
 			if (!first || (first.type === "element" && first.tagName === "strong")) {
-				return children.slice(1);
+				return children.filter((_, i) => i !== firstElemIdx);
 			}
 		}
 

@@ -1,6 +1,8 @@
 import { readdirSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import getReadingTime from "reading-time";
+import { SITE_CONFIG } from "../utils/config.js";
 
 /**
  * Sätteri HAST plugin that injects a Table of Contents (TOC) after the first h1 element.
@@ -14,40 +16,63 @@ import { fileURLToPath } from "node:url";
 export function createSatteriInjectTocPlugin() {
 	return {
 		name: "satteri-inject-toc",
-		root(tree, ctx) {
-			const filePath = ctx.fileURL ? fileURLToPath(ctx.fileURL) : undefined;
-			if (!filePath) {
-				return;
-			}
+		element: {
+			filter: ["h1"],
+			visit(node, ctx) {
+				// Prevent duplicate injection if a document somehow contains multiple h1s.
+				if (ctx.data?._tocInjected) {
+					return;
+				}
 
-			const isBlog = filePath.includes("/content/blog/");
-			const isSeriesIntro = detectSeriesIntro(filePath, isBlog);
-			const readingTime = isBlog ? ctx.data?.readingTime : undefined;
+				let filePath;
+				try {
+					filePath = ctx.fileURL ? fileURLToPath(ctx.fileURL) : undefined;
+				} catch {
+					// If fileURLToPath fails, skip plugin
+					return;
+				}
 
-			// Collect headings from the tree
-			const headings = [];
-			collectHeadings(tree, headings);
+				if (!filePath) {
+					return;
+				}
 
-			// Filter out h1 and keep only h2-h6
-			const tocHeadings = headings.filter((h) => h.depth > 1);
+				const normalizedPath = filePath.replace(/\\/g, "/");
+				const isBlog = normalizedPath.includes("/content/blog/");
+				if (!isBlog) {
+					return;
+				}
 
-			// Build nested TOC structure
-			const nestedHeadings = tocHeadings.length > 0 ? buildNestedToc(tocHeadings) : [];
+				const isSeriesIntro = detectSeriesIntro(filePath, isBlog);
+				const rootNode = getRootNode(node, ctx);
+				const headings = [];
+				collectHeadings(rootNode, headings);
+				const readingTime =
+					ctx.data?.readingTime ||
+					buildReadingTimeFromTree(rootNode, {
+						wordsPerMinute: SITE_CONFIG.readingTime.wordsPerMinute,
+					});
 
-			// Create TOC nav node
-			const tocNode = nestedHeadings.length > 0 ? buildTocNavElement(nestedHeadings) : null;
+				// Filter out h1 and keep only h2-h6
+				const tocHeadings = headings.filter((h) => h.depth > 1);
 
-			// Create reading meta node (for blog posts, excluding series intros)
-			const readingMetaNode = readingTime && isBlog && !isSeriesIntro ? buildReadingMetaElement(readingTime) : null;
+				// Build nested TOC structure
+				const nestedHeadings = tocHeadings.length > 0 ? buildNestedToc(tocHeadings) : [];
 
-			// Gather nodes to insert after h1
-			const nodesToInsert = [readingMetaNode, tocNode].filter((node) => node !== null);
-			if (nodesToInsert.length === 0) {
-				return;
-			}
+				// Create TOC nav node
+				const tocNode = nestedHeadings.length > 0 ? buildTocNavElement(nestedHeadings) : null;
 
-			// Find first h1 and insert nodes after it
-			insertNodesAfterFirstH1(ctx, tree, nodesToInsert);
+				// Create reading meta node (for blog posts, excluding series intros)
+				const readingMetaNode = readingTime && !isSeriesIntro ? buildReadingMetaElement(readingTime) : null;
+
+				// Gather nodes to insert after h1
+				const nodesToInsert = [readingMetaNode, tocNode].filter((candidate) => candidate !== null);
+				if (nodesToInsert.length === 0) {
+					return;
+				}
+
+				ctx.insertAfter(node, nodesToInsert);
+				ctx.data._tocInjected = true;
+			},
 		},
 	};
 
@@ -65,15 +90,33 @@ export function createSatteriInjectTocPlugin() {
 		}
 	}
 
-	function collectHeadings(node, headings) {
-		if (node.type === "element" && /^h[1-6]$/.test(node.tagName)) {
-			const depth = Number.parseInt(node.tagName.charAt(1), 10);
-			const text = extractText(node);
-			const slug = node.properties?.id || createSlug(text);
-			headings.push({ depth, text, slug });
+	function getRootNode(node, ctx) {
+		let current = node;
+		let parent = ctx.parent(current);
+
+		while (parent) {
+			current = parent;
+			parent = ctx.parent(current);
 		}
 
-		if (node.children && Array.isArray(node.children)) {
+		return current;
+	}
+
+	function collectHeadings(node, headings) {
+		if (!node || typeof node !== "object") {
+			return;
+		}
+
+		if (node.type === "element" && /^h[1-6]$/.test(node.tagName)) {
+			const depth = Number.parseInt(node.tagName.charAt(1), 10);
+			const text = extractText(node).trim();
+			if (text) {
+				const slug = typeof node.properties?.id === "string" ? node.properties.id : createSlug(text);
+				headings.push({ depth, text, slug });
+			}
+		}
+
+		if (Array.isArray(node.children)) {
 			for (const child of node.children) {
 				collectHeadings(child, headings);
 			}
@@ -81,12 +124,18 @@ export function createSatteriInjectTocPlugin() {
 	}
 
 	function extractText(node) {
-		if (node.type === "text") {
-			return node.value;
+		if (!node || typeof node !== "object") {
+			return "";
 		}
-		if (node.children && Array.isArray(node.children)) {
+
+		if (node.type === "text") {
+			return typeof node.value === "string" ? node.value : "";
+		}
+
+		if (Array.isArray(node.children)) {
 			return node.children.map(extractText).join("");
 		}
+
 		return "";
 	}
 
@@ -97,6 +146,16 @@ export function createSatteriInjectTocPlugin() {
 			.replace(/[^\w\s-]/g, "")
 			.replace(/[\s_]/g, "-")
 			.replace(/^-+|-+$/g, "");
+	}
+
+	function buildReadingTimeFromTree(rootNode, options) {
+		const text = extractText(rootNode).trim();
+		if (!text) {
+			return null;
+		}
+
+		const stats = getReadingTime(text, options);
+		return stats.words > 0 ? stats : null;
 	}
 
 	function buildNestedToc(headings) {
@@ -201,20 +260,5 @@ export function createSatteriInjectTocPlugin() {
 			properties: { class: "reading-meta" },
 			children: [{ type: "text", value: metaText }],
 		};
-	}
-
-	function insertNodesAfterFirstH1(ctx, tree, nodesToInsert) {
-		if (tree.type !== "root" || !Array.isArray(tree.children)) {
-			return;
-		}
-
-		for (let i = 0; i < tree.children.length; i++) {
-			const child = tree.children[i];
-			if (child.type === "element" && child.tagName === "h1") {
-				// Insert after this h1
-				ctx.insertAfter(child, ...nodesToInsert);
-				return;
-			}
-		}
 	}
 }

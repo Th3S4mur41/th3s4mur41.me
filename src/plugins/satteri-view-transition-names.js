@@ -21,7 +21,13 @@ export function createSatteriViewTransitionNamesPlugin() {
 				return;
 			}
 
-			const filePath = fileURLToPath(fileURL);
+			let filePath;
+			try {
+				filePath = fileURLToPath(fileURL);
+			} catch (e) {
+				return;
+			}
+
 			const pathParts = filePath.split(/[\\/]/);
 			const contentIndex = pathParts.indexOf("content");
 
