@@ -3,6 +3,8 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 import compress from "astro-compress";
+import browserslist from "browserslist";
+import { browserslistToTargets } from "lightningcss";
 import { createSatteriExternalLinksPlugin } from "./src/plugins/satteri-external-links.js";
 import { createSatteriGithubAlertsA11yPlugin } from "./src/plugins/satteri-github-alerts-a11y.js";
 import { createSatteriHeadingDatesPlugin } from "./src/plugins/satteri-heading-dates.js";
@@ -24,9 +26,25 @@ const satteriProcessor = satteri({
 	],
 });
 
+const lightningCssTargets = browserslistToTargets(
+	browserslist(undefined, {
+		path: process.cwd(),
+	}),
+);
+
 // https://astro.build/config
 export default defineConfig({
 	site: "https://th3s4mur41.me",
+	vite: {
+		css: {
+			lightningcss: {
+				targets: lightningCssTargets,
+			},
+		},
+		build: {
+			cssMinify: "lightningcss",
+		},
+	},
 	markdown: {
 		syntaxHighlight: "prism",
 		processor: satteriProcessor,
