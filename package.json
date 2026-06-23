@@ -21,6 +21,7 @@
 	},
 	"homepage": "https://th3s4mur41.me",
 	"dependencies": {
+		"@astrojs/markdown-satteri": "^0.3.1",
 		"@astrojs/rss": "^4.0.18",
 		"@astrojs/sitemap": "^3.7.3",
 		"@fontsource/cascadia-code": "^5.2.3",
