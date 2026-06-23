@@ -1,5 +1,3 @@
-const isProduction = process.env.NODE_ENV === "production";
-
 export default () => ({
 	plugins: {
 		"postcss-preset-env": {
@@ -11,22 +9,5 @@ export default () => ({
 				"media-query-ranges": true,
 			},
 		},
-		...(isProduction
-			? {
-					cssnano: {
-						preset: [
-							"default",
-							{
-								calc: {
-									warnWhenCannotResolve: false, // silence calc division warnings like em/2
-								},
-								discardComments: {
-									removeAll: true,
-								},
-							},
-						],
-					},
-				}
-			: {}),
 	},
 });
