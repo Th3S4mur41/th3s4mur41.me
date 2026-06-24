@@ -1,3 +1,10 @@
+## [2.68.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.68.1...v2.68.2) (2026-06-24)
+
+
+### Bug Fixes
+
+* refactor head slot rendering for blog and podcast schemas ([e9bc041](https://github.com/Th3S4mur41/th3s4mur41.me/commit/e9bc041b86aebc2a8d422278a36bf86a750566c4))
+
 ## [2.68.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.68.0...v2.68.1) (2026-06-24)
 
 
