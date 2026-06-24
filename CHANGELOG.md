@@ -1,3 +1,10 @@
+# [2.68.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.67.0...v2.68.0) (2026-06-24)
+
+
+### Features
+
+* migrate to astro 7 ([#2427](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2427)) ([2dc2c6d](https://github.com/Th3S4mur41/th3s4mur41.me/commit/2dc2c6de92c3ee7138bb754bc0ec69e8d78b83f7))
+
 # [2.67.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.66.3...v2.67.0) (2026-06-17)
 
 
