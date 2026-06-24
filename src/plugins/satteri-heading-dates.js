@@ -60,6 +60,7 @@ export function createSatteriHeadingDatesPlugin() {
 			}
 		}
 
-		ctx.setProperty(node, "children", newChildren);
+		// ctx.setProperty(node, "children", newChildren);
+		node.children = newChildren;
 	}
 }

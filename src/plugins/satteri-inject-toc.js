@@ -6,10 +6,11 @@ import { SITE_CONFIG } from "../utils/config.js";
 
 /**
  * Sätteri HAST plugin that injects a Table of Contents (TOC) after the first h1 element.
- * Also injects reading time metadata for blog posts (but not series introductions).
+ * Also injects reading time metadata for blog posts, excluding series introductions.
  *
  * Series intro detection: An index.mdx file in a blog section with subdirectories is
- * considered a series intro (no TOC or reading time injected).
+ * considered a series intro. Those pages skip reading-time injection.
+ * TOC injection remains content-driven and only happens when h2-h6 headings exist.
  *
  * Reading time data comes from ctx.data.readingTime, which is set by the reading-time MDAST plugin.
  */
@@ -61,7 +62,7 @@ export function createSatteriInjectTocPlugin() {
 				// Create TOC nav node
 				const tocNode = nestedHeadings.length > 0 ? buildTocNavElement(nestedHeadings) : null;
 
-				// Create reading meta node (for blog posts, excluding series intros)
+				// Create reading meta node for blog posts, excluding series intros.
 				const readingMetaNode = readingTime && !isSeriesIntro ? buildReadingMetaElement(readingTime) : null;
 
 				// Gather nodes to insert after h1

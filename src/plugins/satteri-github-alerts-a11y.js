@@ -46,35 +46,33 @@ export function createSatteriGithubAlertsA11yPlugin() {
 				// Extract custom title from first paragraph if present
 				const customTitle = extractCustomTitle(node);
 				const alertTypeTitle = getTitleForAlertType(alertType);
+				const title = customTitle || alertTypeTitle;
+				const originalChildren = removeAlertHeaderParagraph(node.children || []);
+				const builtAlert = defaultBuild(
+					{
+						keyword: alertType,
+						title,
+						icon: getIconMarkup(alertType),
+					},
+					originalChildren,
+				);
 
-				// Check if we have a custom title that warrants converting to <aside>
-				if (customTitle) {
-					const ariaLabel = alertTypeTitle ? `${alertTypeTitle}: ${customTitle}` : customTitle;
-					const originalChildren = removeCustomTitleParagraph(node.children || []);
-					const builtAlert = defaultBuild(
-						{
-							keyword: alertType,
-							title: customTitle,
-							icon: getIconMarkup(alertType),
-						},
-						originalChildren,
-					);
-
-					if (!builtAlert) {
-						return;
-					}
-
-					builtAlert.tagName = "aside";
-					builtAlert.properties = {
-						...builtAlert.properties,
-						"aria-label": ariaLabel,
-					};
-
-					// Return new aside element to replace the blockquote
-					return {
-						...builtAlert,
-					};
+				if (!builtAlert) {
+					return;
 				}
+
+				if (!customTitle) {
+					return builtAlert;
+				}
+
+				const ariaLabel = alertTypeTitle ? `${alertTypeTitle}: ${customTitle}` : customTitle;
+				builtAlert.tagName = "aside";
+				builtAlert.properties = {
+					...builtAlert.properties,
+					"aria-label": ariaLabel,
+				};
+
+				return builtAlert;
 			},
 		},
 	};
@@ -151,7 +149,7 @@ export function createSatteriGithubAlertsA11yPlugin() {
 		return "";
 	}
 
-	function removeCustomTitleParagraph(children) {
+	function removeAlertHeaderParagraph(children) {
 		if (children.length === 0) {
 			return children;
 		}

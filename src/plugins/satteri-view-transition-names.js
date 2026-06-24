@@ -87,8 +87,9 @@ export function createSatteriViewTransitionNamesPlugin() {
 	}
 
 	function addOrUpdateStyle(ctx, node, newStyle) {
-		const currentStyle = node.properties?.style || "";
-		const updatedStyle = currentStyle ? `${currentStyle} ${newStyle}`.trim() : newStyle;
+		const currentStyle = typeof node.properties?.style === "string" ? node.properties.style.trim() : "";
+		const separator = currentStyle && !currentStyle.endsWith(";") ? ";" : "";
+		const updatedStyle = currentStyle ? `${currentStyle}${separator} ${newStyle}`.trim() : newStyle;
 		ctx.setProperty(node, "style", updatedStyle);
 	}
 
