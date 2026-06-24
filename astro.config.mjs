@@ -4,6 +4,7 @@ import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 import compress from "astro-compress";
 import browserslist from "browserslist";
+import browserslistToEsbuild from "browserslist-to-esbuild";
 import { browserslistToTargets } from "lightningcss";
 import { createSatteriExternalLinksPlugin } from "./src/plugins/satteri-external-links.js";
 import { createSatteriGithubAlertsA11yPlugin } from "./src/plugins/satteri-github-alerts-a11y.js";
@@ -26,23 +27,24 @@ const satteriProcessor = satteri({
 	],
 });
 
-const lightningCssTargets = browserslistToTargets(
-	browserslist(undefined, {
-		path: process.cwd(),
-	}),
-);
+const BROWSERSLIST_OPTIONS = { path: process.cwd() };
+const resolvedBrowsers = browserslist(undefined, BROWSERSLIST_OPTIONS);
+const lightningCssTargets = browserslistToTargets(resolvedBrowsers);
+const viteCssTargets = browserslistToEsbuild(resolvedBrowsers);
 
 // https://astro.build/config
 export default defineConfig({
 	site: "https://th3s4mur41.me",
 	vite: {
 		css: {
+			transformer: "lightningcss",
 			lightningcss: {
 				targets: lightningCssTargets,
 			},
 		},
 		build: {
 			cssMinify: "lightningcss",
+			cssTarget: viteCssTargets,
 		},
 	},
 	markdown: {
@@ -71,6 +73,6 @@ export default defineConfig({
 		}),
 	],
 	devToolbar: {
-		enabled: false, // Disable the Astro toolbar
+		enabled: false,
 	},
 });

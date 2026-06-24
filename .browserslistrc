@@ -1,8 +1,5 @@
 # List and versions of browsers we support
-
 # Run npx browserslist to get the current list of matching browsers
-
-> .5% in alt-EU and not last 2 versions and not dead
 
 baseline widely available
 Firefox ESR
