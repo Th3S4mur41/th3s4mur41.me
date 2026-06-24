@@ -323,41 +323,41 @@ void [
   canonical={pageEntry?.data.canonical ?? undefined}
 	translations={translations}
   noHeader>
-	{!isSeriesPage && section === "blog" && article && (
-		<BlogPostingSchema
-			slot="head"
-			headline={article.data.title}
-			description={article.data.description}
-			datePublished={article.data.date}
-			dateModified={article.data.updated}
-			image={img}
-			url={Astro.url.href}
-			canonical={article.data.canonical}
-			translations={article.data.translations}
-			coauthors={article.data.coauthors}
-		/>
-	)}
+	<Fragment slot="head">
+		{!isSeriesPage && section === "blog" && article ? (
+			<BlogPostingSchema
+				headline={article.data.title}
+				description={article.data.description}
+				datePublished={article.data.date}
+				dateModified={article.data.updated}
+				image={img}
+				url={Astro.url.href}
+				canonical={article.data.canonical}
+				translations={article.data.translations}
+				coauthors={article.data.coauthors}
+			/>
+		) : null}
 
-	{!isSeriesPage && siteStandardDocumentUri && siteStandardPublicationUri && (
-		<Fragment slot="head">
-			<link rel="site.standard.document" href={siteStandardDocumentUri} />
-			<link rel="site.standard.publication" href={siteStandardPublicationUri} />
-		</Fragment>
-	)}
+		{!isSeriesPage && siteStandardDocumentUri && siteStandardPublicationUri ? (
+			<>
+				<link rel="site.standard.document" href={siteStandardDocumentUri} />
+				<link rel="site.standard.publication" href={siteStandardPublicationUri} />
+			</>
+		) : null}
 
-	{!isSeriesPage && section === "speaking" && article?.data.type === "podcast" && (
-		<PodcastEpisodeSchema
-			slot="head"
-			name={article.data.title}
-			description={article.data.description}
-			datePublished={article.data.date}
-			url={Astro.url.href}
-			canonical={article.data.canonical}
-			image={img}
-			publisherName={article.data.publisherName}
-			publisherUrl={article.data.publisherUrl}
-		/>
-	)}
+		{!isSeriesPage && section === "speaking" && article?.data.type === "podcast" ? (
+			<PodcastEpisodeSchema
+				name={article.data.title}
+				description={article.data.description}
+				datePublished={article.data.date}
+				url={Astro.url.href}
+				canonical={article.data.canonical}
+				image={img}
+				publisherName={article.data.publisherName}
+				publisherUrl={article.data.publisherUrl}
+			/>
+		) : null}
+	</Fragment>
 
 	{isSeriesPage ? (
 		<>
