@@ -140,7 +140,7 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 		<!-- <a href="#main" class="skip-link">Skip to main content</a> -->
 		{!Astro.props.noHeader && (
 			<header>
-				<Image src={heroImage} alt="Modern-day samurai kneeling in traditional armor, sword in hand, against a vibrant wall of multicolored paint splashes — symbolizing the fusion of ancient warrior spirit with contemporary creativity." loading="eager" fetchpriority="high" />
+				<Image src={heroImage} alt="Modern-day samurai kneeling in traditional armor, sword in hand, against a vibrant wall of multicolored paint splashes — symbolizing the fusion of ancient warrior spirit with contemporary creativity." loading="eager" fetchpriority="high" decoding="auto" />
 			</header>
 		)}
 		<nav aria-label="main">
