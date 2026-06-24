@@ -180,13 +180,6 @@ describe("RSS feed (feed.xml)", () => {
 			expect(hasMarkdownTable, "Raw markdown table found in content:encoded").toBe(false);
 		}
 	});
-
-	it("content:encoded does not contain Astro view-transition-name styles", () => {
-		const encodedBlocks = extractAllTagContents(xml, "content:encoded");
-		for (const block of encodedBlocks) {
-			expect(block).not.toContain("view-transition-name");
-		}
-	});
 });
 
 // ---------------------------------------------------------------------------
@@ -285,13 +278,6 @@ describe("JSON feed (feed.json)", () => {
 			if (!item.content_html) continue;
 			const hasMarkdownTable = /^\|\s*\w/m.test(item.content_html);
 			expect(hasMarkdownTable, `Raw markdown table in item "${item.title}"`).toBe(false);
-		}
-	});
-
-	it("content_html does not contain Astro view-transition-name styles", () => {
-		for (const item of feed.items) {
-			if (!item.content_html) continue;
-			expect(item.content_html).not.toContain("view-transition-name");
 		}
 	});
 

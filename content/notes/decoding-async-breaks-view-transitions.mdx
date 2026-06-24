@@ -1,0 +1,24 @@
+---
+title: "decoding=async can break multipage view transitions"
+date: 2026-06-24T00:00:00Z
+description: ''
+tags:
+  - css
+  - html
+  - ux
+keywords:
+  - view transitions
+  - multipage view transitions
+  - image decoding
+  - performance
+  - decoding async
+  - view-transition-name
+  - snapshot timing
+  - perceived performance
+---
+
+Turns out optimizing for performance can actually harm user experience... Did you know that `decoding="async"` can break multipage [View Transitions](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API).
+
+When a view transition is triggered, the browser captures a snapshot of the new page to animate from. If an image is still decoding asynchronously at that point, the snapshot is taken before the image is painted, resulting in a broken or missing image during the transition animation.
+
+Use `decoding="auto"` (or `sync`) for images with a `view-transition-name`.

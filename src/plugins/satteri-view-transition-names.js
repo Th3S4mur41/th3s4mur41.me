@@ -67,6 +67,7 @@ export function createSatteriViewTransitionNamesPlugin() {
 							foundHeroImage = true;
 							const heroTransitionName = `article-hero-image-${articleId}`;
 							addOrUpdateStyle(ctx, imgChild, `view-transition-name: ${heroTransitionName};`);
+							ctx.setProperty(imgChild, "decoding", "auto"); // decoding="async" is breaking view transitions
 						}
 					}
 				});
