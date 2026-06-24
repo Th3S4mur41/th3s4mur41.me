@@ -1,3 +1,10 @@
+## [2.68.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.68.0...v2.68.1) (2026-06-24)
+
+
+### Bug Fixes
+
+* add decoding="auto" to images for view transitions ([#2435](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2435)) ([2b06ede](https://github.com/Th3S4mur41/th3s4mur41.me/commit/2b06ede4340b36244e834cb6b3214bfda9b15d1a))
+
 # [2.68.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.67.0...v2.68.0) (2026-06-24)
 
 
