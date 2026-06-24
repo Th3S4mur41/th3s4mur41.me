@@ -17,7 +17,7 @@ keywords:
   - perceived performance
 ---
 
-Turns out optimizing for performance can actually harm user experience... Did you know that `decoding="async"` can break multipage [View Transitions](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API).
+Turns out optimizing for performance can actually harm user experience... Did you know that `decoding="async"` can break multipage [View Transitions](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API)?
 
 When a view transition is triggered, the browser captures a snapshot of the new page to animate from. If an image is still decoding asynchronously at that point, the snapshot is taken before the image is painted, resulting in a broken or missing image during the transition animation.
 
