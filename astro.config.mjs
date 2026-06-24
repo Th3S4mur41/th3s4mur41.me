@@ -1,43 +1,55 @@
+import { satteri } from "@astrojs/markdown-satteri";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 import compress from "astro-compress";
-import {
-	rehypeExternalLinks,
-	rehypeGithubAlerts,
-	rehypeGithubAlertsA11yOptions,
-	rehypeHeadingDates,
-	rehypeInjectToc,
-	rehypeOptimizeFirstImage,
-	rehypeViewTransitionNames,
-} from "./src/plugins/index.js";
-import { remarkReadingTime } from "./src/plugins/remark-reading-time.js";
+import browserslist from "browserslist";
+import browserslistToEsbuild from "browserslist-to-esbuild";
+import { browserslistToTargets } from "lightningcss";
+import { createSatteriExternalLinksPlugin } from "./src/plugins/satteri-external-links.js";
+import { createSatteriGithubAlertsA11yPlugin } from "./src/plugins/satteri-github-alerts-a11y.js";
+import { createSatteriHeadingDatesPlugin } from "./src/plugins/satteri-heading-dates.js";
+import { createSatteriInjectTocPlugin } from "./src/plugins/satteri-inject-toc.js";
+import { createSatteriOptimizeFirstImagePlugin } from "./src/plugins/satteri-optimize-first-image.js";
+import { createSatteriReadingTimePlugin } from "./src/plugins/satteri-reading-time.js";
+import { createSatteriViewTransitionNamesPlugin } from "./src/plugins/satteri-view-transition-names.js";
 import { SITE_CONFIG } from "./src/utils/config.js";
 
-const sharedRehypePlugins = [
-	rehypeHeadingDates,
-	rehypeInjectToc,
-	rehypeViewTransitionNames,
-	[rehypeGithubAlerts, rehypeGithubAlertsA11yOptions],
-	rehypeOptimizeFirstImage,
-	rehypeExternalLinks,
-];
-const mdxRehypePlugins = [
-	rehypeHeadingDates,
-	rehypeInjectToc,
-	rehypeViewTransitionNames,
-	[rehypeGithubAlerts, rehypeGithubAlertsA11yOptions],
-	rehypeOptimizeFirstImage,
-	rehypeExternalLinks,
-];
+const satteriProcessor = satteri({
+	mdastPlugins: [createSatteriReadingTimePlugin({ wordsPerMinute: SITE_CONFIG.readingTime.wordsPerMinute })],
+	hastPlugins: [
+		createSatteriHeadingDatesPlugin,
+		createSatteriInjectTocPlugin,
+		createSatteriViewTransitionNamesPlugin,
+		createSatteriGithubAlertsA11yPlugin,
+		createSatteriOptimizeFirstImagePlugin,
+		createSatteriExternalLinksPlugin,
+	],
+});
+
+const BROWSERSLIST_OPTIONS = { path: process.cwd() };
+const resolvedBrowsers = browserslist(undefined, BROWSERSLIST_OPTIONS);
+const lightningCssTargets = browserslistToTargets(resolvedBrowsers);
+const viteCssTargets = browserslistToEsbuild(resolvedBrowsers);
 
 // https://astro.build/config
 export default defineConfig({
 	site: "https://th3s4mur41.me",
+	vite: {
+		css: {
+			transformer: "lightningcss",
+			lightningcss: {
+				targets: lightningCssTargets,
+			},
+		},
+		build: {
+			cssMinify: "lightningcss",
+			cssTarget: viteCssTargets,
+		},
+	},
 	markdown: {
 		syntaxHighlight: "prism",
-		remarkPlugins: [[remarkReadingTime, { wordsPerMinute: SITE_CONFIG.readingTime.wordsPerMinute }]],
-		rehypePlugins: sharedRehypePlugins,
+		processor: satteriProcessor,
 	},
 	integrations: [
 		sitemap({
@@ -47,8 +59,7 @@ export default defineConfig({
 			filter: (pageUrl) => !pageUrl.includes("/_draft-"),
 		}),
 		mdx({
-			remarkPlugins: [[remarkReadingTime, { wordsPerMinute: SITE_CONFIG.readingTime.wordsPerMinute }]],
-			rehypePlugins: mdxRehypePlugins,
+			processor: satteriProcessor,
 		}),
 		compress({
 			HTML: {
@@ -56,12 +67,14 @@ export default defineConfig({
 				collapseWhitespace: false,
 				removeAttributeQuotes: false,
 			},
-			CSS: true,
+			// CSS is already transformed and minified by Lightning CSS in Vite.
+			// A second pass here drops some modern/nested declarations in production.
+			CSS: false,
 			JavaScript: true,
 			Image: false,
 		}),
 	],
 	devToolbar: {
-		enabled: false, // Disable the Astro toolbar
+		enabled: false,
 	},
 });
