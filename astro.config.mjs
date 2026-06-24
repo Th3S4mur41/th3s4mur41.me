@@ -67,7 +67,9 @@ export default defineConfig({
 				collapseWhitespace: false,
 				removeAttributeQuotes: false,
 			},
-			CSS: true,
+			// CSS is already transformed and minified by Lightning CSS in Vite.
+			// A second pass here drops some modern/nested declarations in production.
+			CSS: false,
 			JavaScript: true,
 			Image: false,
 		}),
