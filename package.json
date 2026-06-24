@@ -33,7 +33,7 @@
 	},
 	"devDependencies": {
 		"@astrojs/mdx": "^7.0.0",
-		"@atproto/api": "^0.20.19",
+		"@atproto/api": "^0.20.20",
 		"@biomejs/biome": "2.5.1",
 		"@commitlint/cli": "^21.1.0",
 		"@commitlint/config-conventional": "^21.0.2",
