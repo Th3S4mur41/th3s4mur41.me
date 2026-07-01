@@ -1,21 +1,8 @@
 :root {
-	--color-bg: oklch(0.25 0 0);
-	--color-subtle-bg: oklch(0 0 0);
-	--color-highlight: oklch(0.4 0 0);
-	--color-text: oklch(1 0 0);
-	--color-subtle-text: oklch(0.8 0 0);
-	--color-accent: oklch(0.86 0.18 90.53);
-
 	--main-margin: 1.5rem;
 	--grid-columns: [full-width-start] 1fr [margin-start] var(--main-margin) [content-start title-start]
 		min(80ch, calc(100vi - var(--main-margin) * 2)) [content-end title-end] var(--main-margin) [margin-end] 1fr
 		[full-width-end];
-
-	color-scheme: dark;
-	accent-color: var(--color-accent);
-
-	/* reset */
-	text-size-adjust: none;
 
 	@media (width >= 1200px) {
 		--grid-columns: [full-width-start] 1fr [margin-start] var(--main-margin) [content-start title-start]
@@ -25,33 +12,18 @@
 	}
 }
 
-@view-transition {
-	navigation: auto;
-}
-
 @media (prefers-reduced-motion: no-preference) {
-	:root {
-		interpolate-size: allow-keywords;
-	}
 	html {
-		scroll-behavior: smooth;
-		scrollbar-gutter: stable;
-
 		container-type: scroll-state;
 		container-name: html;
 	}
 }
 
 body {
-	margin: unset;
-	min-block-size: 100svb;
 	display: flex;
 	flex-direction: column;
 	justify-content: stretch;
 	background-color: var(--color-bg);
-	font-family: system-ui, sans-serif;
-	/* Keep line-height at 1.5 unless font-size exceeds 24px, then ease toward 1.2 */
-	line-height: clamp(1.2, calc(36px / 1em), 1.5);
 	color: var(--color-text);
 }
 
@@ -95,7 +67,6 @@ body > header {
 	line-height: 1.25;
 	letter-spacing: 0.05ch;
 	text-transform: uppercase;
-	text-wrap: balance;
 	scroll-margin-block-start: 4rem; /* account for sticky nav */
 
 	& + * {
@@ -128,8 +99,6 @@ body > header {
 
 p,
 li {
-	text-wrap: pretty;
-
 	@media (prefers-reduced-motion: no-preference) {
 		animation: fadeIn 1ms linear both;
 		animation-timeline: view();
@@ -237,7 +206,6 @@ body > nav {
 		grid-area: nav;
 		display: flex;
 		flex-wrap: wrap;
-		list-style: none;
 		justify-content: center;
 		margin: unset;
 		padding: 0.25rem;
@@ -524,7 +492,6 @@ ol > li {
 button,
 input {
 	--color-l: var(--color-accent);
-	font: inherit;
 	border-radius: 0.5em;
 	border: 2px solid transparent;
 
@@ -587,7 +554,6 @@ blockquote:where(:not([class], [cite])) {
 	font-weight: 700;
 	text-align: center;
 	margin-block: 1em;
-	text-wrap: balance;
 
 	@media (prefers-contrast: no-preference) {
 		background: linear-gradient(180deg, var(--color-text) 30%, oklch(from var(--color-text) 0.7 c h) 100%);
@@ -599,9 +565,4 @@ blockquote:where(:not([class], [cite])) {
 	& > p {
 		display: contents;
 	}
-}
-
-.visually-hidden {
-	position: absolute; /* take out of document flow */
-	clip-path: circle(0); /* reduce clickable area to nothing */
 }

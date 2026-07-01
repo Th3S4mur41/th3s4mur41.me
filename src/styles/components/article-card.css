@@ -97,10 +97,9 @@ article.card {
 		background: var(--color-bg);
 		border-radius: 0.25em;
 		z-index: 1;
-		/* biome-ignore lint/correctness/noUnknownProperty: progressive enhancement */
+
 		@supports (corner-shape: squircle) {
 			border-radius: 100vmax;
-			/* biome-ignore lint/correctness/noUnknownProperty: progressive enhancement */
 			corner-shape: squircle;
 		}
 	}

@@ -1,0 +1,123 @@
+/******************************************************************************
+ * Global
+ *****************************************************************************/
+
+* {
+	/* scrollbar-width: thin; */
+}
+
+html {
+	text-size-adjust: none; /* Prevent font size inflation */
+	interpolate-size: allow-keywords;
+	scrollbar-gutter: stable;
+
+	@media (prefers-reduced-motion: no-preference) {
+		scroll-behavior: smooth;
+	}
+}
+
+body {
+	margin: unset;
+	min-block-size: 100svb;
+	/* Keep line-height at 1.5 unless font-size exceeds 24px, then ease toward 1.2 */
+	line-height: clamp(1.2, calc(36px / 1em), 1.5);
+}
+
+/******************************************************************************
+ * Forms
+ *****************************************************************************/
+
+/* Make sure textareas without a rows attribute are not tiny */
+textarea:not([rows]) {
+	min-block-size: 3lh;
+}
+
+/******************************************************************************
+ * Typography
+ *****************************************************************************/
+
+button,
+input,
+textarea,
+select {
+	font: inherit;
+}
+
+:is(h1, h2, h3, h4, h5, h6) {
+	line-height: inherit;
+	text-wrap: balance; /* Balance text wrapping on headings */
+}
+
+p,
+li {
+	text-wrap: pretty;
+}
+
+blockquote {
+	text-wrap: balance;
+}
+
+/* Allow code to wrap in pre blocks and avoid horizontal scrollbars for better accessibility */
+pre {
+	white-space: pre-wrap;
+}
+
+figcaption {
+	font-style: italic;
+	text-align: center;
+	text-wrap: balance;
+}
+
+/******************************************************************************
+ * Lists
+ *****************************************************************************/
+
+/* List styling is not usually desired in navigation */
+nav ul {
+	list-style: none;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+:is(ul, ol)[role="list"] {
+	list-style: none;
+}
+
+/******************************************************************************
+ * Media
+ *****************************************************************************/
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+	display: block; /* Block display is usually what we want */
+	vertical-align: middle; /* removes strange space-below in case authors overwrite the display value */
+	max-inline-size: stretch; /* Responsive by default */
+}
+
+/* Maintain intrinsic aspect ratios when `max-width` is applied */
+img,
+svg,
+video,
+canvas {
+	block-size: auto;
+}
+
+/* Remove the unnecessary wrapping `picture`, while maintaining contents */
+picture {
+	display: contents;
+}
+
+/* Source elements have nothing to display, so we hide them entirely */
+source {
+	display: none;
+}
+
+/* Audio without `[controls]` remains hidden by default */
+audio:not([controls]) {
+	display: none;
+}

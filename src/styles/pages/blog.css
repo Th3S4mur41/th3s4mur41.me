@@ -153,17 +153,12 @@ figure {
 		margin-block: unset;
 	}
 	& img {
-		max-inline-size: 100%;
-		block-size: auto;
 		border-radius: 0.25rem;
 	}
 	& > figcaption {
 		margin-top: 0.5rem;
 		font-size: 0.875rem;
 		color: var(--color-subtle-text);
-		font-style: italic;
-		text-align: center;
-		text-wrap: balance;
 	}
 }
 
