@@ -68,9 +68,7 @@ main {
 		}
 	}
 
-	/* biome-ignore lint/correctness/noUnknownProperty: progressive enhancement */
 	@supports (scroll-target-group: auto) {
-		/* biome-ignore lint/correctness/noUnknownProperty: progressive enhancement */
 		scroll-target-group: auto;
 		border: unset;
 
@@ -93,7 +91,6 @@ main {
 			}
 		}
 
-		/* biome-ignore lint/correctness/noUnknownPseudoClass: progressive enhancement */
 		a:target-current {
 			anchor-name: --toc-target;
 		}
