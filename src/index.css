@@ -1,12 +1,12 @@
-@import url("styles/base.css");
-@import url("styles/animation.css");
+@import url("styles/base.css") layer(base);
+@import url("styles/base/animation.css") layer(base);
 
-@import url("styles/components/article-card.css");
-@import url("styles/components/socials.css");
-@import url("styles/components/table-of-contents.css");
+@import url("styles/components/article-card.css") layer(components);
+@import url("styles/components/socials.css") layer(components);
+@import url("styles/components/table-of-contents.css") layer(components);
 
-@import url("styles/pages/home.css");
-@import url("styles/pages/blog.css");
-@import url("styles/pages/about.css");
+@import url("styles/pages/home.css") layer(pages);
+@import url("styles/pages/blog.css") layer(pages);
+@import url("styles/pages/about.css") layer(pages);
 
-@import url("styles/prism.css");
+@import url("styles/vendors/prism.css") layer(vendors);
