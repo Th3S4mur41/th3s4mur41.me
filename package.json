@@ -25,14 +25,14 @@
 		"@astrojs/rss": "^4.0.19",
 		"@astrojs/sitemap": "^3.7.3",
 		"@fontsource/cascadia-code": "^5.2.3",
-		"astro": "^7.0.4",
+		"astro": "^7.0.5",
 		"baseline-status": "^1.1.1",
 		"reading-time": "^1.5.0",
 		"rehype-github-alerts": "^4.2.0",
 		"unist-util-visit": "^5.1.0"
 	},
 	"devDependencies": {
-		"@astrojs/mdx": "^7.0.0",
+		"@astrojs/mdx": "^7.0.1",
 		"@atproto/api": "^0.20.23",
 		"@biomejs/biome": "2.5.1",
 		"@commitlint/cli": "^21.2.0",
