@@ -1,5 +1,9 @@
 @import url("styles/base.css") layer(base);
+@import url("styles/base/reset.css") layer(base);
+@import url("styles/base/tokens.css") layer(base);
+@import url("styles/base/themes.css") layer(base);
 @import url("styles/base/animation.css") layer(base);
+@import url("styles/base/base.css") layer(base);
 
 @import url("styles/components/article-card.css") layer(components);
 @import url("styles/components/socials.css") layer(components);
@@ -10,3 +14,5 @@
 @import url("styles/pages/about.css") layer(pages);
 
 @import url("styles/vendors/prism.css") layer(vendors);
+
+@import url("styles/utils/utils.css") layer(utils);

@@ -1,0 +1,13 @@
+:root {
+	/* Base Colors */
+	--color-base: oklch(0.86 0.18 90.53);
+
+	/* Spacing */
+
+	/* Font sizes */
+
+	/* Shadows */
+
+	/* Preferences */
+	--max-line-length: 80ch; /* Improve readability by limitting the amount of characters per line */
+}
