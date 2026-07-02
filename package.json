@@ -68,5 +68,10 @@
 		"release": "semantic-release",
 		"version": "npm run lint:fix",
 		"prepare": "husky"
+	},
+	"allowScripts": {
+		"esbuild": true,
+		"sharp": true,
+		"workerd": false
 	}
 }
