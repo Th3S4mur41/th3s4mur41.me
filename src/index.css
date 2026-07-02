@@ -4,8 +4,11 @@
 @import url("styles/base/themes.css") layer(base);
 @import url("styles/base/animation.css") layer(base);
 @import url("styles/base/base.css") layer(base);
+@import url("styles/base/layout.css") layer(base);
 
 @import url("styles/components/article-card.css") layer(components);
+@import url("styles/components/md-alerts.css") layer(components);
+@import url("styles/components/reactions.css") layer(components);
 @import url("styles/components/socials.css") layer(components);
 @import url("styles/components/table-of-contents.css") layer(components);
 

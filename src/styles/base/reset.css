@@ -74,7 +74,15 @@ figcaption {
 
 /* List styling is not usually desired in navigation */
 nav ul {
-	list-style: none;
+	::marker {
+		content: none;
+	}
+
+	/* Fallback if setting content inside ::marker is not supported */
+	@supports not (selector(li::marker) and (content: "")) {
+		/* TODO: Test if fallback works */
+		list-style: none;
+	}
 }
 
 /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */

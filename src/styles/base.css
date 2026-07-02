@@ -382,16 +382,6 @@ body > footer {
 	}
 }
 
-a {
-	text-underline-offset: 0.2em;
-
-	&:where(:focus-visible) {
-		border-radius: 0.125em;
-		outline: 2px solid var(--color-accent);
-		outline-offset: 0.5em;
-	}
-}
-
 a.to-top {
 	color: inherit;
 	text-decoration: none;
@@ -400,23 +390,6 @@ a.to-top {
 	}
 	&::after {
 		content: " ↑" / "";
-	}
-}
-
-hr {
-	border: none;
-	block-size: 0.1rem;
-	inline-size: stretch;
-	margin-block: 2.5em;
-	background: linear-gradient(to right, transparent, var(--color-text), transparent);
-}
-
-a {
-	color: var(--color-accent);
-
-	&:where(:not([class])):is(:hover, :focus) {
-		color: oklch(from var(--color-accent) calc(l + 0.05) c h);
-		text-shadow: 0 0 0.1em oklch(from var(--color-accent) l c h / 0.5);
 	}
 }
 
@@ -446,47 +419,6 @@ li:has(> .emoji) {
 		margin-inline-start: -4ch;
 		margin-inline-end: 1.3ch;
 	}
-}
-
-ol {
-	list-style-position: outside; /* default */
-	padding-inline-start: 1ch;
-	margin-inline-start: 1em;
-}
-
-ol > li {
-	position: relative;
-	margin-block-end: 0.5em;
-	padding-inline-start: 1.5ch;
-
-	&::marker {
-		font-weight: 600;
-		color: var(--color-bg);
-	}
-	&::before {
-		content: "";
-		display: inline-block;
-		position: absolute;
-		top: 0;
-		left: -2.3ch;
-		background-color: var(--color-accent);
-		border-radius: 0.25rem;
-		inline-size: 2.1ch;
-		block-size: 1lh;
-		z-index: -1;
-	}
-}
-
-@property --color-l {
-	syntax: "<color>";
-	initial-value: transparent;
-	inherits: false;
-}
-
-@property --border-angle {
-	syntax: "<angle>";
-	initial-value: 0deg;
-	inherits: false;
 }
 
 button,
