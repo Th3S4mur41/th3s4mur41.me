@@ -75,7 +75,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ID }}
-          command: pages deploy ./dist --project-name=${{ inputs.CLOUDFLARE_PROJECT_NAME }}
+          command: pages deploy ./dist --project-name=${{ inputs.CLOUDFLARE_PROJECT_NAME }} --branch=${{ github.event.workflow_run.head_branch || github.head_ref }} 
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: '📝 Save deployment URL'
