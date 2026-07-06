@@ -1,0 +1,68 @@
+---
+title: 'Focusgroup: The Future of Keyboard Navigation'
+date: 2026-07-10T00:00:00Z
+image: ''
+imageAlt: ''
+description: ''
+tags:
+  - html
+  - a11y
+  - ux
+keywords:
+  - focusgroup
+  - keyboard navigation
+  - arrow key navigation
+  - accessibility
+  - ARIA roles
+  - progressive enhancement
+  - polyfill
+  - lean web
+  - semantic HTML
+  - web standards
+---
+
+# Focusgroup: The Future of Keyboard Navigation
+
+Chromium 150 shipped native support for the [`focusgroup` attribute](https://developer.chrome.com/blog/new-in-chrome-150?hl=en#focusgroup), and it's one of the most useful HTML additions for keyboard users in a long time.
+
+If you've ever manually wired up arrow-key navigation for a toolbar or tablist in JavaScript, you know how tedious and error-prone it gets, and how hard it can be to get accessibility right. `focusgroup` (partially) moves that responsibility into the browser engine.
+
+## What is focusgroup?
+
+The concept is straightforward: `focusgroup` lets you group interactive elements (usually buttons) into a single logical tab stop. Instead of tabbing through every item in a menu, the user tabs into the group once and navigates between items with arrow keys.
+
+It doesn’t introduce new UI patterns — it adds native support for common ones like:
+
+- Toolbars
+- Tablists
+- Menus
+- ...
+
+Not only does this remove the need for custom JavaScript navigation logic, but `focusgroup` also automatically applies the correct ARIA roles based on the chosen pattern, so accessibility is built in rather than bolted on.
+
+And the best part: You can start experimenting today, or even ship it now thanks to an available [polyfill](https://github.com/microsoft/polyfills/tree/main/packages/focusgroup).
+
+> TODO: Add a simple toolbar and tablist demo
+
+## The Progressive Enhancement Catch
+
+Before you rip out your old navigation code, there's a crucial caveat.
+
+### Role mapping and precedence
+
+The browser only auto-applies ARIA roles when doing so won't overwrite an already-set role — either explicitly defined or implied by the element's native semantics.
+
+Miss this, and you can accidentally ship a completely inaccessible interface. The rules are well documented in the [focusgroup explainer](https://open-ui.org/components/scoped-focusgroup.explainer/#supported-behaviors).
+
+I ran into this firsthand while trying to update [Kevin Powell's accessible tabs example](https://www.youtube.com/watch?v=fI9VM5zzpu8). My goal was to strip out the custom JavaScript navigation and replace it with `focusgroup` — and I was caught off guard when the ARIA roles weren't applied automatically.
+
+The reason makes sense once you understand it, but the implication is significant: if you want to use `focusgroup` as a progressive enhancement — with semantic anchor links as a fallback for unsupported browsers — you must set your ARIA roles manually. Because `<a>` already has a native semantic role, `focusgroup` won't touch it.
+
+> TODO: Add tablist demo with fallback
+
+## Wrap Up
+
+`focusgroup` is a solid step forward for the Lean Web philosophy. Less JavaScript to ship, more native browser capability, and accessibility considered from the start. Just watch your element semantics when mixing it with fallback links.
+
+Have you played with `focusgroup` yet?  
+What patterns are you looking forward to refactoring first?
