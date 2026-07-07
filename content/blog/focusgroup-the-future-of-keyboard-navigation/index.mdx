@@ -21,6 +21,8 @@ keywords:
   - web standards
 ---
 
+import CodePen from '/src/components/CodePen.astro';
+
 # Focusgroup: The Future of Keyboard Navigation
 
 Chromium 150 shipped native support for the [`focusgroup` attribute](https://developer.chrome.com/blog/new-in-chrome-150?hl=en#focusgroup), and it's one of the most useful HTML additions for keyboard users in a long time.
@@ -42,11 +44,21 @@ Not only does this remove the need for custom JavaScript navigation logic, but `
 
 And the best part: You can start experimenting today, or even ship it now thanks to an available [polyfill](https://github.com/microsoft/polyfills/tree/main/packages/focusgroup).
 
-> TODO: Add a simple toolbar and tablist demo
+<CodePen
+	title="Focusgroup - Toolbar"
+	href="https://codepen.io/editor/th3s4mur41/pen/019f27a0-85d5-7086-bf79-1bcec3b27156"
+	description="A simple toolbar with 2 button groups, the first one without focus group and the second one with focus group. Use the tab key to enter the groups and arrow keys to navigate between buttons."
+/>
 
 ## The Progressive Enhancement Catch
 
 Before you rip out your old navigation code, there's a crucial caveat.
+
+<CodePen
+	title="Focusgroup without automatic role"
+	href="https://codepen.io/editor/th3s4mur41/pen/019f36b7-9e1d-79ba-be93-c6f56269e065"
+	description="This example follows the same pattern as the previous codepen with one difference that has a big impact. The `div` has been replaced by a `section` which leads to focusgroup no longer setting aria role automatically"
+/>
 
 ### Role mapping and precedence
 
