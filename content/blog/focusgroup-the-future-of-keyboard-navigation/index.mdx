@@ -25,7 +25,7 @@ import CodePen from '/src/components/CodePen.astro';
 
 # Focusgroup: The Future of Keyboard Navigation
 
-Chromium 150 shipped native support for the [`focusgroup` attribute](https://developer.chrome.com/blog/new-in-chrome-150?hl=en#focusgroup), and it's one of the most useful HTML additions for keyboard users in a long time.
+Native support for the `focusgroup` attribute is now available in [Edge](https://blogs.windows.com/msedgedev/2026/07/07/new-in-edge-for-developers-style-layout-gaps-improve-keyboard-accessibility-and-migrate-your-pwa-to-a-new-origin/#focusgroup) and [Chrome](https://developer.chrome.com/blog/new-in-chrome-150?hl=en#focusgroup) 150, and it's one of the most useful HTML additions for keyboard users in a long time.
 
 If you've ever manually wired up arrow-key navigation for a toolbar or tablist in JavaScript, you know how tedious and error-prone it gets, and how hard it can be to get accessibility right. `focusgroup` (partially) moves that responsibility into the browser engine.
 
@@ -45,7 +45,7 @@ Not only does this remove the need for custom JavaScript navigation logic, but `
 And the best part: You can start experimenting today, or even ship it now thanks to an available [polyfill](https://github.com/microsoft/polyfills/tree/main/packages/focusgroup).
 
 <CodePen
-	title="Focusgroup - Toolbar"
+	title="Toolbar with focusgroup"
 	href="https://codepen.io/editor/th3s4mur41/pen/019f27a0-85d5-7086-bf79-1bcec3b27156"
 	description="A simple toolbar with 2 button groups, the first one without focus group and the second one with focus group. Use the tab key to enter the groups and arrow keys to navigate between buttons."
 />
@@ -54,27 +54,40 @@ And the best part: You can start experimenting today, or even ship it now thanks
 
 Before you rip out your old navigation code, there's a crucial caveat.
 
-<CodePen
-	title="Focusgroup without automatic role"
-	href="https://codepen.io/editor/th3s4mur41/pen/019f36b7-9e1d-79ba-be93-c6f56269e065"
-	description="This example follows the same pattern as the previous codepen with one difference that has a big impact. The `div` has been replaced by a `section` which leads to focusgroup no longer setting aria role automatically"
-/>
-
 ### Role mapping and precedence
 
 The browser only auto-applies ARIA roles when doing so won't overwrite an already-set role — either explicitly defined or implied by the element's native semantics.
 
 Miss this, and you can accidentally ship a completely inaccessible interface. The rules are well documented in the [focusgroup explainer](https://open-ui.org/components/scoped-focusgroup.explainer/#supported-behaviors).
 
-I ran into this firsthand while trying to update [Kevin Powell's accessible tabs example](https://www.youtube.com/watch?v=fI9VM5zzpu8). My goal was to strip out the custom JavaScript navigation and replace it with `focusgroup` — and I was caught off guard when the ARIA roles weren't applied automatically.
+<CodePen
+	title="Toolbar with focusgroup and explicit role"
+	href="https://codepen.io/editor/th3s4mur41/pen/019f36b7-9e1d-79ba-be93-c6f56269e065"
+	description="This example follows the same pattern as the previous codepen with one difference that has a big impact. The `div` has been replaced by a `section` which leads to focusgroup no longer setting aria role automatically"
+/>
 
-The reason makes sense once you understand it, but the implication is significant: if you want to use `focusgroup` as a progressive enhancement — with semantic anchor links as a fallback for unsupported browsers — you must set your ARIA roles manually. Because `<a>` already has a native semantic role, `focusgroup` won't touch it.
+I ran into this firsthand while trying to update [Kevin Powell](https://www.kevinpowell.co/)'s [accessible tabs example](https://www.youtube.com/watch?v=fI9VM5zzpu8). My goal was to strip out the custom JavaScript navigation and replace it with `focusgroup` and I was caught off guard when the ARIA roles weren't applied automatically.
+So I dug into the explainer and found the reason: the `<a>` elements in the tablist already have a native semantic role, so `focusgroup` won't override it. The result is that the tablist is no longer accessible to screen readers.
+My first solution was to keep it as simple as possible and build a solution centered around `focusgroup` and the `<button>` element. 
 
-> TODO: Add tablist demo with fallback
+<CodePen
+	title="Tablist with focusgroup"
+	href="https://codepen.io/editor/th3s4mur41/pen/019f3bc5-3be6-7103-b563-1df75368f087"
+	description="A simple tablist example built with focusgroup and buttons based on Kevin Powell's accessible tabs example. Use the tab key to enter the group and arrow keys to navigate between tabs."
+/>
+
+This worked, but it meant losing the ability to use anchor links for fallback navigation and the core principle of Kevin's example: progressive enhancement. 
+So I went back to the original code and only replaced the arrow key navigation logic with `focusgroup`. The result is a fully accessible tablist that works with or without JavaScript, and the ARIA roles are applied correctly.
+
+<CodePen
+	title="Tablist with focusgroup (progressive enhancement)"
+	href="https://codepen.io/editor/th3s4mur41/pen/019f40d9-9a38-77f2-8488-6dcc1906c3cf"
+	description="A tablist example built with focusgroup as progressive enhancement based on Kevin Powell's accessible tabs example. Use the tab key to enter the group and arrow keys to navigate between tabs."
+/>
 
 ## Wrap Up
 
-`focusgroup` is a solid step forward for the Lean Web philosophy. Less JavaScript to ship, more native browser capability, and accessibility considered from the start. Just watch your element semantics when mixing it with fallback links.
+I just started playing around with this new feature and there are more patterns to explore, but I can already see the potential for `focusgroup` to simplify keyboard navigation and improve accessibility across the web.
 
 Have you played with `focusgroup` yet?  
 What patterns are you looking forward to refactoring first?
