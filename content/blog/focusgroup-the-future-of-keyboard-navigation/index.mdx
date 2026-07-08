@@ -2,8 +2,12 @@
 title: 'Focusgroup: The Future of Keyboard Navigation'
 date: 2026-07-08T00:00:00Z
 image: focusgroup-native-accessible-keyboard-navigation.jpg
-imageAlt: >-
- 'A comic-style hero image split in two: on the left, a tired developer, wearing a purple hoodie, is chained by 'Javascript Logic' and 'Manual Tabbing' logic, struggling with complex code. On the right, a smiling Michaël Vanderheden with a cap and glasses gives a thumbs-up. Floating beside him, 'focusgroup' automatically handling navigation for 'tool', 'tablist', and 'menu' via standard arrow keys.'
+imageAlt: >
+  A comic-style hero image split in two: on the left, a tired developer, wearing a purple hoodie,
+  is chained by 'JavaScript Logic' and 'Manual Tabbing' logic, struggling with complex code.
+  On the right, a smiling Michaël Vanderheyden with a cap and glasses gives a thumbs-up.
+  Floating beside him, 'focusgroup' automatically handling navigation for 'toolbar', 'tablist',
+  and 'menu' via standard arrow keys.
 description: 'Chrome and Edge 150 shipped native focusgroup support — an HTML attribute that brings arrow-key navigation to the browser, with automatic ARIA roles and a polyfill available today.'
 tags:
   - html
@@ -26,7 +30,7 @@ import CodePen from '/src/components/CodePen.astro';
 
 # Focusgroup: The Future of Keyboard Navigation
 
-![A comic-style hero image split in two: on the left, a tired developer, wearing a purple hoodie, is chained by 'Javascript Logic' and 'Manual Tabbing' logic, struggling with complex code. On the right, a smiling Michaël Vanderheden with a cap and glasses gives a thumbs-up. Floating beside him, 'focusgroup' automatically handling navigation for 'tool', 'tablist', and 'menu' via standard arrow keys.](focusgroup-native-accessible-keyboard-navigation.jpg)
+![A comic-style hero image split in two: on the left, a tired developer, wearing a purple hoodie, is chained by 'JavaScript Logic' and 'Manual Tabbing' logic, struggling with complex code. On the right, a smiling Michaël Vanderheyden with a cap and glasses gives a thumbs-up. Floating beside him, 'focusgroup' automatically handling navigation for 'toolbar', 'tablist', and 'menu' via standard arrow keys.](focusgroup-native-accessible-keyboard-navigation.jpg)
 
 Native support for the `focusgroup` attribute is now available in [Edge](https://blogs.windows.com/msedgedev/2026/07/07/new-in-edge-for-developers-style-layout-gaps-improve-keyboard-accessibility-and-migrate-your-pwa-to-a-new-origin/#focusgroup) and [Chrome](https://developer.chrome.com/blog/new-in-chrome-150?hl=en#focusgroup) 150, and it's one of the most useful HTML additions for keyboard users in a long time.
 
@@ -70,7 +74,7 @@ Miss this, and you can accidentally ship a completely inaccessible interface. Th
 <CodePen
 	title="Toolbar with focusgroup and explicit role"
 	href="https://codepen.io/editor/th3s4mur41/pen/019f36b7-9e1d-79ba-be93-c6f56269e065"
-	description="This example follows the same pattern as the previous codepen with one difference that has a big impact. The `div` has been replaced by a `section` which leads to focusgroup no longer setting aria role automatically"
+	description="This example follows the same pattern as the previous CodePen with one difference that has a big impact: the `div` is replaced by a `section`, which prevents focusgroup from setting the ARIA role automatically."
 />
 
 ### Tablist with focusgroup
