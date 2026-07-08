@@ -57,7 +57,7 @@ And the best part: You can start experimenting today, or even ship it now thanks
 <CodePen
 	title="Toolbar with focusgroup"
 	href="https://codepen.io/editor/th3s4mur41/pen/019f27a0-85d5-7086-bf79-1bcec3b27156"
-	description="A simple toolbar with 2 button groups, the first one without focus group and the second one with focus group. Use the tab key to enter the groups and arrow keys to navigate between buttons."
+	description="A simple toolbar with 2 button groups, the first one without `focusgroup` and the second one with `focusgroup`. Use the tab key to enter the groups and arrow keys to navigate between buttons."
 />
 
 ## The Progressive Enhancement Catch
@@ -66,7 +66,7 @@ Before you rip out your old navigation code, there's a crucial caveat.
 
 ### Role mapping and precedence
 
-The browser only auto-applies ARIA roles when doing so won't overwrite an already-set role, either explicitly defined or implied by the element's native semantics. 
+The browser only auto-applies ARIA roles when doing so won't overwrite an already-set role, either explicitly defined or implied by the element's native semantics.
 In those cases, you still have to set the proper ARIA role manually.
 
 Miss this, and you can accidentally ship a completely inaccessible interface. The rules are well documented in the [focusgroup explainer](https://open-ui.org/components/scoped-focusgroup.explainer/#supported-behaviors).
@@ -104,7 +104,7 @@ The result is a tablist that works with or without JavaScript, while keeping ARI
 />
 
 The solution with progressive enhancement is a bit more complex and whether you need it depends on your use case and your users.
-e.g. The fallback would probably be meaningful for a website that otherwise works well without any JavaScript, but will be unnecessary if you are building a single page application (SPA) that requires JS to function.
+For example, the fallback would probably be meaningful for a website that otherwise works well without any JavaScript, but it will be unnecessary if you are building a single-page application (SPA) that requires JS to function.
 
 ## Quick implementation checklist
 
