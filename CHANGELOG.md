@@ -1,3 +1,10 @@
+# [2.69.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.68.2...v2.69.0) (2026-07-08)
+
+
+### Features
+
+* **blog:** add article on focusgroup and keyboard navigation ([#2461](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2461)) ([18336ee](https://github.com/Th3S4mur41/th3s4mur41.me/commit/18336ee935c15d15c7b6caad66a8b0f385900935))
+
 ## [2.68.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.68.1...v2.68.2) (2026-06-24)
 
 
