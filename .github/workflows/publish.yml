@@ -73,6 +73,7 @@ jobs:
         id: cloudflare-deploy
         uses: cloudflare/wrangler-action@v4.0.0
         env:
+          GITHUB_EVENT_NAME: ${{ github.event.workflow_run.event || github.event_name }}
           GITHUB_HEAD_REF: ${{ github.event.workflow_run.head_branch || github.head_ref }}
           GITHUB_REF_NAME: ${{ github.event.workflow_run.head_branch || github.ref_name }}
           GITHUB_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
