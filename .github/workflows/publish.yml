@@ -69,11 +69,35 @@ jobs:
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
 
+      # Wrangler's native PR comment update logic relies on pull_request event
+      # context. We do not checkout untrusted PR refs in this privileged job,
+      # so we provide a minimal trusted PR-shaped event payload from
+      # workflow_run metadata instead of using artifact-provided event data.
+      - name: Prepare trusted PR event payload for Wrangler
+        if: ${{ github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.pull_requests[0].number }}
+        run: |
+          cat > "${RUNNER_TEMP}/wrangler-pr-event.json" <<EOF
+          {
+            "number": ${{ github.event.workflow_run.pull_requests[0].number }},
+            "pull_request": {
+              "number": ${{ github.event.workflow_run.pull_requests[0].number }},
+              "head": {
+                "ref": "${{ github.event.workflow_run.head_branch }}",
+                "sha": "${{ github.event.workflow_run.head_sha }}"
+              }
+            },
+            "repository": {
+              "full_name": "${{ github.repository }}"
+            }
+          }
+          EOF
+
       - name: '🚀 Publish to Cloudflare Pages'
         id: cloudflare-deploy
         uses: cloudflare/wrangler-action@v4.0.0
         env:
           GITHUB_EVENT_NAME: ${{ github.event.workflow_run.event || github.event_name }}
+          GITHUB_EVENT_PATH: ${{ github.event.workflow_run.event == 'pull_request' && format('{0}/wrangler-pr-event.json', runner.temp) || github.event_path }}
           GITHUB_HEAD_REF: ${{ github.event.workflow_run.head_branch || github.head_ref }}
           GITHUB_REF_NAME: ${{ github.event.workflow_run.head_branch || github.ref_name }}
           GITHUB_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
