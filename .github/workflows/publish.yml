@@ -41,12 +41,9 @@ jobs:
       deployments: write
 
     steps:
-      - name: '☁️ Checkout repository'
-        uses: actions/checkout@v7
-        with:
-          # Pin to the exact commit that passed Checks; avoids mutable branch refs
-          # and preserves commit/PR association used by Cloudflare preview comments.
-          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+      # Do not checkout PR code in this privileged workflow (secrets are available
+      # here). We deploy the trusted build artifact and pass commit metadata
+      # explicitly so Cloudflare can still associate preview deployments with PRs.
 
       - name: '📎 Download build output'
         uses: actions/download-artifact@v8
@@ -83,7 +80,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ID }}
-          command: pages deploy ./dist --project-name=${{ inputs.CLOUDFLARE_PROJECT_NAME }} --branch=${{ github.event.workflow_run.head_branch || github.head_ref }} 
+          command: pages deploy ./dist --project-name=${{ inputs.CLOUDFLARE_PROJECT_NAME }} --branch=${{ github.event.workflow_run.head_branch || github.head_ref }} --commit-hash=${{ github.event.workflow_run.head_sha || github.sha }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: '📝 Save deployment URL'
