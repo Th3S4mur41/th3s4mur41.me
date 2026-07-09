@@ -50,14 +50,6 @@ jobs:
           HUSKY: 0
         run: npm ci --no-audit --prefer-offline --progress=false
 
-      - name: '📎 Download build output'
-        uses: actions/download-artifact@v8
-        continue-on-error: true # There won't be an artifact in workflow without build job
-        with:
-          name: build
-          run-id: ${{ github.event.workflow_run.id }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: '📦 Release'
         id: release
         env:
