@@ -10,6 +10,8 @@
 			var(--main-margin) [margin-end] 1fr [full-width-end];
 		--toc-sidebar: true;
 	}
+
+	scrollbar-color: var(--color-accent) var(--color-bg);
 }
 
 @media (prefers-reduced-motion: no-preference) {
