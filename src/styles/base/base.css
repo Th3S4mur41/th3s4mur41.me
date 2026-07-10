@@ -38,25 +38,32 @@ body {
 		list-style-position: outside; /* default */
 		padding-inline-start: 1ch;
 		margin-inline-start: 1em;
+		counter-reset: ol;
 
 		li {
 			position: relative;
 
 			&::marker {
-				font-weight: 600;
-				color: var(--color-bg);
+				/* keep marker content for screenreader */
+				color: transparent;
 			}
 			&::before {
-				content: "";
+				counter-increment: ol;
+				content: counter(ol) "." / ""; /* hide for screenreader to not duplicated marker content */
+				background: url(/icons/hinomasu.svg) 0 / contain no-repeat;
+				min-inline-size: 2.5ch;
 				display: inline-block;
 				position: absolute;
-				top: 0;
-				left: -2.3ch;
-				background-color: var(--color-accent);
-				border-radius: 0.25rem;
-				inline-size: 2.1ch;
-				block-size: 1lh;
-				z-index: -1;
+				inset-block-start: 0;
+				inset-inline-start: -2.5ch;
+				padding-inline: 0.75ch 0.25ch;
+				aspect-ratio: 1;
+				color: var(--color-bg);
+				font-weight: 600;
+
+				@media (forced-colors: active) {
+					background: none;
+				}
 			}
 		}
 	}
