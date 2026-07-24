@@ -1,0 +1,9 @@
+/**
+ * Utility classes for styling elements.
+ */
+
+/* Visually hide content but keep it accessible to screen readers */
+.visually-hidden {
+	position: absolute; /* take out of document flow */
+	clip-path: circle(0); /* reduce clickable area to nothing */
+}

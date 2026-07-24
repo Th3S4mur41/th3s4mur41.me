@@ -1,0 +1,144 @@
+/******************************************************************************
+ * Global
+ *****************************************************************************/
+
+@media (prefers-reduced-motion: no-preference) {
+	@view-transition {
+		navigation: auto;
+	}
+}
+
+:root {
+	color-scheme: dark;
+	accent-color: var(--color-accent);
+}
+
+body {
+	font-family: system-ui, sans-serif;
+}
+
+/******************************************************************************
+ * Lists
+ *****************************************************************************/
+
+@scope (main) to (nav) {
+	/* Scope prevents the custom marker to be applied in any nav element */
+	ul {
+		::marker {
+			content: url("/icons/kunai.svg") / "";
+			color: var(--color-accent);
+		}
+		strong {
+			color: var(--color-accent);
+		}
+	}
+
+	ol {
+		/* TODO: rework style using svg icon */
+		list-style-position: outside; /* default */
+		padding-inline-start: 1ch;
+		margin-inline-start: 1em;
+		counter-reset: ol;
+
+		li {
+			position: relative;
+
+			&::marker {
+				/* keep marker content for screenreader */
+				color: transparent;
+			}
+			&::before {
+				counter-increment: ol;
+				content: counter(ol) "." / ""; /* hide for screenreader to not duplicated marker content */
+				background: url(/icons/hinomasu.svg) 0 / contain no-repeat;
+				min-inline-size: 2.5ch;
+				display: inline-block;
+				position: absolute;
+				inset-block-start: 0;
+				inset-inline-start: -2.5ch;
+				padding-inline: 0.75ch 0.25ch;
+				aspect-ratio: 1;
+				color: var(--color-bg);
+				font-weight: 600;
+
+				@media (forced-colors: active) {
+					background: none;
+				}
+			}
+		}
+	}
+
+	li {
+		margin-block: 0.5em;
+		padding-inline-start: 1ch;
+	}
+}
+
+/******************************************************************************
+ * Forms
+ *****************************************************************************/
+
+button > svg {
+	display: inline-block;
+	margin-inline-end: 0.5em; /* same as button padding-inline */
+}
+
+/******************************************************************************
+ * Typography
+ *****************************************************************************/
+
+strong {
+	font-weight: 600;
+}
+
+hr {
+	border: none;
+	block-size: 0.1rem;
+	inline-size: stretch;
+	margin-block: 2.5em;
+	background: linear-gradient(to right, transparent, var(--color-text), transparent);
+}
+
+a {
+	color: var(--color-accent);
+	text-underline-offset: 0.2em;
+
+	&:where(:not([class])):is(:hover, :focus) {
+		color: oklch(from var(--color-accent) calc(l + 0.05) c h);
+		text-shadow: 0 0 0.1em oklch(from var(--color-accent) l c h / 0.5);
+	}
+	&:where(:focus-visible) {
+		border-radius: 0.125em;
+		outline: 2px solid var(--color-accent);
+		outline-offset: 0.5em;
+	}
+}
+
+/******************************************************************************
+ * Table
+ *****************************************************************************/
+
+table {
+	border-collapse: separate; /* Required for padding to work */
+	padding-block-end: 0.5rem;
+	background-color: var(--color-subtle-bg);
+	margin-block: 1.5em;
+	border-radius: 0.25rem;
+	border-spacing: 0;
+}
+
+thead {
+	& th {
+		padding-block: 0.75em;
+		border-block-end: 2px solid var(--color-bg);
+	}
+}
+
+tbody {
+	padding-block-end: 1rem;
+}
+
+td {
+	padding-inline: 1em;
+	padding-block: 1em;
+}

@@ -153,17 +153,12 @@ figure {
 		margin-block: unset;
 	}
 	& img {
-		max-inline-size: 100%;
-		block-size: auto;
 		border-radius: 0.25rem;
 	}
 	& > figcaption {
 		margin-top: 0.5rem;
 		font-size: 0.875rem;
 		color: var(--color-subtle-text);
-		font-style: italic;
-		text-align: center;
-		text-wrap: balance;
 	}
 }
 
@@ -260,165 +255,6 @@ body:is([class^="blog-"], [class^="speaking-"]) {
 		fill: currentcolor;
 		vertical-align: sub;
 	}
-}
-
-.markdown-alert {
-	--color-alert: var(--color-subtle-text);
-	padding-inline: 1rem;
-	border-inline-start: 4px solid var(--color-alert);
-	margin-block: 1rem 2rem;
-	position: relative;
-	border-radius: 0.25rem;
-	background: var(--color-subtle-bg);
-
-	&.markdown-alert-note {
-		--color-alert: oklch(0.57 0.2 259.67);
-	}
-	&.markdown-alert-tip {
-		--color-alert: oklch(0.55 0.15 146.25);
-	}
-	&.markdown-alert-important {
-		--color-alert: oklch(0.58 0.21 295.57);
-	}
-	&.markdown-alert-warning {
-		--color-alert: oklch(0.57 0.12 74.92);
-	}
-	&.markdown-alert-caution {
-		--color-alert: oklch(0.59 0.2 26.79);
-	}
-
-	& .markdown-alert-title {
-		display: flex;
-		align-items: center;
-		column-gap: 0.5rem;
-		color: oklch(from var(--color-alert) calc(l + 0.1) c h);
-		font-size: 1.125em;
-		font-weight: 600;
-		border-end-start-radius: 0.5rem;
-		border-end-end-radius: 0.5rem;
-	}
-	& > :first-child {
-		margin-block-start: 0.5rem;
-	}
-	& > :last-child {
-		margin-block-end: 0.75rem;
-	}
-	& .octicon {
-		fill: currentColor;
-		position: absolute;
-		inset-block-start: 0;
-		inset-inline-start: 0;
-		translate: -50% 0%;
-		background-color: var(--color-subtle-bg);
-		padding: 0.75em;
-		border-end-end-radius: 50%;
-		overflow: visible;
-		border-radius: 50%;
-		z-index: -1;
-	}
-}
-
-.reactions {
-	flex: 1 1 100%;
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.5rem;
-
-	> div {
-		display: flex;
-		flex-wrap: wrap;
-		row-gap: 0.5rem;
-		align-items: start;
-	}
-
-	> header,
-	> p {
-		flex-basis: 100%;
-	}
-	> header {
-		font-size: 1.5em;
-	}
-	> p {
-		margin: unset;
-	}
-	#likes {
-		color: oklch(0.7 0.25 30);
-	}
-	#boosts {
-		color: oklch(0.7 0.4 357);
-	}
-
-	.count {
-		display: inline-block;
-		font-weight: 700;
-		padding-inline: 0.5em;
-		padding-block: 0.25em;
-		border-radius: 100vmax;
-		vertical-align: middle;
-		line-height: 1;
-		font-variant-numeric: tabular-nums;
-	}
-	.avatars {
-		flex-basis: 100%;
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.25em;
-
-		> :is(a, img) {
-			/* And just for performance */
-			content-visibility: auto;
-			contain-intrinsic-size: 3rem;
-		}
-
-		a,
-		img {
-			inline-size: 3rem;
-			block-size: 3rem;
-			overflow: hidden;
-			border-radius: 50%;
-		}
-
-		a {
-			outline-offset: 0;
-		}
-
-		img {
-			object-fit: cover;
-			box-shadow: 0 2px 6px 1px oklch(from var(--color-subtle-bg) l c h / 0.5);
-			border: 1px solid oklch(from var(--color-subtle-bg) l c h / 0.5);
-			animation: fadeIn 0.3s ease-out;
-
-			@media (prefers-reduced-motion: no-preference) {
-				animation: scaleIn 0.3s ease-out;
-			}
-		}
-	}
-}
-
-/* Table */
-table {
-	border-collapse: separate; /* Required for padding to work */
-	padding-block-end: 0.5rem;
-	background-color: var(--color-subtle-bg);
-	margin-block: 1.5em;
-	border-radius: 0.25rem;
-	border-spacing: 0;
-}
-
-thead {
-	& th {
-		padding-block: 0.75em;
-		border-block-end: 2px solid var(--color-bg);
-	}
-}
-
-tbody {
-	padding-block-end: 1rem;
-}
-
-td {
-	padding-inline: 1em;
-	padding-block: 1em;
 }
 
 baseline-status {

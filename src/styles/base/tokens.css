@@ -1,0 +1,66 @@
+:root {
+	/******************************************************************************
+	 * Preferences
+	 *****************************************************************************/
+
+	--color-base: oklch(0.86 0.18 90.53);
+	--color-neutral: oklch(0.5 0 0);
+
+	/* Improve readability by limitting the amount of characters per line */
+	--max-line-length: 80ch;
+
+	/******************************************************************************
+	 * Colors
+	 *****************************************************************************/
+
+	--color-neutral-1: oklch(from var(--color-neutral) 0.1 c h);
+	--color-neutral-2: oklch(from var(--color-neutral) 0.2 c h);
+	--color-neutral-3: oklch(from var(--color-neutral) 0.3 c h);
+	--color-neutral-4: oklch(from var(--color-neutral) 0.4 c h);
+	--color-neutral-5: oklch(from var(--color-neutral) 0.5 c h);
+	--color-neutral-6: oklch(from var(--color-neutral) 0.6 c h);
+	--color-neutral-7: oklch(from var(--color-neutral) 0.7 c h);
+	--color-neutral-8: oklch(from var(--color-neutral) 0.8 c h);
+	--color-neutral-9: oklch(from var(--color-neutral) 0.9 c h);
+
+	/******************************************************************************
+	 * Spacing
+	 *****************************************************************************/
+
+	/******************************************************************************
+	 * Font sizes
+	 *****************************************************************************/
+
+	/******************************************************************************
+	 * Shadows
+	 *****************************************************************************/
+}
+
+@property --color-border {
+	syntax: "<color>";
+	initial-value: black;
+	inherits: false;
+}
+@property --color-border-2 {
+	syntax: "<color>";
+	initial-value: black;
+	inherits: false;
+}
+
+@property --color-shadow {
+	syntax: "<color>";
+	initial-value: black;
+	inherits: false;
+}
+
+@property --color-l {
+	syntax: "<color>";
+	initial-value: transparent;
+	inherits: false;
+}
+
+@property --border-angle {
+	syntax: "<angle>";
+	initial-value: 0deg;
+	inherits: false;
+}

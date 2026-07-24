@@ -1,0 +1,194 @@
+/******************************************************************************
+ * Global/
+ *****************************************************************************/
+
+* {
+	/* scrollbar-width: thin; */
+}
+
+html {
+	text-size-adjust: none; /* Prevent font size inflation */
+	interpolate-size: allow-keywords;
+	scrollbar-gutter: stable; /* Prevent the page from “jumping” when switching from a long to a short page. */
+
+	/* Opt-in to the user's OS preference for dark/light mode automatically */
+	color-scheme: light dark;
+
+	/* Use the standard system font stack as a safe default */
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+
+	@media (prefers-reduced-motion: no-preference) {
+		scroll-behavior: smooth;
+	}
+}
+
+body {
+	margin: unset;
+	min-block-size: 100svb;
+	/* Keep line-height at 1.5 unless font-size exceeds 24px, then ease toward 1.2 */
+	line-height: clamp(1.2, calc(36px / 1em), 1.5);
+	-webkit-font-smoothing: antialiased; /* See https://dbushell.com/2024/11/05/webkit-font-smoothing/ */
+}
+
+/* Add spacing between content and its focus outline. */
+:focus-visible {
+	outline-offset: 3px;
+}
+
+/**
+ * Optimize mark element in Forced Colors Mode
+ * See https://adrianroselli.com/2017/12/tweaking-text-level-styles.html#MarkWHCM
+ */
+@media (forced-colors: active) {
+	mark {
+		color: HighlightText;
+		background-color: Highlight;
+	}
+}
+
+summary {
+	cursor: default; /* By default, only the ::marker inside the summary uses the default cursor.*/
+}
+
+iframe {
+	border: none; /* Remove the default border from iframes */
+}
+
+/**
+ * By default popovers look like modals without a backdrop.
+ * This makes use of the implicit anchor in popvers to position
+ * it closely to the trigger.
+ */
+@supports (position-area: end) {
+	[popover] {
+		margin: 0;
+		position-area: end span-end;
+		position-try-fallbacks:
+			flip-block,
+			flip-inline,
+			flip-block flip-inline;
+	}
+}
+
+/******************************************************************************
+ * Forms
+ *****************************************************************************/
+
+/* Make sure textareas without a rows attribute are not tiny */
+textarea:not([rows]) {
+	min-block-size: 3lh;
+}
+
+fieldset {
+	/* Prevent fieldsets from causing overflow -  https://github.com/twbs/bootstrap/issues/12359 */
+	min-inline-size: 0;
+}
+
+[type="search"] {
+	/* Normalize search input styles on Apple devices */
+	-webkit-appearance: textfield;
+}
+
+input:where([type="tel"], [type="url"], [type="email"], [type="number"]):not(:placeholder-shown) {
+	/* Some input types should remain left-aligned in right-to-left languages - https://rtlstyling.com/posts/rtl-styling#form-inputs */
+	direction: ltr;
+}
+
+/******************************************************************************
+ * Typography
+ *****************************************************************************/
+
+button,
+input,
+textarea,
+select {
+	font: inherit;
+}
+
+:is(h1, h2, h3, h4, h5, h6) {
+	line-height: inherit;
+	text-wrap: balance; /* Balance text wrapping on headings */
+}
+
+p,
+li {
+	text-wrap: pretty;
+}
+
+blockquote {
+	text-wrap: balance;
+}
+
+/* Allow code to wrap in pre blocks and avoid horizontal scrollbars for better accessibility */
+pre {
+	white-space: pre-wrap;
+}
+
+figcaption {
+	font-style: italic;
+	text-align: center;
+	text-wrap: balance;
+}
+
+/******************************************************************************
+ * Lists
+ *****************************************************************************/
+
+/* List styling is not usually desired in navigation */
+nav ul {
+	::marker {
+		content: none;
+	}
+
+	/* Fallback if setting content inside ::marker is not supported */
+	@supports not (selector(li::marker) and (content: "")) {
+		/* TODO: Test if fallback works */
+		list-style: none;
+	}
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+:is(ul, ol)[role="list"] {
+	list-style: none;
+}
+
+/******************************************************************************
+ * Media
+ *****************************************************************************/
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+	display: block; /* Block display is usually what we want */
+	vertical-align: middle; /* removes strange space-below in case authors overwrite the display value */
+	max-block-size: stretch; /* Responsive by default */
+	max-inline-size: stretch; /* Responsive by default */
+}
+
+/* Maintain intrinsic aspect ratios when `max-width` is applied */
+img,
+svg,
+video,
+canvas {
+	block-size: auto;
+}
+
+/* Remove the unnecessary wrapping `picture`, while maintaining contents */
+picture {
+	display: contents;
+}
+
+/* Source elements have nothing to display, so we hide them entirely */
+source {
+	display: none;
+}
+
+/* Audio without `[controls]` remains hidden by default */
+audio:not([controls]) {
+	display: none;
+}
