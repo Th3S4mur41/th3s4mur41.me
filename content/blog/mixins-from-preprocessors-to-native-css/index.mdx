@@ -33,7 +33,7 @@ import CodePen from '/src/components/CodePen.astro';
 
 Back in 2020, I wrote a post about [the good, the bad and the ugly of SCSS mixins](/blog/mixins-the-good-the-bad-the-ugly/). At the time, preprocessors like Sass (SCSS) and Less were the default choice for modular CSS. They helped us keep styles cleaner and more <abbr title="Don't Repeat Yourself">DRY</abbr>, long before native CSS had features like nesting and custom properties.
 
-Today, things are changing fast. Native CSS functions are already available in Chromium based browsers, and Microsoft has now started [native CSS mixins prototyping in Chromium](https://chromestatus.com/feature/5108022310469632?gate=5139569205968896). Full cross-browser support for production use is still some time away, but this is still a big step: patterns that used to depend on build tools are starting to move into the browser itself.
+Today, things are changing fast. Native CSS functions are already available in Chromium-based browsers, and Microsoft has now started [native CSS mixins prototyping in Chromium](https://chromestatus.com/feature/5108022310469632?gate=5139569205968896). Full cross-browser support is still some time away, but this is a big step: patterns that used to depend on build tools are moving into the browser itself.
 
 > [!NOTE] 
 > 
@@ -71,7 +71,7 @@ Less mixins look like normal class rules with parameters, and you call them insi
 }
 ```
 
-This is simple, but it can get confusing. A class can act like a class or like a mixin, so it is easier to make mistakes if naming is not strict as mentioned as [the ugly part of mixins in the old article](/blog/mixins-the-good-the-bad-the-ugly/#the-ugly)
+This is simple, but it can get confusing. A class can act like a class or like a mixin, so naming needs to stay strict, as explained in [the ugly part of mixins in the old article](/blog/mixins-the-good-the-bad-the-ugly/#the-ugly).
 
 ### Sass
 
@@ -123,19 +123,19 @@ The important shift is semantic, not just syntactic. Native mixins run in the br
 - Naming follows CSS custom property conventions (`--line-clamp`, `--lines`), which keeps the model consistent.
 - Values can be resolved at runtime, so styles can react to local variables and state changes without recompiling.
 
-That is the real jump from preprocessors to platform: we keep reusable abstractions, but we move from static output to runtime-aware styling.
+That is the real jump from preprocessors to platform: we keep reusable abstractions, but move from static output to runtime-aware styling.
 
 ## The Good, The Bad, and The Shift
 
 ### The Good
 
-The core benefit of mixins does not change with the native version. They are still about keeping your styles DRY: group related properties together, give them a name, and reuse them wherever needed. If you need to update that pattern, you change it in one place.
+The core benefit of mixins does not change with the native version. They still help you keep styles DRY: group related properties, name the pattern, and reuse it where needed. If the pattern changes, you update it once.
 
 What native mixins add on top of that is runtime evaluation, something preprocessors could never do.
 
 #### Build time vs. runtime
 
-In SCSS or Less, mixin arguments are resolved during the build step. Once compilation is done, the values are fixed. If you wanted a mixin to behave differently in a media query or a dark mode context, you had to duplicate the mixin call with different arguments inside each selector.
+In SCSS or Less, mixin arguments are resolved during the build step. After compilation, the values are fixed. If you wanted different behavior in a media query or dark mode, you had to repeat the mixin call with different arguments.
 
 Native CSS mixins run inside the browser. Because parameters behave like scoped custom properties, the mixin resolves its values at runtime, not at build time.
 
@@ -164,12 +164,12 @@ Native CSS mixins run inside the browser. Because parameters behave like scoped 
 }
 ```
 
-This means:
+In practice:
 
-1. **You can pass `var()` as an argument.** When the variable changes — through a media query, a container query, JavaScript, or a class toggle — the mixin updates automatically without any recompilation.
+1. **You can pass `var()` as an argument.** When the variable changes through a media query, container query, JavaScript, or class toggle, the mixin updates automatically without recompilation.
 2. **The mixin is cascade-aware.** Native mixins live inside the CSSOM, so they respect inheritance and pseudo-class states like `:hover` or `:focus-visible` naturally.
 
-If you want to try this in your own browser, this CodePen extends the `line-clamp` example with a second mixin and lets you test behavior live.
+If you want to try this in your own browser, this CodePen extends the `line-clamp` example with a second mixin and lets you test it live.
 
 <CodePen
   title="Native Mixins"
@@ -180,7 +180,7 @@ If you want to try this in your own browser, this CodePen extends the `line-clam
 
 ### The Bad (revisited)
 
-"The Bad" of preprocessor mixins was a structural trade-off. Your source files looked clean and DRY, but the compiler undid that. Every `@include` in a different selector produced a full copy of those property declarations in the output. The more you used mixins, the larger your compiled CSS grew.
+"The Bad" of preprocessor mixins was a structural trade-off. Your source files looked clean and DRY, but the compiler expanded each `@include` into a full copy of declarations. The more you reused mixins, the larger the compiled CSS became.
 
 Native CSS eliminates this entirely. The `@mixin` block is written once in your stylesheet and stays there. The browser handles applying it internally. Your source code and your shipped CSS are the same thing, no duplication at the output level.
 
@@ -190,7 +190,7 @@ There is another practical improvement worth mentioning: **debugging**.
 
 With compiled SCSS, the mixin abstraction disappears in DevTools. You see the raw properties applied to the selector, with no indication they came from a shared mixin. Source maps help, but they are fragile and not always set up correctly.
 
-With native mixins, this is the behavior we should eventually get as tooling matures: the browser understands the abstraction directly, and DevTools should be able to show where an `@apply` comes from and map it back to its mixin definition.
+With native mixins, this is the behavior we should eventually get as tooling matures: the browser understands the abstraction directly, and DevTools should be able to show where an `@apply` comes from and map it to its mixin definition.
 
 > [!IMPORTANT]
 >
@@ -202,7 +202,7 @@ One argument that utility-first frameworks like Tailwind often make is about CSS
 
 The trade-off is that complexity moves into the markup. Your HTML ends up with long lists of classes that describe how something looks rather than what it is. The abstraction between structure and presentation breaks down.
 
-Native mixins offer a different path to the same goal. Because the `@mixin` block is written once and never duplicated in the output, you get small CSS without giving up semantic class names.
+Native mixins offer a different path to the same goal. You can keep semantic class names while still avoiding repeated style declarations.
 
 So this tailwind code:
 
@@ -265,15 +265,15 @@ The equivalent with a mixin would be:
 }
 ```
 
-Both `.avatar-badge` and `.modal-footer` share the same layout logic without duplicating any declarations in the shipped CSS. The HTML stays clean, and the stylesheet stays small.
-In this simple example the combined footprint of HTML and CSS is already smaller than the utility-first approach, and the difference is subject to grow with more complex components.
+Both `.avatar-badge` and `.modal-footer` share the same layout logic without duplicating declarations in shipped CSS. The HTML stays clean, and the stylesheet stays small.
+In this simple example, the combined footprint of HTML and CSS is already smaller than the utility-first approach, and the gap can grow in larger components.
 
 This does not mean native mixins replace utility frameworks. They solve different problems and suit different workflows. But it does mean that "use utilities to keep CSS small" is no longer the only valid approach.
 
 ## Conclusion
 
-Native CSS mixins are not in production yet. Full cross-browser support will take time, and today they are only available behind a flag in Chromium-based browsers. But the direction is clear.
+Native CSS mixins are still experimental. Full cross-browser support will take time, and today they are only available behind a flag in Chromium-based browsers. But the direction is clear.
 
 The patterns we relied on preprocessors for — reusable style blocks, parameterized values, shared abstractions — are becoming part of the platform itself. When they land, we will be able to write modular, maintainable CSS without a build step, and without the output bloat that came with preprocessor mixins.
 
-It is worth paying attention to the spec now, even if you cannot ship it yet. The mental shift from build-time to runtime is not just a technical detail. It changes how you think about where styles live, how they update, and what tools you actually need.
+It is worth following the spec now, even if you cannot ship it yet. The shift from build-time to runtime is not just a technical detail. It changes how you think about where styles live, how they update, and which tools you actually need.
