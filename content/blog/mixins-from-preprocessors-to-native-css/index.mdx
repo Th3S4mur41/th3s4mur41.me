@@ -33,6 +33,15 @@ Back in 2020, I wrote a post about [the good, the bad and the ugly of SCSS mixin
 
 Today, things are changing fast. Native CSS functions are already available in Chromium based browsers, and Microsoft has now started [native CSS mixins prototyping in Chromium](https://chromestatus.com/feature/5108022310469632?gate=5139569205968896). Full cross-browser support for production use is still some time away, but this is still a big step: patterns that used to depend on build tools are starting to move into the browser itself.
 
+> [!NOTE] 
+> 
+> You can experiment with native CSS mixins in Chrome and Edge by enabling the `Experimental Web Platform features` flag.
+>
+> - **Chrome:** Open `chrome://flags/#enable-experimental-web-platform-features`, set it to **Enabled**, then relaunch the browser.
+> - **Edge:** Open `edge://flags/#enable-experimental-web-platform-features`, set it to **Enabled**, then relaunch the browser.
+
+<baseline-status featureId="mixin"></baseline-status>
+
 This is why the topic is worth revisiting. Native mixins are not just a different syntax for old preprocessor mixins. They change how we think about reuse, performance, and bundle size, and they help solve one of the biggest trade-offs preprocessors left us with.
 
 ## Let's talk semantics
