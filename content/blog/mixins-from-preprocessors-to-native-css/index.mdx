@@ -27,6 +27,8 @@ keywords:
   - frontend development
 ---
 
+import CodePen from '/src/components/CodePen.astro';
+
 # Mixins: From Preprocessors to Native CSS
 
 Back in 2020, I wrote a post about [the good, the bad and the ugly of SCSS mixins](/blog/mixins-the-good-the-bad-the-ugly/). At the time, preprocessors like Sass (SCSS) and Less were the default choice for modular CSS. They helped us keep styles cleaner and more <abbr title="Don't Repeat Yourself">DRY</abbr>, long before native CSS had features like nesting and custom properties.
@@ -167,6 +169,15 @@ This means:
 1. **You can pass `var()` as an argument.** When the variable changes — through a media query, a container query, JavaScript, or a class toggle — the mixin updates automatically without any recompilation.
 2. **The mixin is cascade-aware.** Native mixins live inside the CSSOM, so they respect inheritance and pseudo-class states like `:hover` or `:focus-visible` naturally.
 
+If you want to try this in your own browser, this CodePen extends the `line-clamp` example with a second mixin and lets you test behavior live.
+
+<CodePen
+  title="Native Mixins"
+  href="https://codepen.io/editor/th3s4mur41/pen/019fcd25-ebe8-733e-ab7e-76c359afb2a6"
+  defaultTab="result"
+  description="Experimental native CSS mixins demo showing native CSS mixins with dynamic parameters applied across multiple paragraph cards."
+/>
+
 ### The Bad (revisited)
 
 "The Bad" of preprocessor mixins was a structural trade-off. Your source files looked clean and DRY, but the compiler undid that. Every `@include` in a different selector produced a full copy of those property declarations in the output. The more you used mixins, the larger your compiled CSS grew.
@@ -179,7 +190,11 @@ There is another practical improvement worth mentioning: **debugging**.
 
 With compiled SCSS, the mixin abstraction disappears in DevTools. You see the raw properties applied to the selector, with no indication they came from a shared mixin. Source maps help, but they are fragile and not always set up correctly.
 
-With native mixins, the browser understands the abstraction directly. DevTools can show you the `@apply` call on the element, let you inspect the mixin definition, and reflect live edits across every element using it. The abstraction you wrote is the abstraction the browser works with.
+With native mixins, this is the behavior we should eventually get as tooling matures: the browser understands the abstraction directly, and DevTools should be able to show where an `@apply` comes from and map it back to its mixin definition.
+
+> [!IMPORTANT]
+>
+> In current experimental builds, DevTools support is still incomplete. In my tests, styles applied through native mixins were working, but the resulting declarations did not appear in the Styles panel yet. Treat DevTools inspectability as an expected direction, not something you can fully rely on today.
 
 ## Semantic markup vs. utility class soup
 
