@@ -33,7 +33,7 @@
 	},
 	"devDependencies": {
 		"@astrojs/mdx": "^7.0.5",
-		"@atproto/api": "^0.20.35",
+		"@atproto/api": "^0.20.36",
 		"@biomejs/biome": "2.5.6",
 		"@commitlint/cli": "^21.2.1",
 		"@commitlint/config-conventional": "^21.0.2",
@@ -48,11 +48,11 @@
 		"prettier": "^3.9.6",
 		"typescript": "^7.0.2",
 		"vitest": "^4.1.10",
-		"wrangler": "^4.116.0",
+		"wrangler": "^4.118.0",
 		"yaml": "^2.9.0"
 	},
 	"optionalDependencies": {
-		"lint-staged": "^17.2.0",
+		"lint-staged": "^17.3.0",
 		"semantic-release": "^25.0.8"
 	},
 	"scripts": {
