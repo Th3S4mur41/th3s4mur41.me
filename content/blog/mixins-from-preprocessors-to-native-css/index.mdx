@@ -272,8 +272,10 @@ This does not mean native mixins replace utility frameworks. They solve differen
 
 ## Conclusion
 
-Native CSS mixins are still experimental. Full cross-browser support will take time, and today they are only available behind a flag in Chromium-based browsers. But the direction is clear.
+Native CSS mixins are still experimental. Full cross-browser support will take time, and today they only work behind a flag in Chromium-based browsers.
 
-The patterns we relied on preprocessors for — reusable style blocks, parameterized values, shared abstractions — are becoming part of the platform itself. When they land, we will be able to write modular, maintainable CSS without a build step, and without the output bloat that came with preprocessor mixins.
+I am also still early in exploring this feature, so the examples in this article are intentionally practical and small. They show the core idea, not the full surface.
 
-It is worth following the spec now, even if you cannot ship it yet. The shift from build-time to runtime is not just a technical detail. It changes how you think about where styles live, how they update, and which tools you actually need.
+Still, the direction is clear. Patterns we used preprocessors for, like reusable style blocks and parameterized values, are moving into the platform itself.
+
+If you want to go deeper than this article, check the draft spec: [CSS Custom Functions and Mixins Module Level 1](https://drafts.csswg.org/css-mixins-1/#defining-mixins). It also covers topics I did not discuss here, like local variables, the `@content` rule, and nested declarations.
