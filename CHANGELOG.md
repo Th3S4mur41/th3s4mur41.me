@@ -1,3 +1,10 @@
+# [2.70.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.69.0...v2.70.0) (2026-08-06)
+
+
+### Features
+
+* **opengraph:** enhance metadata handling for articles and profiles ([#2520](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2520)) ([172b19c](https://github.com/Th3S4mur41/th3s4mur41.me/commit/172b19cba160945a1b92fba40f8e9ba766b04b01))
+
 # [2.69.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.68.2...v2.69.0) (2026-07-08)
 
 
