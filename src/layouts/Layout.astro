@@ -8,21 +8,6 @@ import styles from "../index.css?url";
 
 interface Props {
 	title?: string;
-	ogTitle?: string;
-	ogType?: "website" | "article" | "profile";
-	ogArticle?: {
-		publishedTime?: Date | string;
-		modifiedTime?: Date | string;
-		author?: string | string[];
-		section?: string;
-		tags?: string[];
-	};
-	ogProfile?: {
-		firstName?: string;
-		lastName?: string;
-		username?: string;
-		gender?: string;
-	};
 	heading?: string;
 	showHeading?: boolean;
 	tagline?: string;
@@ -46,7 +31,7 @@ const showHeading = Astro.props.showHeading ?? true;
 const pageTitle = Astro.props.tagline
 	? `${siteName} | ${Astro.props.tagline}`
 	: title ? `${title} | ${siteName}` : `${siteName}`;
-const ogTitle = Astro.props.ogTitle?.trim() || title || siteName;
+const ogTitle = title || siteName;
 const header = Astro.props.heading ?? title ?? siteName;
 const currentYear = new Date().getFullYear();
 const slug = Astro.url.pathname.replace(/^\/|\/$/g, "").replace(/\//g, "-") || "home";
@@ -63,19 +48,6 @@ const canonicalUrl = (() => {
 		return new URL(Astro.url.pathname, canonicalBaseUrl).toString();
 	}
 })();
-const trimmedPathname = Astro.url.pathname.replace(/\/+$/, "") || "/";
-const inferredOgType = trimmedPathname === "/about" ? "profile" : "website";
-const ogType = Astro.props.ogType ?? inferredOgType;
-const ogProfileDefaults =
-	ogType === "profile"
-		? {
-				firstName: "Michaël",
-				lastName: "Vanderheyden",
-				username: "th3s4mur41",
-			}
-		: undefined;
-const ogProfile = ogProfileDefaults ? { ...ogProfileDefaults, ...Astro.props.ogProfile } : Astro.props.ogProfile;
-
 // Default meta description (~150 chars) optimized for primary topics without truncation in SERPs
 const desc =
 	description ||
@@ -155,11 +127,8 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 			description={desc}
 			siteName={siteName}
 			url={canonicalUrl}
-			type={ogType}
 			image={image}
 			imageAlt={imageAlt}
-			article={Astro.props.ogArticle}
-			profile={ogProfile}
 		/>
 
 		<meta name="generator" content={Astro.generator} />

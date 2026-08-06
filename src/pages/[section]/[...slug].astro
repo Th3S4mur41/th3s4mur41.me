@@ -271,16 +271,6 @@ const resolvedDescription = pageEntry?.data.description?.trim()
 const translations = pageEntry?.data.translations?.map((t: any) => ({ language: t.language, url: t.url })) ?? undefined;
 const articleEyebrowText = !isSeriesPage && section === "blog" && series ? series.title : article?.data.eyebrow;
 const articleEyebrowHref = !isSeriesPage && section === "blog" && series ? `/blog/${series.slug}/` : null;
-const ogArticleMetadata =
-	!isSeriesPage && article
-		? {
-				publishedTime: article.data.date,
-				modifiedTime: article.data.updated,
-				author: `${Astro.url.origin}/about/`,
-				section: section.charAt(0).toUpperCase() + section.slice(1),
-				tags: article.data.tags,
-			}
-		: undefined;
 const siteStandardPublicationUri = SITE_CONFIG.atproto?.publicationUri;
 const siteStandardDocumentId =
 	!isSeriesPage && article ? (section === "blog" ? article.id : `${section}/${article.id}`) : undefined;
@@ -323,9 +313,6 @@ void [
 
 <Layout
   title={truncatedTitle}
-	ogTitle={trimmedEntryTitle || pageTitle}
-	ogType={!isSeriesPage && article ? "article" : "website"}
-	ogArticle={ogArticleMetadata}
 	showHeading={false}
   image={img}
 	imageAlt={pageEntry?.data.imageAlt}

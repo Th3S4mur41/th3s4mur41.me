@@ -4,25 +4,41 @@ interface Props {
 	description: string;
 	siteName: string;
 	url?: string;
-	type?: "website" | "article" | "profile";
 	image?: any;
 	imageAlt?: string;
-	article?: {
-		publishedTime?: Date | string;
-		modifiedTime?: Date | string;
-		author?: string | string[];
-		section?: string;
-		tags?: string[];
-	};
-	profile?: {
-		firstName?: string;
-		lastName?: string;
-		username?: string;
-		gender?: string;
-	};
 }
 
-const { title, description, siteName, url, type = "website", image, imageAlt, article, profile } = Astro.props;
+const { title: titleProp, description, siteName, url, image, imageAlt } = Astro.props;
+
+// Middleware populates ogData for content entries (blog/speaking/notes).
+// For all other pages it is undefined and values fall back to props or URL inference.
+const ogLocals = Astro.locals.ogData;
+const trimmedPathname = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const type = ogLocals?.type ?? (trimmedPathname === "/about" ? "profile" : "website");
+
+// Prefer the full entry title from middleware; the prop may be SERP-truncated.
+const title = ogLocals?.title || titleProp;
+
+const article =
+	type === "article" && ogLocals
+		? {
+				publishedTime: ogLocals.publishedTime,
+				modifiedTime: ogLocals.modifiedTime,
+				author: ogLocals.author,
+				section: ogLocals.section,
+				tags: ogLocals.tags,
+			}
+		: undefined;
+
+const profile =
+	type === "profile"
+		? {
+				// Default to site owner identity; can be overridden via ogData locals if needed.
+				firstName: ogLocals?.firstName ?? "Michaël",
+				lastName: ogLocals?.lastName ?? "Vanderheyden",
+				username: ogLocals?.username ?? "th3s4mur41",
+			}
+		: undefined;
 
 const siteBaseUrl = new URL(Astro.url.origin);
 const toAbsoluteUrl = (value: string) => new URL(value, siteBaseUrl).href;
@@ -81,7 +97,6 @@ const articleSection = article?.section?.trim();
 const profileFirstName = profile?.firstName?.trim();
 const profileLastName = profile?.lastName?.trim();
 const profileUsername = profile?.username?.trim();
-const profileGender = profile?.gender?.trim();
 ---
 
 <meta property="og:title" content={title} />
@@ -118,7 +133,4 @@ const profileGender = profile?.gender?.trim();
 )}
 {type === "profile" && profileUsername && (
 	<meta property="profile:username" content={profileUsername} />
-)}
-{type === "profile" && profileGender && (
-	<meta property="profile:gender" content={profileGender} />
 )}
