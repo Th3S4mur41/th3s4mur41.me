@@ -12,6 +12,16 @@ type CollectionsCache = {
 let collectionsCache: CollectionsCache | null = null;
 
 async function getCollections(): Promise<CollectionsCache> {
+	// In dev, avoid long-lived caching so HMR/content edits are reflected without restarting.
+	if (import.meta.env.DEV) {
+		const [blog, speaking, notes] = await Promise.all([
+			getCollection("blog"),
+			getCollection("speaking"),
+			getCollection("notes"),
+		]);
+		return { blog, speaking, notes };
+	}
+
 	if (collectionsCache) return collectionsCache;
 	const [blog, speaking, notes] = await Promise.all([
 		getCollection("blog"),
