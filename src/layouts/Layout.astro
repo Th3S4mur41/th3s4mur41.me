@@ -8,7 +8,6 @@ import styles from "../index.css?url";
 
 interface Props {
 	title?: string;
-	ogTitle?: string;
 	heading?: string;
 	showHeading?: boolean;
 	tagline?: string;
@@ -32,7 +31,7 @@ const showHeading = Astro.props.showHeading ?? true;
 const pageTitle = Astro.props.tagline
 	? `${siteName} | ${Astro.props.tagline}`
 	: title ? `${title} | ${siteName}` : `${siteName}`;
-const ogTitle = Astro.props.ogTitle?.trim() || title || siteName;
+const ogTitle = title || siteName;
 const header = Astro.props.heading ?? title ?? siteName;
 const currentYear = new Date().getFullYear();
 const slug = Astro.url.pathname.replace(/^\/|\/$/g, "").replace(/\//g, "-") || "home";
@@ -49,7 +48,6 @@ const canonicalUrl = (() => {
 		return new URL(Astro.url.pathname, canonicalBaseUrl).toString();
 	}
 })();
-
 // Default meta description (~150 chars) optimized for primary topics without truncation in SERPs
 const desc =
 	description ||
@@ -124,7 +122,14 @@ const keyWords = Array.from(new Set([...(Astro.props.keywords ?? []), ...default
 		<link rel="apple-touch-icon" href="/icons/favicon-180.png" />
 
 		<!-- Open Graph data -->
-		<OpenGraph title={ogTitle} description={desc} siteName={siteName} image={image} imageAlt={imageAlt} />
+		<OpenGraph
+			title={ogTitle}
+			description={desc}
+			siteName={siteName}
+			url={canonicalUrl}
+			image={image}
+			imageAlt={imageAlt}
+		/>
 
 		<meta name="generator" content={Astro.generator} />
 		<link rel="sitemap" href="/sitemap-index.xml" />
