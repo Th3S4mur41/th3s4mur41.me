@@ -1,7 +1,7 @@
 {
 	"name": "th3s4mur41.me",
 	"type": "module",
-	"version": "2.69.0",
+	"version": "2.71.0",
 	"license": "LICENSE",
 	"private": true,
 	"description": "th3s4mur41.me website",
@@ -33,7 +33,7 @@
 	},
 	"devDependencies": {
 		"@astrojs/mdx": "^7.0.5",
-		"@atproto/api": "^0.20.36",
+		"@atproto/api": "^0.20.37",
 		"@biomejs/biome": "2.5.6",
 		"@commitlint/cli": "^21.2.1",
 		"@commitlint/config-conventional": "^21.0.2",
