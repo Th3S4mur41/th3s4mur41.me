@@ -1,0 +1,8 @@
+:root {
+	--color-bg: oklch(0.25 0 0);
+	--color-subtle-bg: oklch(0 0 0);
+	--color-highlight: oklch(0.4 0 0);
+	--color-text: oklch(1 0 0);
+	--color-subtle-text: oklch(0.8 0 0);
+	--color-accent: var(--color-base);
+}

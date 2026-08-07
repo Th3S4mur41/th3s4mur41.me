@@ -1,0 +1,76 @@
+.reactions {
+	flex: 1 1 100%;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+
+	> div {
+		display: flex;
+		flex-wrap: wrap;
+		row-gap: 0.5rem;
+		align-items: start;
+	}
+
+	> header,
+	> p {
+		flex-basis: 100%;
+	}
+	> header {
+		font-size: 1.5em;
+	}
+	> p {
+		margin: unset;
+	}
+	#likes {
+		color: oklch(0.7 0.25 30);
+	}
+	#boosts {
+		color: oklch(0.7 0.4 357);
+	}
+
+	.count {
+		display: inline-block;
+		font-weight: 700;
+		padding-inline: 0.5em;
+		padding-block: 0.25em;
+		border-radius: 100vmax;
+		vertical-align: middle;
+		line-height: 1;
+		font-variant-numeric: tabular-nums;
+	}
+	.avatars {
+		flex-basis: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25em;
+
+		> :is(a, img) {
+			/* And just for performance */
+			content-visibility: auto;
+			contain-intrinsic-size: 3rem;
+		}
+
+		a,
+		img {
+			inline-size: 3rem;
+			block-size: 3rem;
+			overflow: hidden;
+			border-radius: 50%;
+		}
+
+		a {
+			outline-offset: 0;
+		}
+
+		img {
+			object-fit: cover;
+			box-shadow: 0 2px 6px 1px oklch(from var(--color-subtle-bg) l c h / 0.5);
+			border: 1px solid oklch(from var(--color-subtle-bg) l c h / 0.5);
+			animation: fadeIn 0.3s ease-out;
+
+			@media (prefers-reduced-motion: no-preference) {
+				animation: scaleIn 0.3s ease-out;
+			}
+		}
+	}
+}
