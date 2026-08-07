@@ -2,9 +2,9 @@
  * Global/
  *****************************************************************************/
 
-* {
-	/* scrollbar-width: thin; */
-}
+/* * {
+	scrollbar-width: thin;
+} */
 
 html {
 	text-size-adjust: none; /* Prevent font size inflation */
