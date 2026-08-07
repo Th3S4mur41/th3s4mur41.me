@@ -1,3 +1,10 @@
+# [2.71.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.70.0...v2.71.0) (2026-08-07)
+
+
+### Features
+
+* **blog:** add post about CSS mixins ([#2519](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2519)) ([d16c1a2](https://github.com/Th3S4mur41/th3s4mur41.me/commit/d16c1a24cd683ac74b352a750d87af54dadd321c))
+
 # [2.70.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.69.0...v2.70.0) (2026-08-06)
 
 
