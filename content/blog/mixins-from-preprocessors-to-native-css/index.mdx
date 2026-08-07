@@ -31,7 +31,7 @@ import CodePen from '/src/components/CodePen.astro';
 
 ![Comic style representation of Michaël Vanderheyden throwing ninja star representing mixins to shatter code blocks filled with repetitive CSS properties](mixins-shattering-repetitive-css.jpg)
 
-Back in 2020, I wrote a post about [the good, the bad and the ugly of SCSS mixins](/blog/mixins-the-good-the-bad-the-ugly/). At the time, preprocessors like Sass (SCSS) and Less were the default choice for modular CSS. They helped us keep styles cleaner and more <abbr title="Don't Repeat Yourself">DRY</abbr>, long before native CSS had features like nesting and custom properties.
+Back in 2020, I wrote a post about [the good, the bad and the ugly of SCSS mixins](/blog/mixins-the-good-the-bad-the-ugly/). At the time, preprocessors like Sass (SCSS) and Less were the default choice for modular CSS. They helped keep styles cleaner and more <abbr title="Don't Repeat Yourself">DRY</abbr>, long before native CSS had features like nesting and custom properties.
 
 Today, things are changing fast. Native CSS functions are already available in Chromium-based browsers, and Microsoft has now started [native CSS mixins prototyping in Chromium](https://chromestatus.com/feature/5108022310469632?gate=5139569205968896). Full cross-browser support is still some time away, but this is a big step: patterns that used to depend on build tools are moving into the browser itself.
 
@@ -44,10 +44,10 @@ Today, things are changing fast. Native CSS functions are already available in C
 
 <baseline-status featureId="mixin"></baseline-status>
 
-This is why the topic is worth revisiting. Native mixins are not just a different syntax for old preprocessor mixins. They change how we think about reuse, performance, and bundle size, and they help solve one of the biggest trade-offs preprocessors left us with.
+This is why the topic is worth revisiting. Native mixins are not just a different syntax for old preprocessor mixins. They change how you can think about reuse, performance, and bundle size, and they help solve one of the biggest trade-offs preprocessors left behind.
 
 ## Let's talk semantics
-If we want to understand native mixins, we need to compare them with the tools we already know: Less and Sass. All three solve the same problem, which is reusing style blocks. The big difference is where and when the work happens.
+If you want to understand native mixins, it helps to compare them with the tools you probably already know: Less and Sass. All three solve the same problem, which is reusing style blocks. The big difference is where and when the work happens.
 
 Here is the same `line-clamp` pattern from the original post in each approach.
 
@@ -123,7 +123,7 @@ The important shift is semantic, not just syntactic. Native mixins run in the br
 - Naming follows CSS custom property conventions (`--line-clamp`, `--lines`), which keeps the model consistent.
 - Values can be resolved at runtime, so styles can react to local variables and state changes without recompiling.
 
-That is the real jump from preprocessors to platform: we keep reusable abstractions, but move from static output to runtime-aware styling.
+That is the real jump from preprocessors to platform: you still get reusable abstractions, but move from static output to runtime-aware styling.
 
 ## The Good, The Bad, and The Shift
 
@@ -190,7 +190,7 @@ There is another practical improvement worth mentioning: **debugging**.
 
 With compiled SCSS, the mixin abstraction disappears in DevTools. You see the raw properties applied to the selector, with no indication they came from a shared mixin. Source maps help, but they are fragile and not always set up correctly.
 
-With native mixins, this is the behavior we should eventually get as tooling matures: the browser understands the abstraction directly, and DevTools should be able to show where an `@apply` comes from and map it to its mixin definition.
+With native mixins, this is the behavior I expect tooling to eventually deliver: the browser understands the abstraction directly, and DevTools should be able to show where an `@apply` comes from and map it to its mixin definition.
 
 > [!IMPORTANT]
 >
@@ -198,7 +198,7 @@ With native mixins, this is the behavior we should eventually get as tooling mat
 
 ## Semantic markup vs. utility class soup
 
-One argument that utility-first frameworks like Tailwind often make is about CSS payload size. Instead of writing component classes that grow with every new rule, you write small atomic classes (`flex`, `items-center`, `p-4`) and combine them in the HTML. The CSS stays small because you reuse the same atomic classes everywhere.
+One argument that utility-first frameworks like Tailwind often make is about CSS payload size. Instead of writing component classes that grow with every new rule, you write small atomic classes (`flex`, `items-center`, `p-4`) and combine them in the HTML. The CSS stays small because those same atomic classes get reused everywhere.
 
 The trade-off is that complexity moves into the markup. Your HTML ends up with long lists of classes that describe how something looks rather than what it is. The abstraction between structure and presentation breaks down.
 
@@ -274,8 +274,8 @@ This does not mean native mixins replace utility frameworks. They solve differen
 
 Native CSS mixins are still experimental. Full cross-browser support will take time, and today they only work behind a flag in Chromium-based browsers.
 
-I am also still early in exploring this feature, so the examples in this article are intentionally practical and small. They show the core idea, not the full surface.
+I am still early in exploring this feature, so the examples in this article are intentionally practical and small. They show the core idea, not the full surface.
 
-Still, the direction is clear. Patterns we used preprocessors for, like reusable style blocks and parameterized values, are moving into the platform itself.
+Still, the direction is clear. Patterns preprocessors gave us, like reusable style blocks and parameterized values, are moving into the platform itself.
 
 If you want to go deeper than this article, check the draft spec: [CSS Custom Functions and Mixins Module Level 1](https://drafts.csswg.org/css-mixins-1/#defining-mixins). It also covers topics I did not discuss here, like local variables, the `@content` rule, and nested declarations.
