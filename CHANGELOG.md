@@ -1,3 +1,10 @@
+## [2.71.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.71.0...v2.71.1) (2026-08-10)
+
+
+### Bug Fixes
+
+* properly handle svg images in content ([#2529](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2529)) ([5a0acc6](https://github.com/Th3S4mur41/th3s4mur41.me/commit/5a0acc64160b88094076566de946956790803502))
+
 # [2.71.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.70.0...v2.71.0) (2026-08-07)
 
 
