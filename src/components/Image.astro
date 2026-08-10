@@ -6,7 +6,7 @@ import { getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
 
 interface Props {
-	src: ImageMetadata | string | URL | { src?: string; default?: string };
+	src: ImageMetadata | string | URL | { src?: ImageMetadata | string | URL; default?: ImageMetadata | string | URL };
 	alt: string;
 	width?: number | string;
 	height?: number | string;
@@ -52,8 +52,9 @@ function isImageMetadata(value: Props["src"]): value is ImageMetadata {
 function sourceToString(value: unknown): string {
 	if (typeof value === "string") return value;
 	if (value instanceof URL) return value.toString();
-	if (typeof value === "object" && value !== null && "href" in value && typeof value.href === "string") {
-		return value.href;
+	if (typeof value === "object" && value !== null) {
+		if ("src" in value && typeof (value as any).src === "string") return (value as any).src;
+		if ("href" in value && typeof (value as any).href === "string") return (value as any).href;
 	}
 	return "";
 }
