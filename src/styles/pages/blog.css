@@ -121,6 +121,7 @@ body:is([class^="blog-"]:where(:not([class^="blog-tags-"])), [class^="speaking-"
 		}
 		& p:has(:is(img, picture):only-child) {
 			text-align: center;
+			justify-items: center;
 		}
 		& > footer {
 			display: flex;
