@@ -41,7 +41,7 @@
 		"@semantic-release/git": "^11.0.1",
 		"ajv": "^8.20.0",
 		"astro-compress": "^2.4.3",
-		"browserslist": "^4.28.7",
+		"browserslist": "^4.28.8",
 		"browserslist-to-esbuild": "^2.1.1",
 		"concurrently": "^10.0.4",
 		"husky": "^9.1.7",
