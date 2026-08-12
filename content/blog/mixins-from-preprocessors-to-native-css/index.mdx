@@ -2,6 +2,7 @@
 title: 'Mixins: From Preprocessors to Native CSS'
 eyebrow: CSS Evolution
 date: 2026-08-07T00:00:00Z
+updated: 2026-08-12T12:30:00Z
 image: mixins-shattering-repetitive-css.jpg
 imageAlt: >-
   Comic style representation of Michaël Vanderheyden throwing ninja star representing mixins to shatter code blocks filled with repetitive CSS properties
@@ -103,6 +104,10 @@ This is easier to read and maintain than Less in many teams. But it is still com
 
 The native spec keeps a familiar shape, but uses dashed names similar to [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/--*), with `@mixin` to define and `@apply` to use.
 The part of the mixin being applied is wrapped in an `@result` block, which is a new syntax that allows the mixin to return a block of CSS.
+
+> [!IMPORTANT]
+>
+> **Update:** The CSSWG has since agreed to drop `@result`; the whole `@mixin` body is now treated as the result. See the [syntax update at the end of this post](#update---2026-08-12).
 
 ```css
 @mixin --line-clamp(--lines) {
@@ -283,3 +288,27 @@ I am still early in exploring this feature, so the examples in this article are 
 Still, the direction is clear. Patterns preprocessors gave us, like reusable style blocks and parameterized values, are moving into the platform itself.
 
 If you want to go deeper than this article, check the draft spec: [CSS Custom Functions and Mixins Module Level 1](https://drafts.csswg.org/css-mixins-1/#defining-mixins). It also covers topics I did not discuss here, like local variables, the `@content` rule, and nested declarations.
+
+## Update - 2026-08-12
+
+Thanks to [Bramus](https://www.bram.us/) for pointing me to the CSSWG's [discussion about converging the mixin authoring model](https://github.com/w3c/csswg-drafts/issues/14243#issuecomment-5180782117).
+
+The syntax has changed since this post was published: `@result` is no longer part of the proposed model. The whole body of the mixin is now treated as its result, so the `line-clamp` example becomes:
+
+```css
+@mixin --line-clamp(--lines) {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: var(--lines);
+  -webkit-box-orient: vertical;
+}
+
+.class-that-cuts-after-2-lines {
+	@apply --line-clamp(2);
+}
+.class-that-cuts-after-3-lines {
+	@apply --line-clamp(3);
+}
+```
+
+The [CodePen](https://codepen.io/editor/th3s4mur41/pen/019fcd25-ebe8-733e-ab7e-76c359afb2a6) still uses the earlier `@result` syntax. I will update it to the new syntax as soon as the change is implemented in the browser.
