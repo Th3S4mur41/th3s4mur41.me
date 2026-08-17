@@ -1,5 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
+import logo from "/src/assets/logo_square.png";
+import Image from "/src/components/Image.astro";
 import Layout from "../../layouts/Layout.astro";
 
 export async function getStaticPaths() {
@@ -19,6 +21,7 @@ const email = import.meta.env.EMAIL as string | undefined;
 
 <Layout title={title} description={description} noHeader={true} noIndex={true}>
 	<p class="cv-role">{role}</p>
+	<Image src={logo} alt="" class="logo" />
 	<ul class="cv-contact">
 		{location && (
 			<li>
