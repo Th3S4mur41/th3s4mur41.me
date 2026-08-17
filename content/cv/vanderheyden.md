@@ -8,7 +8,7 @@ updated: 2026-08-17
 
 ## Summary
 
-Lead UX Engineer with 22+ years of experience designing and building accessible, responsive web applications. I specialize in WCAG 2.2 compliance, design systems, and progressive web apps, and I combine hands-on front-end engineering with team leadership, coaching, and inner-source practices.
+Lead UX Engineer & Accessibility Specialist with 22+ years of experience designing and building accessible, responsive web applications. I specialize in WCAG 2.2 compliance, design systems, and progressive web apps, and I combine hands-on front-end engineering with team leadership, coaching, and inner-source practices.
 
 ## Skills
 
@@ -24,8 +24,8 @@ Lead UX Engineer with 22+ years of experience designing and building accessible,
 
 Long-standing role within the Atos group spanning hands-on engineering, accessibility leadership, and team management.
 
-- Architected and rebuilt cycos.com and my.cycos.com on Astro with a Markdown-driven content workflow, WCAG 2.2 compliance, and zero-JS delivery; set up CI/CD with Playwright, Lighthouse, and Chromatic.
 - Core maintainer of Parallel, Atos' cross-product accessibility design system (Figma library, framework-agnostic web components, Storybook documentation, published via npm).
+- Architected and rebuilt cycos.com and my.cycos.com on Astro with a Markdown-driven content workflow, WCAG 2.2 compliance, and zero-JS delivery; set up CI/CD with Playwright, Lighthouse, and Chromatic.
 - Member of the GitHub Enterprise Accessibility Advisory Panel, contributing enterprise accessibility perspectives on developer tooling and AI-assisted remediation.
 - As R&D Manager (2016 – 2025), led an 8-person front-end team: recruiting, mentoring trainees, and coaching colleagues to IAAP certification and Accessibility Champion status.
 - Delivered accessibility consulting and WCAG audits across multiple Atos business lines, including public-sector, security, and identity-management platforms.
@@ -33,11 +33,9 @@ Long-standing role within the Atos group spanning hands-on engineering, accessib
 ### Client engagements delivered via cycos AG (Atos Group)
 *2020 – 2026 · Aachen, DE / remote*
 
-- **Security & video-analytics vendor** — Lead UX Engineer for a mobile-optimized, offline-capable progressive web app (Angular) with live WebSocket updates, video streaming, and push notifications.
-- **Cryptographic credential-management vendor** — Redesigned a credential management system UI on the Parallel design system, aligning it with WCAG 2.2.
-- **Building communication systems manufacturer** — UX consulting on a new configuration and installation platform, focused on usability for both end users and technicians.
+- **Ipsotek** — Lead UX Engineer for a mobile-optimized, offline-capable progressive web app (Angular) with live WebSocket updates, video streaming, and push notifications.
+- **IDnomic** — Redesigned a credential management system UI on the Parallel design system, aligning it with WCAG 2.2.
 - **German federal public-sector agency** — Rebuilt an accessible web client for internal case-management software, modernizing build tooling from SVN/Jenkins to GitHub Actions.
-- **German defense-sector IT services provider** — Built a progressive web app front end for AI micro-services tooling.
 - Migrated ~80 repositories and their CI/CD workflows from GitLab to GitHub Actions for a large enterprise SAP deployment programme.
 
 ### cycos AG / Unify (Atos Group) — Lead Software Developer
