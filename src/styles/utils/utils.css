@@ -7,3 +7,10 @@
 	position: absolute; /* take out of document flow */
 	clip-path: circle(0); /* reduce clickable area to nothing */
 }
+
+/* Hide from print output only, e.g. interactive controls that make no sense on paper */
+@media print {
+	.no-print {
+		display: none;
+	}
+}
