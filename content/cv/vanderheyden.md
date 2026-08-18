@@ -8,14 +8,18 @@ updated: 2026-08-17
 
 ## Summary
 
-Lead UX Engineer & Accessibility Specialist with 22+ years of experience designing and building accessible, responsive web applications. I specialize in WCAG 2.2 compliance, design systems, and progressive web apps, and I combine hands-on front-end engineering with team leadership, coaching, and inner-source practices.
+Lead UX Engineer & Accessibility Specialist with 22+ years of experience designing and building accessible, responsive web applications. I specialize in WCAG 2.2 compliance, design systems, and progressive web apps, and I combine hands-on frontend engineering with team leadership, coaching, and inner-source practices.
 
 ## Skills
 
-- **Accessibility:** WCAG 2.2, IAAP CPACC & CPWA, accessibility audits, assistive technology testing (NVDA, JAWS), accessibility coaching & training
-- **Front-end:** HTML, CSS, JavaScript/TypeScript, Astro, Vue.js, Angular, Web Components, design systems (Figma, Storybook), responsive & progressive web apps
-- **Engineering practice:** CI/CD, GitHub Actions, Git/GitHub/GitLab, npm, test automation (Playwright, Selenium), code review, GitHub Copilot
-- **Leadership:** Team management, mentoring & coaching, workshops & public speaking (modern web & accessibility), technical consulting, product ownership, Scrum/Kanban
+- **Accessibility & Standards:**  WCAG 2.2, WAI-ARIA, IAAP CPWA, Accessibility Audits, 
+                            Screen Readers (NVDA, JAWS, TalkBack), Accessibility Coaching & Training
+- **Design Systems & Frontend:**  Web Components, Storybook, Figma Libraries, Astro, TypeScript / JS, 
+                            Vue.js, Angular, Progressive Web Apps (PWA), HTML5 / CSS3
+- **Engineering & Testing:**     CI/CD (GitHub Actions), Visual Regression (Chromatic), Test Automation (Vitest, Playwright), 
+                            Git/GitHub/GitLab, npm Publishing, GitHub Copilot
+- **Leadership & Governance:**   Team Management & Mentoring, R&D Leadership, Technical Consulting, 
+                            Inner-Source Practices, Product Ownership (Scrum/Kanban)
 
 ## Experience
 
@@ -27,7 +31,7 @@ Long-standing role within the Atos group spanning hands-on engineering, accessib
 - Core maintainer of Parallel, Atos' cross-product accessibility design system (Figma library, framework-agnostic web components, Storybook documentation, published via npm).
 - Architected and rebuilt cycos.com and my.cycos.com on Astro with a Markdown-driven content workflow, WCAG 2.2 compliance, and zero-JS delivery; set up CI/CD with Playwright, Lighthouse, and Chromatic.
 - Member of the GitHub Enterprise Accessibility Advisory Panel, contributing enterprise accessibility perspectives on developer tooling and AI-assisted remediation.
-- As R&D Manager (2016 – 2025), led an 8-person front-end team: recruiting, mentoring trainees, and coaching colleagues to IAAP certification and Accessibility Champion status.
+- As R&D Manager (2016 – 2025), led an 8-person frontend team: recruiting, mentoring trainees, and coaching colleagues to IAAP certification and Accessibility Champion status.
 - Delivered accessibility consulting and WCAG audits across multiple Atos business lines, including public-sector, security, and identity-management platforms.
 
 ### Client engagements delivered via cycos AG (Atos Group)
@@ -41,7 +45,7 @@ Long-standing role within the Atos group spanning hands-on engineering, accessib
 ### cycos AG / Unify (Atos Group) — Lead Software Developer
 *2011 – 2020 · Alsdorf, DE*
 
-- Led front-end architecture and accessibility for OpenScape UC web, mobile (Android/iOS), and Microsoft Teams clients.
+- Led frontend architecture and accessibility for OpenScape UC web, mobile (Android/iOS), and Microsoft Teams clients.
 - Technical Product Owner for Circuit, an early production WebRTC cloud collaboration platform, coordinating across up to 11 Scrum teams.
 
 ### System-Management Stiewi GmbH — Software Engineer
@@ -54,6 +58,12 @@ Long-standing role within the Atos group spanning hands-on engineering, accessib
 - [scroll-focus-polyfill](https://github.com/Th3S4mur41/scroll-focus-polyfill) — polyfill restoring keyboard focusability of scrollable elements (e.g. `<pre>` blocks) in browsers that don't support it natively
 - [Mushin](https://github.com/Th3S4mur41/Mushin) — GitHub App on Cloudflare Workers that auto-merges Dependabot pull requests under configurable conditions
 - [cleanup-cloudflare-deployments](https://github.com/Th3S4mur41/cleanup-cloudflare-deployments) — GitHub Action to remove stale Cloudflare Pages deployments
+
+## Community & Personal Leadership
+
+- **Shotokan Karate** — 4th Degree Black Belt | Trainer at Karate Dojo Calaminia (2006 – Present)
+
+- **Ligue Francophone de Karate Belge (LFKB)** — Former Vice President & Board Member (4 yrs) | International Referee (11 yrs) | Black Belt Grading Commission Member (3 yrs)
 
 ## Certifications
 
