@@ -40,9 +40,7 @@ body[class*="cv-"] {
 		}
 
 		.icon {
-			inline-size: 1.1em;
-			block-size: 1.1em;
-			flex-shrink: 0;
+			inline-size: 1.2em;
 		}
 	}
 
@@ -79,14 +77,14 @@ body[class*="cv-"] {
 	}
 
 	h2 {
-		margin-block-start: 2rem;
+		/* margin-block-start: 2rem; */
 		padding-block-end: 0.25em;
 		border-block-end: 2px solid var(--color-subtle-bg);
 		font-size: 1.05rem;
 	}
 
 	h3 {
-		margin-block-start: 1.5rem;
+		/* margin-block-start: 1.5rem; */
 		margin-block-end: 0.25em;
 		font-size: 0.95rem;
 	}
@@ -134,15 +132,16 @@ body[class*="cv-"] {
 		}
 
 		h2 {
-			margin-block-start: 0.75rem;
+			/* margin-block-start: 0.75rem; */
 			border-block-end-color: var(--color-accent);
 			break-after: avoid;
 			break-inside: avoid;
 		}
 
 		h3 {
-			margin-block-start: 0.5rem;
+			/* margin-block-start: 0.5rem; */
 			break-after: avoid;
+			break-inside: avoid;
 		}
 
 		a {
@@ -172,7 +171,8 @@ body[class*="cv-"] {
 
 		.cv-contact {
 			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(min-content, 30%));
+			grid-template-columns: repeat(auto-fit, minmax(max-content, 30%));
+			margin-inline-end: 5rem; /* Space for the logo */
 		}
 
 		.cv-contact > li {

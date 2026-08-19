@@ -24,7 +24,7 @@ Lead UX Engineer & Accessibility Specialist with 22+ years of experience designi
 ## Experience
 
 ### cycos AG (Atos Group) — Lead UX Engineer & Accessibility Specialist
-*2011 – Present · Aachen, DE / remote*
+*2011 – Present · Aachen, DE / Remote*
 
 Long-standing role within the Atos group spanning hands-on engineering, accessibility leadership, and team management.
 
@@ -33,20 +33,25 @@ Long-standing role within the Atos group spanning hands-on engineering, accessib
 - Member of the GitHub Enterprise Accessibility Advisory Panel, contributing enterprise accessibility perspectives on developer tooling and AI-assisted remediation.
 - As R&D Manager (2016 – 2025), led an 8-person frontend team: recruiting, mentoring trainees, and coaching colleagues to IAAP certification and Accessibility Champion status.
 - Delivered accessibility consulting and WCAG audits across multiple Atos business lines, including public-sector, security, and identity-management platforms.
+- Migrated ~80 repositories and their CI/CD workflows from GitLab to GitHub Actions for a large enterprise SAP deployment programme.
 
 ### Client engagements delivered via cycos AG (Atos Group)
-*2020 – 2026 · Aachen, DE / remote*
+*2020 – 2026 · Aachen, DE / Remote*
 
 - **Ipsotek** — Lead UX Engineer for a mobile-optimized, offline-capable progressive web app (Angular) with live WebSocket updates, video streaming, and push notifications.
 - **IDnomic** — Redesigned a credential management system UI on the Parallel design system, aligning it with WCAG 2.2.
 - **German federal public-sector agency** — Rebuilt an accessible web client for internal case-management software, modernizing build tooling from SVN/Jenkins to GitHub Actions.
-- Migrated ~80 repositories and their CI/CD workflows from GitLab to GitHub Actions for a large enterprise SAP deployment programme.
 
 ### cycos AG / Unify (Atos Group) — Lead Software Developer
 *2011 – 2020 · Alsdorf, DE*
 
 - Led frontend architecture and accessibility for OpenScape UC web, mobile (Android/iOS), and Microsoft Teams clients.
 - Technical Product Owner for Circuit, an early production WebRTC cloud collaboration platform, coordinating across up to 11 Scrum teams.
+
+### cycos AG — Senior Software Developer
+*2007 – 2011 · Alsdorf, DE*
+
+- Engineered frontend components and core application features for OpenScape UC across web and mobile platforms (Android/iOS).
 
 ### System-Management Stiewi GmbH — Software Engineer
 *2004 – 2007 · Aachen, DE*
@@ -55,15 +60,17 @@ Long-standing role within the Atos group spanning hands-on engineering, accessib
 
 ## Open Source
 
-- [scroll-focus-polyfill](https://github.com/Th3S4mur41/scroll-focus-polyfill) — polyfill restoring keyboard focusability of scrollable elements (e.g. `<pre>` blocks) in browsers that don't support it natively
-- [Mushin](https://github.com/Th3S4mur41/Mushin) — GitHub App on Cloudflare Workers that auto-merges Dependabot pull requests under configurable conditions
-- [cleanup-cloudflare-deployments](https://github.com/Th3S4mur41/cleanup-cloudflare-deployments) — GitHub Action to remove stale Cloudflare Pages deployments
+- **[scroll-focus-polyfill](https://github.com/Th3S4mur41/scroll-focus-polyfill)** — polyfill restoring keyboard focusability of scrollable elements (e.g. `<pre>` blocks) in browsers that don't support it natively
+- **[Mushin](https://github.com/Th3S4mur41/Mushin)** — GitHub App on Cloudflare Workers that auto-merges Dependabot pull requests under configurable conditions
+- **[cleanup-cloudflare-deployments](https://github.com/Th3S4mur41/cleanup-cloudflare-deployments)** — GitHub Action to remove stale Cloudflare Pages deployments
 
 ## Community & Personal Leadership
 
-- **Shotokan Karate** — 4th Degree Black Belt | Trainer at Karate Dojo Calaminia (2006 – Present)
+- **Brazilian Jiu-Jitsu — Active Practitioner (2011 – Present):** Training regularly in modern grappling ("human chess"), applying real-time strategy, adaptability, and problem-solving under pressure.
 
-- **Ligue Francophone de Karate Belge (LFKB)** — Former Vice President & Board Member (4 yrs) | International Referee (11 yrs) | Black Belt Grading Commission Member (3 yrs)
+- **Shotokan Karate — 4th Degree Black Belt:** Trainer at Karate Dojo Calaminia (2006 – 2024)
+
+- **Ligue Francophone de Karate Belge (LFKB):** Former Vice President & Board Member (4 yrs) | International Referee (11 yrs) | Black Belt Grading Commission Member (3 yrs)
 
 ## Certifications
 
@@ -74,7 +81,7 @@ Long-standing role within the Atos group spanning hands-on engineering, accessib
 
 ## Education
 
-Bachelor of Computer Science — Haute École de la Province de Liège "Rennequin Sualem" (2001 – 2004)
+- **Bachelor of Computer Science** — Haute École de la Province de Liège "Rennequin Sualem" (2001 – 2004)
 
 ## Languages
 
