@@ -158,7 +158,7 @@ const notes = defineCollection({
 
 // Not exposed via the generic [section] route or nav: rendered by its own dedicated page.
 const cv = defineCollection({
-	loader: glob({ pattern: "**/*.md", base: `${CONTENT_BASE}/cv` }),
+	loader: glob({ pattern: "*.md", base: `${CONTENT_BASE}/cv` }),
 	schema: cvSchema,
 });
 

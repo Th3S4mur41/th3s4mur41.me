@@ -1,5 +1,5 @@
 /* Screen presentation for the CV page: branded but restrained, distinct from the blog/article layout. */
-body[class*="cv-"] {
+body[class^="cv-"] {
 	h1 {
 		grid-row: 1;
 		margin-block-start: 0;

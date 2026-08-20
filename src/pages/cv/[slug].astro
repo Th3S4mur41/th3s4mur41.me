@@ -12,7 +12,7 @@ export async function getStaticPaths() {
 	}));
 }
 
-const { entry } = Astro.props as { entry: any };
+const { entry } = Astro.props as { entry: import("astro:content").CollectionEntry<"cv"> };
 const { Content } = await render(entry);
 const { title, role, location, description, updated } = entry.data;
 // Kept out of the committed content file; set via the EMAIL build-time env var.
