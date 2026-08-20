@@ -33,7 +33,7 @@
 	},
 	"devDependencies": {
 		"@astrojs/mdx": "^7.0.5",
-		"@atproto/api": "^0.20.40",
+		"@atproto/api": "^0.20.41",
 		"@biomejs/biome": "2.5.8",
 		"@commitlint/cli": "^21.2.2",
 		"@commitlint/config-conventional": "^21.0.2",
@@ -43,7 +43,7 @@
 		"astro-compress": "^2.4.3",
 		"browserslist": "^4.28.8",
 		"browserslist-to-esbuild": "^2.1.1",
-		"concurrently": "^10.0.4",
+		"concurrently": "^10.0.5",
 		"husky": "^9.1.7",
 		"prettier": "^3.9.6",
 		"typescript": "^7.0.2",
