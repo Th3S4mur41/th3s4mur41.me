@@ -54,6 +54,7 @@ jobs:
       - name: '🛠️ Build'
         env:
           PREVIEW_FUTURE_CONTENT: ${{ github.event_name == 'pull_request' && 'true' || '' }}
+          EMAIL: ${{ secrets.EMAIL }}
         run: npm run build --if-present
 
       - name: '🧫 Run tests'

@@ -79,6 +79,15 @@ const speakingSchema = ({ image }) =>
 		reactions: z.boolean().optional().default(true),
 	});
 
+const cvSchema = z.object({
+	title: z.string(),
+	role: z.string(),
+	location: z.string().optional(),
+	// Contact email is intentionally not stored here; it's injected at build time via the EMAIL env var.
+	description: z.string().optional(),
+	updated: z.date().optional(),
+});
+
 const notesSchema = z.object({
 	title: z.string(),
 	type: z.enum(["note"]).optional().default("note"),
@@ -147,5 +156,11 @@ const notes = defineCollection({
 	schema: notesSchema,
 });
 
+// Not exposed via the generic [section] route or nav: rendered by its own dedicated page.
+const cv = defineCollection({
+	loader: glob({ pattern: "*.md", base: `${CONTENT_BASE}/cv` }),
+	schema: cvSchema,
+});
+
 // 7. Export a single `collections` object to register your collection(s)
-export const collections = { blog, speaking, notes };
+export const collections = { blog, speaking, notes, cv };

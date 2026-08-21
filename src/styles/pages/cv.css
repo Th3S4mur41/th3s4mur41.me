@@ -1,0 +1,193 @@
+/* Screen presentation for the CV page: branded but restrained, distinct from the blog/article layout. */
+body[class^="cv-"] {
+	h1 {
+		grid-row: 1;
+		margin-block-start: 0;
+		margin-block-end: 0.25rem;
+	}
+
+	.cv-role {
+		grid-row: 2;
+		margin-block: 0;
+		font-size: 1.125rem;
+		font-weight: 600;
+		color: var(--color-accent);
+	}
+
+	.logo {
+		grid-row: 1 / span 2;
+		grid-column: content;
+		justify-self: end;
+		inline-size: 5.5rem;
+	}
+
+	.cv-contact {
+		display: flex;
+		flex-wrap: wrap;
+		column-gap: 1.5rem;
+		row-gap: 0.5rem;
+		margin-block: 0.75rem 0;
+		padding: 0;
+
+		::marker {
+			content: "";
+		}
+		& > li {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.4em;
+			padding-inline-start: 0;
+		}
+
+		.icon {
+			inline-size: 1.2em;
+		}
+	}
+
+	.cv-updated {
+		margin-block-start: 0.5rem;
+		color: var(--color-subtle-text);
+	}
+
+	.cv-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+		margin-block: 2rem;
+
+		button,
+		.button {
+			font: inherit;
+			cursor: pointer;
+			padding: 0.5em 1.25em;
+			border: 2px solid var(--color-accent);
+			border-radius: 0.5rem;
+			background: transparent;
+			color: var(--color-text);
+			text-decoration: none;
+			transition:
+				background-color 0.15s ease-out,
+				color 0.15s ease-out;
+
+			&:is(:hover, :focus-visible) {
+				background: var(--color-accent);
+				color: var(--color-bg);
+			}
+		}
+	}
+
+	h2 {
+		/* margin-block-start: 2rem; */
+		padding-block-end: 0.25em;
+		border-block-end: 2px solid var(--color-subtle-bg);
+		font-size: 1.05rem;
+	}
+
+	h3 {
+		/* margin-block-start: 1.5rem; */
+		margin-block-end: 0.25em;
+		font-size: 0.95rem;
+	}
+}
+
+/* Printable, 2-page A4 resume: hide site chrome, tighten spacing and typography. */
+@media print {
+	@page {
+		size: A4;
+		margin: 12mm;
+	}
+
+	body[class*="cv-"] {
+		--color-accent-text: oklch(0.4 0 0);
+
+		font-size: 9.5pt;
+		line-height: 1.35;
+		background: white;
+		color: black;
+		display: block;
+
+		& > :is(header, nav, footer) {
+			display: none;
+		}
+
+		main {
+			display: block;
+			margin: 0;
+			container: unset;
+		}
+
+		.cv-role {
+			color: var(--color-accent-text);
+		}
+
+		.logo {
+			position: absolute;
+			inset-block-start: 0;
+			inset-inline-end: 0;
+		}
+
+		:is(h1, h2, h3) {
+			color: black;
+			animation: none;
+		}
+
+		h2 {
+			/* margin-block-start: 0.75rem; */
+			border-block-end-color: var(--color-accent);
+			break-after: avoid;
+			break-inside: avoid;
+		}
+
+		h3 {
+			/* margin-block-start: 0.5rem; */
+			break-after: avoid;
+			break-inside: avoid;
+		}
+
+		a {
+			color: inherit;
+			text-decoration: none;
+		}
+
+		:is(p, li) {
+			animation: none;
+		}
+
+		p,
+		ul,
+		ol,
+		li {
+			break-inside: avoid;
+		}
+
+		li {
+			margin-block: 0.15em;
+
+			strong {
+				font-weight: 700;
+				color: black;
+			}
+		}
+
+		.cv-contact {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(max-content, 30%));
+			margin-inline-end: 5rem; /* Space for the logo */
+		}
+
+		.cv-contact > li {
+			white-space: nowrap;
+		}
+
+		.cv-contact a {
+			display: flex;
+			align-items: center;
+		}
+
+		.cv-contact a[aria-label]::after {
+			/* Icons alone carry no meaning on paper: reveal the accessible name instead. */
+			content: attr(aria-label);
+			margin-inline-start: 0.35em;
+		}
+	}
+}
