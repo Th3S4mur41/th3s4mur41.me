@@ -60,13 +60,7 @@ export function createSatteriHeadingDatesPlugin() {
 			}
 		}
 
-		try {
-			// In MDX context, Astro may serialise component children into a frozen
-			// HastChildStub whose `children` property is read-only. Silently skip
-			// the mutation in that case — the node's content is left untouched.
-			node.children = newChildren;
-		} catch {
-			// node.children is not writable; nothing to update.
-		}
+		// ctx.setProperty(node, "children", newChildren);
+		node.children = newChildren;
 	}
 }
