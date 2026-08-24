@@ -14,7 +14,7 @@ body[class^="cv-"] {
 		color: var(--color-accent);
 	}
 
-	.logo {
+	& > main .logo {
 		grid-row: 1 / span 2;
 		grid-column: content;
 		justify-self: end;
