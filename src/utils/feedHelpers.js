@@ -80,7 +80,7 @@ const PASSTHROUGH_HTML_ELEMENTS = new Set([
  *   helper) or a plain filename/path string (legacy).
  * @returns {import('astro').ImageMetadata|null}
  */
-function getImageModule(section, entryId, image) {
+export function getImageModule(section, entryId, image) {
 	if (!image) return null;
 	// ImageMetadata objects carry `src`, `width`, and `format` — short-circuit
 	// without any pool lookup when we already have the resolved metadata.

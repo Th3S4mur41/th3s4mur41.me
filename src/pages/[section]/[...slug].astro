@@ -18,6 +18,7 @@ import Layout from "../../layouts/Layout.astro";
 import { formatSiteDate, SITE_CONFIG } from "../../utils/config.js";
 import { getEntryIds, getSeriesSlug, isSeriesContainerId, normalizeEntryId } from "../../utils/contentSeries";
 import { isPreviewFutureContentEnabled, isVisibleContent } from "../../utils/contentVisibility";
+import { getImageModule } from "../../utils/feedHelpers.js";
 import { toSiteStandardDocumentUri } from "../../utils/siteStandard.js";
 import { getTagDisplayName, sortTags } from "../../utils/tags.js";
 import type { ProcessedWebmentions } from "../../utils/webmentions";
@@ -171,11 +172,12 @@ const SeriesIntroContent = isSeriesPage && seriesIntroEntry ? (await render(seri
 // With `image()` in collection schema, content image frontmatter is resolved to ImageMetadata.
 const pageEntry = isSeriesPage ? seriesIntroEntry : article;
 const resolvedImage = pageEntry?.data.image;
+const imageMetadata = getImageModule(section, pageEntry?.id ?? "", resolvedImage);
 
 const img =
-	resolvedImage
+	imageMetadata
 		? await getImage({
-				src: resolvedImage,
+				src: imageMetadata,
 				width: 1200,
 				height: 630,
 				format: "jpg",
