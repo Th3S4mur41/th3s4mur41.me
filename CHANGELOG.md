@@ -1,3 +1,10 @@
+## [2.72.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.72.0...v2.72.1) (2026-08-24)
+
+
+### Reverts
+
+* Revert "build(deps): bump the astro group across 1 directory with 3 updates" ([#2548](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2548)) ([76310e9](https://github.com/Th3S4mur41/th3s4mur41.me/commit/76310e9549fe33954a0c4dff55c428880cc1174c))
+
 # [2.72.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.71.1...v2.72.0) (2026-08-24)
 
 
