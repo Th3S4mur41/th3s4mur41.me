@@ -41,6 +41,12 @@ dist/
 reports/
 .tscache/
 
+# Playwright (baseline screenshots under tests/visual/__screenshots__ are committed)
+playwright-report/
+test-results/
+blob-report/
+.playwright/
+
 # Environment variables (except .env.development template)
 .env
 .env.local

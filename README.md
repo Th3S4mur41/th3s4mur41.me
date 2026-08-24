@@ -8,6 +8,23 @@
 
 This repository hosts the code which powers the https://th3s4mur41.me website.
 
+## 📜 Scripts
+
+| Script                                      | Description                                                                              |
+| ------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `npm start`                                 | Start the Astro dev server.                                                              |
+| `npm run start:prod`                        | Preview the production build locally.                                                    |
+| `npm run build`                             | Build the site into `dist/`.                                                             |
+| `npm run lint`                              | Check formatting (Prettier) and lint (Biome).                                            |
+| `npm run lint:fix`                          | Apply formatting/lint fixes.                                                             |
+| `npm test`                                  | Run unit tests (Vitest).                                                                 |
+| `npm run test:visual`                       | Run Playwright visual regression tests against `dist/` (requires `npm run build` first). |
+| `npm run test:visual:update`                | Update the visual regression baselines.                                                  |
+| `npm run sync:atproto` / `sync:atproto:dry` | Sync posts to Bluesky/ATProto.                                                           |
+
+> [!IMPORTANT]
+> Visual regression baselines (`tests/visual/__screenshots__/`) are rendered by Playwright and differ slightly between operating systems (font rasterization, anti-aliasing). Always generate/update snapshots on Linux — either in [GitHub Codespaces](https://github.com/features/codespaces), the devcontainer, or CI — so they match the Linux runners used by the `test:visual` workflow. Snapshots produced on macOS or Windows will cause false-positive diffs in CI.
+
 ## ♿ Accessibility Testing
 
 This repository includes automated accessibility testing using GitHub Actions. The testing runs automatically after deployments and can also be triggered manually.
