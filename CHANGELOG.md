@@ -1,3 +1,10 @@
+# [2.72.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.71.1...v2.72.0) (2026-08-24)
+
+
+### Features
+
+* add online CV ([#2543](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2543)) ([6b91914](https://github.com/Th3S4mur41/th3s4mur41.me/commit/6b91914793e3bb29bb5e4e67da48d195b6c24119))
+
 ## [2.71.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.71.0...v2.71.1) (2026-08-10)
 
 
