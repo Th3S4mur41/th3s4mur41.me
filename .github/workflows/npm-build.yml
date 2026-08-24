@@ -5,6 +5,9 @@ name: Build & Test
 on:
   # Allows you to call this workflow from other workflows
   workflow_call:
+    secrets:
+      EMAIL:
+        required: false
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -54,6 +57,7 @@ jobs:
       - name: '🛠️ Build'
         env:
           PREVIEW_FUTURE_CONTENT: ${{ github.event_name == 'pull_request' && 'true' || '' }}
+          EMAIL: ${{ secrets.EMAIL }}
         run: npm run build --if-present
 
       - name: '🧫 Run tests'

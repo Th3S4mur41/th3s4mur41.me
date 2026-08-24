@@ -15,6 +15,7 @@
 @import url("styles/pages/home.css") layer(pages);
 @import url("styles/pages/blog.css") layer(pages);
 @import url("styles/pages/about.css") layer(pages);
+@import url("styles/pages/cv.css") layer(pages);
 
 @import url("styles/vendors/prism.css") layer(vendors);
 

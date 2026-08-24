@@ -56,7 +56,8 @@ export default defineConfig({
 			// Exclude any draft blog post URLs using the conventional `_draft-` slug prefix.
 			// The sitemap integration does not expose markdown frontmatter, so we rely on URL pattern.
 			// Example draft path: https://th3s4mur41.me/blog/_draft-my-new-post/
-			filter: (pageUrl) => !pageUrl.includes("/_draft-"),
+			// Also exclude the intentionally unlisted CV page.
+			filter: (pageUrl) => !pageUrl.includes("/_draft-") && !pageUrl.includes("/cv/"),
 		}),
 		mdx({
 			processor: satteriProcessor,
