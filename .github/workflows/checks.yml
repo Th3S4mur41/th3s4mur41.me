@@ -45,3 +45,4 @@ jobs:
   npm-build:
     name: '▶️ actions'
     uses: ./.github/workflows/npm-build.yml
+    secrets: inherit
