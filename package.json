@@ -52,7 +52,7 @@
 		"yaml": "^2.9.0"
 	},
 	"optionalDependencies": {
-		"lint-staged": "^17.3.0",
+		"lint-staged": "^17.4.1",
 		"semantic-release": "^25.0.9"
 	},
 	"scripts": {
