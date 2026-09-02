@@ -1,3 +1,10 @@
+## [2.72.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.72.1...v2.72.2) (2026-09-02)
+
+
+### Bug Fixes
+
+* use github-slugger to avoid id mismatch in TOC ([#2556](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2556)) ([5341bb2](https://github.com/Th3S4mur41/th3s4mur41.me/commit/5341bb28278e196ab7074922f0857eea63e0391a))
+
 ## [2.72.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.72.0...v2.72.1) (2026-08-24)
 
 
