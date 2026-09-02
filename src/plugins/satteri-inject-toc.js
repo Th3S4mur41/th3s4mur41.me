@@ -1,6 +1,7 @@
 import { readdirSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import GithubSlugger from "github-slugger";
 import getReadingTime from "reading-time";
 import { SITE_CONFIG } from "../utils/config.js";
 
@@ -46,7 +47,7 @@ export function createSatteriInjectTocPlugin() {
 				const isSeriesIntro = detectSeriesIntro(filePath, isBlog);
 				const rootNode = getRootNode(node, ctx);
 				const headings = [];
-				collectHeadings(rootNode, headings);
+				collectHeadings(rootNode, headings, new GithubSlugger());
 				const readingTime =
 					ctx.data?.readingTime ||
 					buildReadingTimeFromTree(rootNode, {
@@ -103,7 +104,7 @@ export function createSatteriInjectTocPlugin() {
 		return current;
 	}
 
-	function collectHeadings(node, headings) {
+	function collectHeadings(node, headings, slugger) {
 		if (!node || typeof node !== "object") {
 			return;
 		}
@@ -112,14 +113,14 @@ export function createSatteriInjectTocPlugin() {
 			const depth = Number.parseInt(node.tagName.charAt(1), 10);
 			const text = extractText(node).trim();
 			if (text) {
-				const slug = typeof node.properties?.id === "string" ? node.properties.id : createSlug(text);
+				const slug = typeof node.properties?.id === "string" ? node.properties.id : slugger.slug(text);
 				headings.push({ depth, text, slug });
 			}
 		}
 
 		if (Array.isArray(node.children)) {
 			for (const child of node.children) {
-				collectHeadings(child, headings);
+				collectHeadings(child, headings, slugger);
 			}
 		}
 	}
@@ -138,15 +139,6 @@ export function createSatteriInjectTocPlugin() {
 		}
 
 		return "";
-	}
-
-	function createSlug(text) {
-		return text
-			.toLowerCase()
-			.trim()
-			.replace(/[^\w\s-]/g, "")
-			.replace(/[\s_]/g, "-")
-			.replace(/^-+|-+$/g, "");
 	}
 
 	function buildReadingTimeFromTree(rootNode, options) {
