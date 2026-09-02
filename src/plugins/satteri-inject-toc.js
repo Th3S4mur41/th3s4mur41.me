@@ -113,8 +113,8 @@ export function createSatteriInjectTocPlugin() {
 			const depth = Number.parseInt(node.tagName.charAt(1), 10);
 			const text = extractText(node).trim();
 			if (text) {
-				const generatedSlug = slugger.slug(text);
-				const slug = typeof node.properties?.id === "string" && node.properties.id ? node.properties.id : generatedSlug;
+				const slug =
+					typeof node.properties?.id === "string" && node.properties.id ? node.properties.id : slugger.slug(text);
 				headings.push({ depth, text, slug });
 			}
 		}
