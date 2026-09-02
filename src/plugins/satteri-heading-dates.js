@@ -14,27 +14,37 @@ export function createSatteriHeadingDatesPlugin() {
 		name: "satteri-heading-dates",
 		element: {
 			filter: ["h1", "h2", "h3", "h4", "h5", "h6"],
-			visit(node, ctx) {
-				processHeadingChildren(node, ctx, ISO_DATE_RE);
+			visit(node) {
+				const children = transformHeadingChildren(node.children, ISO_DATE_RE);
+				if (!children) {
+					return;
+				}
+
+				return {
+					...node,
+					children,
+				};
 			},
 		},
 	};
 
-	function processHeadingChildren(node, ctx, pattern) {
-		if (!Array.isArray(node.children)) {
-			return;
+	function transformHeadingChildren(children, pattern) {
+		if (!Array.isArray(children)) {
+			return null;
 		}
 
+		let transformed = false;
 		const newChildren = [];
 
-		for (const child of node.children) {
+		for (const child of children) {
 			if (child.type === "text") {
 				const parts = child.value.split(pattern);
 				if (parts.length === 1) {
-					// No ISO date in this text node — keep as-is.
+					// Preserve compiler-owned MDX children without mutating their internals.
 					newChildren.push(child);
 					continue;
 				}
+				transformed = true;
 
 				for (const part of parts) {
 					if (!part) continue;
@@ -51,16 +61,11 @@ export function createSatteriHeadingDatesPlugin() {
 						newChildren.push({ type: "text", value: part });
 					}
 				}
-			} else if (child.type === "element" && child.children) {
-				// Recurse into non-text elements (e.g. <strong>, <em>)
-				processHeadingChildren(child, ctx, pattern);
-				newChildren.push(child);
 			} else {
 				newChildren.push(child);
 			}
 		}
 
-		// ctx.setProperty(node, "children", newChildren);
-		node.children = newChildren;
+		return transformed ? newChildren : null;
 	}
 }
