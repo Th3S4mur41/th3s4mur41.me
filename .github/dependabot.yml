@@ -17,6 +17,10 @@ updates:
           - 'astro'
           - '@astrojs/*'
           - 'astro-*'
+          - 'rehype-*'
+          - 'remark-*'
+          - 'satteri'
+          - 'unified'
       babel:
         patterns:
           - '@babel/*'
