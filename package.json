@@ -57,7 +57,7 @@
 		"prettier": "^3.9.6",
 		"typescript": "^7.0.2",
 		"vitest": "^5.0.0",
-		"wrangler": "^4.129.0",
+		"wrangler": "^4.129.1",
 		"yaml": "^2.9.0"
 	},
 	"optionalDependencies": {
