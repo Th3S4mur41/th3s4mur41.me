@@ -54,7 +54,7 @@
 		"browserslist-to-esbuild": "^2.1.1",
 		"concurrently": "^10.0.5",
 		"husky": "^9.1.7",
-		"prettier": "^3.9.6",
+		"prettier": "^3.9.8",
 		"typescript": "^7.0.2",
 		"vitest": "^5.0.0",
 		"wrangler": "^4.131.2",
