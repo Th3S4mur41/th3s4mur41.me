@@ -29,7 +29,7 @@ import CodePen from '/src/components/CodePen.astro';
 
 ![Comic-style illustration of Michaël Vanderheyden wearing a baseball cap and samurai-themed shirt, working on a laptop with a samurai sticker. To the side, accessibility icons and the hashtag #A11yTips promote practical accessibility tips for developers.](../Practical_Accessibility_Tips_for_Developers-v2.jpg)
 
-Setting the correct `lang` attribute is one of the simplest yet most impactful accessibility practices in web development. It ensures that assistive technologies like screen readers interpret and pronounce content correctly, giving users the proper context for what they are reading or hearing.
+Setting the correct [`lang` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/lang) is one of the simplest yet most impactful accessibility practices in web development. It ensures that assistive technologies like screen readers interpret and pronounce content correctly, giving users the proper context for what they are reading or hearing.
 
 ## What Happens When You Omit the lang Attribute?
 
@@ -52,7 +52,7 @@ In short, a correctly declared language gives both people and machines the conte
 
 ## Multilingual Content & Technical Terminology
 
-Setting the language at the root level (`<html lang="..."`>) is only the bare minimum. Whenever a section, quote, or phrase on a page switches languages, that specific element must be tagged with its corresponding `lang` attribute.
+Setting the [document language](https://www.w3.org/WAI/WCAG22/Understanding/language-of-page.html) at the root level (`<html lang="..."`>) is only the bare minimum. Whenever a section, quote, or phrase on a page switches languages, that specific element must be tagged with its corresponding `lang` attribute.
 
 ```html
 <p lang="fr">C'est la vie!</p>
@@ -123,7 +123,7 @@ This CodePen demo shows two approaches to language selectors:
 
 ## Closing Thoughts
 
-Language support should be verified in practice, not assumed from the markup alone. Test across multiple browser and screen reader combinations, such as NVDA with Firefox, VoiceOver with Safari, and JAWS with Chrome, rather than relying solely on automated auditing tools.
+Language support should be verified in practice, not assumed from the markup alone. Follow the [manual testing guidance](https://th3s4mur41.me/blog/a11y-tips/labels-validation/) and test across multiple browser and screen reader combinations, such as NVDA with Firefox, VoiceOver with Safari, and JAWS with Chrome, rather than relying solely on automated auditing tools.
 
 The `lang` attribute is a small piece of markup with a meaningful impact: it helps people hear, read, and navigate content in the language it was intended for. Declare the document language, mark language changes where they occur, and test the experience with real assistive technologies.
 
