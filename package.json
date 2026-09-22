@@ -43,7 +43,7 @@
 	"devDependencies": {
 		"@astrojs/mdx": "^8.0.1",
 		"@atproto/api": "^0.20.44",
-		"@biomejs/biome": "2.5.13",
+		"@biomejs/biome": "2.5.14",
 		"@commitlint/cli": "^21.2.2",
 		"@commitlint/config-conventional": "^21.0.2",
 		"@semantic-release/changelog": "^7.0.0",
@@ -57,7 +57,7 @@
 		"prettier": "^3.9.8",
 		"typescript": "^7.0.2",
 		"vitest": "^5.0.1",
-		"wrangler": "^4.134.0",
+		"wrangler": "^4.135.0",
 		"yaml": "^2.9.1"
 	},
 	"optionalDependencies": {
