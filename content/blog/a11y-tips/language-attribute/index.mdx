@@ -97,22 +97,22 @@ Language selectors should **always display each language option in its own nativ
 | **Accessible**	| `<li lang="de">Deutsch</li>`	| Immediate recognition for native speakers. |
 | **Hybrid (Recommended)**	| `<li lang="de">Deutsch <span lang="en">(German)</span></li>`	| Clear for both native speakers and current readers. |
 
-Check out this demonstration comparing both approaches:
+The CodePen demo below compares three approaches to language selectors:
 
 {/* TODO: This chapter and the demo need some more work */}
 
+- **Problematic Version:** All options are translated into Persian without `lang` attributes. While fully localized for Persian readers, it prevents non-Persian speakers from identifying their native language to switch back.
+
+- **Accessible Version:** Each language name is rendered in its native script with the proper `lang` attribute (`lang="fa"`, `lang="de"`, etc.), allowing immediate recognition.
+
+- **Hybrid Version (Recommended):** Each language name is rendered in its native script with the proper `lang` attribute, followed by its English name in parentheses. This preserves native recognition while also helping users who do not read that language.
+
 <CodePen
-	title="Language selector"
-	href="https://codepen.io/th3s4mur41/pen/OPNZWVj"
-	height={500}
-	description="Interactive CodePen demo comparing to approaches to the language selector."
+  title="Language selector"
+  href="https://codepen.io/th3s4mur41/pen/OPNZWVj"
+  height={500}
+  description="Interactive CodePen demo comparing three approaches to the language selector."
 />
-
-This CodePen demo shows two approaches to language selectors:
-
-- **Accessible Version:** Each language name is rendered in its native script with the proper `lang attribute (`lang="fa"`, `lang="de"`, etc.), allowing immediate recognition.
-
-- **Problematic Version:** All options are forced into Farsi without lang attributes. While fully localized for Farsi readers, it prevents non-Farsi speakers from identifying their native language to switch back.
 
 > [!WARNING]
 > **Narrator & System Language Boundaries**
