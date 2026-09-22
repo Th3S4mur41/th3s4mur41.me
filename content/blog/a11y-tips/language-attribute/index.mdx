@@ -36,14 +36,14 @@ Setting the correct [`lang` attribute](https://developer.mozilla.org/en-US/docs/
 When a document lacks a declared language attribute (e.g., `<html lang="en">`), screen readers default to the user’s system or software language settings. If a user with an English system setup opens a page written in French without a lang attribute, the synthesizer will force English phonetic rules onto French words.
 
 The result is confusing, comical, or entirely unintelligible:
-So the Text *<span lang="fr">"Bienvenue sur notre site web"</span>* would be read using English phonetics as *"Bee-en-ven-oo sur no-tree sight web"*.
+So the text *<span lang="fr">"Bienvenue sur notre site web"</span>* would be read using English phonetics as *"Bee-en-ven-oo sur no-tree sight web"*.
 
 You might have experienced a similar mismatch while using navigation software abroad. When street names are written in a language different from the app's interface or voice, pronunciation can become unexpectedly confusing and sometimes comical. A turn instruction that should be clear can suddenly sound like an entirely different place, reminding us how important the right language context is.
 
 
 ## Multilingual Content & Technical Terminology
 
-Setting the [document language](https://www.w3.org/WAI/WCAG22/Understanding/language-of-page.html) at the root level (`<html lang="..."`>) is only the bare minimum. Whenever a section, quote, or phrase on a page switches languages, that specific element must be tagged with its corresponding `lang` attribute.
+Setting the [document language](https://www.w3.org/WAI/WCAG22/Understanding/language-of-page.html) at the root level (`<html lang="...">`) is only the bare minimum. Whenever a section, quote, or phrase on a page switches languages, that specific element must be tagged with its corresponding `lang` attribute.
 
 ```html
 <p lang="fr">C'est la vie!</p>
