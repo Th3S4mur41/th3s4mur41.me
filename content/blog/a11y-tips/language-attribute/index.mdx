@@ -33,21 +33,12 @@ Setting the correct [`lang` attribute](https://developer.mozilla.org/en-US/docs/
 
 ## What Happens When You Omit the lang Attribute?
 
-When a document lacks a declared language attribute (e.g., `<html lang="en">`), screen readers default to the user’s system or software language settings. If a user with a English system setup opens a page written in French without a lang attribute, the synthesizer will force English phonetic rules onto French words.
+When a document lacks a declared language attribute (e.g., `<html lang="en">`), screen readers default to the user’s system or software language settings. If a user with an English system setup opens a page written in French without a lang attribute, the synthesizer will force English phonetic rules onto French words.
 
 The result is confusing, comical, or entirely unintelligible:
 So the Text *<span lang="fr">"Bienvenue sur notre site web"</span>* would be read using English phonetics as *"Bee-en-ven-oo sur no-tree sight web"*.
 
-Yoy might have experienced a similar mismatch while using navigation software abroad. When street names are written in a language different from the app's interface or voice, pronunciation can become unexpectedly confusing and sometimes comical. A turn instruction that should be clear can suddenly sound like an entirely different place, reminding us how important the right language context is.
-
-
-### Beyond Screen Readers: SEO & AI Parsing
-
-Declaring the correct language doesn't just aid screen readers:
-- **Search Engine Optimization (SEO):** Search engines rely on explicit language declarations to serve localized search results to the right audiences without relying solely on IP geolocation or automated detection.
-- **AI & Natural Language Processing (NLP):** Large Language Models (LLMs) and automated parsing pipelines use structural metadata to determine grammar rules, tokenization boundaries, and translation models.
-
-In short, a correctly declared language gives both people and machines the context they need to interpret your content accurately.
+You might have experienced a similar mismatch while using navigation software abroad. When street names are written in a language different from the app's interface or voice, pronunciation can become unexpectedly confusing and sometimes comical. A turn instruction that should be clear can suddenly sound like an entirely different place, reminding us how important the right language context is.
 
 
 ## Multilingual Content & Technical Terminology
@@ -75,7 +66,7 @@ While wrapping foreign terms in `<span lang="en">...</span>` ensures precise pro
 > Over time, many foreign terms become officially integrated into a host language's dictionary. In German, words like ["Lounge" are explicitly listed in the Duden dictionary](https://www.duden.de/rechtschreibung/Lounge).
 > 
 > During recent screen reader testing on German technical content, NVDA, Narrator, and TalkBack correctly pronounced "Lounge" using standard German phonetic adjustments.
-> JAWS, however, misinterpreted the unflagged German context and pronounced it as "Lunge" (the German word for "Lungs").
+> JAWS, however, misinterpreted the unflagged German context and pronounced it as <span lang="de">"Lunge"</span> (the German word for "lung").
 
 **Rule of thumb:** If a term is widely recognized and documented in the native language's reference dictionary, explicit `lang` overrides are usually unnecessary unless testing reveals severe pronunciation failures in major screen readers.
 
