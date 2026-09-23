@@ -24,10 +24,16 @@ describe("normalizeContentEntryId", () => {
 });
 
 describe("toSiteStandardDocumentRkey", () => {
-	it("builds deterministic rkeys from normalized entry IDs", () => {
-		expect(toSiteStandardDocumentRkey("a11y-tips/index")).toBe("a11y-tips");
+	it("keeps legacy rkeys for existing synced documents", () => {
 		expect(toSiteStandardDocumentRkey("a11y-tips/contrast")).toBe("a11y-tips~contrast");
-		expect(toSiteStandardDocumentRkey("the-lean-web/grid/guide")).toBe("the-lean-web~grid~guide");
+		expect(toSiteStandardDocumentRkey("notes/standard-site")).toBe("notes~standard-site");
+	});
+
+	it("builds deterministic TID rkeys for new documents", () => {
+		const rkey = toSiteStandardDocumentRkey("a11y-tips/language-attribute");
+
+		expect(rkey).toMatch(/^[234567abcdefghij][234567abcdefghijklmnopqrstuvwxyz]{12}$/);
+		expect(toSiteStandardDocumentRkey("a11y-tips/language-attribute")).toBe(rkey);
 	});
 
 	it("returns undefined when entry ID is missing", () => {
@@ -39,12 +45,14 @@ describe("toSiteStandardDocumentRkey", () => {
 describe("toSiteStandardDocumentUri", () => {
 	const did = "did:plc:xetli7nktzsvhl74bhl4r4yx";
 
-	it("builds full at:// URI from DID and deterministic rkey", () => {
-		expect(toSiteStandardDocumentUri(did, "a11y-tips/index")).toBe(
-			`at://${did}/${SITE_STANDARD_DOCUMENT_COLLECTION}/a11y-tips`,
-		);
+	it("builds full at:// URI from DID and rkey", () => {
 		expect(toSiteStandardDocumentUri(did, "a11y-tips/contrast")).toBe(
 			`at://${did}/${SITE_STANDARD_DOCUMENT_COLLECTION}/a11y-tips~contrast`,
+		);
+		expect(toSiteStandardDocumentUri(did, "a11y-tips/language-attribute")).toMatch(
+			new RegExp(
+				`^at://${did}/${SITE_STANDARD_DOCUMENT_COLLECTION}/[234567abcdefghij][234567abcdefghijklmnopqrstuvwxyz]{12}$`,
+			),
 		);
 	});
 
