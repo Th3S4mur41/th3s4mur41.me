@@ -1,3 +1,10 @@
+# [2.73.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.72.2...v2.73.0) (2026-09-23)
+
+
+### Features
+
+* **blog:** add lang attribute post ([#2585](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2585)) ([2b15d58](https://github.com/Th3S4mur41/th3s4mur41.me/commit/2b15d58c7686ed39c57b49ef75590f0e7e0f4b7c))
+
 ## [2.72.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.72.1...v2.72.2) (2026-09-02)
 
 
