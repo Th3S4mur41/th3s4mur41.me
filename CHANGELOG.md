@@ -1,3 +1,10 @@
+## [2.73.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.73.0...v2.73.1) (2026-09-23)
+
+
+### Bug Fixes
+
+* **atproto:** enhance document ID handling with legacy support ([616642e](https://github.com/Th3S4mur41/th3s4mur41.me/commit/616642ec6791001db0a047352ef0ad8340c6721d))
+
 # [2.73.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.72.2...v2.73.0) (2026-09-23)
 
 
