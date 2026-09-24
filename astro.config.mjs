@@ -6,6 +6,7 @@ import compress from "astro-compress";
 import browserslist from "browserslist";
 import browserslistToEsbuild from "browserslist-to-esbuild";
 import { browserslistToTargets } from "lightningcss";
+import { createSatteriCodePenEmbedsPlugin } from "./src/plugins/satteri-codepen-embeds.js";
 import { createSatteriExternalLinksPlugin } from "./src/plugins/satteri-external-links.js";
 import { createSatteriGithubAlertsA11yPlugin } from "./src/plugins/satteri-github-alerts-a11y.js";
 import { createSatteriHeadingDatesPlugin } from "./src/plugins/satteri-heading-dates.js";
@@ -22,6 +23,7 @@ const satteriProcessor = satteri({
 		createSatteriInjectTocPlugin,
 		createSatteriViewTransitionNamesPlugin,
 		createSatteriGithubAlertsA11yPlugin,
+		createSatteriCodePenEmbedsPlugin,
 		createSatteriOptimizeFirstImagePlugin,
 		createSatteriExternalLinksPlugin,
 	],

@@ -29,8 +29,6 @@ syndication:
   - https://www.linkedin.com/posts/michaelvanderheyden_focusgroup-html-webdev-share-7480601299743465473-hc-L/
 ---
 
-import CodePen from '/src/components/CodePen.astro';
-
 # Focusgroup: The Future of Keyboard Navigation
 
 ![A comic-style hero image split in two: on the left, a tired developer, wearing a purple hoodie, is chained by 'JavaScript Logic' and 'Manual Tabbing' logic, struggling with complex code. On the right, a smiling Michaël Vanderheyden with a cap and glasses gives a thumbs-up. Floating beside him, 'focusgroup' automatically handling navigation for 'toolbar', 'tablist', and 'menu' via standard arrow keys.](focusgroup-native-accessible-keyboard-navigation.jpg)
@@ -57,11 +55,9 @@ This removes the need for custom JavaScript navigation logic.
 
 And the best part: You can start experimenting today, or even ship it now thanks to an available [polyfill](https://github.com/microsoft/polyfills/tree/main/packages/focusgroup).
 
-<CodePen
-	title="Toolbar with focusgroup"
-	href="https://codepen.io/editor/th3s4mur41/pen/019f27a0-85d5-7086-bf79-1bcec3b27156"
-	description="A simple toolbar with 2 button groups, the first one without `focusgroup` and the second one with `focusgroup`. Use the tab key to enter the groups and arrow keys to navigate between buttons."
-/>
+A simple toolbar with 2 button groups, the first one without `focusgroup` and the second one with `focusgroup`. Use the tab key to enter the groups and arrow keys to navigate between buttons.
+
+https://codepen.io/editor/th3s4mur41/pen/019f27a0-85d5-7086-bf79-1bcec3b27156
 
 ## The Progressive Enhancement Catch
 
@@ -74,11 +70,9 @@ In those cases, you still have to set the proper ARIA role manually.
 
 Miss this, and you can accidentally ship a completely inaccessible interface. The rules are well documented in the [focusgroup explainer](https://open-ui.org/components/scoped-focusgroup.explainer/#supported-behaviors).
 
-<CodePen
-	title="Toolbar with focusgroup and explicit role"
-	href="https://codepen.io/editor/th3s4mur41/pen/019f36b7-9e1d-79ba-be93-c6f56269e065"
-	description="This example follows the same pattern as the previous CodePen with one difference that has a big impact: the `div` is replaced by a `section`, which prevents focusgroup from setting the ARIA role automatically."
-/>
+This example follows the same pattern as the previous CodePen with one difference that has a big impact: the `div` is replaced by a `section`, which prevents focusgroup from setting the ARIA role automatically.
+
+https://codepen.io/editor/th3s4mur41/pen/019f36b7-9e1d-79ba-be93-c6f56269e065
 
 ### Tablist with focusgroup
 
@@ -90,21 +84,17 @@ That makes the tablist less useful for screen reader users unless you add explic
 
 My first solution was to keep things simple and build around `focusgroup` with `<button>` elements.
 
-<CodePen
-	title="Tablist with focusgroup"
-	href="https://codepen.io/editor/th3s4mur41/pen/019f3bc5-3be6-7103-b563-1df75368f087"
-	description="A simple tablist example built with focusgroup and buttons based on Kevin Powell's accessible tabs example. Use the tab key to enter the group and arrow keys to navigate between tabs."
-/>
+A simple tablist example built with focusgroup and buttons based on Kevin Powell's accessible tabs example. Use the tab key to enter the group and arrow keys to navigate between tabs.
+
+https://codepen.io/editor/th3s4mur41/pen/019f3bc5-3be6-7103-b563-1df75368f087
 
 This worked, but it removed anchor-link fallback and went against the core principle of Kevin's example: progressive enhancement.
 So I went back to the original code and only replaced the arrow-key navigation logic with `focusgroup`.
 The result is a tablist that works with or without JavaScript, while keeping ARIA roles correct.
 
-<CodePen
-	title="Tablist with focusgroup (progressive enhancement)"
-	href="https://codepen.io/editor/th3s4mur41/pen/019f40d9-9a38-77f2-8488-6dcc1906c3cf"
-	description="A progressive enhancement tablist based on Kevin Powell's accessible tabs example. Tab enters the tablist; arrow keys move between tabs."
-/>
+A progressive enhancement tablist based on Kevin Powell's accessible tabs example. Tab enters the tablist; arrow keys move between tabs.
+
+https://codepen.io/editor/th3s4mur41/pen/019f40d9-9a38-77f2-8488-6dcc1906c3cf
 
 The solution with progressive enhancement is a bit more complex and whether you need it depends on your use case and your users.
 For example, the fallback would probably be meaningful for a website that otherwise works well without any JavaScript, but it will be unnecessary if you are building a single-page application (SPA) that requires JS to function.

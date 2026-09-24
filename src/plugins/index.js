@@ -1,6 +1,7 @@
 // Sätteri MDAST plugins
 
 // Sätteri HAST plugins
+export { createSatteriCodePenEmbedsPlugin } from "./satteri-codepen-embeds.js";
 export { createSatteriExternalLinksPlugin } from "./satteri-external-links.js";
 export { createSatteriGithubAlertsA11yPlugin } from "./satteri-github-alerts-a11y.js";
 export { createSatteriHeadingDatesPlugin } from "./satteri-heading-dates.js";

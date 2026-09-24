@@ -8,6 +8,7 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 import { visit } from "unist-util-visit";
+import { createSatteriCodePenEmbedsPlugin } from "../plugins/satteri-codepen-embeds.js";
 import { createSatteriGithubAlertsA11yPlugin } from "../plugins/satteri-github-alerts-a11y.js";
 
 const CONTENT_ROOT = "/content";
@@ -295,6 +296,30 @@ function renderGithubAlerts() {
 	};
 }
 
+/** Rehype adapter for the site's asynchronous Sätteri CodePen transform. */
+function renderCodePenEmbeds() {
+	const transformCodePen = createSatteriCodePenEmbedsPlugin().element.visit;
+
+	return async (tree) => {
+		const candidates = [];
+		visit(tree, "element", (node, index, parent) => {
+			if (node.tagName === "p" && parent && typeof index === "number") candidates.push({ node, index, parent });
+		});
+
+		const replacements = await Promise.all(
+			candidates.map(async ({ node, index, parent }) => ({
+				index,
+				parent,
+				replacement: await transformCodePen(node),
+			})),
+		);
+
+		for (const { index, parent, replacement } of replacements) {
+			if (replacement) parent.children[index] = replacement;
+		}
+	};
+}
+
 function humanizeSlug(value) {
 	return (
 		value
@@ -331,7 +356,7 @@ function getPlainTextExcerpt(markdown, maxLength = 160) {
  *
  * The pipeline:
  *   remark-parse → remark-mdx → remark-gfm → stripMdxMeta →
- *   remark-rehype (with JSX handlers) → rehype-raw → renderGithubAlerts → stripScripts →
+ *   remark-rehype (with JSX handlers) → rehype-raw → renderGithubAlerts → renderCodePenEmbeds → stripScripts →
  *   stripH1 → resolveContentImages → makeLinksAbsolute → rehype-stringify
  *
  * @param {object} entry  - Astro content collection entry (needs .body, .id, .filePath).
@@ -359,6 +384,7 @@ export async function renderBodyToHtml(entry, site) {
 		})
 		.use(rehypeRaw)
 		.use(renderGithubAlerts)
+		.use(renderCodePenEmbeds)
 		.use(stripScripts)
 		.use(stripH1)
 		.use(resolveContentImages(section, entryId, site))

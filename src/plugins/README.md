@@ -74,6 +74,16 @@ const processor = satteri({
 - Output: renders alerts as `aside` elements with GitHub-style alert classes and an `aria-label`.
 - Use when: content includes `> [!NOTE]`, `> [!WARNING]`, and similar alert syntax.
 
+### `createSatteriCodePenEmbedsPlugin`
+
+- Phase: HAST
+- Purpose: resolves a standalone CodePen URL through the official oEmbed endpoint.
+- Output: renders a lazy 400px preview iframe in a semantic figure with title, author, and fallback links.
+- Supported URLs: classic `https://codepen.io/{user}/pen/{slug}` and v2 `https://codepen.io/editor/{user}/pen/{uuid}`.
+- Request behavior: uses reviewed metadata from `src/data/codepen-embeds.js` for published Pens. New URLs are resolved through oEmbed with deduplication, pacing, and bounded retries.
+- Failure behavior: unresolved new URLs or invalid metadata stop the build. Cache existing Pens because CodePen may challenge server-side oEmbed requests nondeterministically.
+- Use when: a paragraph contains only the CodePen URL; keep additional descriptions in nearby Markdown prose.
+
 ### `createSatteriOptimizeFirstImagePlugin`
 
 - Phase: HAST
