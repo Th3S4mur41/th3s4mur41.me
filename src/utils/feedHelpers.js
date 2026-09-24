@@ -8,6 +8,7 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 import { visit } from "unist-util-visit";
+import { createSatteriGithubAlertsA11yPlugin } from "../plugins/satteri-github-alerts-a11y.js";
 
 const CONTENT_ROOT = "/content";
 const BLOG_CONTENT_SEGMENT = `${CONTENT_ROOT}/blog/`;
@@ -281,6 +282,19 @@ function stripH1() {
 	};
 }
 
+/** Rehype adapter for the site's Sätteri GitHub alert transform. */
+function renderGithubAlerts() {
+	const transformAlert = createSatteriGithubAlertsA11yPlugin().element.visit;
+
+	return (tree) => {
+		visit(tree, "element", (node, index, parent) => {
+			if (node.tagName !== "blockquote" || !parent || typeof index !== "number") return;
+			const alert = transformAlert(node);
+			if (alert) parent.children[index] = alert;
+		});
+	};
+}
+
 function humanizeSlug(value) {
 	return (
 		value
@@ -317,7 +331,7 @@ function getPlainTextExcerpt(markdown, maxLength = 160) {
  *
  * The pipeline:
  *   remark-parse → remark-mdx → remark-gfm → stripMdxMeta →
- *   remark-rehype (with JSX handlers) → rehype-raw → stripScripts →
+ *   remark-rehype (with JSX handlers) → rehype-raw → renderGithubAlerts → stripScripts →
  *   stripH1 → resolveContentImages → makeLinksAbsolute → rehype-stringify
  *
  * @param {object} entry  - Astro content collection entry (needs .body, .id, .filePath).
@@ -344,6 +358,7 @@ export async function renderBodyToHtml(entry, site) {
 			},
 		})
 		.use(rehypeRaw)
+		.use(renderGithubAlerts)
 		.use(stripScripts)
 		.use(stripH1)
 		.use(resolveContentImages(section, entryId, site))

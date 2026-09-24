@@ -15,6 +15,8 @@ const DIST_DIR = resolve(import.meta.dirname, "../../dist");
 const REQUIRED_DIST_FEED_FILES = ["feed.xml", "feed.json"];
 const COAUTHORED_ENTRY_PATH = "/blog/beyond-compliance-building-accessibility-into-quality-with-test-automation/";
 const COAUTHOR_NAME = "Jörg Jakoby";
+const ALERT_ENTRY_PATH = "/blog/a11y-tips/language-attribute/";
+const ALERT_LABEL = "Note: The Loanword Exception";
 
 beforeAll(() => {
 	const missingDistFeedFiles = REQUIRED_DIST_FEED_FILES.filter((name) => !existsSync(resolve(DIST_DIR, name)));
@@ -180,6 +182,16 @@ describe("RSS feed (feed.xml)", () => {
 			expect(hasMarkdownTable, "Raw markdown table found in content:encoded").toBe(false);
 		}
 	});
+
+	it("renders GitHub alerts as accessible HTML with icons", () => {
+		const itemBlocks = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].map((m) => m[1]);
+		const alertItem = itemBlocks.find((item) => toPathname(extractTagContent(item, "link")) === ALERT_ENTRY_PATH);
+
+		expect(alertItem).toContain(`aria-label=&quot;${ALERT_LABEL}&quot;`);
+		expect(alertItem).toContain("&lt;svg");
+		expect(alertItem).toContain("markdown-alert-title");
+		expect(alertItem).not.toContain("[!NOTE]");
+	});
 });
 
 // ---------------------------------------------------------------------------
@@ -279,6 +291,17 @@ describe("JSON feed (feed.json)", () => {
 			const hasMarkdownTable = /^\|\s*\w/m.test(item.content_html);
 			expect(hasMarkdownTable, `Raw markdown table in item "${item.title}"`).toBe(false);
 		}
+	});
+
+	it("renders GitHub alerts as accessible HTML with icons", () => {
+		const alertItem = feed.items.find((item) => toPathname(item.url) === ALERT_ENTRY_PATH);
+
+		expect(alertItem.content_html).toContain(
+			`<aside class="markdown-alert markdown-alert-note" aria-label="${ALERT_LABEL}">`,
+		);
+		expect(alertItem.content_html).toContain("<svg");
+		expect(alertItem.content_html).toContain("markdown-alert-title");
+		expect(alertItem.content_html).not.toContain("[!NOTE]");
 	});
 
 	it("content_html image srcs are absolute URLs in a web-compatible format", () => {
