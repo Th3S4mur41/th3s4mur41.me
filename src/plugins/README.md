@@ -14,6 +14,7 @@ Import the plugin creators from `src/plugins/index.js` and pass them into the Sa
 ```js
 import { satteri } from "@astrojs/markdown-satteri";
 import {
+  createSatteriCodePenEmbedsPlugin,
   createSatteriExternalLinksPlugin,
   createSatteriGithubAlertsA11yPlugin,
   createSatteriHeadingDatesPlugin,
@@ -30,6 +31,7 @@ const processor = satteri({
     createSatteriInjectTocPlugin,
     createSatteriViewTransitionNamesPlugin,
     createSatteriGithubAlertsA11yPlugin,
+    createSatteriCodePenEmbedsPlugin,
     createSatteriOptimizeFirstImagePlugin,
     createSatteriExternalLinksPlugin,
   ],
@@ -108,8 +110,9 @@ The current HAST order is intentional:
 2. TOC and reading-meta injection
 3. View transition naming
 4. GitHub alert conversion
-5. First-image optimization
-6. External link decoration
+5. CodePen embed conversion
+6. First-image optimization
+7. External link decoration
 
 ## Notes
 
