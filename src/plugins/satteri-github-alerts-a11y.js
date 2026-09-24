@@ -36,7 +36,7 @@ export function createSatteriGithubAlertsA11yPlugin() {
 		name: "satteri-github-alerts-a11y",
 		element: {
 			filter: ["blockquote"],
-			visit(node, ctx) {
+			visit(node) {
 				// Check if this blockquote is a GitHub alert
 				const alertType = detectAlertType(node);
 				if (!alertType) {
@@ -162,9 +162,19 @@ export function createSatteriGithubAlertsA11yPlugin() {
 			return children;
 		}
 
+		const normalizedFirstChild = {
+			...firstChild,
+			children: firstChild.children?.map((child) =>
+				child.type === "text" && /^\[!\w+\]/.test(child.value || "")
+					? { ...child, value: child.value.replace(/^\[!\w+\][ \t]*(?:\r?\n)?/, "") }
+					: child,
+			),
+		};
+		const normalizedChildren = children.map((child, index) => (index === firstElemIdx ? normalizedFirstChild : child));
+
 		// Check if first paragraph only contains [!TYPE] and optionally **Title**
 		const meaningfulChildren =
-			firstChild.children?.filter((child) => {
+			normalizedFirstChild.children?.filter((child) => {
 				if (child.type === "text") {
 					const trimmed = child.value?.trim() || "";
 					return trimmed.replace(/^\[!\w+\]\s*/, "").trim() !== "";
@@ -176,11 +186,11 @@ export function createSatteriGithubAlertsA11yPlugin() {
 		if (meaningfulChildren.length <= 1) {
 			const first = meaningfulChildren[0];
 			if (!first || (first.type === "element" && first.tagName === "strong")) {
-				return children.filter((_, i) => i !== firstElemIdx);
+				return normalizedChildren.filter((_, i) => i !== firstElemIdx);
 			}
 		}
 
-		return children;
+		return normalizedChildren;
 	}
 
 	function extractText(node) {
