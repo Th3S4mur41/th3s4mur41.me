@@ -1,3 +1,10 @@
+# [2.75.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.74.0...v2.75.0) (2026-09-24)
+
+
+### Features
+
+* implement CodePen embed functionality with oEmbed support ([#2588](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2588)) ([ce61552](https://github.com/Th3S4mur41/th3s4mur41.me/commit/ce61552eca6a3cbbe6e2087c305e6828cdf91b4f))
+
 # [2.74.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.73.1...v2.74.0) (2026-09-24)
 
 
