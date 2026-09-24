@@ -186,13 +186,14 @@ describe("RSS feed (feed.xml)", () => {
 		}
 	});
 
-	it("renders GitHub alerts as accessible HTML with icons", () => {
+	it("renders GitHub alerts as portable blockquotes", () => {
 		const itemBlocks = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].map((m) => m[1]);
 		const alertItem = itemBlocks.find((item) => toPathname(extractTagContent(item, "link")) === ALERT_ENTRY_PATH);
 
-		expect(alertItem).toContain(`aria-label=&quot;${ALERT_LABEL}&quot;`);
-		expect(alertItem).toContain("&lt;svg");
-		expect(alertItem).toContain("markdown-alert-title");
+		expect(alertItem).toContain(`&lt;blockquote&gt;&lt;p&gt;&lt;strong&gt;${ALERT_LABEL}&lt;/strong&gt;&lt;/p&gt;`);
+		expect(xml).toContain("&lt;strong&gt;Note&lt;/strong&gt;");
+		expect(alertItem).not.toContain("markdown-alert");
+		expect(alertItem).not.toContain("&lt;svg");
 		expect(alertItem).not.toContain("[!NOTE]");
 	});
 
@@ -309,14 +310,13 @@ describe("JSON feed (feed.json)", () => {
 		}
 	});
 
-	it("renders GitHub alerts as accessible HTML with icons", () => {
+	it("renders GitHub alerts as portable blockquotes", () => {
 		const alertItem = feed.items.find((item) => toPathname(item.url) === ALERT_ENTRY_PATH);
 
-		expect(alertItem.content_html).toContain(
-			`<aside class="markdown-alert markdown-alert-note" aria-label="${ALERT_LABEL}">`,
-		);
-		expect(alertItem.content_html).toContain("<svg");
-		expect(alertItem.content_html).toContain("markdown-alert-title");
+		expect(alertItem.content_html).toContain(`<blockquote><p><strong>${ALERT_LABEL}</strong></p>`);
+		expect(feed.items.some((item) => item.content_html?.includes("<strong>Note</strong>"))).toBe(true);
+		expect(alertItem.content_html).not.toContain("markdown-alert");
+		expect(alertItem.content_html).not.toContain("<svg");
 		expect(alertItem.content_html).not.toContain("[!NOTE]");
 	});
 

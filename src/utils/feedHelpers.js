@@ -283,15 +283,41 @@ function stripH1() {
 	};
 }
 
-/** Rehype adapter for the site's Sätteri GitHub alert transform. */
-function renderGithubAlerts() {
+/** Rehype adapter that renders GitHub alerts as portable feed blockquotes. */
+function renderGithubAlertsForFeed() {
 	const transformAlert = createSatteriGithubAlertsA11yPlugin().element.visit;
 
 	return (tree) => {
 		visit(tree, "element", (node, index, parent) => {
 			if (node.tagName !== "blockquote" || !parent || typeof index !== "number") return;
 			const alert = transformAlert(node);
-			if (alert) parent.children[index] = alert;
+			if (!alert) return;
+
+			const titleParagraph = alert.children?.[0];
+			const label = alert.properties?.["aria-label"] ?? titleParagraph?.children?.at(-1)?.value;
+			if (typeof label !== "string" || !label) return;
+
+			parent.children[index] = {
+				type: "element",
+				tagName: "blockquote",
+				properties: {},
+				children: [
+					{
+						type: "element",
+						tagName: "p",
+						properties: {},
+						children: [
+							{
+								type: "element",
+								tagName: "strong",
+								properties: {},
+								children: [{ type: "text", value: label }],
+							},
+						],
+					},
+					...(alert.children?.slice(1) ?? []),
+				],
+			};
 		});
 	};
 }
@@ -356,7 +382,7 @@ function getPlainTextExcerpt(markdown, maxLength = 160) {
  *
  * The pipeline:
  *   remark-parse → remark-mdx → remark-gfm → stripMdxMeta →
- *   remark-rehype (with JSX handlers) → rehype-raw → renderGithubAlerts → renderCodePenEmbeds → stripScripts →
+ *   remark-rehype (with JSX handlers) → rehype-raw → renderGithubAlertsForFeed → renderCodePenEmbeds → stripScripts →
  *   stripH1 → resolveContentImages → makeLinksAbsolute → rehype-stringify
  *
  * @param {object} entry  - Astro content collection entry (needs .body, .id, .filePath).
@@ -383,7 +409,7 @@ export async function renderBodyToHtml(entry, site) {
 			},
 		})
 		.use(rehypeRaw)
-		.use(renderGithubAlerts)
+		.use(renderGithubAlertsForFeed)
 		.use(renderCodePenEmbeds)
 		.use(stripScripts)
 		.use(stripH1)
