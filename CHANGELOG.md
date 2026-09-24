@@ -1,3 +1,10 @@
+# [2.74.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.73.1...v2.74.0) (2026-09-24)
+
+
+### Features
+
+* integrate GitHub alerts into feed rendering ([#2587](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2587)) ([629d597](https://github.com/Th3S4mur41/th3s4mur41.me/commit/629d59788e806df156bb69ec70fe5ef0937b9cdd))
+
 ## [2.73.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.73.0...v2.73.1) (2026-09-23)
 
 
