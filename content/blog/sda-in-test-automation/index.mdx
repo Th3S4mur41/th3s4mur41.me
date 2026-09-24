@@ -32,8 +32,6 @@ syndication:
   - https://bsky.app/profile/th3s4mur41.me/post/3mfme64gmis24
 ---
 
-import CodePen from '/src/components/CodePen.astro';
-
 # Scroll-Driven Animations and Test Automation
 
 ![Cartoon-style developer at a standing desk scratching his head in confusion while looking at code on a monitor, struggling to make visual test automation work with scroll-driven animations.](sda-visual-test-automation-headache.jpg)
@@ -70,12 +68,9 @@ If you are performing visual regression testing or worse accessibility testing, 
 </figure>
 
 Here's this in action (if your browser supports it):
-<CodePen
-	title="Fade-in on scroll: A visual testing nightmare"
-	href="https://codepen.io/th3s4mur41/pen/WbxdRZO"
-	height={500}
-	description="Interactive CodePen demo showing a scroll-driven animation where text fades in as the user scrolls, illustrating the challenges it poses for visual regression testing."
-/>
+
+Interactive CodePen demo showing a scroll-driven animation where text fades in as the user scrolls, illustrating the challenges it poses for visual regression testing.
+https://codepen.io/th3s4mur41/pen/WbxdRZO
 
 Notice how the text opacity changes as you scroll—this inconsistent state is exactly what breaks automated testing.
 

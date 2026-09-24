@@ -25,8 +25,6 @@ syndication:
   - https://www.linkedin.com/posts/michaelvanderheyden_a11y-webdev-html-share-7472982122320965633-ouX-
 ---
 
-import CodePen from '/src/components/CodePen.astro';
-
 # href="#" and the Focus Trap
 
 ![A comic style illustration within a web browser frame shows Michaël Vanderheyden looking confused as a giant diagonal lightning bolt splits the scene. His upper body is shown floating up towards a yellow background box reading 'VIEWPORT: SCROLL TO TOP,' while his lower body and legs are physically chained to a rusty anchor labeled 'keyboard focus trapped in footer' keycap-rubble background](href-hash-focus-desync-accessibility.jpg)
@@ -83,12 +81,8 @@ Instead of `href="#"`, give the top container an explicit ID and target it:
 
 You get the same practical scroll effect, but without focus desync.
 
-<CodePen
-	title="Empty Fragment Link"
-	href="https://codepen.io/editor/th3s4mur41/pen/019ecf95-41ec-77cf-9d8c-b35f76b7ea2a"
-	height={500}
-	description="Interactive CodePen demo with two footer links: one with href='#' and another with href='#_top' to demonstrate the focus desynchronization issue and its workaround."
-/>
+Interactive CodePen demo with two footer links: one with href='#' and another with href='#_top' to demonstrate the focus desynchronization issue and its workaround.
+https://codepen.io/editor/th3s4mur41/pen/019ecf95-41ec-77cf-9d8c-b35f76b7ea2a
 
 What you will notice:
 

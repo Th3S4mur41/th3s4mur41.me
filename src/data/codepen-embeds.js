@@ -1,0 +1,80 @@
+export const CODEPEN_EMBED_METADATA = {
+	"https://codepen.io/th3s4mur41/pen/KwzRMyJ": {
+		title: "Contrast: WCAG vs APCA",
+		authorName: "Th3S4mur41",
+		authorUrl: "https://codepen.io/th3s4mur41",
+		iframeUrl: "https://codepen.io/th3s4mur41/embed/preview/KwzRMyJ",
+	},
+	"https://codepen.io/th3s4mur41/pen/zxqgLYR": {
+		title: "No contrast on stacking",
+		authorName: "Th3S4mur41",
+		authorUrl: "https://codepen.io/th3s4mur41",
+		iframeUrl: "https://codepen.io/th3s4mur41/embed/preview/zxqgLYR",
+	},
+	"https://codepen.io/th3s4mur41/pen/OPNZWVj": {
+		title: "Language selectors",
+		authorName: "Th3S4mur41",
+		authorUrl: "https://codepen.io/th3s4mur41",
+		iframeUrl: "https://codepen.io/th3s4mur41/embed/preview/OPNZWVj",
+	},
+	"https://codepen.io/th3s4mur41/pen/QwGbawP": {
+		title: "Visual Order as Reading Order v1",
+		authorName: "Th3S4mur41",
+		authorUrl: "https://codepen.io/th3s4mur41",
+		iframeUrl: "https://codepen.io/th3s4mur41/embed/preview/QwGbawP",
+	},
+	"https://codepen.io/th3s4mur41/pen/WbxdRZO": {
+		title: "Fade-in on scroll: A visual testing nightmare",
+		authorName: "Th3S4mur41",
+		authorUrl: "https://codepen.io/th3s4mur41",
+		iframeUrl: "https://codepen.io/th3s4mur41/embed/preview/WbxdRZO",
+	},
+	"https://codepen.io/editor/th3s4mur41/pen/019f27a0-85d5-7086-bf79-1bcec3b27156": {
+		title: "Toolbar with focusgroup",
+		authorName: "Th3S4mur41",
+		authorUrl: "https://codepen.io/th3s4mur41",
+		iframeUrl: "https://codepen.io/editor/th3s4mur41/embed/preview/ogBoMmz",
+	},
+	"https://codepen.io/editor/th3s4mur41/pen/019f36b7-9e1d-79ba-be93-c6f56269e065": {
+		title: "Toolbar with focusgroup and explicit role",
+		authorName: "Th3S4mur41",
+		authorUrl: "https://codepen.io/th3s4mur41",
+		iframeUrl: "https://codepen.io/editor/th3s4mur41/embed/preview/GgryyVw",
+	},
+	"https://codepen.io/editor/th3s4mur41/pen/019f3bc5-3be6-7103-b563-1df75368f087": {
+		title: "Tablist with focusgroup",
+		authorName: "Th3S4mur41",
+		authorUrl: "https://codepen.io/th3s4mur41",
+		iframeUrl: "https://codepen.io/editor/th3s4mur41/embed/preview/yygpWgJ",
+	},
+	"https://codepen.io/editor/th3s4mur41/pen/019f40d9-9a38-77f2-8488-6dcc1906c3cf": {
+		title: "Tablist with focusgroup (progressive enhancement)",
+		authorName: "Th3S4mur41",
+		authorUrl: "https://codepen.io/th3s4mur41",
+		iframeUrl: "https://codepen.io/editor/th3s4mur41/embed/preview/QwdQdQq",
+	},
+	"https://codepen.io/editor/th3s4mur41/pen/019e8da3-90df-7090-ae14-3e4541413757": {
+		title: "headingoffset",
+		authorName: "Th3S4mur41",
+		authorUrl: "https://codepen.io/th3s4mur41",
+		iframeUrl: "https://codepen.io/editor/th3s4mur41/embed/preview/VYmXGYG",
+	},
+	"https://codepen.io/editor/th3s4mur41/pen/019ecf95-41ec-77cf-9d8c-b35f76b7ea2a": {
+		title: "Empty Fragment Link",
+		authorName: "Th3S4mur41",
+		authorUrl: "https://codepen.io/th3s4mur41",
+		iframeUrl: "https://codepen.io/editor/th3s4mur41/embed/preview/azpBJLv",
+	},
+	"https://codepen.io/editor/th3s4mur41/pen/019fcd25-ebe8-733e-ab7e-76c359afb2a6": {
+		title: "Native Mixins",
+		authorName: "Th3S4mur41",
+		authorUrl: "https://codepen.io/th3s4mur41",
+		iframeUrl: "https://codepen.io/editor/th3s4mur41/embed/preview/bNgzeEw",
+	},
+	"https://codepen.io/editor/th3s4mur41/pen/019db588-5eee-7500-bb0b-f33009caac30": {
+		title: "grid-lanes and subgrid",
+		authorName: "Th3S4mur41",
+		authorUrl: "https://codepen.io/th3s4mur41",
+		iframeUrl: "https://codepen.io/editor/th3s4mur41/embed/preview/MYjdPVy",
+	},
+};
