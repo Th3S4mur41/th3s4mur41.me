@@ -1,3 +1,10 @@
+## [2.75.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.75.0...v2.75.1) (2026-09-24)
+
+
+### Bug Fixes
+
+* update GitHub alerts rendering to use portable blockquotes in feed ([#2589](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2589)) ([99f5b27](https://github.com/Th3S4mur41/th3s4mur41.me/commit/99f5b274fa306cfa33ade2dd34bdb3fcf3050577))
+
 # [2.75.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.74.0...v2.75.0) (2026-09-24)
 
 
