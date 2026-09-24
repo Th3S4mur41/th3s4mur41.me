@@ -19,6 +19,7 @@ const ALERT_ENTRY_PATH = "/blog/a11y-tips/language-attribute/";
 const ALERT_LABEL = "Note: The Loanword Exception";
 const CODEPEN_URL = "https://codepen.io/th3s4mur41/pen/OPNZWVj";
 const CODEPEN_TITLE = "Language selectors";
+const CODEPEN_DESCRIPTION = "Interactive CodePen demo comparing three approaches to the language selector.";
 
 beforeAll(() => {
 	const missingDistFeedFiles = REQUIRED_DIST_FEED_FILES.filter((name) => !existsSync(resolve(DIST_DIR, name)));
@@ -203,6 +204,7 @@ describe("RSS feed (feed.xml)", () => {
 		expect(codePenItem).toContain(`title=&quot;${CODEPEN_TITLE}&quot;`);
 		expect(codePenItem).toContain("height=&quot;400&quot;");
 		expect(codePenItem).toContain("src=&quot;https://codepen.io/");
+		expect(codePenItem).toContain(`&lt;figcaption&gt;${CODEPEN_DESCRIPTION}&lt;br&gt;View “`);
 		expect(codePenItem).toContain(`href=&quot;${CODEPEN_URL}&quot;`);
 		expect(codePenItem).toContain("Th3S4mur41");
 	});
@@ -325,6 +327,7 @@ describe("JSON feed (feed.json)", () => {
 		expect(codePenItem.content_html).toContain(`<iframe src="https://codepen.io/`);
 		expect(codePenItem.content_html).toContain(`title="${CODEPEN_TITLE}"`);
 		expect(codePenItem.content_html).toContain('height="400"');
+		expect(codePenItem.content_html).toContain(`<figcaption>${CODEPEN_DESCRIPTION}<br>View “`);
 		expect(codePenItem.content_html).toContain(`href="${CODEPEN_URL}"`);
 		expect(codePenItem.content_html).toContain("Th3S4mur41");
 	});

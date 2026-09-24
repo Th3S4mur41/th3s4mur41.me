@@ -74,7 +74,6 @@ Modern CSS layout capabilities like Flexbox, Grid, and now [grid-lanes aka. Maso
 That disconnect is exactly what motivated browser engineers like [Rachel Andrew](https://bsky.app/profile/rachelandrew.bsky.social) to push for a proper reading-order solution before Masonry layout shipped. She wrote about the problem and the initial ideas to solve it in [Reading order and CSS layout](https://developer.chrome.com/blog/reading-order), which is worth a read if you haven't seen it. The result is the new [`reading-flow`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/reading-flow) property.
 
 A minimal demo showing how reading-flow can align keyboard and screen‑reader navigation with the visual layout. The author info is visually placed under the heading, but semantically lives in the footer — reading-flow resolves the mismatch without changing the DOM.
-
 https://codepen.io/th3s4mur41/pen/QwGbawP
 
 I believe AI could detect mismatches between visual reading order and DOM order, especially in these complex layout scenarios. Historically, when layout and markup order diverged, the fix often meant restructuring the layout itself, a trade-off designers and developers often were reluctant to make. AI flagging the issue didn't necessarily make it easier to resolve. But `reading-flow` is changing that: it gives developers a way to declare the intended reading sequence without touching the visual layout. 

@@ -60,6 +60,23 @@ describe("createSatteriCodePenEmbedsPlugin", () => {
 		expect(endpoint.searchParams.get("height")).toBe(String(CODEPEN_EMBED_HEIGHT));
 	});
 
+	it("moves an immediately preceding description into the figcaption", async () => {
+		const penUrl = "https://codepen.io/th3s4mur41/pen/OPNZWVj";
+		const { html } = await render(`Interactive **CodePen** demo.\n${penUrl}`, createFetch(createMetadata(penUrl)));
+
+		expect(html).toContain("<figcaption>Interactive <strong>CodePen</strong> demo.<br>View “");
+		expect(html).not.toContain("<p>Interactive");
+	});
+
+	it("leaves a description separated by a blank line outside the figure", async () => {
+		const penUrl = "https://codepen.io/th3s4mur41/pen/OPNZWVj";
+		const { html } = await render(`Keep this description.\n\n${penUrl}`, createFetch(createMetadata(penUrl)));
+
+		expect(html).toContain("<p>Keep this description.</p>");
+		expect(html).toContain("<figcaption>View “");
+		expect(html).not.toContain("<figcaption>Keep this description.");
+	});
+
 	it("deduplicates metadata requests for repeated Pens", async () => {
 		const penUrl = "https://codepen.io/th3s4mur41/pen/OPNZWVj";
 		const fetchImpl = createFetch(createMetadata(penUrl));

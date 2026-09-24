@@ -82,7 +82,7 @@ const processor = satteri({
 - Supported URLs: classic `https://codepen.io/{user}/pen/{slug}` and v2 `https://codepen.io/editor/{user}/pen/{uuid}`.
 - Request behavior: uses reviewed metadata from `src/data/codepen-embeds.js` for published Pens. New URLs are resolved through oEmbed with deduplication, pacing, and bounded retries.
 - Failure behavior: unresolved new URLs or invalid metadata stop the build. Cache existing Pens because CodePen may challenge server-side oEmbed requests nondeterministically.
-- Use when: a paragraph contains only the CodePen URL; keep additional descriptions in nearby Markdown prose.
+- Use when: a paragraph contains only the CodePen URL. A description on the immediately preceding line is moved into the figcaption; add a blank line before the URL to keep that paragraph outside the figure.
 
 ### `createSatteriOptimizeFirstImagePlugin`
 

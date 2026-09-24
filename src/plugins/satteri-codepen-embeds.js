@@ -18,14 +18,12 @@ function getTextContent(node) {
 	return node.children.map(getTextContent).join("");
 }
 
-function getStandaloneCodePenUrl(node) {
+function getCodePenEmbedInput(node) {
 	if (node.tagName !== "p" || !Array.isArray(node.children)) return null;
 
 	const meaningfulChildren = node.children.filter((child) => child.type !== "text" || child.value?.trim());
-	if (meaningfulChildren.length !== 1) return null;
-
-	const link = meaningfulChildren[0];
-	if (link.type !== "element" || link.tagName !== "a") return null;
+	const link = meaningfulChildren.at(-1);
+	if (link?.type !== "element" || link.tagName !== "a") return null;
 
 	const href = link.properties?.href;
 	if (typeof href !== "string" || getTextContent(link).trim() !== href) return null;
@@ -42,7 +40,24 @@ function getStandaloneCodePenUrl(node) {
 			parts[2] === "pen" &&
 			/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(parts[3]);
 
-		return isClassicUrl || isEditorUrl ? url.href : null;
+		if (!isClassicUrl && !isEditorUrl) return null;
+
+		const linkIndex = node.children.indexOf(link);
+		const descriptionChildren = node.children.slice(0, linkIndex);
+		if (descriptionChildren.length === 0) return { penUrl: url.href, descriptionChildren: [] };
+
+		const lastDescriptionChild = descriptionChildren.at(-1);
+		if (lastDescriptionChild?.type !== "text" || !/\r?\n[ \t]*$/.test(lastDescriptionChild.value ?? "")) return null;
+
+		descriptionChildren[descriptionChildren.length - 1] = {
+			...lastDescriptionChild,
+			value: lastDescriptionChild.value.replace(/\r?\n[ \t]*$/, ""),
+		};
+
+		return {
+			penUrl: url.href,
+			descriptionChildren: descriptionChildren.filter((child) => child.type !== "text" || child.value),
+		};
 	} catch {
 		return null;
 	}
@@ -157,7 +172,25 @@ function resolveCodePenMetadata(penUrl, fetchImpl, cache, requestIntervalMs, ret
 	return cache.get(penUrl);
 }
 
-function buildCodePenFigure(penUrl, metadata) {
+function buildCodePenFigure(penUrl, metadata, descriptionChildren) {
+	const fallbackChildren = [
+		{ type: "text", value: "View “" },
+		{
+			type: "element",
+			tagName: "a",
+			properties: { href: penUrl },
+			children: [{ type: "text", value: metadata.title }],
+		},
+		{ type: "text", value: "” by " },
+		{
+			type: "element",
+			tagName: "a",
+			properties: { href: metadata.authorUrl },
+			children: [{ type: "text", value: metadata.authorName }],
+		},
+		{ type: "text", value: " on CodePen." },
+	];
+
 	return {
 		type: "element",
 		tagName: "figure",
@@ -180,23 +213,13 @@ function buildCodePenFigure(penUrl, metadata) {
 				type: "element",
 				tagName: "figcaption",
 				properties: {},
-				children: [
-					{ type: "text", value: "View “" },
-					{
-						type: "element",
-						tagName: "a",
-						properties: { href: penUrl },
-						children: [{ type: "text", value: metadata.title }],
-					},
-					{ type: "text", value: "” by " },
-					{
-						type: "element",
-						tagName: "a",
-						properties: { href: metadata.authorUrl },
-						children: [{ type: "text", value: metadata.authorName }],
-					},
-					{ type: "text", value: " on CodePen." },
-				],
+				children: descriptionChildren.length
+					? [
+							...descriptionChildren,
+							{ type: "element", tagName: "br", properties: {}, children: [] },
+							...fallbackChildren,
+						]
+					: fallbackChildren,
 			},
 		],
 	};
@@ -215,11 +238,11 @@ export function createSatteriCodePenEmbedsPlugin({
 		element: {
 			filter: ["p"],
 			async visit(node) {
-				const penUrl = getStandaloneCodePenUrl(node);
-				if (!penUrl) return;
+				const input = getCodePenEmbedInput(node);
+				if (!input) return;
 
-				const metadata = await resolveCodePenMetadata(penUrl, fetchImpl, cache, requestIntervalMs, retryDelaysMs);
-				return buildCodePenFigure(penUrl, metadata);
+				const metadata = await resolveCodePenMetadata(input.penUrl, fetchImpl, cache, requestIntervalMs, retryDelaysMs);
+				return buildCodePenFigure(input.penUrl, metadata, input.descriptionChildren);
 			},
 		},
 	};

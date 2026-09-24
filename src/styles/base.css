@@ -21,6 +21,11 @@
 	}
 }
 
+iframe[src*="codepen.io"] {
+	/* biome-ignore lint/correctness/noUnknownProperty: https://github.com/biomejs/biome/issues/11925 */
+	frame-sizing: unset; /* Frame-sizing is adapting the iFrame to the unexecuted CodePen content, creating layout shift on execute */
+}
+
 body {
 	display: flex;
 	flex-direction: column;
