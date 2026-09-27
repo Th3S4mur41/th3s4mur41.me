@@ -21,11 +21,11 @@
 	},
 	"homepage": "https://th3s4mur41.me",
 	"dependencies": {
-		"@astrojs/markdown-satteri": "^0.4.1",
+		"@astrojs/markdown-satteri": "^0.4.2",
 		"@astrojs/rss": "^4.0.19",
 		"@astrojs/sitemap": "^3.7.4",
 		"@fontsource/cascadia-code": "^5.3.0",
-		"astro": "^7.3.3",
+		"astro": "^7.3.5",
 		"baseline-status": "^1.2.0",
 		"github-slugger": "^2.0.0",
 		"hast-util-from-html": "^2.0.3",
@@ -42,7 +42,7 @@
 		"unist-util-visit": "^5.1.0"
 	},
 	"devDependencies": {
-		"@astrojs/mdx": "^8.0.1",
+		"@astrojs/mdx": "^8.0.2",
 		"@atproto/api": "^0.20.44",
 		"@biomejs/biome": "2.5.14",
 		"@commitlint/cli": "^21.2.3",
