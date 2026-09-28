@@ -86,6 +86,14 @@ const processor = satteri({
 - Failure behavior: unresolved new URLs or invalid metadata stop the build. Cache existing Pens because CodePen may challenge server-side oEmbed requests nondeterministically.
 - Use when: a paragraph contains only the CodePen URL. A description on the immediately preceding line is moved into the figcaption; add a blank line before the URL to keep that paragraph outside the figure.
 
+### `createSatteriTableWrapperPlugin`
+
+- Phase: HAST
+- Purpose: wraps every `table` in a scroll container.
+- Output: renders `div.table-wrapper > table`; the wrapper scrolls horizontally instead of the page.
+- Use when: content contains tables that may be wider than narrow viewports.
+- Notes: keyboard access to the scroll container is handled by `scroll-focus-polyfill` on article pages.
+
 ### `createSatteriOptimizeFirstImagePlugin`
 
 - Phase: HAST
@@ -111,8 +119,9 @@ The current HAST order is intentional:
 3. View transition naming
 4. GitHub alert conversion
 5. CodePen embed conversion
-6. First-image optimization
-7. External link decoration
+6. Table wrapping
+7. First-image optimization
+8. External link decoration
 
 ## Notes
 

@@ -13,6 +13,7 @@ import { createSatteriHeadingDatesPlugin } from "./src/plugins/satteri-heading-d
 import { createSatteriInjectTocPlugin } from "./src/plugins/satteri-inject-toc.js";
 import { createSatteriOptimizeFirstImagePlugin } from "./src/plugins/satteri-optimize-first-image.js";
 import { createSatteriReadingTimePlugin } from "./src/plugins/satteri-reading-time.js";
+import { createSatteriTableWrapperPlugin } from "./src/plugins/satteri-table-wrapper.js";
 import { createSatteriViewTransitionNamesPlugin } from "./src/plugins/satteri-view-transition-names.js";
 import { SITE_CONFIG } from "./src/utils/config.js";
 
@@ -24,6 +25,7 @@ const satteriProcessor = satteri({
 		createSatteriViewTransitionNamesPlugin,
 		createSatteriGithubAlertsA11yPlugin,
 		createSatteriCodePenEmbedsPlugin,
+		createSatteriTableWrapperPlugin,
 		createSatteriOptimizeFirstImagePlugin,
 		createSatteriExternalLinksPlugin,
 	],

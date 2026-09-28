@@ -118,11 +118,22 @@ a {
  * Table
  *****************************************************************************/
 
+/* Scroll wide tables inside their own container instead of the page */
+.table-wrapper {
+	overflow: auto;
+	margin-block: 1.5em;
+	border-radius: 0.25rem;
+
+	&:focus-visible {
+		outline: 2px solid var(--color-accent);
+	}
+}
+
 table {
 	border-collapse: separate; /* Required for padding to work */
 	padding-block-end: 0.5rem;
 	background-color: var(--color-subtle-bg);
-	margin-block: 1.5em;
+	margin-block: 0;
 	border-radius: 0.25rem;
 	border-spacing: 0;
 }

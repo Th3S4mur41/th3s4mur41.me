@@ -475,42 +475,7 @@ void [
 				shareButton.classList.remove("hidden");
 			}
 		}
-
-		/**
-		 * A11y: Add tabindex="0" to horizontally scrollable <pre> blocks
-		 * https://www.w3.org/WAI/standards-guidelines/act/rules/0ssw9k/
-		 */
-		function updatePreTabIndex(pre: Element) {
-			const element = pre as HTMLElement;
-			if (element.scrollWidth > element.clientWidth) {
-				if (!element.hasAttribute("tabindex")) {
-					element.setAttribute("tabindex", "0");
-				}
-			} else {
-				// Remove tabindex if no longer scrollable
-				if (element.getAttribute("tabindex") === "0") {
-					element.removeAttribute("tabindex");
-				}
-			}
-		}
-
-		// Observe each pre element for resize events
-		if ("ResizeObserver" in window) {
-			const resizeObserver = new ResizeObserver((entries) => {
-				for (const entry of entries) {
-					updatePreTabIndex(entry.target);
-				}
-			});
-
-			document.querySelectorAll("pre").forEach((pre) => {
-				updatePreTabIndex(pre);
-				resizeObserver.observe(pre);
-			});
-		} else {
-			// Fallback: just set initial tabindex without observation
-			document.querySelectorAll("pre").forEach((pre) => {
-				updatePreTabIndex(pre);
-			});
-		}
 	</script>
+	<script src="scroll-focus-polyfill" data-selectors="pre, .table-wrapper"></script>
+
 </Layout>
