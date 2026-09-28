@@ -6,6 +6,7 @@
 
 
 
+import scrollFocusPolyfillUrl from "scroll-focus-polyfill?url&no-inline";
 import { getImage } from "astro:assets";
 import { getCollection, render } from "astro:content";
 import ArticleCard from "../../components/ArticleCard.astro";
@@ -476,6 +477,7 @@ void [
 			}
 		}
 	</script>
-	<script src="scroll-focus-polyfill" data-selectors="pre, .table-wrapper"></script>
+	<!-- Emitted file name keeps "scroll-focus-polyfill", which the polyfill uses to find this tag and read its data-* options -->
+	<script is:inline type="module" src={scrollFocusPolyfillUrl} data-selectors="pre, .table-wrapper"></script>
 
 </Layout>

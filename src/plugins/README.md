@@ -21,6 +21,7 @@ import {
   createSatteriInjectTocPlugin,
   createSatteriOptimizeFirstImagePlugin,
   createSatteriReadingTimePlugin,
+  createSatteriTableWrapperPlugin,
   createSatteriViewTransitionNamesPlugin,
 } from "./src/plugins/index.js";
 
@@ -32,6 +33,7 @@ const processor = satteri({
     createSatteriViewTransitionNamesPlugin,
     createSatteriGithubAlertsA11yPlugin,
     createSatteriCodePenEmbedsPlugin,
+    createSatteriTableWrapperPlugin,
     createSatteriOptimizeFirstImagePlugin,
     createSatteriExternalLinksPlugin,
   ],
