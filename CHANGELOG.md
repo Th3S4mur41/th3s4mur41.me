@@ -1,3 +1,10 @@
+## [2.75.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.75.1...v2.75.2) (2026-09-29)
+
+
+### Bug Fixes
+
+* add table wrapper for responsive tables and accessibility ([#2596](https://github.com/Th3S4mur41/th3s4mur41.me/issues/2596)) ([0201ab6](https://github.com/Th3S4mur41/th3s4mur41.me/commit/0201ab6b550a0949df44b076b1802403f19a14a9))
+
 ## [2.75.1](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.75.0...v2.75.1) (2026-09-24)
 
 
