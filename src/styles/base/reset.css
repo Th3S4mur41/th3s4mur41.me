@@ -96,6 +96,10 @@ input:where([type="tel"], [type="url"], [type="email"], [type="number"]):not(:pl
 	direction: ltr;
 }
 
+button {
+	touch-action: manipulation; /* Prevent zoom on accidental double tap on mobile devices - https://piccalil.li/blog/stop-buttons-triggering-zoom-when-theyre-double-tapped/ */
+}
+
 /******************************************************************************
  * Typography
  *****************************************************************************/
