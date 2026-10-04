@@ -38,7 +38,7 @@
 		"remark-parse": "^11.0.0",
 		"remark-rehype": "^11.1.2",
 		"satteri": "^0.10.5",
-		"scroll-focus-polyfill": "^1.0.0",
+		"scroll-focus-polyfill": "^1.1.0",
 		"unified": "^11.0.5",
 		"unist-util-visit": "^5.1.0"
 	},
