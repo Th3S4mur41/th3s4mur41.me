@@ -54,7 +54,7 @@
 		"astro-compress": "^2.4.3",
 		"browserslist": "^4.29.3",
 		"browserslist-to-esbuild": "^2.1.1",
-		"concurrently": "^10.0.5",
+		"concurrently": "^10.0.6",
 		"husky": "^9.1.7",
 		"prettier": "^3.9.9",
 		"typescript": "^7.0.2",
