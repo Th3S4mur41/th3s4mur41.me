@@ -88,3 +88,50 @@ jobs:
           echo "Deployed to: ${{ steps.cloudflare-deploy.outputs.deployment-url }}"
           echo "Alias URL: ${{ steps.cloudflare-deploy.outputs.pages-deployment-alias-url }}"
 
+  # Delete the source run's `build` artifact once it has been deployed to reduce
+  # Actions storage. The upload keeps `retention-days: 1` (the native minimum) as
+  # a fallback for failed or skipped publishes, which keep their artifact for
+  # troubleshooting. Note: once deleted, re-running only this publish workflow
+  # requires re-running the source Checks run to regenerate the artifact.
+  #
+  # This runs in a separate job so that only this minimal job (no checkout, no
+  # secrets, no artifact contents) holds `actions: write`; the deploy job above,
+  # which handles artifact contents, keeps `actions: read`.
+  cleanup:
+    name: '🧹 Delete build artifact'
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    # Only after a successful publish, and only when a source run exists
+    # (manual workflow_dispatch runs have no workflow_run payload).
+    if: needs.build.result == 'success' && github.event.workflow_run.id
+
+    permissions:
+      actions: write
+
+    steps:
+      - name: '🧹 Delete build artifact from source run'
+        # Cleanup is best effort: never fail the publish (and skip downstream
+        # jobs such as a11y-scan or indexnow) because of a cleanup issue.
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SOURCE_RUN_ID: ${{ github.event.workflow_run.id }}
+          ARTIFACT_NAME: build
+        run: |
+          # Scope strictly to this repository and the run that produced the
+          # deployed artifact, so artifacts from unrelated runs are never touched.
+          artifact_ids="$(gh api --paginate \
+            "repos/${GITHUB_REPOSITORY}/actions/runs/${SOURCE_RUN_ID}/artifacts?name=${ARTIFACT_NAME}&per_page=100" \
+            --jq ".artifacts[] | select(.name == \"${ARTIFACT_NAME}\") | .id")"
+
+          if [ -z "$artifact_ids" ]; then
+            echo "No '${ARTIFACT_NAME}' artifact found for run ${SOURCE_RUN_ID}; nothing to delete."
+            exit 0
+          fi
+
+          for artifact_id in $artifact_ids; do
+            echo "Deleting artifact ${artifact_id} ('${ARTIFACT_NAME}') from run ${SOURCE_RUN_ID}."
+            gh api --method DELETE "repos/${GITHUB_REPOSITORY}/actions/artifacts/${artifact_id}"
+          done
+

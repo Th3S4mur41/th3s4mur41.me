@@ -30,7 +30,9 @@ jobs:
       CLOUDFLARE_ID: ${{ secrets.CLOUDFLARE_ID }}
     with:
       CLOUDFLARE_PROJECT_NAME: ${{ vars.CLOUDFLARE_PROJECT_NAME }}
+    # Caller permissions cap the reusable workflow's token. `actions: write` is
+    # only used by publish.yml's cleanup job to delete the deployed build artifact.
     permissions:
       contents: read
-      actions: read
+      actions: write
       deployments: write    
