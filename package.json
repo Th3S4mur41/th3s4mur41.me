@@ -40,7 +40,7 @@
 		"satteri": "^0.10.5",
 		"scroll-focus-polyfill": "^1.1.0",
 		"unified": "^11.0.5",
-		"unist-util-visit": "^5.1.0"
+		"unist-util-visit": "^5.2.0"
 	},
 	"devDependencies": {
 		"@astrojs/mdx": "^8.1.1",
