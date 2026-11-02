@@ -14,29 +14,29 @@ Import the plugin creators from `src/plugins/index.js` and pass them into the Sa
 ```js
 import { satteri } from "@astrojs/markdown-satteri";
 import {
-  createSatteriCodePenEmbedsPlugin,
-  createSatteriExternalLinksPlugin,
-  createSatteriGithubAlertsA11yPlugin,
-  createSatteriHeadingDatesPlugin,
-  createSatteriInjectTocPlugin,
-  createSatteriOptimizeFirstImagePlugin,
-  createSatteriReadingTimePlugin,
-  createSatteriTableWrapperPlugin,
-  createSatteriViewTransitionNamesPlugin,
+	createSatteriCodePenEmbedsPlugin,
+	createSatteriExternalLinksPlugin,
+	createSatteriGithubAlertsA11yPlugin,
+	createSatteriHeadingDatesPlugin,
+	createSatteriInjectTocPlugin,
+	createSatteriOptimizeFirstImagePlugin,
+	createSatteriReadingTimePlugin,
+	createSatteriTableWrapperPlugin,
+	createSatteriViewTransitionNamesPlugin,
 } from "./src/plugins/index.js";
 
 const processor = satteri({
-  mdastPlugins: [createSatteriReadingTimePlugin()],
-  hastPlugins: [
-    createSatteriHeadingDatesPlugin,
-    createSatteriInjectTocPlugin,
-    createSatteriViewTransitionNamesPlugin,
-    createSatteriGithubAlertsA11yPlugin,
-    createSatteriCodePenEmbedsPlugin,
-    createSatteriTableWrapperPlugin,
-    createSatteriOptimizeFirstImagePlugin,
-    createSatteriExternalLinksPlugin,
-  ],
+	mdastPlugins: [createSatteriReadingTimePlugin()],
+	hastPlugins: [
+		createSatteriHeadingDatesPlugin,
+		createSatteriInjectTocPlugin,
+		createSatteriViewTransitionNamesPlugin,
+		createSatteriGithubAlertsA11yPlugin,
+		createSatteriCodePenEmbedsPlugin,
+		createSatteriTableWrapperPlugin,
+		createSatteriOptimizeFirstImagePlugin,
+		createSatteriExternalLinksPlugin,
+	],
 });
 ```
 

@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   semantic-release:
-    name: '▶️ actions'
+    name: "▶️ actions"
     uses: ./.github/workflows/semantic-release.yml
 
     # Release only if checks succeeded
@@ -34,7 +34,7 @@ jobs:
       pull-requests: write
 
   publish:
-    name: '▶️ actions'
+    name: "▶️ actions"
     needs: [semantic-release]
     uses: ./.github/workflows/publish.yml
     secrets:
@@ -51,26 +51,26 @@ jobs:
       deployments: write
 
   atproto-sync:
-    name: '🛰️ ATProto document sync'
+    name: "🛰️ ATProto document sync"
     needs: publish
     runs-on: ubuntu-latest
     if: needs.publish.result == 'success' && github.event.workflow_run.event != 'pull_request'
 
     steps:
-      - name: '☁️ Checkout repository'
+      - name: "☁️ Checkout repository"
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: '🧰 Setup Node.js'
+      - name: "🧰 Setup Node.js"
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
           check-latest: true
-          cache: 'npm'
+          cache: "npm"
 
-      - name: '📦 Install dependencies'
+      - name: "📦 Install dependencies"
         run: npm ci --ignore-scripts
 
-      - name: '🛰️ Publish documents to ATProto'
+      - name: "🛰️ Publish documents to ATProto"
         run: npm run sync:atproto
         env:
           ATPROTO_APP_PASSWORD: ${{ secrets.ATPROTO_APP_PASSWORD }}
@@ -79,7 +79,7 @@ jobs:
           ATPROTO_SITE_URL: https://th3s4mur41.me
 
   indexnow:
-    name: '▶️ actions'
+    name: "▶️ actions"
     needs: publish
     if: needs.publish.result == 'success' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.event != 'schedule'
     uses: ./.github/workflows/indexnow.yml
@@ -95,7 +95,7 @@ jobs:
       actions: read
 
   a11y-scan:
-    name: '♿ a11y scan'
+    name: "♿ a11y scan"
     needs: publish
 
     # Run only if publish job was run
