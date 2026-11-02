@@ -14,27 +14,27 @@ permissions:
 
 jobs:
   build:
-    name: '🛠️ Test Code'
+    name: "🛠️ Test Code"
     runs-on: ubuntu-latest
     container: mcr.microsoft.com/playwright # Provide browser instances for test runners
 
     steps:
-      - name: '☁️ Checkout repository'
+      - name: "☁️ Checkout repository"
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - name: '⚙️ Use Node.js'
+      - name: "⚙️ Use Node.js"
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
           check-latest: true
-          cache: 'npm'
+          cache: "npm"
 
-      - name: '⛓️ Install dependencies'
+      - name: "⛓️ Install dependencies"
         env:
           HUSKY: 0
         run: npm ci --no-audit --prefer-offline --progress=false
 
-      - name: '🧫 Run tests'
+      - name: "🧫 Run tests"
         run: npm run test --if-present

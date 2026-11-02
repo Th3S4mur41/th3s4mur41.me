@@ -17,29 +17,29 @@ permissions:
 
 jobs:
   build:
-    name: '🛠️ Build & Test'
+    name: "🛠️ Build & Test"
     runs-on: ubuntu-latest
 
     steps:
-      - name: '☁️ Checkout repository'
+      - name: "☁️ Checkout repository"
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0 # Fetches all history so timestamps are more consistent for image optimization caching
 
-      - name: '⚙️ Use Node.js'
+      - name: "⚙️ Use Node.js"
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
           check-latest: true
-          cache: 'npm'
+          cache: "npm"
 
-      - name: '⛓️ Install dependencies'
+      - name: "⛓️ Install dependencies"
         env:
           HUSKY: 0
         run: npm ci --no-audit --prefer-offline --progress=false
 
-      - name: '💾 Cache Astro image optimization'
+      - name: "💾 Cache Astro image optimization"
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: |
@@ -51,21 +51,21 @@ jobs:
             astro-cache-${{ runner.os }}-main-v1
             astro-cache-${{ runner.os }}-
 
-      - name: '✅ Lint code'
+      - name: "✅ Lint code"
         run: npm run lint -- --reporter=github
 
-      - name: '🛠️ Build'
+      - name: "🛠️ Build"
         env:
           PREVIEW_FUTURE_CONTENT: ${{ github.event_name == 'pull_request' && 'true' || '' }}
           EMAIL: ${{ secrets.EMAIL }}
         run: npm run build --if-present
 
-      - name: '🧫 Run tests'
+      - name: "🧫 Run tests"
         run: npm run test --if-present
 
-      - name: '📎 Upload build output'
+      - name: "📎 Upload build output"
         # Skip uploading build output since dependabot PR doesn't deploy a preview
-        if: github.actor != 'dependabot[bot]' 
+        if: github.actor != 'dependabot[bot]'
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: build

@@ -11,14 +11,14 @@ permissions:
 
 jobs:
   lint-pr:
-    name: '🕵️‍♂️ Lint Commit Message'
+    name: "🕵️‍♂️ Lint Commit Message"
     runs-on: ubuntu-latest
 
     steps:
       # Login to Docker Hub to avoid anonymous download rate limits (100 pulls per 6 hours).
       # Authenticated users get 200 pulls per 6 hours. This step is optional and won't fail
       # the workflow if login fails, allowing the linting to continue regardless.
-      - name: '🔐 Login to Docker Hub'
+      - name: "🔐 Login to Docker Hub"
         uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6 # v4.7.0
         continue-on-error: true
         with:
@@ -26,10 +26,10 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       # check for the most recent release: https://github.com/Namchee/conventional-pr/releases
-      - name: '✅ Lint PR'
+      - name: "✅ Lint PR"
         uses: Namchee/conventional-pr@130d7ab18df28e92ff803e37bfdf0600fb2a318e # v0.16.0
         with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
-          label: '⁉️ invalid'
-          branch_pattern: ''
+          label: "⁉️ invalid"
+          branch_pattern: ""
           issue: false

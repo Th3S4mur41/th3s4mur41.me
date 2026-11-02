@@ -4,23 +4,23 @@ on:
   workflow_call:
     inputs:
       mode:
-        description: 'Submission mode: changed or all'
+        description: "Submission mode: changed or all"
         required: false
-        default: 'changed'
+        default: "changed"
         type: string
       branch:
-        description: 'Branch to inspect for diffs'
+        description: "Branch to inspect for diffs"
         required: false
-        default: 'main'
+        default: "main"
         type: string
       head_sha:
-        description: 'Commit SHA to submit from'
+        description: "Commit SHA to submit from"
         required: false
         type: string
       site_url:
-        description: 'Canonical site URL used for sitemap discovery'
+        description: "Canonical site URL used for sitemap discovery"
         required: false
-        default: 'https://th3s4mur41.me'
+        default: "https://th3s4mur41.me"
         type: string
     secrets:
       INDEXNOW_KEY:
@@ -29,9 +29,9 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: 'Submission mode'
+        description: "Submission mode"
         required: true
-        default: 'all'
+        default: "all"
         type: choice
         options:
           - all
@@ -47,31 +47,31 @@ concurrency:
 
 jobs:
   submit:
-    name: '🔎 Submit to IndexNow'
+    name: "🔎 Submit to IndexNow"
     runs-on: ubuntu-latest
     env:
       INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
 
     steps:
-      - name: '⏭️ Skip when IndexNow key is unavailable'
+      - name: "⏭️ Skip when IndexNow key is unavailable"
         if: env.INDEXNOW_KEY == ''
         run: echo 'INDEXNOW_KEY is not configured; skipping IndexNow submission.'
 
-      - name: '☁️ Checkout repository'
+      - name: "☁️ Checkout repository"
         if: env.INDEXNOW_KEY != ''
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ inputs.head_sha || inputs.branch || github.ref_name }}
           fetch-depth: 0
 
-      - name: '⚙️ Use Node.js'
+      - name: "⚙️ Use Node.js"
         if: env.INDEXNOW_KEY != ''
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
           check-latest: true
 
-      - name: '🧮 Determine target commit'
+      - name: "🧮 Determine target commit"
         if: env.INDEXNOW_KEY != ''
         id: target
         env:
@@ -90,7 +90,7 @@ jobs:
           echo "mode=$INPUT_MODE" >> "$GITHUB_OUTPUT"
           echo "site_url=$INPUT_SITE_URL" >> "$GITHUB_OUTPUT"
 
-      - name: '🔍 Find previous successful IndexNow run'
+      - name: "🔍 Find previous successful IndexNow run"
         if: env.INDEXNOW_KEY != '' && steps.target.outputs.mode == 'changed'
         id: previous
         env:
@@ -101,7 +101,7 @@ jobs:
           previous_sha="$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/indexnow.yml/runs?branch=$TARGET_BRANCH&status=success&event=workflow_call&per_page=20" --jq ".workflow_runs[] | select((.id | tostring) != \"$CURRENT_RUN_ID\") | .head_sha" | head -n 1)"
           echo "previous_sha=$previous_sha" >> "$GITHUB_OUTPUT"
 
-      - name: '🗺️ Resolve URLs to notify'
+      - name: "🗺️ Resolve URLs to notify"
         if: env.INDEXNOW_KEY != ''
         id: urls
         env:
@@ -123,7 +123,7 @@ jobs:
           echo "reason=$reason" >> "$GITHUB_OUTPUT"
           echo "count=$count" >> "$GITHUB_OUTPUT"
 
-      - name: '📝 Publish IndexNow summary'
+      - name: "📝 Publish IndexNow summary"
         if: env.INDEXNOW_KEY != ''
         env:
           MODE: ${{ steps.target.outputs.mode }}
@@ -149,7 +149,7 @@ jobs:
             fi
           } >> "$GITHUB_STEP_SUMMARY"
 
-      - name: '📤 Submit URLs to IndexNow'
+      - name: "📤 Submit URLs to IndexNow"
         if: env.INDEXNOW_KEY != '' && steps.urls.outputs.count != '0'
         env:
           SITE_URL: ${{ steps.target.outputs.site_url }}
@@ -181,7 +181,6 @@ jobs:
           }
           EOF
 
-      - name: 'ℹ️ No URLs to submit'
+      - name: "ℹ️ No URLs to submit"
         if: env.INDEXNOW_KEY != '' && steps.urls.outputs.count == '0'
         run: echo 'No relevant URLs changed; skipping IndexNow submission.'
-        

@@ -1,6 +1,6 @@
 # Accessibility Testing Workflow
 # This workflow runs accessibility tests on deployed sites
-name: 'A11y scan'
+name: "A11y scan"
 
 # Controls when the action will run
 on:
@@ -11,18 +11,18 @@ on:
         required: true
     inputs:
       url:
-        description: 'Site URL to test (e.g., https://th3s4mur41.me)'
+        description: "Site URL to test (e.g., https://th3s4mur41.me)"
         required: true
-        default: 'https://th3s4mur41.me'
+        default: "https://th3s4mur41.me"
         type: string
 
   # Manual trigger with custom URL
   workflow_dispatch:
     inputs:
       url:
-        description: 'Site URL to test (e.g., https://th3s4mur41.me)'
+        description: "Site URL to test (e.g., https://th3s4mur41.me)"
         required: true
-        default: 'https://th3s4mur41.me'
+        default: "https://th3s4mur41.me"
         type: string
 
 permissions:
@@ -30,7 +30,7 @@ permissions:
 
 jobs:
   accessibility-test:
-    name: '♿ Accessibility Testing'
+    name: "♿ Accessibility Testing"
     runs-on: ubuntu-latest
 
     # Only run if manually triggered OR if the workflow succeeded and wasn't triggered by dependabot
@@ -42,7 +42,7 @@ jobs:
       pull-requests: write
 
     steps:
-      - name: '📋 Extract URLs from deployed sitemap'
+      - name: "📋 Extract URLs from deployed sitemap"
         id: extract-urls
         run: |
           site_url="${{ inputs.url }}"
@@ -127,7 +127,7 @@ jobs:
           echo "Found $url_count URLs to test for accessibility:"
           echo "$all_urls"
 
-      - name: '♿ Run Accessibility Scanner'
+      - name: "♿ Run Accessibility Scanner"
         uses: github/accessibility-scanner@b9ff6911fdcdb17032a2fda1013b77bb4bff76b3 # v3.5.1
         with:
           # Newline-delimited list of URLs to scan
@@ -141,16 +141,16 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
 
           # Cache key for results
-          cache_key: 'accessibility-scan-${{ github.event.workflow_run.head_branch }}-${{ github.event.workflow_run.head_sha }}'
+          cache_key: "accessibility-scan-${{ github.event.workflow_run.head_branch }}-${{ github.event.workflow_run.head_sha }}"
 
           # Skip Copilot assignment for now (you can enable this later)
           skip_copilot_assignment: true
           include_screenshots: true
           # Scanner settings
-          reduced_motion: 'reduce'
+          reduced_motion: "reduce"
           # color_scheme: 'light'
 
-      - name: '✅ Accessibility scan completed'
+      - name: "✅ Accessibility scan completed"
         run: |
           echo "♿ Accessibility scan completed for ${{ steps.extract-urls.outputs.url_count }} URLs"
           echo "Any accessibility issues found will be automatically filed as GitHub issues"

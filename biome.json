@@ -4,9 +4,7 @@
 		"enabled": true,
 		"rules": {
 			"preset": "recommended",
-			"nursery": {
-				"useBaseline": "info"
-			},
+			"nursery": {},
 			"style": {
 				"noParameterAssign": "error",
 				"useAsConstAssertion": "error",
@@ -21,6 +19,9 @@
 			"a11y": {
 				"useAnchorContent": "off",
 				"useSemanticElements": "warn"
+			},
+			"suspicious": {
+				"useBaseline": "info"
 			}
 		}
 	},
@@ -38,12 +39,21 @@
 	"html": {
 		"experimentalFullSupportEnabled": true
 	},
+	"markdown": {
+		"analyzeEmbeds": true,
+		"formatter": {
+			"formatEmbeds": true
+		},
+		"parser": {
+			"frontmatter": true
+		}
+	},
 	"formatter": {
 		"indentStyle": "tab",
 		"lineWidth": 120
 	},
 	"files": {
-		"includes": ["**", "!**/.devcontainer/devcontainer.json"]
+		"includes": ["**", "!**/.devcontainer/devcontainer.json", "!CHANGELOG.md"]
 	},
 	"vcs": {
 		"enabled": true,

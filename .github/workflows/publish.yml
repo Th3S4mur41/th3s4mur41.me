@@ -14,22 +14,20 @@ on:
         required: false
     inputs:
       CLOUDFLARE_PROJECT_NAME:
-        description: 'The Cloudflare Pages project name'
+        description: "The Cloudflare Pages project name"
         required: true
         type: string
     outputs:
       deployment-url:
-        description: 'The URL of the deployed site'
+        description: "The URL of the deployed site"
         value: ${{ jobs.build.outputs.deployment-url }}
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-
-    
 jobs:
   build:
-    name: '🚀 Publish'
+    name: "🚀 Publish"
     runs-on: ubuntu-latest
 
     outputs:
@@ -45,7 +43,7 @@ jobs:
       # here). We deploy the trusted build artifact and pass commit metadata
       # explicitly so Cloudflare can still associate preview deployments with PRs.
 
-      - name: '📎 Download build output'
+      - name: "📎 Download build output"
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: build
@@ -70,7 +68,7 @@ jobs:
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
 
-      - name: '🚀 Publish to Cloudflare Pages'
+      - name: "🚀 Publish to Cloudflare Pages"
         id: cloudflare-deploy
         uses: cloudflare/wrangler-action@953926a2e2182532811c01a25e53647d93bf07c0 # v4.1.3
         env:
@@ -83,7 +81,7 @@ jobs:
           command: pages deploy ./dist --project-name=${{ inputs.CLOUDFLARE_PROJECT_NAME }} --branch=${{ github.event.workflow_run.head_branch || github.head_ref }} --commit-hash=${{ github.event.workflow_run.head_sha || github.sha }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: '📝 Save deployment URL'
+      - name: "📝 Save deployment URL"
         run: |
           echo "Deployed to: ${{ steps.cloudflare-deploy.outputs.deployment-url }}"
           echo "Alias URL: ${{ steps.cloudflare-deploy.outputs.pages-deployment-alias-url }}"
@@ -98,7 +96,7 @@ jobs:
   # secrets, no artifact contents) holds `actions: write`; the deploy job above,
   # which handles artifact contents, keeps `actions: read`.
   cleanup:
-    name: '🧹 Delete build artifact'
+    name: "🧹 Delete build artifact"
     needs: [build]
     runs-on: ubuntu-latest
 
@@ -110,7 +108,7 @@ jobs:
       actions: write
 
     steps:
-      - name: '🧹 Delete build artifact from source run'
+      - name: "🧹 Delete build artifact from source run"
         # Cleanup is best effort: never fail the publish (and skip downstream
         # jobs such as a11y-scan or indexnow) because of a cleanup issue.
         continue-on-error: true
@@ -134,4 +132,3 @@ jobs:
             echo "Deleting artifact ${artifact_id} ('${ARTIFACT_NAME}') from run ${SOURCE_RUN_ID}."
             gh api --method DELETE "repos/${GITHUB_REPOSITORY}/actions/artifacts/${artifact_id}"
           done
-

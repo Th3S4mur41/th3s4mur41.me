@@ -4,22 +4,22 @@ on:
   workflow_dispatch:
     inputs:
       cleanup-types:
-        description: 'Type of cleanup to perform'
+        description: "Type of cleanup to perform"
         required: false
-        default: 'preview'
+        default: "preview"
         type: choice
         options:
           - preview
           - production
           - all
       dry-run:
-        description: 'Run the workflow in dry-run mode'
+        description: "Run the workflow in dry-run mode"
         required: false
         default: false
         type: boolean
 
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
 
 permissions:
   contents: read

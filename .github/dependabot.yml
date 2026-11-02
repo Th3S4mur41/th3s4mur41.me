@@ -5,39 +5,39 @@
 
 version: 2
 updates:
-  - package-ecosystem: 'npm'
-    directory: '/' # Location of package manifests
+  - package-ecosystem: "npm"
+    directory: "/" # Location of package manifests
     schedule:
-      interval: 'daily'
-      time: '00:00'
-      timezone: 'Europe/Berlin'
+      interval: "daily"
+      time: "00:00"
+      timezone: "Europe/Berlin"
     groups:
       astro:
         patterns:
-          - 'astro'
-          - '@astrojs/*'
-          - 'astro-*'
-          - 'rehype-*'
-          - 'remark-*'
-          - 'satteri'
-          - 'unified'
+          - "astro"
+          - "@astrojs/*"
+          - "astro-*"
+          - "rehype-*"
+          - "remark-*"
+          - "satteri"
+          - "unified"
       babel:
         patterns:
-          - '@babel/*'
+          - "@babel/*"
       commitlint:
         patterns:
-          - '@commitlint/*'
+          - "@commitlint/*"
       typescript-eslint:
         patterns:
-          - '@typescript-eslint/*'
+          - "@typescript-eslint/*"
 
-  - package-ecosystem: 'github-actions'
-    directory: '/'
+  - package-ecosystem: "github-actions"
+    directory: "/"
     schedule:
-      interval: 'daily'
-      time: '00:00'
-      timezone: 'Europe/Berlin'
+      interval: "daily"
+      time: "00:00"
+      timezone: "Europe/Berlin"
     groups:
       artifacts:
         patterns:
-          - 'actions/*-artifact'
+          - "actions/*-artifact"

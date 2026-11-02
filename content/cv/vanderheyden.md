@@ -1,8 +1,8 @@
 ---
-title: 'Michaël Vanderheyden'
-role: 'Lead UX Engineer & Accessibility Specialist'
-location: 'La Calamine, Belgium'
-description: 'Resume of Michaël Vanderheyden, Lead UX Engineer & Accessibility Specialist with 22+ years building accessible, responsive web applications.'
+title: "Michaël Vanderheyden"
+role: "Lead UX Engineer & Accessibility Specialist"
+location: "La Calamine, Belgium"
+description: "Resume of Michaël Vanderheyden, Lead UX Engineer & Accessibility Specialist with 22+ years building accessible, responsive web applications."
 updated: 2026-08-17
 ---
 
@@ -12,19 +12,20 @@ Lead UX Engineer & Accessibility Specialist with 22+ years of experience designi
 
 ## Skills
 
-- **Accessibility & Standards:**  WCAG 2.2, WAI-ARIA, IAAP CPWA, Accessibility Audits, 
-                            Screen Readers (NVDA, JAWS, TalkBack), Accessibility Coaching & Training
-- **Design Systems & Frontend:**  Web Components, Storybook, Figma Libraries, Astro, TypeScript / JS, 
-                            Vue.js, Angular, Progressive Web Apps (PWA), HTML5 / CSS3
-- **Engineering & Testing:**     CI/CD (GitHub Actions), Visual Regression (Chromatic), Test Automation (Vitest, Playwright), 
-                            Git/GitHub/GitLab, npm Publishing, GitHub Copilot
-- **Leadership & Governance:**   Team Management & Mentoring, R&D Leadership, Technical Consulting, 
-                            Inner-Source Practices, Product Ownership (Scrum/Kanban)
+- **Accessibility & Standards:** WCAG 2.2, WAI-ARIA, IAAP CPWA, Accessibility Audits,
+  Screen Readers (NVDA, JAWS, TalkBack), Accessibility Coaching & Training
+- **Design Systems & Frontend:** Web Components, Storybook, Figma Libraries, Astro, TypeScript / JS,
+  Vue.js, Angular, Progressive Web Apps (PWA), HTML5 / CSS3
+- **Engineering & Testing:** CI/CD (GitHub Actions), Visual Regression (Chromatic), Test Automation (Vitest, Playwright),
+  Git/GitHub/GitLab, npm Publishing, GitHub Copilot
+- **Leadership & Governance:** Team Management & Mentoring, R&D Leadership, Technical Consulting,
+  Inner-Source Practices, Product Ownership (Scrum/Kanban)
 
 ## Experience
 
 ### cycos AG (Atos Group) — Lead UX Engineer & Accessibility Specialist
-*2011 – Present · Aachen, DE / Remote*
+
+_2011 – Present · Aachen, DE / Remote_
 
 Long-standing role within the Atos group spanning hands-on engineering, accessibility leadership, and team management.
 
@@ -36,25 +37,29 @@ Long-standing role within the Atos group spanning hands-on engineering, accessib
 - Migrated ~80 repositories and their CI/CD workflows from GitLab to GitHub Actions for a large enterprise SAP deployment programme.
 
 ### Client engagements delivered via cycos AG (Atos Group)
-*2020 – 2026 · Aachen, DE / Remote*
+
+_2020 – 2026 · Aachen, DE / Remote_
 
 - **Ipsotek** — Lead UX Engineer for a mobile-optimized, offline-capable progressive web app (Angular) with live WebSocket updates, video streaming, and push notifications.
 - **IDnomic** — Redesigned a credential management system UI on the Parallel design system, aligning it with WCAG 2.2.
 - **German federal public-sector agency** — Rebuilt an accessible web client for internal case-management software, modernizing build tooling from SVN/Jenkins to GitHub Actions.
 
 ### cycos AG / Unify (Atos Group) — Lead Software Developer
-*2011 – 2020 · Alsdorf, DE*
+
+_2011 – 2020 · Alsdorf, DE_
 
 - Led frontend architecture and accessibility for OpenScape UC web, mobile (Android/iOS), and Microsoft Teams clients.
 - Technical Product Owner for Circuit, an early production WebRTC cloud collaboration platform, coordinating across up to 11 Scrum teams.
 
 ### cycos AG — Senior Software Developer
-*2007 – 2011 · Alsdorf, DE*
+
+_2007 – 2011 · Alsdorf, DE_
 
 - Engineered frontend components and core application features for OpenScape UC across web and mobile platforms (Android/iOS).
 
 ### System-Management Stiewi GmbH — Software Engineer
-*2004 – 2007 · Aachen, DE*
+
+_2004 – 2007 · Aachen, DE_
 
 - Modernized a travel-expense management application for German public-sector agencies, covering UI, database design, and WCAG-aligned accessibility.
 

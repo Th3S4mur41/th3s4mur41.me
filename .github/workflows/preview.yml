@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   publish:
-    name: '▶️ actions'
+    name: "▶️ actions"
 
     # Publish only if checks succeeded and PR was not opened by dependabot
     if: github.actor != 'dependabot[bot]' && github.event.workflow_run.conclusion == 'success'
@@ -35,4 +35,4 @@ jobs:
     permissions:
       contents: read
       actions: write
-      deployments: write    
+      deployments: write
