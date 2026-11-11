@@ -24,7 +24,7 @@ main {
 		margin-block: 1rem;
 		margin-inline-start: 4rem;
 		position: sticky;
-		top: 5rem;
+		inset-block-start: 5rem;
 		align-self: start;
 	}
 
@@ -81,7 +81,7 @@ main {
 			&::before {
 				content: "";
 				display: block;
-				width: 4px;
+				inline-size: 4px;
 				position: absolute;
 				inset-block: anchor(--toc-target inside);
 				background-color: var(--color-accent);

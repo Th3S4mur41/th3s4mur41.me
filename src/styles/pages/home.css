@@ -23,7 +23,7 @@ body.home {
 			}
 		}
 		& a {
-			float: left;
+			float: inline-start;
 			margin-inline-end: 2rem;
 			margin-block-end: 1rem;
 			/* Positioning with z-index to avoid issues with float and link hover */
@@ -80,8 +80,8 @@ body.home {
 
 		& > img,
 		& > picture > img {
-			width: 10rem;
-			height: 10rem;
+			inline-size: 10rem;
+			block-size: 10rem;
 			object-fit: cover;
 
 			mask-image: linear-gradient(to bottom, black 98%, transparent 100%);
