@@ -157,7 +157,7 @@ figure {
 		border-radius: 0.25rem;
 	}
 	& > figcaption {
-		margin-top: 0.5rem;
+		margin-block-start: 0.5rem;
 		font-size: 0.875rem;
 		color: var(--color-subtle-text);
 	}
@@ -188,7 +188,7 @@ h2[id^="update-"]::before {
 .sidenote {
 	font-size: 0.875rem;
 	color: var(--color-subtle-text);
-	border-left: 2px solid var(--color-subtle-text);
+	border-inline-start: 2px solid var(--color-subtle-text);
 	margin-block: 1.5rem;
 	padding-inline-start: 1.5rem;
 	padding-block: 0.5rem;
@@ -221,8 +221,8 @@ figure > p:has(picture + picture) {
 	justify-content: space-evenly;
 
 	& img {
-		width: 100%;
-		height: auto;
+		inline-size: 100%;
+		block-size: auto;
 	}
 }
 

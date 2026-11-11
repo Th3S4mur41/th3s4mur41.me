@@ -4,7 +4,9 @@
 		"enabled": true,
 		"rules": {
 			"preset": "recommended",
-			"nursery": {},
+			"nursery": {
+				"useLogicalProperties": "warn"
+			},
 			"style": {
 				"noParameterAssign": "error",
 				"useAsConstAssertion": "error",
