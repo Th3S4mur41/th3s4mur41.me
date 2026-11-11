@@ -46,7 +46,7 @@ body > header {
 		margin-block-start: 10lvb;
 		margin-block-end: 1rem;
 		inline-size: 100%;
-		min-inline-size: min(18rem, 60svb);
+		min-block-size: min(18rem, 60svb);
 		block-size: calc(100svb - 10lvb - 15rem);
 		max-block-size: calc(100svb - 10lvb - 15rem);
 		object-fit: contain;
