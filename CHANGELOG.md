@@ -1,3 +1,9 @@
+# [2.76.0](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.75.2...v2.76.0) (2026-11-20)
+
+### Features
+
+* **about:** add Microsoft Pro Badge for GitHub Copilot ([4744b17](https://github.com/Th3S4mur41/th3s4mur41.me/commit/4744b1714959b06d7767655d62717edf7759abfd))
+
 ## [2.75.2](https://github.com/Th3S4mur41/th3s4mur41.me/compare/v2.75.1...v2.75.2) (2026-09-29)
 
 
