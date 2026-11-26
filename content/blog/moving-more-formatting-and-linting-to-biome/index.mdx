@@ -1,0 +1,165 @@
+---
+title: 'Moving more of my formatting and linting to Biome'
+date: 2026-12-01T00:00:00Z
+published: false
+# image: 
+imageAlt: ''
+description: >-
+  How Biome 2.6 is helping me replace Prettier and phase out Stylelint across repositories I maintain.
+tags:
+  - dx
+  - code-quality
+  - thoughts
+keywords:
+  - Biome
+---
+
+# Moving more of my formatting and linting to Biome
+
+I’ve been using Biome for a while to format and lint HTML, JavaScript, and CSS. Until recently, I still combined it with Prettier for file types Biome didn’t support, such as Markdown and YAML, and Stylelint for CSS rules provided by plugins.
+
+That started to change with Biome 2.6. I’ve begun updating several repositories I maintain to use Biome for more of this work.
+
+## Replacing Prettier
+
+[Biome 2.6](https://biomejs.dev/blog/biome-v2-6/) supports formatting and linting Markdown and YAML. That let me remove Prettier from the repositories where I was still using it for those formats.
+
+It simplifies the toolchain, and formatting runs faster for me. One less formatter to install and configure is a practical improvement across the repositories I maintain.
+
+I wanted to take full advantage of the markdown integrations though, so I added a few configuration options to apply the the rules and formatting not only to Markdown content, but also to frontmatter and embeds within the Markdown files.
+
+```json
+{
+	"markdown": {
+		"analyzeEmbeds": true,
+		"formatter": {
+			"formatEmbeds": true
+		},
+		"parser": {
+			"frontmatter": true
+		}
+	}
+}
+```
+
+Removing prettier, also meant removing pretty-quick as a dependency, since Biome can easily be setup as pre-commit hook without any additional tooling.
+
+## Phasing out Stylelint
+
+Biome already covered the general CSS linting I used Stylelint for. The harder part was replacing the rules I got from Stylelint plugins.
+
+One plugin I relied on was `stylelint-config-property-sort-order-smacss`. Consistent property order is especially useful in larger projects with many contributors. Biome doesn’t use the exact same ordering rule, but its [useSortedProperties assist](https://biomejs.dev/assist/actions/use-sorted-properties/css/#how-to-configure) provides the same benefit. It needs to be enabled explicitly.
+
+```json
+{
+  "assist": {
+    "actions": {
+      "source": {
+        "useSortedProperties": "on"
+      }
+    }
+  }
+}
+```
+
+I also used `stylelint-use-logical-spec` to encourage logical properties over physical ones. Logical properties help layouts work across different reading directions. I ported the plugin’s logic to a Biome rule and extended it to cover newer properties. This is my first rule contribution to Biome. The rule is still in the nursery, so it needs to be enabled explicitly: [useLogicalProperties](https://biomejs.dev/linter/rules/use-logical-properties/css/).
+
+```json
+{
+  "linter": {
+    "rules": {
+      "nursery": {
+        "useLogicalProperties": "error"
+      }
+    }
+  }
+}
+```
+
+Another useful rule is [useBaseline](https://biomejs.dev/linter/rules/use-baseline/css/), which isn’t recommended by default. Previously, I combined webhint and Browserslist to warn when CSS features weren’t supported by some target browsers. The goal was to make developers aware of support limits, not to prevent use of a feature that might be a progressive enhancement or have a polyfill.
+
+```json
+{
+  "linter": {
+    "rules": {
+      "suspicious": {
+        "useBaseline": "error"
+      }
+    }
+  }
+}
+```
+
+Biome doesn’t use Browserslist, but many of our Browserslist configurations already mostly reflected Baseline. That made it possible to use Biome for these warnings too. The rule can be configured for widely available features or for a specific year.
+
+```json
+{
+  "linter": {
+    "rules": {
+      "suspicious": {
+        "useBaseline": {
+          "level": "on",
+          "options": {
+            "available": "2025"
+          }
+        }
+      }
+    }
+  }
+}
+```
+The rule can be configured further to allow specific properties despite their baseline support status.
+
+The last Stylelint plugin I often rely on is [defensiveCSS](https://github.com/yuschick/stylelint-plugin-defensive-css). Rules from it are also being added to Biome as part of [issue #9034](https://github.com/biomejs/biome/issues/9034).
+
+## Accessibility checks
+
+Biome also has accessibility rules. It doesn’t cover as many checks as tools such as axe-linter, but it can catch some basic issues before a build, without adding another tool to the setup.
+
+## HTML super languages support
+
+Biome also supports so called "super languages" like Vue, Svelte and Astro. The support is still considered experimental and must be enabled exlicitly.
+
+```json
+{
+  "html": {
+    "experimentalFullSupportEnabled": true,
+    "formatter": {
+      "enabled": true
+    }
+  }
+}
+```
+
+## Embedded Snippets Support
+
+I'm also working in various repos with web components, where HTML/CSS snippets are embedded within JavaScript or TypeScript files. Biome can lint these embedded snippets as well, providing consistent feedback across different file types.
+This too is considered experilmental though and must be enabled explicitly in the configuration.
+
+```json
+{
+  "javascript": {
+    "experimentalEmbeddedSnippetsSupportEnabled": true
+  }
+}
+```
+
+## Sharing my configuration
+
+As mentioned earlier, I have been doing the same changes in various repositories I managed, and I wanted to share my configuration to make it easier to apply consistently across projects.
+Since I also rely on some experimental features, sharing a configuration requires me to just update a single file once those features get released instead of updating the config in every single repository.
+
+To this end, I've created a config as npm package and ave updated my dependabot configuration to group biome and config updates together.
+
+
+```yaml
+
+ypdates:
+ - package-ecosystem: "npm"
+    directory: "/" # Location of package manifests
+    groups:
+      biome:
+        patterns:
+          - "@biomejs/*"
+          - "@Th3S4mur41/biome-config"
+```
